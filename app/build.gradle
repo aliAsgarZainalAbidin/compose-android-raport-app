@@ -2,9 +2,13 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
 }
+apply plugin: 'kotlin-kapt'
+apply plugin: 'com.android.application'
+apply plugin: 'dagger.hilt.android.plugin'
+
 
 android {
-    compileSdk 31
+    compileSdk 32
 
     defaultConfig {
         applicationId "id.deval.raport"
@@ -12,6 +16,7 @@ android {
         targetSdk 31
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -24,6 +29,9 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+        debug {
+            buildConfigField "String", "BASE_URL", '"https://192.0.0.1:3000"'
+        }
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -31,12 +39,6 @@ android {
     }
     kotlinOptions {
         jvmTarget = '1.8'
-    }
-    buildFeatures {
-        compose true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion compose_version
     }
     packagingOptions {
         resources {
@@ -46,16 +48,148 @@ android {
 }
 
 dependencies {
+    api fileTree(dir: "libs", include: ["*.jar"])
+    api "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    api deps.androidx.constraint
+    api deps.androidx.core
+    api deps.androidx.appcompat
+    api deps.network.retrofit
+    api deps.network.gson
+    api deps.network.converter_gson
+    api deps.network.okhttp_log
+    api deps.third.glide
+    api 'androidx.legacy:legacy-support-v4:1.0.0'
+    api 'androidx.navigation:navigation-fragment-ktx:2.4.1'
+    api 'androidx.navigation:navigation-ui-ktx:2.4.1'
+    api 'androidx.recyclerview:recyclerview:1.2.1'
+    api deps.androidx.rv_selection
+    kapt deps.third.glide_compiler
 
-    implementation 'androidx.core:core-ktx:1.7.0'
-    implementation "androidx.compose.ui:ui:$compose_version"
-    implementation "androidx.compose.material:material:$compose_version"
-    implementation "androidx.compose.ui:ui-tooling-preview:$compose_version"
-    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.1'
-    implementation 'androidx.activity:activity-compose:1.3.1'
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
-    androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_version"
-    debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
+    kapt "com.google.dagger:hilt-android-compiler:2.28-alpha"
+    // Dagger Core
+    api "com.google.dagger:dagger:2.42"
+    kapt "com.google.dagger:dagger-compiler:2.42"
+
+// Dagger Android
+    api 'com.google.dagger:dagger-android:2.42'
+    api 'com.google.dagger:dagger-android-support:2.42'
+    kapt 'com.google.dagger:dagger-android-processor:2.42'
+
+// Dagger - Hilt
+    api "com.google.dagger:hilt-android:2.42"
+    kapt "com.google.dagger:hilt-android-compiler:2.42"
+
+    api "androidx.coordinatorlayout:coordinatorlayout:1.2.0"
+
+    // Rx & Binding
+    api deps.rx.core
+    api deps.rx.java
+    api deps.rx.android
+    api deps.rx.kotlin
+    api deps.network.adapter_rx
+    api deps.network.adapter_rx2
+    api deps.network.adapter_coroutine
+//    api deps.jetbrains.anko
+
+    //kalau butuh loading animation
+//    api "com.airbnb.android:lottie:3.4.0"
+//
+    //Kotlin Coroutines
+    api deps.jetbrains.coroutine
+    api deps.jetbrains.coroutine_kotlin
+
+    //Dagger
+    api deps.dagger.main
+    api deps.dagger.android
+    api deps.dagger.android_support
+    kapt deps.dagger.compiler
+    kapt deps.dagger.android_processor
+
+    //lifecycle
+    api deps.activity.activity_ktx
+    api deps.lifecycle.extensions
+    api deps.lifecycle.runtime_ktx
+    api deps.lifecycle.livedata_ktx
+    kapt deps.lifecycle.compiler
+
+    // ViewModel Kotlin support
+    api deps.lifecycle.viewmodel_ktx
+
+    //Material Design
+    api deps.third.material
+
+    //Circle Image View
+    api deps.third.circle_image
+
+    //Cardview
+    api deps.androidx.cardview
+
+    //Google
+//    api deps.google.play_auth
+//    api deps.google.firebase_auth_ktx
+//    api deps.google.firebase
+//    api deps.google.firebase_messaging
+//    api deps.google.exoplayer
+//    api deps.google.exo_dash
+//    api deps.google.exo_ui
+//    api deps.google.exo_core
+
+    //Otpview
+//    api deps.third.otpview
+
+    //Timeline View
+    api deps.third.timeline
+
+    //ShapeView
+//    api deps.third.shapeview
+
+    //TextDrawable
+//    api deps.third.text_drawable
+
+    //Navigation
+    api deps.navigation.fragment_ktx
+    api deps.navigation.ui_ktx
+
+    //Placeholder
+    api deps.third.shimmer
+
+    //Fragment
+    api deps.fragment.fragment_runtime
+    api deps.fragment.fragment_runtime_ktx
+
+    //third party
+//    api 'id.zelory:compressor:3.0.0'
+//    api 'com.github.HaarigerHarald:android-youtubeExtractor:v1.7.0'
+//    api 'com.pierfrancescosoffritti.androidyoutubeplayer:core:10.0.5'
+    api 'com.github.rubensousa:gravitysnaphelper:2.2.1'
+//    api 'com.github.chrisbanes:PhotoView:2.3.0'
+    api 'com.mobsandgeeks:android-saripaar:2.0.3'
+    api "com.airbnb.android:lottie:3.4.0"
+
+    def hilt_jetpack = "1.0.0-alpha01"
+    def hilt_version = "2.42"
+    def lifecycle_version = "2.4.1"
+// Room
+    api "androidx.room:room-runtime:2.4.2"
+    kapt "androidx.room:room-compiler:2.4.2"
+// Activity Ktx for by viewModels()
+    api "androidx.activity:activity-ktx:1.4.0"
+//Dagger - Hilt
+    api "com.google.dagger:hilt-android:$hilt_jetpack"
+    kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
+// coroutines
+    api "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.4"
+    api "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.4"
+// ViewModel
+    api 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.0-alpha05'
+// LiveData
+    api "androidx.lifecycle:lifecycle-livedata-ktx:"
+    api "org.greenrobot:eventbus:3.3.1"
+    implementation group: 'com.itextpdf', name: 'itextpdf', version: '5.5.13.1'
+//    implementation 'com.github.SUPERCILEX.poi-android:poi:3.17'
+//    compileOnly 'org.apache.poi:poi-ooxml:3.17'
+    implementation platform('com.google.firebase:firebase-bom:30.0.1')
+    implementation 'com.google.firebase:firebase-analytics-ktx'
+
+    implementation "androidx.work:work-runtime-ktx:2.7.1"
 }
