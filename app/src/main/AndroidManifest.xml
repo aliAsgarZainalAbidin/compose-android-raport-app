@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="id.deval.raport">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
         android:name=".utils.MyApp"
         android:allowBackup="true"
@@ -11,10 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Raport">
         <activity
-            android:name=".MainActivity"
-            android:exported="false"
-            android:label="@string/app_name"
-            android:theme="@style/Theme.Raport">
+            android:name=".ui.MainActivity"
+            android:theme="@style/Theme.Raport"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

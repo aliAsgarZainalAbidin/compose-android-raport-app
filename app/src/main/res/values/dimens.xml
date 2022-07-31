@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <dimen name="list_item_spacing">16dp</dimen>
+    <dimen name="list_item_spacing_half">8dp</dimen>
+    <dimen name="design_bottom_navigation_text_size" tools:override="true">30sp</dimen>
+    <dimen name="design_bottom_navigation_active_text_size" tools:override="true">30sp</dimen>
+
+    <dimen name="padding_layout">16dp</dimen>
+    <dimen name="margin_item">24dp</dimen>
+    <dimen name="margin_rvitem">8dp</dimen>
+    <dimen name="margin_rvitem_small">4dp</dimen>
+</resources>

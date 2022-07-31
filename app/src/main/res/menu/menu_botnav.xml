@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/akun"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/ic_akun"
+        android:title="Akun" />
+    <item android:id="@+id/kelas"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/ic_kelas"
+        android:title="Kelas" />
+    <item android:id="@+id/mapel"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/ic_mapel"
+        android:title="Mapel" />
+</menu>
