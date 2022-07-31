@@ -9,4 +9,14 @@
         android:name="id.deval.raport.ui.akun.AkunFragment"
         android:label="fragment_akun"
         tools:layout="@layout/fragment_akun" />
+    <fragment
+        android:id="@+id/kelasFragment"
+        android:name="id.deval.raport.ui.kelas.KelasFragment"
+        android:label="fragment_kelas"
+        tools:layout="@layout/fragment_kelas" />
+    <fragment
+        android:id="@+id/mapelFragment"
+        android:name="id.deval.raport.ui.mapel.MapelFragment"
+        android:label="fragment_mapel"
+        tools:layout="@layout/fragment_mapel" />
 </navigation>
