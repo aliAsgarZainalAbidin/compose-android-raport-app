@@ -1,23 +1,175 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:fillViewport="true"
     android:layout_height="match_parent"
+    android:fillViewport="true"
     tools:context=".ui.akun.AkunFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/white_variant1">
 
-        <com.google.android.material.textview.MaterialTextView
-            app:layout_constraintTop_toTopOf="parent"
-            android:text="FRAGMENT AKUN"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_akun_bgblue"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="156dp"
+            android:background="@color/blue_variant1"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/iv_akun_person"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="26dp"
+                android:background="@drawable/bg_person_akun"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_person_akun"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/mtv_akun_greeting"
+                style="@style/TextAppearance.MdcTypographyStyles.Body2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="Selamat Datang"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toTopOf="@id/mtv_akun_name"
+                app:layout_constraintStart_toEndOf="@id/iv_akun_person"
+                app:layout_constraintTop_toTopOf="@id/iv_akun_person" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/mtv_akun_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@id/iv_akun_person"
+                app:layout_constraintStart_toStartOf="@id/mtv_akun_greeting"
+                app:layout_constraintTop_toBottomOf="@id/mtv_akun_greeting"
+                tools:text="Admin" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cv_akun_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/padding_layout"
+            android:elevation="2dp"
+            app:cardCornerRadius="8dp"
+            app:layout_constraintBottom_toBottomOf="@id/cl_akun_bgblue"
+            app:layout_constraintTop_toBottomOf="@id/cl_akun_bgblue">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="71dp"
+                android:background="@color/white"
+                android:padding="12dp">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/mtv_akun_titletotal"
+                    style="@style/TextAppearance.MdcTypographyStyles.Subtitle2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Total Keseluruhan"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/mtv_akun_titleguru"
+                    style="@style/TextAppearance.MdcTypographyStyles.Subtitle2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Guru"
+                    android:textColor="@color/gray3"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/gl"
+                    app:layout_constraintTop_toBottomOf="@id/mtv_akun_titletotal" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/mtv_akun_guru"
+                    style="@style/TextAppearance.MdcTypographyStyles.Headline6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@id/mtv_akun_titleguru"
+                    app:layout_constraintStart_toEndOf="@id/gl"
+                    tools:text="12" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/mtv_akun_titlesiswa"
+                    style="@style/TextAppearance.MdcTypographyStyles.Subtitle2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Siswa"
+                    android:textColor="@color/gray3"
+                    app:layout_constraintBottom_toBottomOf="@id/mtv_akun_titleguru"
+                    app:layout_constraintEnd_toStartOf="@id/gl2" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/mtv_akun_siswa"
+                    style="@style/TextAppearance.MdcTypographyStyles.Headline6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@id/mtv_akun_titlesiswa"
+                    app:layout_constraintStart_toEndOf="@id/gl2"
+                    tools:text="144" />
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/gl"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.25" />
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/gl2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.75" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_akun_containerrvguru"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="196dp"
+            android:padding="@dimen/padding_layout"
+            app:layout_constraintTop_toBottomOf="@id/cv_akun_container">
+
+            <include
+                android:id="@+id/include_rv_guru"
+                layout="@layout/rv_layout" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_akun_containerrvsiswa"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="196dp"
+            android:padding="@dimen/padding_layout"
+            app:layout_constraintTop_toBottomOf="@id/cl_akun_containerrvguru">
+
+            <include
+                android:id="@+id/include_rv_siswa"
+                layout="@layout/rv_layout" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 
 </androidx.core.widget.NestedScrollView>
