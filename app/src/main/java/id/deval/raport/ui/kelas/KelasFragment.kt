@@ -40,6 +40,10 @@ class KelasFragment : BaseSkeletonFragment() {
             mtvKelasTotalKelas.text = dataKelas.size.toString()
             includeRvGuru.mtvRvlayoutTitle.text = "Kelas"
             includeRvGuru.mtvRvlayoutAdd.show()
+            includeRvGuru.mtvRvlayoutAdd.setOnClickListener {
+                mainNavController.navigate(R.id.action_baseFragment_to_addKelasFragment)
+            }
+            includeRvGuru.mtvRvlayoutAdd.text = "Tambah Kelas"
             includeRvGuru.mtvRvlayoutViewmore.hide()
 
             includeRvGuru.rvRvlayoutContainer.apply {

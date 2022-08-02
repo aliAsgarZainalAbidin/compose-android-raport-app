@@ -28,6 +28,9 @@
         <action
             android:id="@+id/action_baseFragment_to_registrasiSiswaFragment"
             app:destination="@id/registrasiSiswaFragment" />
+        <action
+            android:id="@+id/action_baseFragment_to_addKelasFragment"
+            app:destination="@id/addKelasFragment" />
     </fragment>
     <fragment
         android:id="@+id/registrasiGuruFragment"
@@ -66,4 +69,26 @@
         android:name="id.deval.raport.ui.akun.siswa.AddOrangTuaFragment"
         android:label="fragment_add_orang_tua"
         tools:layout="@layout/fragment_add_orang_tua" />
+    <fragment
+        android:id="@+id/addKelasFragment"
+        android:name="id.deval.raport.ui.kelas.AddKelasFragment"
+        android:label="fragment_add_kelas"
+        tools:layout="@layout/fragment_add_kelas" >
+        <action
+            android:id="@+id/action_addKelasFragment_to_chooseSiswaFragment"
+            app:destination="@id/chooseSiswaFragment" />
+        <action
+            android:id="@+id/action_addKelasFragment_to_chooseMapelFragment"
+            app:destination="@id/chooseMapelFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/chooseSiswaFragment"
+        android:name="id.deval.raport.ui.kelas.ChooseSiswaFragment"
+        android:label="fragment_choose_siswa"
+        tools:layout="@layout/fragment_choose_siswa" />
+    <fragment
+        android:id="@+id/chooseMapelFragment"
+        android:name="id.deval.raport.ui.kelas.ChooseMapelFragment"
+        android:label="fragment_choose_mapel"
+        tools:layout="@layout/fragment_choose_mapel" />
 </navigation>

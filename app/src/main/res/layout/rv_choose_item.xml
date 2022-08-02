@@ -2,9 +2,9 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+    app:cardCornerRadius="8dp"
     android:layout_marginVertical="@dimen/margin_rvitem_small"
     android:layout_marginHorizontal="@dimen/margin_rvitem_small"
-    app:cardCornerRadius="4dp"
     android:layout_height="wrap_content">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -13,7 +13,7 @@
         android:padding="12dp">
 
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/mtv_rvitem_titlename"
+            android:id="@+id/mtv_rvChooseItem_titlename"
             style="@style/TextAppearance.MdcTypographyStyles.Body2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -29,80 +29,78 @@
             app:layout_constraintGuide_percent="0.25" />
 
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/mtv_rvitem_doubledot1"
+            android:id="@+id/mtv_rvChooseItem_doubledot1"
             style="@style/TextAppearance.MdcTypographyStyles.Body2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text=":"
-            app:layout_constraintBottom_toBottomOf="@id/mtv_rvitem_titlename"
+            app:layout_constraintBottom_toBottomOf="@id/mtv_rvChooseItem_titlename"
             app:layout_constraintStart_toEndOf="@id/gl"
-            app:layout_constraintTop_toTopOf="@id/mtv_rvitem_titlename" />
+            app:layout_constraintTop_toTopOf="@id/mtv_rvChooseItem_titlename" />
 
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/mtv_rvitem_name"
+            android:id="@+id/mtv_rvChooseItem_name"
             style="@style/TextAppearance.MdcTypographyStyles.Body2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_rvitem_small"
             android:text="Ali Zainal"
-            app:layout_constraintBottom_toBottomOf="@id/mtv_rvitem_titlename"
-            app:layout_constraintStart_toEndOf="@id/mtv_rvitem_doubledot1"
-            app:layout_constraintTop_toTopOf="@id/mtv_rvitem_titlename" />
+            app:layout_constraintBottom_toBottomOf="@id/mtv_rvChooseItem_titlename"
+            app:layout_constraintStart_toEndOf="@id/mtv_rvChooseItem_doubledot1"
+            app:layout_constraintTop_toTopOf="@id/mtv_rvChooseItem_titlename" />
 
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/mtv_rvitem_titlenis"
+            android:id="@+id/mtv_rvChooseItem_titlenis"
             style="@style/TextAppearance.MdcTypographyStyles.Body2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_rvitem_small"
             android:text="NIS"
             android:textColor="@color/gray3"
-            app:layout_constraintStart_toStartOf="@id/mtv_rvitem_titlename"
-            app:layout_constraintTop_toBottomOf="@id/mtv_rvitem_titlename" />
+            app:layout_constraintStart_toStartOf="@id/mtv_rvChooseItem_titlename"
+            app:layout_constraintTop_toBottomOf="@id/mtv_rvChooseItem_titlename" />
 
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/mtv_rvitem_doubledot2"
+            android:id="@+id/mtv_rvChooseItem_doubledot2"
             style="@style/TextAppearance.MdcTypographyStyles.Body2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text=":"
             android:textColor="@color/gray3"
-            app:layout_constraintBottom_toBottomOf="@id/mtv_rvitem_titlenis"
+            app:layout_constraintBottom_toBottomOf="@id/mtv_rvChooseItem_titlenis"
             app:layout_constraintStart_toEndOf="@id/gl"
-            app:layout_constraintTop_toTopOf="@id/mtv_rvitem_titlenis" />
+            app:layout_constraintTop_toTopOf="@id/mtv_rvChooseItem_titlenis" />
 
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/mtv_rvitem_nis"
+            android:id="@+id/mtv_rvChooseItem_nis"
             style="@style/TextAppearance.MdcTypographyStyles.Body2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_rvitem_small"
             android:text="70200123"
             android:textColor="@color/gray3"
-            app:layout_constraintBottom_toBottomOf="@id/mtv_rvitem_titlenis"
-            app:layout_constraintStart_toEndOf="@id/mtv_rvitem_doubledot2"
-            app:layout_constraintTop_toTopOf="@id/mtv_rvitem_titlenis" />
+            app:layout_constraintBottom_toBottomOf="@id/mtv_rvChooseItem_titlenis"
+            app:layout_constraintStart_toEndOf="@id/mtv_rvChooseItem_doubledot2"
+            app:layout_constraintTop_toTopOf="@id/mtv_rvChooseItem_titlenis" />
 
         <ImageView
-            android:id="@+id/iv_rvitem_edit"
+            android:id="@+id/iv_rvChooseItem_edit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:src="@drawable/ic_edit"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="@id/mtv_rvitem_titlenis"
-            app:layout_constraintEnd_toStartOf="@id/iv_rvitem_delete"
-            app:layout_constraintTop_toTopOf="@id/mtv_rvitem_titlename" />
-
-        <ImageView
-            android:id="@+id/iv_rvitem_delete"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_delete"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="@id/iv_rvitem_edit"
+            android:src="@drawable/ic_plus"
+            app:layout_constraintBottom_toBottomOf="@id/mtv_rvChooseItem_titlenis"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/iv_rvitem_edit" />
+            app:layout_constraintTop_toTopOf="@id/mtv_rvChooseItem_titlename" />
+
+        <ImageView
+            android:id="@+id/iv_rvChooseItem_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:src="@drawable/ic_delete"
+            app:layout_constraintBottom_toBottomOf="@id/iv_rvChooseItem_edit"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/iv_rvChooseItem_edit" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

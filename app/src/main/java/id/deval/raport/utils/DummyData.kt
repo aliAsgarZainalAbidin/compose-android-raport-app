@@ -2,6 +2,7 @@ package id.deval.raport.utils
 
 import id.deval.raport.db.models.Account
 import id.deval.raport.db.models.Kelas
+import id.deval.raport.db.models.Mapel
 import id.deval.raport.db.models.Siswa
 
 class DummyData {
@@ -67,5 +68,18 @@ class DummyData {
             dataKelas.add(siswa)
         }
         return dataKelas
+    }
+
+    fun setDummyDataMapel(): ArrayList<Mapel> {
+        val dataMapel = arrayListOf<Mapel>()
+        for (n in 1..5) {
+            val siswa = Mapel(
+                "asdasdasd",
+                "Matematika",
+                "Khusus"
+                )
+            dataMapel.add(siswa)
+        }
+        return dataMapel
     }
 }
