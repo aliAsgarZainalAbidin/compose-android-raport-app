@@ -35,6 +35,11 @@
         <item name="android:fontFamily">@font/roboto</item>
         <item name="android:textSize">18sp</item>
     </style>
+    <style name="TextAppearance.MdcTypographyStyles.Headline7" parent="TextAppearance.MaterialComponents.Headline6">
+        <item name="fontFamily">@font/roboto</item>
+        <item name="android:fontFamily">@font/roboto</item>
+        <item name="android:textSize">16sp</item>
+    </style>
     <style name="TextAppearance.MdcTypographyStyles.Subtitle1" parent="TextAppearance.MaterialComponents.Subtitle1">
         <item name="fontFamily">@font/roboto</item>
         <item name="android:fontFamily">@font/roboto</item>
@@ -86,6 +91,18 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:background">@color/white</item>
         <item name="boxStrokeColor">@drawable/selector_til_android</item>
+    </style>
+    <style name="TextField.Outlined.White.Custom" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="android:textSize">12sp</item>
+        <item name="android:layout_marginTop">@dimen/margin_rvitem</item>
+        <item name="android:inputType">text</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="hintTextColor">@color/black1</item>
+        <item name="android:textColor">@color/black1</item>
+        <item name="android:textColorHint">@color/black1</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="background">@drawable/bg_til_android_blue</item>
+        <item name="boxStrokeColor">@drawable/selector_til_android_white</item>
     </style>
     <style name="AutoCompleteTextView.Custom" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
         <item name="android:drawableEnd">@drawable/ic_menu_down</item>

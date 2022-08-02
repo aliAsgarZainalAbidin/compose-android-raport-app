@@ -30,5 +30,14 @@
         android:id="@+id/registrasiGuruFragment"
         android:name="id.deval.raport.ui.akun.guru.RegistrasiGuruFragment"
         android:label="fragment_registrasi_guru"
-        tools:layout="@layout/fragment_registrasi_guru" />
+        tools:layout="@layout/fragment_registrasi_guru" >
+        <action
+            android:id="@+id/action_registrasiGuruFragment_to_addGuruFragment"
+            app:destination="@id/addGuruFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addGuruFragment"
+        android:name="id.deval.raport.ui.akun.guru.AddGuruFragment"
+        android:label="fragment_add_guru"
+        tools:layout="@layout/fragment_add_guru" />
 </navigation>

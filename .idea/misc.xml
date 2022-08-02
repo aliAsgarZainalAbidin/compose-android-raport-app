@@ -4,10 +4,14 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/Raport/app/src/main/res/drawable/bg_person_akun.xml" value="0.1575" />
+        <entry key="..\:/Users/ASUS/AndroidStudioProjects/Raport/app/src/main/res/drawable/bg_til_android.xml" value="0.1175" />
+        <entry key="..\:/Users/ASUS/AndroidStudioProjects/Raport/app/src/main/res/drawable/bg_til_android_gray.xml" value="0.1175" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/Raport/app/src/main/res/drawable/ic_person_akun.xml" value="0.1575" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/Raport/app/src/main/res/drawable/selector_icon_botnav.xml" value="0.1575" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/Raport/app/src/main/res/drawable/selector_til_android.xml" value="0.1" />
+        <entry key="..\:/Users/ASUS/AndroidStudioProjects/Raport/app/src/main/res/drawable/selector_til_android_white.xml" value="0.1175" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/Raport/app/src/main/res/layout/activity_main.xml" value="0.27447916666666666" />
+        <entry key="..\:/Users/ASUS/AndroidStudioProjects/Raport/app/src/main/res/layout/fragment_add_guru.xml" value="0.264" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/Raport/app/src/main/res/layout/fragment_akun.xml" value="0.19698492462311556" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/Raport/app/src/main/res/layout/fragment_base.xml" value="0.27447916666666666" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/Raport/app/src/main/res/layout/fragment_kelas.xml" value="0.27447916666666666" />

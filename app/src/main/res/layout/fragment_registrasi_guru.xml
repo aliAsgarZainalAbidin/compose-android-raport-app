@@ -13,58 +13,46 @@
         android:backgroundTint="@color/white_variant1">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/cl_akun_bgblue"
+            android:id="@+id/cl_registrasiguru_bgblue"
             android:layout_width="match_parent"
             android:layout_height="156dp"
             android:background="@color/blue_variant1"
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
-                android:id="@+id/iv_akun_person"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_marginStart="26dp"
-                android:background="@drawable/bg_person_akun"
+                android:id="@+id/iv_registrasiguru_back"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginStart="@dimen/padding_layout"
                 android:scaleType="centerInside"
-                android:src="@drawable/ic_person_akun"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginTop="28dp"
+                android:src="@drawable/ic_arrow_back"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/mtv_akun_greeting"
-                style="@style/TextAppearance.MdcTypographyStyles.Body2"
+                android:id="@+id/mtv_registrasiguru_name"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:text="Selamat Datang"
-                android:textColor="@color/white"
-                app:layout_constraintBottom_toTopOf="@id/mtv_akun_name"
-                app:layout_constraintStart_toEndOf="@id/iv_akun_person"
-                app:layout_constraintTop_toTopOf="@id/iv_akun_person" />
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/mtv_akun_name"
-                android:layout_width="wrap_content"
+                style="@style/TextAppearance.MdcTypographyStyles.Headline7"
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@id/iv_akun_person"
-                app:layout_constraintStart_toStartOf="@id/mtv_akun_greeting"
-                app:layout_constraintTop_toBottomOf="@id/mtv_akun_greeting"
-                tools:text="Admin" />
+                app:layout_constraintBottom_toBottomOf="@id/iv_registrasiguru_back"
+                app:layout_constraintStart_toEndOf="@id/iv_registrasiguru_back"
+                app:layout_constraintTop_toTopOf="@id/iv_registrasiguru_back"
+                android:text="Daftar Guru" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/cv_akun_container"
+            android:id="@+id/cv_registrasiguru_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/padding_layout"
             android:elevation="2dp"
             app:cardCornerRadius="8dp"
-            app:layout_constraintBottom_toBottomOf="@id/cl_akun_bgblue"
-            app:layout_constraintTop_toBottomOf="@id/cl_akun_bgblue">
+            app:layout_constraintBottom_toBottomOf="@id/cl_registrasiguru_bgblue"
+            app:layout_constraintTop_toBottomOf="@id/cl_registrasiguru_bgblue">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -73,7 +61,7 @@
                 android:padding="12dp">
 
                 <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/mtv_akun_titletotal"
+                    android:id="@+id/mtv_registrasiguru_titletotal"
                     style="@style/TextAppearance.MdcTypographyStyles.Subtitle2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -83,7 +71,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/mtv_akun_titleguru"
+                    android:id="@+id/mtv_registrasiguru_titleguru"
                     style="@style/TextAppearance.MdcTypographyStyles.Subtitle2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -91,18 +79,18 @@
                     android:textColor="@color/gray3"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/gl"
-                    app:layout_constraintTop_toBottomOf="@id/mtv_akun_titletotal" />
+                    app:layout_constraintTop_toBottomOf="@id/mtv_registrasiguru_titletotal" />
 
                 <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/mtv_akun_guru"
+                    android:id="@+id/mtv_registrasiguru_guru"
                     style="@style/TextAppearance.MdcTypographyStyles.Headline6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_rvitem_small"
                     android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="@id/mtv_akun_titleguru"
+                    app:layout_constraintBottom_toBottomOf="@id/mtv_registrasiguru_titleguru"
                     app:layout_constraintStart_toEndOf="@id/gl"
-                    app:layout_constraintTop_toTopOf="@id/mtv_akun_titleguru"
+                    app:layout_constraintTop_toTopOf="@id/mtv_registrasiguru_titleguru"
                     tools:text="12" />
 
                 <com.google.android.material.button.MaterialButton
@@ -113,9 +101,9 @@
                     android:text="Tambah"
                     app:icon="@drawable/ic_add_person_"
                     app:iconTint="@color/black1"
-                    app:layout_constraintBottom_toBottomOf="@id/mtv_akun_titleguru"
+                    app:layout_constraintBottom_toBottomOf="@id/mtv_registrasiguru_titleguru"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/mtv_akun_titleguru" />
+                    app:layout_constraintTop_toTopOf="@id/mtv_registrasiguru_titleguru" />
 
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/gl"
@@ -137,11 +125,11 @@
         </androidx.cardview.widget.CardView>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/cl_akun_containerrvguru"
+            android:id="@+id/cl_registrasiguru_containerrvguru"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minHeight="196dp"
-            app:layout_constraintTop_toBottomOf="@id/cv_akun_container">
+            app:layout_constraintTop_toBottomOf="@id/cv_registrasiguru_container">
 
             <include
                 android:id="@+id/include_rv_guru"
