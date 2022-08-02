@@ -5,33 +5,32 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.NavController
 import id.deval.raport.R
-import id.deval.raport.databinding.FragmentAddSiswaBinding
+import id.deval.raport.databinding.FragmentAddOrangTuaBinding
 import id.deval.raport.utils.BaseSkeletonFragment
 
-class AddSiswaFragment : BaseSkeletonFragment() {
+class AddOrangTuaFragment : BaseSkeletonFragment() {
 
-    private lateinit var _binding : FragmentAddSiswaBinding
-    private val binding get() =  _binding
+    private lateinit var _binding: FragmentAddOrangTuaBinding
+    private val binding get() = _binding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentAddSiswaBinding.inflate(inflater, container, false)
+        _binding = FragmentAddOrangTuaBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        with(binding) {
 
-        with(binding){
-            ivAddsiswaBack.setOnClickListener {
+            ivAddorangtuaBack.setOnClickListener {
                 mainNavController.popBackStack()
             }
-            mbAddsiswaSimpan.setOnClickListener {
-                mainNavController.navigate(R.id.action_addSiswaFragment_to_addOrangTuaFragment)
+            mbAddorangtuaSimpan.setOnClickListener {
+                mainNavController.popBackStack(R.id.addSiswaFragment, true)
             }
         }
     }

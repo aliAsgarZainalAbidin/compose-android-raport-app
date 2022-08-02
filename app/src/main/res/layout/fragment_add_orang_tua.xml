@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    tools:context=".ui.akun.siswa.AddOrangTuaFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/blue_variant1"
+        android:padding="@dimen/padding_layout">
+
+        <ImageView
+            android:id="@+id/iv_addorangtua_back"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginTop="12dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_arrow_back"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/mtv_addorangtua_name"
+            style="@style/TextAppearance.MdcTypographyStyles.Headline7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Daftar Akun Orang Tua Siswa"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/iv_addorangtua_back"
+            app:layout_constraintStart_toEndOf="@id/iv_addorangtua_back"
+            app:layout_constraintTop_toTopOf="@id/iv_addorangtua_back" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/mtv_addorangtua_namalengkap"
+            style="@style/TextAppearance.MdcTypographyStyles.Body3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="Nama Lengkap"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/mtv_addorangtua_name" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_addorangtua_namalengkap"
+            style="@style/TextField.Outlined.White.Custom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
+            app:layout_constraintTop_toBottomOf="@+id/mtv_addorangtua_namalengkap">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tiet_addorangtua_namalengkap"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_til_android_blue"
+                android:inputType="text"
+                tools:text="2221231" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/mtv_addorangtua_nisn"
+            style="@style/TextAppearance.MdcTypographyStyles.Body3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Username"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/til_addorangtua_namalengkap" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_addorangtua_nisn"
+            style="@style/TextField.Outlined.White.Custom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
+            android:enabled="false"
+            app:layout_constraintTop_toBottomOf="@+id/mtv_addorangtua_nisn">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tiet_addorangtua_nisn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_til_android_blue"
+                android:inputType="number"
+                tools:text="2221231" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/mtv_addorangtua_tempatlahir"
+            style="@style/TextAppearance.MdcTypographyStyles.Body3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Password"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/til_addorangtua_nisn" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_addorangtua_tempatlahir"
+            style="@style/TextField.Outlined.White.Custom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
+            app:layout_constraintTop_toBottomOf="@+id/mtv_addorangtua_tempatlahir"
+            app:passwordToggleEnabled="true">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tiet_addorangtua_tempatlahir"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_til_android_blue"
+                android:inputType="textPassword"
+                tools:text="Onto Sapo" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/mtv_addorangtua_tanggalLahir"
+            style="@style/TextAppearance.MdcTypographyStyles.Body3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Tanggal Lahir"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/til_addorangtua_tempatlahir" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_addorangtua_tanggalLahir"
+            style="@style/TextField.Outlined.White.Custom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
+            app:layout_constraintTop_toBottomOf="@+id/mtv_addorangtua_tanggalLahir">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tiet_addorangtua_tanggalLahir"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_til_android_blue"
+                android:inputType="text"
+                tools:text="17 Juni 1999" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/mtv_addorangtua_gender"
+            style="@style/TextAppearance.MdcTypographyStyles.Body3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Alamat"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/til_addorangtua_tanggalLahir" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_addorangtua_gender"
+            style="@style/TextField.Outlined.White.Custom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
+            android:enabled="false"
+            app:layout_constraintTop_toBottomOf="@+id/mtv_addorangtua_gender">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tiet_addorangtua_gender"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_til_android_blue"
+                android:inputType="text"
+                android:text="Jln. Siswomiharjo" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/mtv_addorangtua_email"
+            style="@style/TextAppearance.MdcTypographyStyles.Body3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Email"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/til_addorangtua_gender" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_addorangtua_email"
+            style="@style/TextField.Outlined.White.Custom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
+            app:layout_constraintTop_toBottomOf="@+id/mtv_addorangtua_email">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tiet_addorangtua_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_til_android_blue"
+                android:inputType="phone"
+                tools:text="IRT" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/mtv_addorangtua_hp"
+            style="@style/TextAppearance.MdcTypographyStyles.Body3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Nomor Hp Orang Tua/Wali"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/til_addorangtua_email" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_addorangtua_hp"
+            style="@style/TextField.Outlined.White.Custom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
+            app:layout_constraintTop_toBottomOf="@+id/mtv_addorangtua_hp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tiet_addorangtua_hp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_til_android_blue"
+                android:inputType="phone"
+                tools:text="IRT" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/mb_addorangtua_simpan"
+            style="@style/MaterialButton.Custom"
+            android:layout_width="match_parent"
+            android:layout_marginTop="48dp"
+            android:text="Simpan"
+            app:layout_constraintTop_toBottomOf="@id/til_addorangtua_hp" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.core.widget.NestedScrollView>

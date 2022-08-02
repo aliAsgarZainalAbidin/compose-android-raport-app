@@ -11,10 +11,7 @@ import id.deval.raport.R
 import id.deval.raport.databinding.FragmentRegistrasiSiswaBinding
 import id.deval.raport.db.models.Siswa
 import id.deval.raport.ui.RvAdapter
-import id.deval.raport.utils.BaseSkeletonFragment
-import id.deval.raport.utils.DummyData
-import id.deval.raport.utils.HelperView
-import id.deval.raport.utils.OperationsTypeRv
+import id.deval.raport.utils.*
 
 class RegistrasiSiswaFragment : BaseSkeletonFragment() {
 
@@ -36,6 +33,8 @@ class RegistrasiSiswaFragment : BaseSkeletonFragment() {
         dataSiswa = DummyData().setDummyDataSiswa()
         with(binding){
             includeRvGuru.mtvRvlayoutTitle.text = "Siswa"
+            includeRvGuru.mtvRvlayoutViewmore.hide()
+            includeRvGuru.mtvRvlayoutAdd.hide()
             includeRvGuru.rvRvlayoutContainer.apply {
                 val adapter = RvAdapter<Siswa>("siswa", OperationsTypeRv.EDIT)
                 adapter.setData(dataSiswa)

@@ -108,7 +108,13 @@
         <item name="android:drawableEnd">@drawable/ic_menu_down</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
+        <item name="hintTextColor">@color/black1</item>
+        <item name="android:textColor">@color/black1</item>
+        <item name="android:textColorHint">@color/black1</item>
+        <item name="background">@drawable/bg_til_android_blue</item>
+        <item name="boxBackgroundColor">@color/white</item>
         <item name="android:inputType">none</item>
+        <item name="boxStrokeColor">@drawable/selector_til_android_white</item>
     </style>
     <style name="MaterialButton.Custom" parent="Widget.MaterialComponents.Button">
         <item name="android:textAllCaps">false</item>
