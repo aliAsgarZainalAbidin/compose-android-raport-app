@@ -25,6 +25,9 @@
         <action
             android:id="@+id/action_baseFragment_to_registrasiGuruFragment"
             app:destination="@id/registrasiGuruFragment" />
+        <action
+            android:id="@+id/action_baseFragment_to_registrasiSiswaFragment"
+            app:destination="@id/registrasiSiswaFragment" />
     </fragment>
     <fragment
         android:id="@+id/registrasiGuruFragment"
@@ -40,4 +43,18 @@
         android:name="id.deval.raport.ui.akun.guru.AddGuruFragment"
         android:label="fragment_add_guru"
         tools:layout="@layout/fragment_add_guru" />
+    <fragment
+        android:id="@+id/addSiswaFragment"
+        android:name="id.deval.raport.ui.akun.siswa.AddSiswaFragment"
+        android:label="fragment_add_siswa"
+        tools:layout="@layout/fragment_add_siswa" />
+    <fragment
+        android:id="@+id/registrasiSiswaFragment"
+        android:name="id.deval.raport.ui.akun.siswa.RegistrasiSiswaFragment"
+        android:label="fragment_registrasi_siswa"
+        tools:layout="@layout/fragment_registrasi_siswa" >
+        <action
+            android:id="@+id/action_registrasiSiswaFragment_to_addSiswaFragment"
+            app:destination="@id/addSiswaFragment" />
+    </fragment>
 </navigation>

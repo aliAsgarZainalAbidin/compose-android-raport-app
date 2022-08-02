@@ -16,13 +16,12 @@ import id.deval.raport.db.models.Siswa
 import id.deval.raport.ui.RvAdapter
 import id.deval.raport.utils.*
 
-class AkunFragment : Fragment() {
+class AkunFragment : BaseSkeletonFragment() {
 
     private lateinit var _binding: FragmentAkunBinding
     private val binding get() = _binding
     private var dataGuru = arrayListOf<Account>()
     private var dataSiswa = arrayListOf<Siswa>()
-    private lateinit var navController: NavController
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,7 +35,6 @@ class AkunFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         dataGuru = DummyData().setDummyGuru()
         dataSiswa = DummyData().setDummyDataSiswa()
-        navController = HelperView.getMainNavController(requireActivity())
 
         with(binding) {
             mtvAkunName.text = "Admin"
@@ -47,7 +45,7 @@ class AkunFragment : Fragment() {
 
             includeRvGuru.mtvRvlayoutViewmore.show()
             includeRvGuru.mtvRvlayoutViewmore.setOnClickListener {
-                navController.navigate(R.id.action_baseFragment_to_registrasiGuruFragment)
+                mainNavController.navigate(R.id.action_baseFragment_to_registrasiGuruFragment)
             }
             includeRvGuru.mtvRvlayoutAdd.hide()
             includeRvGuru.rvRvlayoutContainer.apply {
@@ -60,6 +58,9 @@ class AkunFragment : Fragment() {
             }
 
             includeRvSiswa.mtvRvlayoutViewmore.show()
+            includeRvSiswa.mtvRvlayoutViewmore.setOnClickListener {
+                mainNavController.navigate(R.id.action_baseFragment_to_registrasiSiswaFragment)
+            }
             includeRvSiswa.mtvRvlayoutAdd.hide()
             includeRvSiswa.mtvRvlayoutTitle.text = "Siswa"
             includeRvSiswa.rvRvlayoutContainer.apply {

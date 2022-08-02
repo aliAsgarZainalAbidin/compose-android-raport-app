@@ -11,17 +11,13 @@ import id.deval.raport.R
 import id.deval.raport.databinding.FragmentRegistrasiGuruBinding
 import id.deval.raport.db.models.Account
 import id.deval.raport.ui.RvAdapter
-import id.deval.raport.utils.DummyData
-import id.deval.raport.utils.HelperView
-import id.deval.raport.utils.OperationsTypeRv
-import id.deval.raport.utils.hide
+import id.deval.raport.utils.*
 
-class RegistrasiGuruFragment : Fragment() {
+class RegistrasiGuruFragment : BaseSkeletonFragment() {
 
     private lateinit var _binding: FragmentRegistrasiGuruBinding
     private val binding get() = _binding
     private var dataGuru = arrayListOf<Account>()
-    private lateinit var navController: NavController
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,13 +33,12 @@ class RegistrasiGuruFragment : Fragment() {
         with(binding) {
             mtvRegistrasiguruGuru.text = dataGuru.size.toString()
 
-            navController = HelperView.getMainNavController(requireActivity())
             mbRegistrasiguruAdd.setOnClickListener {
-                navController.navigate(R.id.action_registrasiGuruFragment_to_addGuruFragment)
+                mainNavController.navigate(R.id.action_registrasiGuruFragment_to_addGuruFragment)
             }
 
             ivRegistrasiguruBack.setOnClickListener {
-                navController.popBackStack()
+                mainNavController.popBackStack()
             }
 
             includeRvGuru.mtvRvlayoutAdd.hide()

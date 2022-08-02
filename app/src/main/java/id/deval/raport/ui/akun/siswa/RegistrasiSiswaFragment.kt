@@ -11,14 +11,14 @@ import id.deval.raport.R
 import id.deval.raport.databinding.FragmentRegistrasiSiswaBinding
 import id.deval.raport.db.models.Siswa
 import id.deval.raport.ui.RvAdapter
+import id.deval.raport.utils.BaseSkeletonFragment
 import id.deval.raport.utils.DummyData
 import id.deval.raport.utils.HelperView
 import id.deval.raport.utils.OperationsTypeRv
 
-class RegistrasiSiswaFragment : Fragment() {
+class RegistrasiSiswaFragment : BaseSkeletonFragment() {
 
     private lateinit var _binding : FragmentRegistrasiSiswaBinding
-    private lateinit var navController: NavController
     private lateinit var dataSiswa : ArrayList<Siswa>
     private val binding get() = _binding
 
@@ -33,7 +33,6 @@ class RegistrasiSiswaFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        navController = HelperView.getMainNavController(requireActivity())
         dataSiswa = DummyData().setDummyDataSiswa()
         with(binding){
             includeRvGuru.mtvRvlayoutTitle.text = "Siswa"
@@ -46,7 +45,11 @@ class RegistrasiSiswaFragment : Fragment() {
             }
 
             mbRegistrasisiswaAdd.setOnClickListener {
+                mainNavController.navigate(R.id.action_registrasiSiswaFragment_to_addSiswaFragment)
+            }
 
+            ivRegistrasisiswaBack.setOnClickListener {
+                mainNavController.popBackStack()
             }
         }
     }

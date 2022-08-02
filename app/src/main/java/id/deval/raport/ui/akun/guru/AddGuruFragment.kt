@@ -8,12 +8,12 @@ import android.view.ViewGroup
 import androidx.navigation.NavController
 import id.deval.raport.R
 import id.deval.raport.databinding.FragmentAddGuruBinding
+import id.deval.raport.utils.BaseSkeletonFragment
 import id.deval.raport.utils.HelperView
 
-class AddGuruFragment : Fragment() {
+class AddGuruFragment : BaseSkeletonFragment() {
 
     private lateinit var _binding : FragmentAddGuruBinding
-    private lateinit var navController: NavController
     private val binding get() = _binding
 
     override fun onCreateView(
@@ -26,14 +26,13 @@ class AddGuruFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        navController = HelperView.getMainNavController(requireActivity())
 
         with(binding){
             ivAddguruBack.setOnClickListener {
-                navController.popBackStack()
+                mainNavController.popBackStack()
             }
             mbAddguruSimpan.setOnClickListener {
-                navController.popBackStack()
+                mainNavController.popBackStack()
             }
         }
     }
