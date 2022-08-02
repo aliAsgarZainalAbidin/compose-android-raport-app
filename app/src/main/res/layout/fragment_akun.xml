@@ -98,9 +98,11 @@
                     style="@style/TextAppearance.MdcTypographyStyles.Headline6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_rvitem_small"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="@id/mtv_akun_titleguru"
                     app:layout_constraintStart_toEndOf="@id/gl"
+                    app:layout_constraintTop_toTopOf="@id/mtv_akun_titleguru"
                     tools:text="12" />
 
                 <com.google.android.material.textview.MaterialTextView
@@ -118,9 +120,11 @@
                     style="@style/TextAppearance.MdcTypographyStyles.Headline6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_rvitem_small"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="@id/mtv_akun_titlesiswa"
                     app:layout_constraintStart_toEndOf="@id/gl2"
+                    app:layout_constraintTop_toTopOf="@id/mtv_akun_titlesiswa"
                     tools:text="144" />
 
                 <androidx.constraintlayout.widget.Guideline
