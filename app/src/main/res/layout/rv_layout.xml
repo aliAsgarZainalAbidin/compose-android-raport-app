@@ -32,7 +32,7 @@
     <com.google.android.material.button.MaterialButton
         android:id="@+id/mtv_rvlayout_add"
         android:layout_width="77dp"
-        android:layout_height="24dp"
+        android:layout_height="32dp"
         android:backgroundTint="@color/yellow"
         android:fontFamily="@font/roboto"
         android:gravity="center"
@@ -42,9 +42,8 @@
         android:textColor="@color/black1"
         android:textSize="8dp"
         app:cornerRadius="2dp"
-        app:layout_constraintBottom_toBottomOf="@id/mtv_rvlayout_title"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/mtv_rvlayout_title" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_rvlayout_container"
