@@ -23,11 +23,11 @@
                 android:id="@+id/iv_kelas_person"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:layout_marginStart="26dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="28dp"
                 android:background="@drawable/bg_person_akun"
                 android:scaleType="centerInside"
                 android:src="@drawable/ic_person_akun"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -59,7 +59,7 @@
         <androidx.cardview.widget.CardView
             android:id="@+id/cv_kelas_container"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="71dp"
             android:layout_marginHorizontal="@dimen/padding_layout"
             android:elevation="2dp"
             app:cardCornerRadius="8dp"
@@ -77,69 +77,33 @@
                     style="@style/TextAppearance.MdcTypographyStyles.Subtitle2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Total Keseluruhan"
+                    android:text="Informasi"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/mtv_kelas_titleguru"
-                    style="@style/TextAppearance.MdcTypographyStyles.Subtitle2"
+                    android:id="@+id/mtv_kelas_titlekelas"
+                    style="@style/TextAppearance.MdcTypographyStyles.Body3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Guru"
+                    android:text="Total Kelas : "
                     android:textColor="@color/gray3"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/gl"
+                    app:layout_constraintStart_toStartOf="@id/mtv_kelas_titletotal"
                     app:layout_constraintTop_toBottomOf="@id/mtv_kelas_titletotal" />
 
                 <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/mtv_kelas_guru"
-                    style="@style/TextAppearance.MdcTypographyStyles.Headline6"
+                    android:id="@+id/mtv_kelas_totalKelas"
+                    style="@style/TextAppearance.MdcTypographyStyles.Body3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_rvitem_small"
                     android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="@id/mtv_kelas_titleguru"
-                    app:layout_constraintStart_toEndOf="@id/gl"
-                    app:layout_constraintTop_toTopOf="@id/mtv_kelas_titleguru"
+                    app:layout_constraintBottom_toBottomOf="@id/mtv_kelas_titlekelas"
+                    app:layout_constraintStart_toEndOf="@id/mtv_kelas_titlekelas"
+                    app:layout_constraintTop_toTopOf="@id/mtv_kelas_titlekelas"
                     tools:text="12" />
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/mtv_kelas_titlesiswa"
-                    style="@style/TextAppearance.MdcTypographyStyles.Subtitle2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Siswa"
-                    android:textColor="@color/gray3"
-                    app:layout_constraintBottom_toBottomOf="@id/mtv_kelas_titleguru"
-                    app:layout_constraintEnd_toStartOf="@id/gl2" />
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/mtv_kelas_siswa"
-                    style="@style/TextAppearance.MdcTypographyStyles.Headline6"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/margin_rvitem_small"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="@id/mtv_kelas_titlesiswa"
-                    app:layout_constraintStart_toEndOf="@id/gl2"
-                    app:layout_constraintTop_toTopOf="@id/mtv_kelas_titlesiswa"
-                    tools:text="144" />
-
-                <androidx.constraintlayout.widget.Guideline
-                    android:id="@+id/gl"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    app:layout_constraintGuide_percent="0.25" />
-
-                <androidx.constraintlayout.widget.Guideline
-                    android:id="@+id/gl2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    app:layout_constraintGuide_percent="0.75" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

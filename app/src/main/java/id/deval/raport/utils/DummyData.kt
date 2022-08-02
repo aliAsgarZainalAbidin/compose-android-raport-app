@@ -1,6 +1,7 @@
 package id.deval.raport.utils
 
 import id.deval.raport.db.models.Account
+import id.deval.raport.db.models.Kelas
 import id.deval.raport.db.models.Siswa
 
 class DummyData {
@@ -49,5 +50,22 @@ class DummyData {
             dataSiswa.add(siswa)
         }
         return dataSiswa
+    }
+
+    fun setDummyDataKelas(): ArrayList<Kelas> {
+        val dataKelas = arrayListOf<Kelas>()
+        for (n in 1..5) {
+            val siswa = Kelas(
+                "980213088132",
+                arrayListOf(),
+                "Kelas IV A",
+                arrayListOf(),
+                1,
+                "2021/2022",
+                "912039812m3",
+                )
+            dataKelas.add(siswa)
+        }
+        return dataKelas
     }
 }

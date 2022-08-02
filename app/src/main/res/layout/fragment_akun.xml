@@ -23,11 +23,11 @@
                 android:id="@+id/iv_akun_person"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:layout_marginStart="26dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="28dp"
                 android:background="@drawable/bg_person_akun"
                 android:scaleType="centerInside"
                 android:src="@drawable/ic_person_akun"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
