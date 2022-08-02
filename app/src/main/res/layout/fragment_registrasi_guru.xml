@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
-    tools:context=".ui.akun.AkunFragment">
+    tools:context=".ui.akun.guru.RegistrasiGuruFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -68,7 +68,7 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="71dp"
+                android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:padding="12dp">
 
@@ -105,27 +105,17 @@
                     app:layout_constraintTop_toTopOf="@id/mtv_akun_titleguru"
                     tools:text="12" />
 
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/mtv_akun_titlesiswa"
-                    style="@style/TextAppearance.MdcTypographyStyles.Subtitle2"
-                    android:layout_width="wrap_content"
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/mb_registrasiguru_add"
+                    style="@style/MaterialButton.Custom"
+                    android:layout_width="144dp"
                     android:layout_height="wrap_content"
-                    android:text="Siswa"
-                    android:textColor="@color/gray3"
+                    android:text="Tambah"
+                    app:icon="@drawable/ic_add_person_"
+                    app:iconTint="@color/black1"
                     app:layout_constraintBottom_toBottomOf="@id/mtv_akun_titleguru"
-                    app:layout_constraintEnd_toStartOf="@id/gl2" />
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/mtv_akun_siswa"
-                    style="@style/TextAppearance.MdcTypographyStyles.Headline6"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/margin_rvitem_small"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="@id/mtv_akun_titlesiswa"
-                    app:layout_constraintStart_toEndOf="@id/gl2"
-                    app:layout_constraintTop_toTopOf="@id/mtv_akun_titlesiswa"
-                    tools:text="144" />
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/mtv_akun_titleguru" />
 
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/gl"
@@ -155,19 +145,6 @@
 
             <include
                 android:id="@+id/include_rv_guru"
-                layout="@layout/rv_layout" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/cl_akun_containerrvsiswa"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="196dp"
-            app:layout_constraintTop_toBottomOf="@id/cl_akun_containerrvguru">
-
-            <include
-                android:id="@+id/include_rv_siswa"
                 layout="@layout/rv_layout" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

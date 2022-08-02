@@ -9,6 +9,7 @@ import id.deval.raport.db.models.Kelas
 import id.deval.raport.db.models.Mapel
 import id.deval.raport.db.models.Siswa
 import id.deval.raport.utils.OperationsTypeRv
+import id.deval.raport.utils.show
 
 class RvAdapter<T>(
     private val typeAdapter: String,
@@ -24,8 +25,13 @@ class RvAdapter<T>(
     }
 
     class RvViewHolder(private var binding: RvItemBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun <T> bind(type: String, data: T, operationsTypeRv: OperationsTypeRv) {
+        fun <T> bind(type: String, data: T, operationsTypeRv: OperationsTypeRv, maxItemShow: Int?) {
             with(binding) {
+                if (operationsTypeRv == OperationsTypeRv.EDIT){
+                    ivRvitemDelete.show()
+                    ivRvitemEdit.show()
+                }
+
                 when (type) {
                     "guru" -> {
                         data as Account
@@ -73,7 +79,7 @@ class RvAdapter<T>(
     }
 
     override fun onBindViewHolder(holder: RvViewHolder, position: Int) {
-        holder.bind(typeAdapter, listData[position], typeOperation)
+        holder.bind(typeAdapter, listData[position], typeOperation, maxItemShow)
     }
 
     override fun getItemCount(): Int {

@@ -6,20 +6,23 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import id.deval.raport.R
 import id.deval.raport.databinding.FragmentAkunBinding
 import id.deval.raport.db.models.Account
 import id.deval.raport.db.models.Siswa
 import id.deval.raport.ui.RvAdapter
-import id.deval.raport.utils.OperationsTypeRv
+import id.deval.raport.utils.*
 
 class AkunFragment : Fragment() {
 
     private lateinit var _binding: FragmentAkunBinding
     private val binding get() = _binding
-    private val dataGuru = arrayListOf<Account>()
-    private val dataSiswa = arrayListOf<Siswa>()
+    private var dataGuru = arrayListOf<Account>()
+    private var dataSiswa = arrayListOf<Siswa>()
+    private lateinit var navController: NavController
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,7 +34,10 @@ class AkunFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setDummy()
+        dataGuru = DummyData().setDummyGuru()
+        dataSiswa = DummyData().setDummyDataSiswa()
+        navController = HelperView.getMainNavController(requireActivity())
+
         with(binding) {
             mtvAkunName.text = "Admin"
             with(cvAkunContainer){
@@ -39,6 +45,11 @@ class AkunFragment : Fragment() {
                 mtvAkunSiswa.text = dataSiswa.size.toString()
             }
 
+            includeRvGuru.mtvRvlayoutViewmore.show()
+            includeRvGuru.mtvRvlayoutViewmore.setOnClickListener {
+                navController.navigate(R.id.action_baseFragment_to_registrasiGuruFragment)
+            }
+            includeRvGuru.mtvRvlayoutAdd.hide()
             includeRvGuru.rvRvlayoutContainer.apply {
                 val adapter = RvAdapter<Account>("guru", OperationsTypeRv.READ, 2)
                 adapter.setData(dataGuru)
@@ -47,6 +58,9 @@ class AkunFragment : Fragment() {
                 layoutManager =
                     LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
             }
+
+            includeRvSiswa.mtvRvlayoutViewmore.show()
+            includeRvSiswa.mtvRvlayoutAdd.hide()
             includeRvSiswa.mtvRvlayoutTitle.text = "Siswa"
             includeRvSiswa.rvRvlayoutContainer.apply {
                 val adapter = RvAdapter<Siswa>("siswa", OperationsTypeRv.READ, 2)
@@ -59,44 +73,6 @@ class AkunFragment : Fragment() {
         }
     }
 
-    fun setDummy() {
-        for (n in 1..5) {
-            val guru = Account(
-                "980213088132",
-                "ArogaN61",
-                "guru",
-                "Jln. S. Sutoyo",
-                "ArogaN61",
-                "01288312",
-                "Ali",
-                "ali@gmail.com",
-                "ArogaN61"
-            )
-            dataGuru.add(guru)
-        }
-        for (n in 1..5) {
-            val siswa = Siswa(
-                "980213088132",
-                "Jln Sutoyo",
-                "-",
-                "Laki-laki",
-                "-",
-                "17 Juni 1999",
-                "Jln. Wali",
-                "Islam",
-                "Ali",
-                "asdasdas",
-                "-",
-                "Syam",
-                "0192839",
-                "Ali Asgar",
-                "60200117039",
-                "Onto",
-                "PNS",
-                "PNS"
-            )
-            dataSiswa.add(siswa)
-        }
-    }
+
 
 }

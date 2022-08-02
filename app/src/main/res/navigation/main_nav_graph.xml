@@ -21,5 +21,14 @@
         android:id="@+id/baseFragment"
         android:name="id.deval.raport.ui.BaseFragment"
         android:label="fragment_base"
-        tools:layout="@layout/fragment_base" />
+        tools:layout="@layout/fragment_base" >
+        <action
+            android:id="@+id/action_baseFragment_to_registrasiGuruFragment"
+            app:destination="@id/registrasiGuruFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/registrasiGuruFragment"
+        android:name="id.deval.raport.ui.akun.guru.RegistrasiGuruFragment"
+        android:label="fragment_registrasi_guru"
+        tools:layout="@layout/fragment_registrasi_guru" />
 </navigation>
