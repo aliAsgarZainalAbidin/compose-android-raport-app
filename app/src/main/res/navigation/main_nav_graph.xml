@@ -106,5 +106,14 @@
         android:id="@+id/listAbsenFragment"
         android:name="id.deval.raport.ui.absen.ListAbsenFragment"
         android:label="fragment_list_absen"
-        tools:layout="@layout/fragment_list_absen" />
+        tools:layout="@layout/fragment_list_absen" >
+        <action
+            android:id="@+id/action_listAbsenFragment_to_absenDetailFragment"
+            app:destination="@id/absenDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/absenDetailFragment"
+        android:name="id.deval.raport.ui.absen.AbsenDetailFragment"
+        android:label="fragment_absen_detail"
+        tools:layout="@layout/fragment_absen_detail" />
 </navigation>

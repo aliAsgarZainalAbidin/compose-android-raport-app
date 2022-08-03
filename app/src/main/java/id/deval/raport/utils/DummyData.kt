@@ -82,4 +82,12 @@ class DummyData {
         }
         return dataMapel
     }
+
+    fun setDummyDataTanggal(): ArrayList<String> {
+        val dataString = arrayListOf<String>()
+        for (n in 1..5) {
+            dataString.add("Jumat, 18 Juni 2019")
+        }
+        return dataString
+    }
 }

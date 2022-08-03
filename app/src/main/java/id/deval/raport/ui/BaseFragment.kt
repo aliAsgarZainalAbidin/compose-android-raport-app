@@ -33,7 +33,7 @@ class BaseFragment : BaseSkeletonFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         with(binding) {
-            when (Role.ADMIN) {
+            when (Role.TEACHER) {
                 Role.ADMIN -> {
                     navigateToMenuAsAdmin()
                     true
@@ -50,7 +50,7 @@ class BaseFragment : BaseSkeletonFragment() {
     override fun onResume() {
         super.onResume()
         with(binding) {
-            when (Role.ADMIN) {
+            when (Role.TEACHER) {
                 Role.ADMIN -> {
                     botnavBaseContainer.selectedItemId = R.id.akun
                     true

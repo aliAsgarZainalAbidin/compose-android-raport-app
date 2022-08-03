@@ -1,7 +1,6 @@
 package id.deval.raport.ui.kelas
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +9,7 @@ import id.deval.raport.R
 import id.deval.raport.databinding.FragmentAddKelasBinding
 import id.deval.raport.db.models.Mapel
 import id.deval.raport.db.models.Siswa
-import id.deval.raport.ui.RvAdapter
+import id.deval.raport.ui.adapter.RvAdapter
 import id.deval.raport.utils.*
 
 class AddKelasFragment : BaseSkeletonFragment() {

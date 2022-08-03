@@ -1,19 +1,15 @@
 package id.deval.raport.ui.akun
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
-import androidx.navigation.NavController
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import id.deval.raport.R
 import id.deval.raport.databinding.FragmentAkunBinding
 import id.deval.raport.db.models.Account
 import id.deval.raport.db.models.Siswa
-import id.deval.raport.ui.RvAdapter
+import id.deval.raport.ui.adapter.RvAdapter
 import id.deval.raport.utils.*
 
 class AkunFragment : BaseSkeletonFragment() {
