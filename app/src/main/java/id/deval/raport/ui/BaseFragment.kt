@@ -44,9 +44,27 @@ class BaseFragment : BaseSkeletonFragment() {
                 }
                 else -> false
             }
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        with(binding) {
+            when (Role.ADMIN) {
+                Role.ADMIN -> {
+                    botnavBaseContainer.selectedItemId = R.id.akun
+                    true
+                }
+                Role.TEACHER -> {
+                    botnavBaseContainer.selectedItemId = R.id.absen
+                    true
+                }
+                else -> false
+            }
 
         }
     }
+
 
     fun navigateToMenuAsAdmin() {
         with(binding) {

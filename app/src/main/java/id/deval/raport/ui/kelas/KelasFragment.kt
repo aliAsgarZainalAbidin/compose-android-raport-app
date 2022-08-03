@@ -17,7 +17,6 @@ class KelasFragment : BaseSkeletonFragment() {
 
     private lateinit var _binding: FragmentKelasBinding
     private val binding get() = _binding
-    private lateinit var navController: NavController
     private var dataKelas = arrayListOf<Kelas>()
 
     override fun onCreateView(
