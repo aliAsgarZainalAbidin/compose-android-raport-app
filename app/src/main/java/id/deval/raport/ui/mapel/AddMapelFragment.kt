@@ -30,6 +30,9 @@ class AddMapelFragment : BaseSkeletonFragment() {
             ivAddmapelBack.setOnClickListener {
                 mainNavController.popBackStack()
             }
+            mbAddmapelSimpan.setOnClickListener {
+                mainNavController.popBackStack()
+            }
         }
     }
 

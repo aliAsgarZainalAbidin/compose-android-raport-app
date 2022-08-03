@@ -34,6 +34,9 @@ class MapelFragment : BaseSkeletonFragment() {
             mtvMapelTotalmapel.text = dataMapel.size.toString()
             includeRvMapel.mtvRvlayoutAdd.show()
             includeRvMapel.mtvRvlayoutAdd.text = "Tambah Mapel"
+            includeRvMapel.mtvRvlayoutAdd.setOnClickListener {
+                mainNavController.navigate(R.id.action_baseFragment_to_addMapelFragment)
+            }
             includeRvMapel.mtvRvlayoutTitle.text = "Mata Pelajaran"
             includeRvMapel.mtvRvlayoutViewmore.hide()
             includeRvMapel.rvRvlayoutContainer.apply {

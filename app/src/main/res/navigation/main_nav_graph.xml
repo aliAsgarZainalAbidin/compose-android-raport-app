@@ -31,6 +31,9 @@
         <action
             android:id="@+id/action_baseFragment_to_addKelasFragment"
             app:destination="@id/addKelasFragment" />
+        <action
+            android:id="@+id/action_baseFragment_to_addMapelFragment"
+            app:destination="@id/addMapelFragment" />
     </fragment>
     <fragment
         android:id="@+id/registrasiGuruFragment"
@@ -91,4 +94,9 @@
         android:name="id.deval.raport.ui.kelas.ChooseMapelFragment"
         android:label="fragment_choose_mapel"
         tools:layout="@layout/fragment_choose_mapel" />
+    <fragment
+        android:id="@+id/addMapelFragment"
+        android:name="id.deval.raport.ui.mapel.AddMapelFragment"
+        android:label="fragment_add_mapel"
+        tools:layout="@layout/fragment_add_mapel" />
 </navigation>
