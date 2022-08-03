@@ -41,7 +41,7 @@ class RegistrasiGuruFragment : BaseSkeletonFragment() {
                 mainNavController.popBackStack()
             }
 
-            includeRvGuru.mtvRvlayoutAdd.hide()
+            includeRvGuru.mtvRvlayoutAdd.invisible()
             includeRvGuru.mtvRvlayoutViewmore.hide()
             includeRvGuru.rvRvlayoutContainer.apply {
                 val adapter = RvAdapter<Account>("guru", OperationsTypeRv.EDIT)

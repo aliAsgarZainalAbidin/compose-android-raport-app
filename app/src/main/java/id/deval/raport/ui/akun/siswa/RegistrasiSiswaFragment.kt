@@ -34,7 +34,7 @@ class RegistrasiSiswaFragment : BaseSkeletonFragment() {
         with(binding){
             includeRvGuru.mtvRvlayoutTitle.text = "Siswa"
             includeRvGuru.mtvRvlayoutViewmore.hide()
-            includeRvGuru.mtvRvlayoutAdd.hide()
+            includeRvGuru.mtvRvlayoutAdd.invisible()
             includeRvGuru.rvRvlayoutContainer.apply {
                 val adapter = RvAdapter<Siswa>("siswa", OperationsTypeRv.EDIT)
                 adapter.setData(dataSiswa)

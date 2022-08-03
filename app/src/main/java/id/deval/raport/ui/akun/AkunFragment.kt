@@ -47,7 +47,7 @@ class AkunFragment : BaseSkeletonFragment() {
             includeRvGuru.mtvRvlayoutViewmore.setOnClickListener {
                 mainNavController.navigate(R.id.action_baseFragment_to_registrasiGuruFragment)
             }
-            includeRvGuru.mtvRvlayoutAdd.hide()
+            includeRvGuru.mtvRvlayoutAdd.invisible()
             includeRvGuru.rvRvlayoutContainer.apply {
                 val adapter = RvAdapter<Account>("guru", OperationsTypeRv.READ, 2)
                 adapter.setData(dataGuru)
@@ -61,7 +61,7 @@ class AkunFragment : BaseSkeletonFragment() {
             includeRvSiswa.mtvRvlayoutViewmore.setOnClickListener {
                 mainNavController.navigate(R.id.action_baseFragment_to_registrasiSiswaFragment)
             }
-            includeRvSiswa.mtvRvlayoutAdd.hide()
+            includeRvSiswa.mtvRvlayoutAdd.invisible()
             includeRvSiswa.mtvRvlayoutTitle.text = "Siswa"
             includeRvSiswa.rvRvlayoutContainer.apply {
                 val adapter = RvAdapter<Siswa>("siswa", OperationsTypeRv.READ, 2)

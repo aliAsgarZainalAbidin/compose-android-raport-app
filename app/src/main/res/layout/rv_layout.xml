@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="@dimen/padding_layout"
+    android:paddingHorizontal="@dimen/padding_layout"
+    android:paddingBottom="@dimen/padding_layout"
     xmlns:tools="http://schemas.android.com/tools">
 
     <com.google.android.material.textview.MaterialTextView
@@ -14,7 +15,8 @@
         android:text="Guru"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@id/mtv_rvlayout_add"
+        app:layout_constraintBottom_toBottomOf="@id/mtv_rvlayout_add"/>
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/mtv_rvlayout_viewmore"
@@ -40,6 +42,7 @@
         android:text="Tambah Kelas"
         android:textAllCaps="false"
         android:textColor="@color/black1"
+        android:layout_marginTop="4dp"
         android:textSize="8dp"
         app:cornerRadius="2dp"
         app:layout_constraintEnd_toEndOf="parent"
