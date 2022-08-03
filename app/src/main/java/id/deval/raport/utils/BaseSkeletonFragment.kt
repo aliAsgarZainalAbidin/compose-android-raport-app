@@ -23,7 +23,7 @@ open class BaseSkeletonFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        mainNavController = HelperView.getMainNavController(requireActivity())
-        secNavController = HelperView.getSecNavController(this)
+        mainNavController = requireActivity().getMainNavController()
+        secNavController = this.getSecNavController()
     }
 }

@@ -8,13 +8,13 @@ import android.view.ViewGroup
 import androidx.navigation.NavController
 import id.deval.raport.R
 import id.deval.raport.databinding.FragmentBaseBinding
+import id.deval.raport.utils.BaseSkeletonFragment
 import id.deval.raport.utils.HelperView
 
-class BaseFragment : Fragment() {
+class BaseFragment : BaseSkeletonFragment() {
 
     private lateinit var _binding : FragmentBaseBinding
     private val binding get () = _binding
-    private lateinit var navController: NavController
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -26,21 +26,20 @@ class BaseFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        navController = HelperView.getSecNavController(this)
 
         with(binding){
             botnavBaseContainer.setOnItemSelectedListener {
                 when(it.itemId){
                     R.id.akun -> {
-                        navController.navigate(R.id.akunFragment)
+                        secNavController.navigate(R.id.akunFragment)
                         true
                     }
                     R.id.kelas -> {
-                        navController.navigate(R.id.kelasFragment)
+                        secNavController.navigate(R.id.kelasFragment)
                         true
                     }
                     R.id.mapel -> {
-                        navController.navigate(R.id.mapelFragment)
+                        secNavController.navigate(R.id.mapelFragment)
                         true
                     }
                     else -> false

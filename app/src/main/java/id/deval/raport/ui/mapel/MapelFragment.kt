@@ -10,12 +10,9 @@ import id.deval.raport.R
 import id.deval.raport.databinding.FragmentMapelBinding
 import id.deval.raport.db.models.Mapel
 import id.deval.raport.ui.RvAdapter
-import id.deval.raport.utils.DummyData
-import id.deval.raport.utils.OperationsTypeRv
-import id.deval.raport.utils.hide
-import id.deval.raport.utils.show
+import id.deval.raport.utils.*
 
-class MapelFragment : Fragment() {
+class MapelFragment : BaseSkeletonFragment() {
 
     private lateinit var _binding : FragmentMapelBinding
     private val binding get() = _binding
