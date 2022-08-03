@@ -47,7 +47,7 @@ class KelasFragment : BaseSkeletonFragment() {
             includeRvGuru.mtvRvlayoutViewmore.hide()
 
             includeRvGuru.rvRvlayoutContainer.apply {
-                val adapter = RvAdapter<Kelas>("kelas", OperationsTypeRv.EDIT)
+                val adapter = RvAdapter<Kelas>("kelas", OperationsTypeRv.EDIT,mainNavController)
                 adapter.setData(dataKelas)
                 adapter.notifyDataSetChanged()
                 this.adapter = adapter

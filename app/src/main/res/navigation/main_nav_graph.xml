@@ -34,6 +34,9 @@
         <action
             android:id="@+id/action_baseFragment_to_addMapelFragment"
             app:destination="@id/addMapelFragment" />
+        <action
+            android:id="@+id/action_baseFragment_to_listAbsenFragment"
+            app:destination="@id/listAbsenFragment" />
     </fragment>
     <fragment
         android:id="@+id/registrasiGuruFragment"
@@ -99,4 +102,9 @@
         android:name="id.deval.raport.ui.mapel.AddMapelFragment"
         android:label="fragment_add_mapel"
         tools:layout="@layout/fragment_add_mapel" />
+    <fragment
+        android:id="@+id/listAbsenFragment"
+        android:name="id.deval.raport.ui.absen.ListAbsenFragment"
+        android:label="fragment_list_absen"
+        tools:layout="@layout/fragment_list_absen" />
 </navigation>

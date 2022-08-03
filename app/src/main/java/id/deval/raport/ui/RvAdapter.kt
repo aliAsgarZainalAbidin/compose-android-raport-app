@@ -2,7 +2,9 @@ package id.deval.raport.ui
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
+import id.deval.raport.R
 import id.deval.raport.databinding.RvItemBinding
 import id.deval.raport.db.models.Account
 import id.deval.raport.db.models.Kelas
@@ -14,7 +16,8 @@ import id.deval.raport.utils.show
 class RvAdapter<T>(
     private val typeAdapter: String,
     private val typeOperation: OperationsTypeRv,
-    private val maxItemShow : Int? = null
+    private val navController: NavController,
+    private val maxItemShow : Int? = null,
 ) : RecyclerView.Adapter<RvAdapter.RvViewHolder>() {
 
     private var listData = arrayListOf<T>()
@@ -25,7 +28,7 @@ class RvAdapter<T>(
     }
 
     class RvViewHolder(private var binding: RvItemBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun <T> bind(type: String, data: T, operationsTypeRv: OperationsTypeRv, maxItemShow: Int?) {
+        fun <T> bind(type: String, data: T, operationsTypeRv: OperationsTypeRv,navController: NavController, maxItemShow: Int?) {
             with(binding) {
                 if (operationsTypeRv == OperationsTypeRv.EDIT){
                     ivRvitemDelete.show()
@@ -63,6 +66,9 @@ class RvAdapter<T>(
                         mtvRvitemTitlenis.text = "Kategori"
                         mtvRvitemName.text = data.name
                         mtvRvitemNis.text = data.category
+                        clIvitemContainer.setOnClickListener {
+                            navController.navigate(R.id.action_baseFragment_to_listAbsenFragment)
+                        }
                         true
                     }
                     else -> {
@@ -79,7 +85,7 @@ class RvAdapter<T>(
     }
 
     override fun onBindViewHolder(holder: RvViewHolder, position: Int) {
-        holder.bind(typeAdapter, listData[position], typeOperation, maxItemShow)
+        holder.bind(typeAdapter, listData[position], typeOperation,navController, maxItemShow)
     }
 
     override fun getItemCount(): Int {

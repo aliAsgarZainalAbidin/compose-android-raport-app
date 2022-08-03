@@ -2,13 +2,18 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/second_nav_graph"
-    app:startDestination="@id/akunFragment">
+    android:id="@+id/second_nav_graph">
     <fragment
         android:id="@+id/akunFragment"
         android:name="id.deval.raport.ui.akun.AkunFragment"
         android:label="fragment_akun"
-        tools:layout="@layout/fragment_akun" />
+        tools:layout="@layout/fragment_akun" >
+        <action
+            android:id="@+id/action_akunFragment_to_absenFragment"
+            app:destination="@id/absenFragment"
+            app:popUpTo="@id/akunFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
     <fragment
         android:id="@+id/kelasFragment"
         android:name="id.deval.raport.ui.kelas.KelasFragment"
@@ -19,4 +24,9 @@
         android:name="id.deval.raport.ui.mapel.MapelFragment"
         android:label="fragment_mapel"
         tools:layout="@layout/fragment_mapel" />
+    <fragment
+        android:id="@+id/absenFragment"
+        android:name="id.deval.raport.ui.absen.AbsenFragment"
+        android:label="fragment_absen"
+        tools:layout="@layout/fragment_absen" />
 </navigation>

@@ -49,7 +49,7 @@ class AkunFragment : BaseSkeletonFragment() {
             }
             includeRvGuru.mtvRvlayoutAdd.invisible()
             includeRvGuru.rvRvlayoutContainer.apply {
-                val adapter = RvAdapter<Account>("guru", OperationsTypeRv.READ, 2)
+                val adapter = RvAdapter<Account>("guru", OperationsTypeRv.READ, mainNavController,2)
                 adapter.setData(dataGuru)
                 adapter.notifyDataSetChanged()
                 this.adapter = adapter
@@ -64,7 +64,7 @@ class AkunFragment : BaseSkeletonFragment() {
             includeRvSiswa.mtvRvlayoutAdd.invisible()
             includeRvSiswa.mtvRvlayoutTitle.text = "Siswa"
             includeRvSiswa.rvRvlayoutContainer.apply {
-                val adapter = RvAdapter<Siswa>("siswa", OperationsTypeRv.READ, 2)
+                val adapter = RvAdapter<Siswa>("siswa", OperationsTypeRv.READ, mainNavController,2)
                 adapter.setData(dataSiswa)
                 adapter.notifyDataSetChanged()
                 this.adapter = adapter

@@ -36,7 +36,7 @@ class RegistrasiSiswaFragment : BaseSkeletonFragment() {
             includeRvGuru.mtvRvlayoutViewmore.hide()
             includeRvGuru.mtvRvlayoutAdd.invisible()
             includeRvGuru.rvRvlayoutContainer.apply {
-                val adapter = RvAdapter<Siswa>("siswa", OperationsTypeRv.EDIT)
+                val adapter = RvAdapter<Siswa>("siswa", OperationsTypeRv.EDIT,mainNavController)
                 adapter.setData(dataSiswa)
                 adapter.notifyDataSetChanged()
                 this.adapter = adapter

@@ -44,7 +44,7 @@ class RegistrasiGuruFragment : BaseSkeletonFragment() {
             includeRvGuru.mtvRvlayoutAdd.invisible()
             includeRvGuru.mtvRvlayoutViewmore.hide()
             includeRvGuru.rvRvlayoutContainer.apply {
-                val adapter = RvAdapter<Account>("guru", OperationsTypeRv.EDIT)
+                val adapter = RvAdapter<Account>("guru", OperationsTypeRv.EDIT,mainNavController)
                 adapter.setData(dataGuru)
                 adapter.notifyDataSetChanged()
                 this.adapter = adapter

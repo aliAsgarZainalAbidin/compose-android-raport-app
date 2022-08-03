@@ -18,8 +18,7 @@
             android:layout_height="0dp"
             app:defaultNavHost="true"
             app:layout_constraintBottom_toTopOf="@id/botnav_base_container"
-            app:layout_constraintTop_toTopOf="parent"
-            app:navGraph="@navigation/second_nav_graph" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/botnav_base_container"

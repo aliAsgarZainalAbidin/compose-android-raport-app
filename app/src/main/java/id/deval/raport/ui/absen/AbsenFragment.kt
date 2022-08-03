@@ -1,4 +1,4 @@
-package id.deval.raport.ui.mapel
+package id.deval.raport.ui.absen
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,40 +7,44 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import id.deval.raport.R
-import id.deval.raport.databinding.FragmentMapelBinding
+import id.deval.raport.databinding.FragmentAbsenBinding
 import id.deval.raport.db.models.Mapel
+import id.deval.raport.db.models.Siswa
 import id.deval.raport.ui.RvAdapter
-import id.deval.raport.utils.*
+import id.deval.raport.utils.BaseSkeletonFragment
+import id.deval.raport.utils.DummyData
+import id.deval.raport.utils.OperationsTypeRv
+import id.deval.raport.utils.invisible
 
-class MapelFragment : BaseSkeletonFragment() {
+class AbsenFragment : BaseSkeletonFragment() {
 
-    private lateinit var _binding : FragmentMapelBinding
+    private lateinit var _binding : FragmentAbsenBinding
     private val binding get() = _binding
+    private lateinit var dataMapel: ArrayList<Mapel>
+    private lateinit var dataSiswa: ArrayList<Siswa>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentMapelBinding.inflate(inflater, container, false)
+        _binding = FragmentAbsenBinding.inflate(inflater)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val dataMapel = DummyData().setDummyDataMapel()
+        dataMapel = DummyData().setDummyDataMapel()
+        dataSiswa = DummyData().setDummyDataSiswa()
         with(binding){
-            mtvMapelName.text = "Admin"
-            mtvMapelTotalmapel.text = dataMapel.size.toString()
-            includeRvMapel.mtvRvlayoutAdd.show()
-            includeRvMapel.mtvRvlayoutAdd.text = "Tambah Mapel"
-            includeRvMapel.mtvRvlayoutAdd.setOnClickListener {
-                mainNavController.navigate(R.id.action_baseFragment_to_addMapelFragment)
-            }
+            mtvAbsenMapel.text = dataMapel.size.toString()
+            mtvAbsenSiswa.text = dataSiswa.size.toString()
+
             includeRvMapel.mtvRvlayoutTitle.text = "Mata Pelajaran"
-            includeRvMapel.mtvRvlayoutViewmore.hide()
+            includeRvMapel.mtvRvlayoutAdd.invisible()
+            includeRvMapel.mtvRvlayoutViewmore.invisible()
             includeRvMapel.rvRvlayoutContainer.apply {
-                val adapter = RvAdapter<Mapel>("mapel",OperationsTypeRv.READ,mainNavController)
+                val adapter = RvAdapter<Mapel>("mapel", OperationsTypeRv.READ, mainNavController)
                 adapter.setData(dataMapel)
                 adapter.notifyDataSetChanged()
                 this.adapter = adapter

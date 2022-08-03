@@ -47,7 +47,7 @@ class AddKelasFragment : BaseSkeletonFragment() {
             includeRvSiswa.mtvRvlayoutAdd.text = "Tambah Siswa"
             includeRvSiswa.mtvRvlayoutViewmore.hide()
             includeRvSiswa.rvRvlayoutContainer.apply {
-                val adapter = RvAdapter<Siswa>("siswa", OperationsTypeRv.READ)
+                val adapter = RvAdapter<Siswa>("siswa", OperationsTypeRv.READ,mainNavController)
                 adapter.setData(dataSiswa)
                 adapter.notifyDataSetChanged()
                 this.adapter = adapter
@@ -64,7 +64,7 @@ class AddKelasFragment : BaseSkeletonFragment() {
             includeRvMapel.mtvRvlayoutAdd.text = "Tambah Mapel"
             includeRvMapel.mtvRvlayoutViewmore.hide()
             includeRvMapel.rvRvlayoutContainer.apply {
-                val adapter = RvAdapter<Mapel>("mapel", OperationsTypeRv.READ)
+                val adapter = RvAdapter<Mapel>("mapel", OperationsTypeRv.READ,mainNavController)
                 adapter.setData(dataMapel)
                 adapter.notifyDataSetChanged()
                 this.adapter = adapter
