@@ -124,6 +124,10 @@
         <item name="android:textColor">@color/black1</item>
         <item name="android:textStyle">bold</item>
     </style>
+    <style name="MaterialRadioButton.Custom" parent="Widget.AppCompat.CompoundButton.RadioButton">
+        <item name="android:textColor">@color/blue_variant1</item>
+        <item name="android:buttonTint">@color/blue_variant1</item>
+    </style>
     <style name="BottomNavigationView.Custom" parent="Widget.MaterialComponents.BottomNavigationView">
         <item name="colorPrimary">@color/white</item>
         <item name="colorOnPrimary">@color/blue_variant1</item>

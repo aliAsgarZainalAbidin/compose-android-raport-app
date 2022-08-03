@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="@dimen/margin_rvitem_small"
+    android:layout_marginVertical="@dimen/margin_rvitem_small"
+    app:cardCornerRadius="4dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_ivitem_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="12dp">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/mtv_rvitem_titlename"
+            style="@style/TextAppearance.MdcTypographyStyles.Body2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nama"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.20" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/mtv_rvitem_doubledot1"
+            style="@style/TextAppearance.MdcTypographyStyles.Body2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=":"
+            app:layout_constraintBottom_toBottomOf="@id/mtv_rvitem_titlename"
+            app:layout_constraintStart_toEndOf="@id/gl"
+            app:layout_constraintTop_toTopOf="@id/mtv_rvitem_titlename" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/mtv_rvitem_name"
+            style="@style/TextAppearance.MdcTypographyStyles.Body2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_rvitem_small"
+            android:text="Ali Zainal"
+            app:layout_constraintBottom_toBottomOf="@id/mtv_rvitem_titlename"
+            app:layout_constraintStart_toEndOf="@id/mtv_rvitem_doubledot1"
+            app:layout_constraintTop_toTopOf="@id/mtv_rvitem_titlename" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/mtv_rvitem_titlenis"
+            style="@style/TextAppearance.MdcTypographyStyles.Body2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_rvitem_small"
+            android:text="NIS"
+            android:textColor="@color/black1"
+            app:layout_constraintStart_toStartOf="@id/mtv_rvitem_titlename"
+            app:layout_constraintTop_toBottomOf="@id/mtv_rvitem_titlename" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/mtv_rvitem_doubledot2"
+            style="@style/TextAppearance.MdcTypographyStyles.Body2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=":"
+            android:textColor="@color/black1"
+            app:layout_constraintBottom_toBottomOf="@id/mtv_rvitem_titlenis"
+            app:layout_constraintStart_toEndOf="@id/gl"
+            app:layout_constraintTop_toTopOf="@id/mtv_rvitem_titlenis" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/mtv_rvitem_nis"
+            style="@style/TextAppearance.MdcTypographyStyles.Body2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_rvitem_small"
+            android:text="70200123"
+            android:textColor="@color/black1"
+            app:layout_constraintBottom_toBottomOf="@id/mtv_rvitem_titlenis"
+            app:layout_constraintStart_toEndOf="@id/mtv_rvitem_doubledot2"
+            app:layout_constraintTop_toTopOf="@id/mtv_rvitem_titlenis" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/mtv_rvitem_titleket"
+            style="@style/TextAppearance.MdcTypographyStyles.Body2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_rvitem_small"
+            android:text="Ket"
+            android:textColor="@color/black1"
+            app:layout_constraintStart_toStartOf="@id/mtv_rvitem_titlenis"
+            app:layout_constraintTop_toBottomOf="@id/mtv_rvitem_titlenis" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/mtv_rvitem_doubledot3"
+            style="@style/TextAppearance.MdcTypographyStyles.Body2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=":"
+            android:textColor="@color/black1"
+            app:layout_constraintBottom_toBottomOf="@id/mtv_rvitem_titleket"
+            app:layout_constraintStart_toEndOf="@id/gl"
+            app:layout_constraintTop_toTopOf="@id/mtv_rvitem_titleket" />
+
+        <RadioGroup
+            android:id="@+id/rg_rvitem_absen"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toEndOf="@id/mtv_rvitem_doubledot3"
+            app:layout_constraintTop_toTopOf="@id/mtv_rvitem_titleket">
+
+            <RadioButton
+                android:id="@+id/rb_rvitem_hadir"
+                style="@style/MaterialRadioButton.Custom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hadir" />
+
+            <RadioButton
+                android:id="@+id/rb_rvitem_sakit"
+                style="@style/MaterialRadioButton.Custom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sakit" />
+
+            <RadioButton
+                android:id="@+id/rb_rvitem_izin"
+                style="@style/MaterialRadioButton.Custom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Izin" />
+
+            <RadioButton
+                android:id="@+id/rb_rvitem_tanpaket"
+                style="@style/MaterialRadioButton.Custom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="Tanpa Ket." />
+
+        </RadioGroup>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

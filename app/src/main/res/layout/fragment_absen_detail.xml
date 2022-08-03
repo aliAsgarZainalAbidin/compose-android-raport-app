@@ -1,14 +1,171 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fillViewport="true"
     tools:context=".ui.absen.AbsenDetailFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/white_variant1">
 
-</FrameLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_detailabsen_bgblue"
+            android:layout_width="match_parent"
+            android:layout_height="156dp"
+            android:background="@color/blue_variant1"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/iv_detailabsen_back"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginStart="@dimen/padding_layout"
+                android:layout_marginTop="28dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_arrow_back"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/mtv_detailabsen_name"
+                style="@style/TextAppearance.MdcTypographyStyles.Headline7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Matematika"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@id/iv_detailabsen_back"
+                app:layout_constraintStart_toEndOf="@id/iv_detailabsen_back"
+                app:layout_constraintTop_toTopOf="@id/iv_detailabsen_back" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/mtv_detailabsen_date"
+                style="@style/TextAppearance.MdcTypographyStyles.Subtitle1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/padding_layout"
+                android:text="18 Juni 2022"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@id/iv_detailabsen_back"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/iv_detailabsen_back" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cv_detailabsen_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/padding_layout"
+            android:elevation="2dp"
+            app:cardCornerRadius="8dp"
+            app:layout_constraintBottom_toBottomOf="@id/cl_detailabsen_bgblue"
+            app:layout_constraintTop_toBottomOf="@id/cl_detailabsen_bgblue">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:padding="12dp">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/mtv_detailabsen_titletotal"
+                    style="@style/TextAppearance.MdcTypographyStyles.Subtitle2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Total"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/mtv_detailabsen_titleabsen"
+                    style="@style/TextAppearance.MdcTypographyStyles.Subtitle2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Siswa"
+                    android:textColor="@color/gray3"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/gl"
+                    app:layout_constraintTop_toBottomOf="@id/mtv_detailabsen_titletotal" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/mtv_detailabsen_absen"
+                    style="@style/TextAppearance.MdcTypographyStyles.Headline6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_rvitem_small"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@id/mtv_detailabsen_titleabsen"
+                    app:layout_constraintStart_toEndOf="@id/gl"
+                    app:layout_constraintTop_toTopOf="@id/mtv_detailabsen_titleabsen"
+                    tools:text="12" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/mb_detailabsen_add"
+                    style="@style/MaterialButton.Custom"
+                    android:layout_width="144dp"
+                    android:layout_height="wrap_content"
+                    android:text="Simpan"
+                    app:icon="@drawable/ic_archive_arrow_down_outline"
+                    app:iconTint="@color/black1"
+                    app:layout_constraintBottom_toBottomOf="@id/mtv_detailabsen_titleabsen"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/mtv_detailabsen_titleabsen" />
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/gl"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.25" />
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/gl2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.75" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_detailabsen_containerrvabsen"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="196dp"
+            android:paddingHorizontal="@dimen/padding_layout"
+            android:paddingTop="@dimen/padding_layout"
+            app:layout_constraintTop_toBottomOf="@id/cv_detailabsen_container">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/mtv_detailabsen_title"
+                style="@style/TextAppearance.MdcTypographyStyles.Body2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Siswa"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_detailabsen_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                app:layout_constraintTop_toBottomOf="@id/mtv_detailabsen_title"
+                tools:listitem="@layout/rv_absen_siswa" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>

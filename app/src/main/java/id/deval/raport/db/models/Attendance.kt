@@ -26,5 +26,6 @@ data class AttendanceItem(
 	val kehadiran: String? = null,
 
 	@field:SerializedName("siswaId")
-	val siswaId: String? = null
+	val siswaId: String? = null,
+
 )

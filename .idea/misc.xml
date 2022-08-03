@@ -13,6 +13,7 @@
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/Raport/app/src/main/res/drawable/selector_til_android_white.xml" value="0.1175" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/Raport/app/src/main/res/layout/activity_main.xml" value="0.27447916666666666" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/Raport/app/src/main/res/layout/fragment_absen.xml" value="0.27447916666666666" />
+        <entry key="..\:/Users/ASUS/AndroidStudioProjects/Raport/app/src/main/res/layout/fragment_absen_detail.xml" value="0.2604166666666667" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/Raport/app/src/main/res/layout/fragment_add_guru.xml" value="0.264" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/Raport/app/src/main/res/layout/fragment_add_kelas.xml" value="0.27447916666666666" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/Raport/app/src/main/res/layout/fragment_add_mapel.xml" value="0.27447916666666666" />
@@ -28,6 +29,7 @@
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/Raport/app/src/main/res/layout/fragment_mapel.xml" value="0.27447916666666666" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/Raport/app/src/main/res/layout/fragment_registrasi_guru.xml" value="0.264" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/Raport/app/src/main/res/layout/fragment_registrasi_siswa.xml" value="0.27462219906201146" />
+        <entry key="..\:/Users/ASUS/AndroidStudioProjects/Raport/app/src/main/res/layout/rv_absen_siswa.xml" value="0.27447916666666666" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/Raport/app/src/main/res/layout/rv_absensi.xml" value="0.27447916666666666" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/Raport/app/src/main/res/layout/rv_choose_item.xml" value="0.264" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/Raport/app/src/main/res/layout/rv_item.xml" value="0.264" />

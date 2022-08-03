@@ -1,9 +1,7 @@
 package id.deval.raport.utils
 
-import id.deval.raport.db.models.Account
-import id.deval.raport.db.models.Kelas
-import id.deval.raport.db.models.Mapel
-import id.deval.raport.db.models.Siswa
+import id.deval.raport.db.models.*
+import id.deval.raport.db.response.DetailSiswaItem
 
 class DummyData {
     fun setDummyGuru(): ArrayList<Account> {
@@ -87,6 +85,19 @@ class DummyData {
         val dataString = arrayListOf<String>()
         for (n in 1..5) {
             dataString.add("Jumat, 18 Juni 2019")
+        }
+        return dataString
+    }
+
+    fun setDummyDataAbsenSiswa(): ArrayList<DetailSiswaItem> {
+        val dataString = arrayListOf<DetailSiswaItem>()
+        for (n in 1..5) {
+            val absen = DetailSiswaItem(
+                "Ali",
+                "60200117039",
+                "Hadir"
+            )
+            dataString.add(absen)
         }
         return dataString
     }
