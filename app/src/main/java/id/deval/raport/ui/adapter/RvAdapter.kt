@@ -60,14 +60,20 @@ class RvAdapter<T>(
                         mtvRvitemNis.text = data.siswaId?.size.toString()
                         true
                     }
-                    "mapel" -> {
-                        data as Mapel
-                        mtvRvitemTitlename.text = "Nama Mapel"
-                        mtvRvitemTitlenis.text = "Kategori"
-                        mtvRvitemName.text = data.name
-                        mtvRvitemNis.text = data.category
+                    "mapel-absen" -> {
+                        bindingMapelRv(data as Mapel)
                         clIvitemContainer.setOnClickListener {
                             navController.navigate(R.id.action_baseFragment_to_listAbsenFragment)
+                        }
+                        true
+                    }
+                    "mapel" -> {
+                        bindingMapelRv(data as Mapel)
+                        true
+                    }
+                    "mapel-raport" -> {
+                        bindingMapelRv(data as Mapel)
+                        clIvitemContainer.setOnClickListener {
                         }
                         true
                     }
@@ -75,6 +81,15 @@ class RvAdapter<T>(
                         false
                     }
                 }
+            }
+        }
+
+        fun bindingMapelRv(data : Mapel){
+            with(binding){
+                mtvRvitemTitlename.text = "Nama Mapel"
+                mtvRvitemTitlenis.text = "Kategori"
+                mtvRvitemName.text = data.name
+                mtvRvitemNis.text = data.category
             }
         }
     }

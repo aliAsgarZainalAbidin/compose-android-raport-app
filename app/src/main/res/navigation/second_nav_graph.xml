@@ -2,7 +2,8 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/second_nav_graph">
+    android:id="@+id/second_nav_graph"
+    app:startDestination="@id/raportFragment">
     <fragment
         android:id="@+id/akunFragment"
         android:name="id.deval.raport.ui.akun.AkunFragment"
@@ -29,4 +30,9 @@
         android:name="id.deval.raport.ui.absen.AbsenFragment"
         android:label="fragment_absen"
         tools:layout="@layout/fragment_absen" />
+    <fragment
+        android:id="@+id/raportFragment"
+        android:name="id.deval.raport.ui.raport.RaportFragment"
+        android:label="fragment_raport"
+        tools:layout="@layout/fragment_raport" />
 </navigation>

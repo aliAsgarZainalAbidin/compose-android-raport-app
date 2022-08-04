@@ -122,7 +122,7 @@ class BaseFragment : BaseSkeletonFragment() {
                         true
                     }
                     R.id.raport -> {
-                        secNavController.navigate(R.id.kelasFragment)
+                        secNavController.navigate(R.id.raportFragment)
                         true
                     }
                     R.id.pesan -> {
