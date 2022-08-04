@@ -30,7 +30,7 @@ class AddPesanFragment : BaseSkeletonFragment() {
         super.onViewCreated(view, savedInstanceState)
         with(binding) {
             mtvAddpesanAddgrowth.setOnClickListener {
-                TODO("NOT READY")
+                mainNavController.navigate(R.id.action_addPesanFragment_to_addGrowthFragment)
             }
             rvAddpesanGrowth.apply {
                 val adapter = RvGrowthAdapter(DummyData().setDummyDataGrowth())
@@ -41,7 +41,7 @@ class AddPesanFragment : BaseSkeletonFragment() {
             }
 
             mtvAddpesanAddnote.setOnClickListener {
-                TODO()
+                mainNavController.navigate(R.id.action_addPesanFragment_to_addNoteFragment)
             }
             rvAddpesanNote.apply {
                 val adapter = RvNoteAdapter(DummyData().setDummyDataNote())

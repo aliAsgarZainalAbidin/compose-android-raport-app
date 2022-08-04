@@ -149,5 +149,22 @@
         android:id="@+id/addPesanFragment"
         android:name="id.deval.raport.ui.pesan.AddPesanFragment"
         android:label="fragment_add_pesan"
-        tools:layout="@layout/fragment_add_pesan" />
+        tools:layout="@layout/fragment_add_pesan" >
+        <action
+            android:id="@+id/action_addPesanFragment_to_addNoteFragment"
+            app:destination="@id/addNoteFragment" />
+        <action
+            android:id="@+id/action_addPesanFragment_to_addGrowthFragment"
+            app:destination="@id/addGrowthFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addNoteFragment"
+        android:name="id.deval.raport.ui.note.AddNoteFragment"
+        android:label="fragment_add_note"
+        tools:layout="@layout/fragment_add_note" />
+    <fragment
+        android:id="@+id/addGrowthFragment"
+        android:name="id.deval.raport.ui.growth.AddGrowthFragment"
+        android:label="fragment_add_growth"
+        tools:layout="@layout/fragment_add_growth" />
 </navigation>
