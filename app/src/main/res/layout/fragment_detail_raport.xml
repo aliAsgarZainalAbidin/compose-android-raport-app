@@ -1,14 +1,235 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fillViewport="true"
     tools:context=".ui.raport.DetailRaportFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:background="@color/blue_variant1">
 
-</FrameLayout>
+        <ImageView
+            android:id="@+id/iv_detailraport_back"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginHorizontal="@dimen/padding_layout"
+            android:layout_marginTop="12dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_arrow_back"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/mtv_detailraport_name"
+            style="@style/TextAppearance.MdcTypographyStyles.Headline7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tambah Kelas"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/iv_detailraport_back"
+            app:layout_constraintStart_toEndOf="@id/iv_detailraport_back"
+            app:layout_constraintTop_toTopOf="@id/iv_detailraport_back" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_addKelas_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/padding_layout"
+            app:layout_constraintTop_toBottomOf="@id/mtv_detailraport_name">
+
+            <include
+                android:id="@+id/include_detailraport_container"
+                layout="@layout/rv_item" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/mtv_detailraport_sikap"
+            style="@style/TextAppearance.MdcTypographyStyles.Body3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/padding_layout"
+            android:text="Nilai Sikap"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cl_addKelas_container" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_detailraport_sikap"
+            style="@style/TextField.Outlined.White.Custom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/padding_layout"
+            android:layout_marginTop="0dp"
+            app:layout_constraintTop_toBottomOf="@+id/mtv_detailraport_sikap">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tiet_detailraport_sikap"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_til_android_blue"
+                android:inputType="number"
+                tools:text="2221231" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_detailraport_containertugas"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/til_detailraport_sikap">
+
+            <include
+                android:id="@+id/include_rv_siswa"
+                layout="@layout/rv_layout" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/mtv_detailraport_keterampilan"
+            style="@style/TextAppearance.MdcTypographyStyles.Body3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/padding_layout"
+            android:text="Nilai Keterampilan"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cl_detailraport_containertugas" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_detailraport_keterampilan"
+            style="@style/TextField.Outlined.White.Custom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/padding_layout"
+            android:layout_marginTop="0dp"
+            app:layout_constraintTop_toBottomOf="@+id/mtv_detailraport_keterampilan">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tiet_detailraport_keterampilan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_til_android_blue"
+                android:inputType="number"
+                tools:text="2221231" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/mtv_detailraport_uts"
+            style="@style/TextAppearance.MdcTypographyStyles.Body3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/padding_layout"
+            android:layout_marginTop="8dp"
+            android:text="UTS"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/til_detailraport_keterampilan" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_detailraport_uts"
+            style="@style/TextField.Outlined.White.Custom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/padding_layout"
+            android:layout_marginTop="0dp"
+            app:layout_constraintTop_toBottomOf="@+id/mtv_detailraport_uts">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tiet_detailraport_uts"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_til_android_blue"
+                android:inputType="number"
+                tools:text="2221231" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/mtv_detailraport_uas"
+            style="@style/TextAppearance.MdcTypographyStyles.Body3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/padding_layout"
+            android:layout_marginTop="8dp"
+            android:text="UAS"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/til_detailraport_uts" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_detailraport_uas"
+            style="@style/TextField.Outlined.White.Custom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/padding_layout"
+            android:layout_marginTop="0dp"
+            app:layout_constraintTop_toBottomOf="@+id/mtv_detailraport_uas">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tiet_detailraport_uas"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_til_android_blue"
+                android:inputType="number"
+                tools:text="2221231" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/mtv_detailraport_desc"
+            style="@style/TextAppearance.MdcTypographyStyles.Body3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/padding_layout"
+            android:layout_marginTop="8dp"
+            android:text="Deskripsi"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/til_detailraport_uas" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_detailraport_desc"
+            style="@style/TextField.Outlined.White.Custom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/padding_layout"
+            android:layout_marginTop="0dp"
+            app:layout_constraintTop_toBottomOf="@+id/mtv_detailraport_desc">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tiet_detailraport_desc"
+                android:layout_width="match_parent"
+                android:maxLines="3"
+                android:gravity="top"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_til_android_blue"
+                android:inputType="textMultiLine"
+                tools:text="2221231 asdasd asd a asda sdasda sda sd asda a asdas das asd asd s asdsadasdasdasd ad asda sd asd s" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/mb_detailraport_simpan"
+            style="@style/MaterialButton.Custom"
+            android:layout_width="match_parent"
+            android:layout_marginHorizontal="@dimen/padding_layout"
+            android:layout_marginTop="48dp"
+            android:layout_marginBottom="24dp"
+            android:text="Simpan"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/til_detailraport_desc" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

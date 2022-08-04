@@ -132,5 +132,14 @@
         android:id="@+id/detailRaportFragment"
         android:name="id.deval.raport.ui.raport.DetailRaportFragment"
         android:label="fragment_detail_raport"
-        tools:layout="@layout/fragment_detail_raport" />
+        tools:layout="@layout/fragment_detail_raport" >
+        <action
+            android:id="@+id/action_detailRaportFragment_to_addTugasFragment"
+            app:destination="@id/addTugasFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addTugasFragment"
+        android:name="id.deval.raport.ui.tugas.AddTugasFragment"
+        android:label="fragment_add_tugas"
+        tools:layout="@layout/fragment_add_tugas" />
 </navigation>

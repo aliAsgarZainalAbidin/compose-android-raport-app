@@ -8,10 +8,12 @@ import android.view.ViewGroup
 import id.deval.raport.R
 import id.deval.raport.databinding.FragmentDetailRaportBinding
 import id.deval.raport.utils.BaseSkeletonFragment
+import id.deval.raport.utils.invisible
+import id.deval.raport.utils.show
 
 class DetailRaportFragment : BaseSkeletonFragment() {
 
-    private lateinit var _binding : FragmentDetailRaportBinding
+    private lateinit var _binding: FragmentDetailRaportBinding
     private val binding get() = _binding
 
     override fun onCreateView(
@@ -25,8 +27,16 @@ class DetailRaportFragment : BaseSkeletonFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        with(binding){
-
+        with(binding) {
+            includeDetailraportContainer.mtvRvitemName.text = "Ali"
+            includeDetailraportContainer.mtvRvitemNis.text = "60200117039"
+            includeRvSiswa.mtvRvlayoutViewmore.invisible()
+            includeRvSiswa.mtvRvlayoutAdd.show()
+            includeRvSiswa.mtvRvlayoutAdd.setOnClickListener {
+                mainNavController.navigate(R.id.action_detailRaportFragment_to_addTugasFragment)
+            }
+            includeRvSiswa.mtvRvlayoutTitle.text = "Tugas"
+            includeRvSiswa.mtvRvlayoutTitle.setTextColor(resources.getColor(R.color.white))
         }
     }
 
