@@ -101,4 +101,35 @@ class DummyData {
         }
         return dataString
     }
+
+    fun setDummyDataGrowth(): ArrayList<Growth> {
+        val dataString = arrayListOf<Growth>()
+        for (n in 1..5) {
+            val absen = Growth(
+                64,
+                "60200117039",
+                "17 8 2022",
+                "Selama jantungku masih berdetak, selama itu pun engkau milikku, selama darahku masih mengalir, cintaku pasti takan pernah berakhir",
+                132,
+                12
+            )
+            dataString.add(absen)
+        }
+        return dataString
+    }
+
+    fun setDummyDataNote(): ArrayList<Note> {
+        val dataString = arrayListOf<Note>()
+        for (n in 1..5) {
+            val absen = Note(
+                "Selama jantungku masih berdetak, selama itu pun engkau milikku, selama darahku masih mengalir, cintaku pasti takan pernah berakhir",
+                "60200117039",
+                "17 8 2022",
+            )
+            dataString.add(absen)
+        }
+        return dataString
+    }
+
+
 }

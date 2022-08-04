@@ -18,6 +18,7 @@
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/Raport/app/src/main/res/layout/fragment_add_kelas.xml" value="0.27447916666666666" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/Raport/app/src/main/res/layout/fragment_add_mapel.xml" value="0.27447916666666666" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/Raport/app/src/main/res/layout/fragment_add_orang_tua.xml" value="0.27447916666666666" />
+        <entry key="..\:/Users/ASUS/AndroidStudioProjects/Raport/app/src/main/res/layout/fragment_add_pesan.xml" value="0.27462219906201146" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/Raport/app/src/main/res/layout/fragment_add_siswa.xml" value="0.264" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/Raport/app/src/main/res/layout/fragment_add_tugas.xml" value="0.27447916666666666" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/Raport/app/src/main/res/layout/fragment_akun.xml" value="0.264" />
@@ -37,8 +38,10 @@
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/Raport/app/src/main/res/layout/rv_absen_siswa.xml" value="0.27447916666666666" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/Raport/app/src/main/res/layout/rv_absensi.xml" value="0.27447916666666666" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/Raport/app/src/main/res/layout/rv_choose_item.xml" value="0.264" />
+        <entry key="..\:/Users/ASUS/AndroidStudioProjects/Raport/app/src/main/res/layout/rv_growth.xml" value="0.27447916666666666" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/Raport/app/src/main/res/layout/rv_item.xml" value="0.264" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/Raport/app/src/main/res/layout/rv_layout.xml" value="0.3492462311557789" />
+        <entry key="..\:/Users/ASUS/AndroidStudioProjects/Raport/app/src/main/res/layout/rv_note.xml" value="0.27447916666666666" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/Raport/app/src/main/res/menu/menu_botnav.xml" value="0.27447916666666666" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/Raport/app/src/main/res/menu/menu_botnav_teacher.xml" value="0.27447916666666666" />
       </map>

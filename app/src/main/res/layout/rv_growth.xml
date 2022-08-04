@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="4dp"
+    android:layout_marginHorizontal="@dimen/padding_layout"
+    android:layout_marginVertical="4dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="156dp"
+        android:padding="@dimen/padding_layout">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/mtv_rvgrowth_tanggal"
+            style="@style/TextAppearance.MdcTypographyStyles.Body2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/gray3"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Juli 2022" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/mtv_rvgrowth_titletinggi"
+            style="@style/TextAppearance.MdcTypographyStyles.Body2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="Tinggi"
+            app:layout_constraintStart_toStartOf="@id/mtv_rvgrowth_tanggal"
+            app:layout_constraintTop_toBottomOf="@id/mtv_rvgrowth_tanggal" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/mtv_rvgrowth_titlebmi"
+            style="@style/TextAppearance.MdcTypographyStyles.Body2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="BMI"
+            app:layout_constraintStart_toStartOf="@id/mtv_rvgrowth_titletinggi"
+            app:layout_constraintTop_toBottomOf="@id/mtv_rvgrowth_titletinggi" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/mtv_rvgrowth_titleberat"
+            style="@style/TextAppearance.MdcTypographyStyles.Body2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Berat"
+            app:layout_constraintEnd_toStartOf="@id/gl2"
+            app:layout_constraintTop_toTopOf="@id/mtv_rvgrowth_titletinggi" />
+
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/mtv_rvgrowth_doubledot1"
+            style="@style/TextAppearance.MdcTypographyStyles.Body2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=":"
+            app:layout_constraintStart_toStartOf="@id/gl"
+            app:layout_constraintTop_toTopOf="@id/mtv_rvgrowth_titletinggi" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/mtv_rvgrowth_doubledot4"
+            style="@style/TextAppearance.MdcTypographyStyles.Body2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=":"
+            app:layout_constraintStart_toStartOf="@id/gl"
+            app:layout_constraintTop_toTopOf="@id/mtv_rvgrowth_titlebmi" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/mtv_rvgrowth_doubledot3"
+            style="@style/TextAppearance.MdcTypographyStyles.Body2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=":"
+            app:layout_constraintStart_toStartOf="@id/gl"
+            app:layout_constraintTop_toTopOf="@id/mtv_rvgrowth_titleket" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/mtv_rvgrowth_tinggi"
+            style="@style/TextAppearance.MdcTypographyStyles.Body2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:text=" 179cm"
+            app:layout_constraintStart_toStartOf="@id/mtv_rvgrowth_doubledot1"
+            app:layout_constraintTop_toTopOf="@id/mtv_rvgrowth_titletinggi" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/mtv_rvgrowth_bmi"
+            style="@style/TextAppearance.MdcTypographyStyles.Body2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:text=" 17"
+            app:layout_constraintStart_toStartOf="@id/mtv_rvgrowth_doubledot4"
+            app:layout_constraintTop_toTopOf="@id/mtv_rvgrowth_titlebmi" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/mtv_rvgrowth_berat"
+            style="@style/TextAppearance.MdcTypographyStyles.Body2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:text=" 60kg"
+            app:layout_constraintStart_toStartOf="@id/mtv_rvgrowth_doubledot2"
+            app:layout_constraintTop_toTopOf="@id/mtv_rvgrowth_titleberat" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/mtv_rvgrowth_doubledot2"
+            style="@style/TextAppearance.MdcTypographyStyles.Body2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=":"
+            app:layout_constraintStart_toStartOf="@id/gl3"
+            app:layout_constraintTop_toTopOf="@id/mtv_rvgrowth_titleberat" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.2" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.6" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.7" />
+
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/mtv_rvgrowth_titleket"
+            style="@style/TextAppearance.MdcTypographyStyles.Body2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="Keterangan"
+            android:textColor="@color/gray3"
+            app:layout_constraintStart_toStartOf="@id/mtv_rvgrowth_titlebmi"
+            app:layout_constraintTop_toBottomOf="@id/mtv_rvgrowth_titlebmi" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/mtv_rvgrowth_ket"
+            style="@style/TextAppearance.MdcTypographyStyles.Body2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:maxLines="3"
+            app:layout_constraintStart_toStartOf="@id/mtv_rvgrowth_titleket"
+            app:layout_constraintTop_toBottomOf="@id/mtv_rvgrowth_titleket"
+            tools:text="@tools:sample/lorem/random" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>
