@@ -35,4 +35,9 @@
         android:name="id.deval.raport.ui.raport.RaportFragment"
         android:label="fragment_raport"
         tools:layout="@layout/fragment_raport" />
+    <fragment
+        android:id="@+id/pesanFragment"
+        android:name="id.deval.raport.ui.pesan.PesanFragment"
+        android:label="fragment_pesan"
+        tools:layout="@layout/fragment_pesan" />
 </navigation>

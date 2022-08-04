@@ -40,6 +40,9 @@
         <action
             android:id="@+id/action_baseFragment_to_listRaportFragment"
             app:destination="@id/listRaportFragment" />
+        <action
+            android:id="@+id/action_baseFragment_to_addPesanFragment"
+            app:destination="@id/addPesanFragment" />
     </fragment>
     <fragment
         android:id="@+id/registrasiGuruFragment"
@@ -142,4 +145,9 @@
         android:name="id.deval.raport.ui.tugas.AddTugasFragment"
         android:label="fragment_add_tugas"
         tools:layout="@layout/fragment_add_tugas" />
+    <fragment
+        android:id="@+id/addPesanFragment"
+        android:name="id.deval.raport.ui.pesan.AddPesanFragment"
+        android:label="fragment_add_pesan"
+        tools:layout="@layout/fragment_add_pesan" />
 </navigation>

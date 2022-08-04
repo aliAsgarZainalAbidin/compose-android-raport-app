@@ -126,7 +126,7 @@ class BaseFragment : BaseSkeletonFragment() {
                         true
                     }
                     R.id.pesan -> {
-                        secNavController.navigate(R.id.mapelFragment)
+                        secNavController.navigate(R.id.pesanFragment)
                         true
                     }
                     else -> false

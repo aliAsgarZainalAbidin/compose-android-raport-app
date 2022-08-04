@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    tools:context=".ui.pesan.PesanFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/white_variant1">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_pesan_bgblue"
+            android:layout_width="match_parent"
+            android:layout_height="156dp"
+            android:background="@color/blue_variant1"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/iv_pesan_person"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="28dp"
+                android:background="@drawable/bg_person_akun"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_person_akun"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/mtv_pesan_greeting"
+                style="@style/TextAppearance.MdcTypographyStyles.Body2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="Selamat Datang"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toTopOf="@id/mtv_pesan_name"
+                app:layout_constraintStart_toEndOf="@id/iv_pesan_person"
+                app:layout_constraintTop_toTopOf="@id/iv_pesan_person" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/mtv_pesan_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@id/iv_pesan_person"
+                app:layout_constraintStart_toStartOf="@id/mtv_pesan_greeting"
+                app:layout_constraintTop_toBottomOf="@id/mtv_pesan_greeting"
+                tools:text="Admin" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cv_pesan_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/padding_layout"
+            android:elevation="2dp"
+            app:cardCornerRadius="8dp"
+            app:layout_constraintBottom_toBottomOf="@id/cl_pesan_bgblue"
+            app:layout_constraintTop_toBottomOf="@id/cl_pesan_bgblue">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="71dp"
+                android:background="@color/white"
+                android:padding="12dp">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/mtv_pesan_titletotal"
+                    style="@style/TextAppearance.MdcTypographyStyles.Subtitle2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Total Mapel &amp; Siswa Kelas IV B"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/mtv_pesan_titlemapel"
+                    style="@style/TextAppearance.MdcTypographyStyles.Subtitle2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Mapel"
+                    android:textColor="@color/gray3"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/gl"
+                    app:layout_constraintTop_toBottomOf="@id/mtv_pesan_titletotal" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/mtv_pesan_mapel"
+                    style="@style/TextAppearance.MdcTypographyStyles.Headline6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_rvitem_small"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@id/mtv_pesan_titlemapel"
+                    app:layout_constraintStart_toEndOf="@id/gl"
+                    app:layout_constraintTop_toTopOf="@id/mtv_pesan_titlemapel"
+                    tools:text="12" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/mtv_pesan_titlesiswa"
+                    style="@style/TextAppearance.MdcTypographyStyles.Subtitle2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Siswa"
+                    android:textColor="@color/gray3"
+                    app:layout_constraintBottom_toBottomOf="@id/mtv_pesan_titlemapel"
+                    app:layout_constraintEnd_toStartOf="@id/gl2" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/mtv_pesan_siswa"
+                    style="@style/TextAppearance.MdcTypographyStyles.Headline6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_rvitem_small"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@id/mtv_pesan_titlesiswa"
+                    app:layout_constraintStart_toEndOf="@id/gl2"
+                    app:layout_constraintTop_toTopOf="@id/mtv_pesan_titlesiswa"
+                    tools:text="144" />
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/gl"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.25" />
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/gl2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.75" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_pesan_containerrvsiswa"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="196dp"
+            app:layout_constraintTop_toBottomOf="@id/cv_pesan_container">
+
+            <include
+                android:id="@+id/include_rv_siswa"
+                layout="@layout/rv_layout" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.core.widget.NestedScrollView>

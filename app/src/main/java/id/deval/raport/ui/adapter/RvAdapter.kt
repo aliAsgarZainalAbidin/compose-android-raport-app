@@ -55,6 +55,13 @@ class RvAdapter<T>(
                         }
                         true
                     }
+                    "siswa-pesan" -> {
+                        bindingSiswaRv(data as Siswa)
+                        clIvitemContainer.setOnClickListener {
+                            navController.navigate(R.id.action_baseFragment_to_addPesanFragment)
+                        }
+                        true
+                    }
                     "kelas" -> {
                         data as Kelas
                         mtvRvitemTitlename.text = "Nama Kelas"
