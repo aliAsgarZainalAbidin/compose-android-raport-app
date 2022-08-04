@@ -45,11 +45,14 @@ class RvAdapter<T>(
                         true
                     }
                     "siswa" -> {
-                        data as Siswa
-                        mtvRvitemTitlename.text = "Nama"
-                        mtvRvitemTitlenis.text = "NIS"
-                        mtvRvitemName.text = data.name
-                        mtvRvitemNis.text = data.nis
+                        bindingSiswaRv(data as Siswa)
+                        true
+                    }
+                    "siswa-raport" -> {
+                        bindingSiswaRv(data as Siswa)
+                        clIvitemContainer.setOnClickListener {
+                            navController.navigate(R.id.action_listRaportFragment_to_detailRaportFragment)
+                        }
                         true
                     }
                     "kelas" -> {
@@ -74,6 +77,7 @@ class RvAdapter<T>(
                     "mapel-raport" -> {
                         bindingMapelRv(data as Mapel)
                         clIvitemContainer.setOnClickListener {
+                            navController.navigate(R.id.action_baseFragment_to_listRaportFragment)
                         }
                         true
                     }
@@ -90,6 +94,15 @@ class RvAdapter<T>(
                 mtvRvitemTitlenis.text = "Kategori"
                 mtvRvitemName.text = data.name
                 mtvRvitemNis.text = data.category
+            }
+        }
+
+        fun bindingSiswaRv(data : Siswa){
+            with(binding){
+                mtvRvitemTitlename.text = "Nama"
+                mtvRvitemTitlenis.text = "NIS"
+                mtvRvitemName.text = data.name
+                mtvRvitemNis.text = data.nis
             }
         }
     }

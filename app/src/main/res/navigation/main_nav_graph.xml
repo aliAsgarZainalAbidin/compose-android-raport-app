@@ -37,6 +37,9 @@
         <action
             android:id="@+id/action_baseFragment_to_listAbsenFragment"
             app:destination="@id/listAbsenFragment" />
+        <action
+            android:id="@+id/action_baseFragment_to_listRaportFragment"
+            app:destination="@id/listRaportFragment" />
     </fragment>
     <fragment
         android:id="@+id/registrasiGuruFragment"
@@ -116,4 +119,18 @@
         android:name="id.deval.raport.ui.absen.AbsenDetailFragment"
         android:label="fragment_absen_detail"
         tools:layout="@layout/fragment_absen_detail" />
+    <fragment
+        android:id="@+id/listRaportFragment"
+        android:name="id.deval.raport.ui.raport.ListRaportFragment"
+        android:label="fragment_list_raport"
+        tools:layout="@layout/fragment_list_raport" >
+        <action
+            android:id="@+id/action_listRaportFragment_to_detailRaportFragment"
+            app:destination="@id/detailRaportFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailRaportFragment"
+        android:name="id.deval.raport.ui.raport.DetailRaportFragment"
+        android:label="fragment_detail_raport"
+        tools:layout="@layout/fragment_detail_raport" />
 </navigation>
