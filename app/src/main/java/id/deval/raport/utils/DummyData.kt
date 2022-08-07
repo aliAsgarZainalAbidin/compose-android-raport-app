@@ -143,7 +143,7 @@ class DummyData {
                 64,
                 "60200117039",
                 "17 8 2022",
-                "Selama jantungku masih berdetak, selama itu pun engkau milikku, selama darahku masih mengalir, cintaku pasti takan pernah berakhir",
+                "Selama jantungku masih berdetak,  berdetak aksksadwk askjda sdkajsd aksdja skdjasd aksjda sdkajsd aksdja skdjasdkas djkasd",
                 132,
                 12
             )
@@ -156,7 +156,7 @@ class DummyData {
         val dataString = arrayListOf<Note>()
         for (n in 1..5) {
             val absen = Note(
-                "Selama jantungku masih berdetak, selama itu pun engkau milikku, selama darahku masih mengalir, cintaku pasti takan pernah berakhir",
+                "Selama jantungku masih berdetak aksksadwk askjda sdkajsd aksdja skdjasd aksjda sdkajsd aksdja skdjasdkas djkasd ",
                 "60200117039",
                 "17 8 2022",
             )
