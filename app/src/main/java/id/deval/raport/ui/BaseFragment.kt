@@ -13,6 +13,7 @@ import androidx.navigation.findNavController
 import id.deval.raport.R
 import id.deval.raport.databinding.FragmentBaseBinding
 import id.deval.raport.utils.BaseSkeletonFragment
+import id.deval.raport.utils.Constanta
 import id.deval.raport.utils.HelperView
 import id.deval.raport.utils.Role
 
@@ -20,6 +21,7 @@ class BaseFragment : BaseSkeletonFragment() {
 
     private lateinit var _binding: FragmentBaseBinding
     private val binding get() = _binding
+    private lateinit var roleString: String
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,8 +34,23 @@ class BaseFragment : BaseSkeletonFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        roleString = arguments?.getString(Constanta.USERNAME).toString()
+        val role: Role?
+        when (roleString) {
+            "admin" -> {
+                role = Role.ADMIN
+            }
+            "guru" -> {
+                role = Role.TEACHER
+            }
+            "orangtua" -> {
+                role = Role.PARENT
+            }
+            else -> role = null
+        }
+
         with(binding) {
-            when (Role.TEACHER) {
+            when (role) {
                 Role.ADMIN -> {
                     navigateToMenuAsAdmin()
                     true
@@ -41,6 +58,9 @@ class BaseFragment : BaseSkeletonFragment() {
                 Role.TEACHER -> {
                     navigateToMenuAsTeacher()
                     true
+                }
+                Role.PARENT -> {
+                    TODO("DOING LATER")
                 }
                 else -> false
             }
