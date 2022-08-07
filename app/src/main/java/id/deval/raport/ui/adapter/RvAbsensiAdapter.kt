@@ -1,5 +1,6 @@
 package id.deval.raport.ui.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.navigation.NavController
@@ -7,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import id.deval.raport.R
 import id.deval.raport.databinding.RvAbsensiBinding
 import id.deval.raport.db.models.Attendance
+import id.deval.raport.utils.show
 
 class RvAbsensiAdapter(
     private val listData : ArrayList<Attendance>,
@@ -28,11 +30,14 @@ class RvAbsensiAdapter(
                                 "Izin" -> mtvRvabsensiKehadiran.setTextColor(context.resources.getColor(R.color.blue))
                                 "Tanpa Ket." -> mtvRvabsensiKehadiran.setTextColor(context.resources.getColor(R.color.red))
                             }
+                            mtvRvabsensiKehadiran.show()
                         }
                     }
                 }
-                clRvabsensiContainer.setOnClickListener {
-                    navController.navigate(R.id.action_listAbsenFragment_to_absenDetailFragment)
+                if (siswaId == null){
+                    clRvabsensiContainer.setOnClickListener {
+                        navController.navigate(R.id.action_listAbsenFragment_to_absenDetailFragment)
+                    }
                 }
             }
         }

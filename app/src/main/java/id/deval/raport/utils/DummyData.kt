@@ -94,12 +94,21 @@ class DummyData {
         for (n in 1..5){
             val attendanceItem = AttendanceItem(
                 "Izin",
-                "askdkaksdk"
+                "siswa1"
             )
 
             val attendanceItem1 = AttendanceItem(
                 "Sakit",
-                "askdkaksdk"
+                "siswa2"
+            )
+            val attendanceItem2 = AttendanceItem(
+                "Hadir",
+                "siswa3"
+            )
+
+            val attendanceItem3 = AttendanceItem(
+                "Tanpa Ket.",
+                "siswa4"
             )
 
             val attendance = Attendance(
@@ -107,7 +116,7 @@ class DummyData {
                 "asd;lkasd",
                 "mapelasdasd",
                 "2$n Juni 2022",
-                arrayListOf(attendanceItem, attendanceItem1)
+                arrayListOf(attendanceItem, attendanceItem1, attendanceItem2, attendanceItem3)
             )
             dataAttendance.add(attendance)
         }

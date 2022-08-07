@@ -77,6 +77,13 @@ class RvAdapter<T>(
                         }
                         true
                     }
+                    "mapel-absen-orangtua" -> {
+                        bindingMapelRv(data as Mapel)
+                        clIvitemContainer.setOnClickListener {
+                            navController.navigate(R.id.action_baseFragment_to_absenOrangtuaFragment)
+                        }
+                        true
+                    }
                     "mapel" -> {
                         bindingMapelRv(data as Mapel)
                         true

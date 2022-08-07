@@ -55,12 +55,9 @@ class BaseFragment : BaseSkeletonFragment() {
                     navigateToMenuAsAdmin()
                     true
                 }
-                Role.TEACHER -> {
-                    navigateToMenuAsTeacher()
+                Role.TEACHER,Role.PARENT -> {
+                    navigateToMenuAsTeacher(roleString)
                     true
-                }
-                Role.PARENT -> {
-                    TODO("DOING LATER")
                 }
                 else -> false
             }
@@ -119,7 +116,10 @@ class BaseFragment : BaseSkeletonFragment() {
         }
     }
 
-    fun navigateToMenuAsTeacher() {
+    fun navigateToMenuAsTeacher(role : String) {
+        val bundle = bundleOf()
+        bundle.putString(Constanta.ROLE, role)
+
         with(binding) {
             val navGraph = secNavController.navInflater.inflate(R.navigation.second_nav_graph)
             navGraph.setStartDestination(R.id.absenFragment)
@@ -138,15 +138,15 @@ class BaseFragment : BaseSkeletonFragment() {
                 )
                 when (it.itemId) {
                     R.id.absen -> {
-                        secNavController.navigate(R.id.absenFragment)
+                        secNavController.navigate(R.id.absenFragment, bundle)
                         true
                     }
                     R.id.raport -> {
-                        secNavController.navigate(R.id.raportFragment)
+                        secNavController.navigate(R.id.raportFragment, bundle)
                         true
                     }
                     R.id.pesan -> {
-                        secNavController.navigate(R.id.pesanFragment)
+                        secNavController.navigate(R.id.pesanFragment, bundle)
                         true
                     }
                     else -> false

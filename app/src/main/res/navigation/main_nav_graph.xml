@@ -43,6 +43,9 @@
         <action
             android:id="@+id/action_baseFragment_to_addPesanFragment"
             app:destination="@id/addPesanFragment" />
+        <action
+            android:id="@+id/action_baseFragment_to_absenOrangtuaFragment"
+            app:destination="@id/absenOrangtuaFragment" />
     </fragment>
     <fragment
         android:id="@+id/registrasiGuruFragment"
@@ -167,4 +170,9 @@
         android:name="id.deval.raport.ui.growth.AddGrowthFragment"
         android:label="fragment_add_growth"
         tools:layout="@layout/fragment_add_growth" />
+    <fragment
+        android:id="@+id/absenOrangtuaFragment"
+        android:name="id.deval.raport.ui.absen.AbsenOrangtuaFragment"
+        android:label="fragment_absen_orangtua"
+        tools:layout="@layout/fragment_absen_orangtua" />
 </navigation>
