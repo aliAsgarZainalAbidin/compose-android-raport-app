@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.LinearLayoutManager
 import id.deval.raport.R
 import id.deval.raport.databinding.FragmentPesanOrangtuaBinding
@@ -12,10 +13,7 @@ import id.deval.raport.db.models.Siswa
 import id.deval.raport.ui.adapter.RvAdapter
 import id.deval.raport.ui.adapter.RvGrowthAdapter
 import id.deval.raport.ui.adapter.RvNoteAdapter
-import id.deval.raport.utils.BaseSkeletonFragment
-import id.deval.raport.utils.DummyData
-import id.deval.raport.utils.OperationsTypeRv
-import id.deval.raport.utils.invisible
+import id.deval.raport.utils.*
 
 class PesanOrangtuaFragment : BaseSkeletonFragment() {
 
@@ -37,6 +35,12 @@ class PesanOrangtuaFragment : BaseSkeletonFragment() {
         val dataSiswa = DummyData().setDummyDataSiswa()
 
         with(binding){
+            ivPesanorangtuaPerson.setOnClickListener {
+                val bundle = bundleOf()
+                bundle.putString(Constanta.ROLE, "orangtua")
+                mainNavController.navigate(R.id.action_baseFragment_to_addSiswaFragment, bundle)
+            }
+
             mtvPesanorangtuaMapel.text = dataMapel.size.toString()
             mtvPesanorangtuaSiswa.text = dataSiswa.size.toString()
 

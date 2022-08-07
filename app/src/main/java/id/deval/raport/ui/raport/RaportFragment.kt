@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.LinearLayoutManager
 import id.deval.raport.R
 import id.deval.raport.databinding.FragmentRaportBinding
@@ -19,6 +20,7 @@ class RaportFragment : BaseSkeletonFragment() {
     private val binding get() = _binding
     private lateinit var dataMapel: ArrayList<Mapel>
     private lateinit var dataSiswa: ArrayList<Siswa>
+    private lateinit var role : String
 
 
     override fun onCreateView(
@@ -34,7 +36,7 @@ class RaportFragment : BaseSkeletonFragment() {
 
         dataMapel = DummyData().setDummyDataMapel()
         dataSiswa = DummyData().setDummyDataSiswa()
-        val role = arguments?.getString(Constanta.ROLE).toString()
+        role = arguments?.getString(Constanta.ROLE).toString()
         when(role){
             "guru" -> viewAsGuru()
             "orangtua" -> viewAsOrangTua()
@@ -52,6 +54,12 @@ class RaportFragment : BaseSkeletonFragment() {
 
     fun viewAsOrangTua(){
         with(binding){
+            ivRaportPerson.setOnClickListener {
+                val bundle = bundleOf()
+                bundle.putString(Constanta.ROLE, role)
+                mainNavController.navigate(R.id.action_baseFragment_to_addSiswaFragment, bundle)
+            }
+
             includeRvMapel.rvRvlayoutContainer.apply {
                 val adapter = RvAdapter<Mapel>("mapel-raport-orangtua", OperationsTypeRv.READ, mainNavController)
                 adapter.setData(dataMapel)

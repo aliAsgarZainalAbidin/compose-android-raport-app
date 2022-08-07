@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.LinearLayoutManager
+import id.deval.raport.R
 import id.deval.raport.databinding.FragmentAbsenBinding
 import id.deval.raport.db.models.Mapel
 import id.deval.raport.db.models.Siswa
@@ -51,6 +53,12 @@ class AbsenFragment : BaseSkeletonFragment() {
                     }
                 }
                 "orangtua" -> {
+                    ivAbsenPerson.setOnClickListener {
+                        val bundle = bundleOf()
+                        bundle.putString(Constanta.ROLE, role)
+                        mainNavController.navigate(R.id.action_baseFragment_to_addSiswaFragment, bundle)
+                    }
+
                     includeRvMapel.rvRvlayoutContainer.apply {
                         val adapter = RvAdapter<Mapel>("mapel-absen-orangtua", OperationsTypeRv.READ, mainNavController)
                         adapter.setData(dataMapel)
@@ -61,6 +69,8 @@ class AbsenFragment : BaseSkeletonFragment() {
                 }
                 else -> false
             }
+
+
         }
     }
 }

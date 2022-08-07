@@ -49,6 +49,9 @@
         <action
             android:id="@+id/action_baseFragment_to_detailRaportFragment"
             app:destination="@id/detailRaportFragment" />
+        <action
+            android:id="@+id/action_baseFragment_to_addSiswaFragment"
+            app:destination="@id/addSiswaFragment" />
     </fragment>
     <fragment
         android:id="@+id/registrasiGuruFragment"
