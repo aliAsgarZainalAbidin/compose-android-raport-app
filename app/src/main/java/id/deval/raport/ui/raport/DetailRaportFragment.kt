@@ -5,9 +5,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
 import id.deval.raport.R
 import id.deval.raport.databinding.FragmentDetailRaportBinding
+import id.deval.raport.ui.adapter.RvAdapter
+import id.deval.raport.ui.adapter.RvTugasAdapter
 import id.deval.raport.utils.BaseSkeletonFragment
+import id.deval.raport.utils.DummyData
 import id.deval.raport.utils.invisible
 import id.deval.raport.utils.show
 
@@ -37,6 +41,13 @@ class DetailRaportFragment : BaseSkeletonFragment() {
             }
             includeRvSiswa.mtvRvlayoutTitle.text = "Tugas"
             includeRvSiswa.mtvRvlayoutTitle.setTextColor(resources.getColor(R.color.white))
+
+            includeRvSiswa.rvRvlayoutContainer.apply {
+                val adapter = RvTugasAdapter(DummyData().setDummyDataTugas(), mainNavController)
+                adapter.notifyDataSetChanged()
+                this.adapter = adapter
+                layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+            }
         }
     }
 

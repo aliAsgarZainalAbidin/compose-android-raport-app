@@ -164,6 +164,18 @@ class DummyData {
         }
         return dataString
     }
+    fun setDummyDataTugas(): ArrayList<Tugas> {
+        val dataString = arrayListOf<Tugas>()
+        for (n in 1..5) {
+            val absen = Tugas(
+                "Tugas $n",
+                60,
+                "17 8 2022",
+            )
+            dataString.add(absen)
+        }
+        return dataString
+    }
 
 
 }
