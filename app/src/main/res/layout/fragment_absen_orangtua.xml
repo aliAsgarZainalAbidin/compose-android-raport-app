@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    tools:context=".ui.absen.AbsenOrangtuaFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/white_variant1">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_absenorangtua_bgblue"
+            android:layout_width="match_parent"
+            android:layout_height="156dp"
+            android:background="@color/blue_variant1"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/iv_absenorangtua_back"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginStart="@dimen/padding_layout"
+                android:layout_marginTop="28dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_arrow_back"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/mtv_absenorangtua_mapel"
+                style="@style/TextAppearance.MdcTypographyStyles.Headline7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Matematika"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@id/iv_absenorangtua_back"
+                app:layout_constraintStart_toEndOf="@id/iv_absenorangtua_back"
+                app:layout_constraintTop_toTopOf="@id/iv_absenorangtua_back" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cv_absenorangtua_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/padding_layout"
+            android:elevation="2dp"
+            app:cardCornerRadius="8dp"
+            app:layout_constraintBottom_toBottomOf="@id/cl_absenorangtua_bgblue"
+            app:layout_constraintTop_toBottomOf="@id/cl_absenorangtua_bgblue">
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_ivitem_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="12dp">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/mtv_absenorangtua_titlename"
+                    style="@style/TextAppearance.MdcTypographyStyles.Body2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Nama"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/gl"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.25" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/mtv_absenorangtua_doubledot1"
+                    style="@style/TextAppearance.MdcTypographyStyles.Body2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=":"
+                    app:layout_constraintBottom_toBottomOf="@id/mtv_absenorangtua_titlename"
+                    app:layout_constraintStart_toEndOf="@id/gl"
+                    app:layout_constraintTop_toTopOf="@id/mtv_absenorangtua_titlename" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/mtv_absenorangtua_name"
+                    style="@style/TextAppearance.MdcTypographyStyles.Body2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_rvitem_small"
+                    android:text="Ali Zainal"
+                    app:layout_constraintBottom_toBottomOf="@id/mtv_absenorangtua_titlename"
+                    app:layout_constraintStart_toEndOf="@id/mtv_absenorangtua_doubledot1"
+                    app:layout_constraintTop_toTopOf="@id/mtv_absenorangtua_titlename" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/mtv_absenorangtua_titlenis"
+                    style="@style/TextAppearance.MdcTypographyStyles.Body2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_rvitem_small"
+                    android:text="NIS"
+                    android:textColor="@color/gray3"
+                    app:layout_constraintStart_toStartOf="@id/mtv_absenorangtua_titlename"
+                    app:layout_constraintTop_toBottomOf="@id/mtv_absenorangtua_titlename" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/mtv_absenorangtua_doubledot2"
+                    style="@style/TextAppearance.MdcTypographyStyles.Body2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=":"
+                    android:textColor="@color/gray3"
+                    app:layout_constraintBottom_toBottomOf="@id/mtv_absenorangtua_titlenis"
+                    app:layout_constraintStart_toEndOf="@id/gl"
+                    app:layout_constraintTop_toTopOf="@id/mtv_absenorangtua_titlenis" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/mtv_absenorangtua_nis"
+                    style="@style/TextAppearance.MdcTypographyStyles.Body2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_rvitem_small"
+                    android:text="70200123"
+                    android:textColor="@color/gray3"
+                    app:layout_constraintBottom_toBottomOf="@id/mtv_absenorangtua_titlenis"
+                    app:layout_constraintStart_toEndOf="@id/mtv_absenorangtua_doubledot2"
+                    app:layout_constraintTop_toTopOf="@id/mtv_absenorangtua_titlenis" />
+
+                <ImageView
+                    android:id="@+id/iv_absenorangtua_edit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:src="@drawable/ic_edit"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="@id/mtv_absenorangtua_titlenis"
+                    app:layout_constraintEnd_toStartOf="@id/iv_absenorangtua_delete"
+                    app:layout_constraintTop_toTopOf="@id/mtv_absenorangtua_titlename" />
+
+                <ImageView
+                    android:id="@+id/iv_absenorangtua_delete"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_delete"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="@id/iv_absenorangtua_edit"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/iv_absenorangtua_edit" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_absenorangtua_containerrvabsen"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="196dp"
+            android:paddingHorizontal="@dimen/padding_layout"
+            android:paddingTop="@dimen/padding_layout"
+            app:layout_constraintTop_toBottomOf="@id/cv_absenorangtua_container">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/mtv_absenorangtua_title"
+                style="@style/TextAppearance.MdcTypographyStyles.Body2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Absensi"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_absenorangtua_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                app:layout_constraintTop_toBottomOf="@id/mtv_absenorangtua_title"
+                tools:listitem="@layout/rv_absensi" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>

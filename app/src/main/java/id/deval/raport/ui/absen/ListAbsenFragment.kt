@@ -28,11 +28,11 @@ class ListAbsenFragment : BaseSkeletonFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val dataTanggal = DummyData().setDummyDataTanggal()
+        val dataTanggal = DummyData().setDummyAttendance()
         with(binding){
             mtvListabsenAbsen.text = dataTanggal.size.toString()
             rvListabsenDate.apply {
-                val adapter = RvAbsensiAdapter(dataTanggal, mainNavController)
+                val adapter = RvAbsensiAdapter(dataTanggal, mainNavController, null)
                 adapter.notifyDataSetChanged()
                 this.adapter = adapter
                 layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)

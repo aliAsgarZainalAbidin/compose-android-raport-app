@@ -6,15 +6,31 @@ import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
 import id.deval.raport.R
 import id.deval.raport.databinding.RvAbsensiBinding
+import id.deval.raport.db.models.Attendance
 
 class RvAbsensiAdapter(
-    private val listData : ArrayList<String>,
-    private val navController: NavController
+    private val listData : ArrayList<Attendance>,
+    private val navController: NavController,
+    private val siswaId: String?
 ) : RecyclerView.Adapter<RvAbsensiAdapter.AbsensiViewHolder>() {
     class AbsensiViewHolder(private val binding: RvAbsensiBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(data : String, navController: NavController){
+        fun bind(data : Attendance, navController: NavController, siswaId: String?){
             with(binding){
-                mtvRvabsensiTitlename.text = data
+                val context = binding.root.context
+                mtvRvabsensiTitlename.text = data.tanggalAbsen
+                if (siswaId != null){
+                    data.attendance?.forEach {
+                        if (siswaId == it?.siswaId){
+                            mtvRvabsensiKehadiran.text = it.kehadiran
+                            when (it.kehadiran){
+                                "Hadir" -> mtvRvabsensiKehadiran.setTextColor(context.resources.getColor(R.color.green))
+                                "Sakit" -> mtvRvabsensiKehadiran.setTextColor(context.resources.getColor(R.color.warning))
+                                "Izin" -> mtvRvabsensiKehadiran.setTextColor(context.resources.getColor(R.color.blue))
+                                "Tanpa Ket." -> mtvRvabsensiKehadiran.setTextColor(context.resources.getColor(R.color.red))
+                            }
+                        }
+                    }
+                }
                 clRvabsensiContainer.setOnClickListener {
                     navController.navigate(R.id.action_listAbsenFragment_to_absenDetailFragment)
                 }
@@ -28,7 +44,7 @@ class RvAbsensiAdapter(
     }
 
     override fun onBindViewHolder(holder: AbsensiViewHolder, position: Int) {
-        holder.bind(listData[position], navController)
+        holder.bind(listData[position], navController, siswaId)
     }
 
     override fun getItemCount(): Int {

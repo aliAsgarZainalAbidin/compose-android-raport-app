@@ -81,12 +81,37 @@ class DummyData {
         return dataMapel
     }
 
-    fun setDummyDataTanggal(): ArrayList<String> {
-        val dataString = arrayListOf<String>()
-        for (n in 1..5) {
-            dataString.add("Jumat, 18 Juni 2019")
+//    fun setDummyDataTanggal(): ArrayList<String> {
+//        val dataString = arrayListOf<String>()
+//        for (n in 1..5) {
+//            dataString.add("Jumat, 18 Juni 2019")
+//        }
+//        return dataString
+//    }
+
+    fun setDummyAttendance(): ArrayList<Attendance>{
+        val dataAttendance = arrayListOf<Attendance>()
+        for (n in 1..5){
+            val attendanceItem = AttendanceItem(
+                "Izin",
+                "askdkaksdk"
+            )
+
+            val attendanceItem1 = AttendanceItem(
+                "Sakit",
+                "askdkaksdk"
+            )
+
+            val attendance = Attendance(
+                "12938123",
+                "asd;lkasd",
+                "mapelasdasd",
+                "2$n Juni 2022",
+                arrayListOf(attendanceItem, attendanceItem1)
+            )
+            dataAttendance.add(attendance)
         }
-        return dataString
+        return dataAttendance
     }
 
     fun setDummyDataAbsenSiswa(): ArrayList<DetailSiswaItem> {
