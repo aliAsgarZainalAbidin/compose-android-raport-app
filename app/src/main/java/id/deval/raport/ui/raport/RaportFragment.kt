@@ -11,10 +11,7 @@ import id.deval.raport.databinding.FragmentRaportBinding
 import id.deval.raport.db.models.Mapel
 import id.deval.raport.db.models.Siswa
 import id.deval.raport.ui.adapter.RvAdapter
-import id.deval.raport.utils.BaseSkeletonFragment
-import id.deval.raport.utils.DummyData
-import id.deval.raport.utils.OperationsTypeRv
-import id.deval.raport.utils.invisible
+import id.deval.raport.utils.*
 
 class RaportFragment : BaseSkeletonFragment() {
 
@@ -37,6 +34,12 @@ class RaportFragment : BaseSkeletonFragment() {
 
         dataMapel = DummyData().setDummyDataMapel()
         dataSiswa = DummyData().setDummyDataSiswa()
+        val role = arguments?.getString(Constanta.ROLE).toString()
+        when(role){
+            "guru" -> viewAsGuru()
+            "orangtua" -> viewAsOrangTua()
+        }
+
         with(binding){
             mtvRaportMapel.text = dataMapel.size.toString()
             mtvRaportSiswa.text = dataSiswa.size.toString()
@@ -44,6 +47,23 @@ class RaportFragment : BaseSkeletonFragment() {
             includeRvMapel.mtvRvlayoutTitle.text = "Mata Pelajaran"
             includeRvMapel.mtvRvlayoutAdd.invisible()
             includeRvMapel.mtvRvlayoutViewmore.invisible()
+        }
+    }
+
+    fun viewAsOrangTua(){
+        with(binding){
+            includeRvMapel.rvRvlayoutContainer.apply {
+                val adapter = RvAdapter<Mapel>("mapel-raport-orangtua", OperationsTypeRv.READ, mainNavController)
+                adapter.setData(dataMapel)
+                adapter.notifyDataSetChanged()
+                this.adapter = adapter
+                layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+            }
+        }
+    }
+
+    fun viewAsGuru(){
+        with(binding){
             includeRvMapel.rvRvlayoutContainer.apply {
                 val adapter = RvAdapter<Mapel>("mapel-raport", OperationsTypeRv.READ, mainNavController)
                 adapter.setData(dataMapel)

@@ -31,6 +31,10 @@ class ListRaportFragment : BaseSkeletonFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        viewAsGuru()
+    }
+
+    fun viewAsGuru(){
         with(binding){
             includeListraportContainer.mtvRvlayoutTitle.text = "Siswa"
             includeListraportContainer.mtvRvlayoutTitle.setTextColor(resources.getColor(R.color.white))

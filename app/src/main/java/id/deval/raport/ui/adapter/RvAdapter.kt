@@ -2,6 +2,7 @@ package id.deval.raport.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
 import id.deval.raport.R
@@ -10,6 +11,7 @@ import id.deval.raport.db.models.Account
 import id.deval.raport.db.models.Kelas
 import id.deval.raport.db.models.Mapel
 import id.deval.raport.db.models.Siswa
+import id.deval.raport.utils.Constanta
 import id.deval.raport.utils.OperationsTypeRv
 import id.deval.raport.utils.show
 
@@ -92,6 +94,15 @@ class RvAdapter<T>(
                         bindingMapelRv(data as Mapel)
                         clIvitemContainer.setOnClickListener {
                             navController.navigate(R.id.action_baseFragment_to_listRaportFragment)
+                        }
+                        true
+                    }
+                    "mapel-raport-orangtua" -> {
+                        bindingMapelRv(data as Mapel)
+                        val bundle = bundleOf()
+                        bundle.putString(Constanta.ROLE, "orangtua")
+                        clIvitemContainer.setOnClickListener {
+                            navController.navigate(R.id.action_baseFragment_to_detailRaportFragment, bundle)
                         }
                         true
                     }
