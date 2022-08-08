@@ -33,4 +33,10 @@ interface ApiInterface {
     suspend fun login(
         @Body account: Account
     ) : GlobalWrapper<Account>
+
+    @GET("account/")
+    suspend fun getAccount(
+        @Header("Authorization") token:String,
+        @Query("role") role: String,
+    ) : GlobalWrapper<ArrayList<Account>>
 }

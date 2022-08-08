@@ -19,7 +19,7 @@ class RvAdapter<T>(
     private val typeAdapter: String,
     private val typeOperation: OperationsTypeRv,
     private val navController: NavController,
-    private val maxItemShow : Int? = null,
+    private var maxItemShow : Int? = null,
 ) : RecyclerView.Adapter<RvAdapter.RvViewHolder>() {
 
     private var listData = arrayListOf<T>()
@@ -142,6 +142,9 @@ class RvAdapter<T>(
     }
 
     override fun getItemCount(): Int {
+        if (listData.size < 2){
+            maxItemShow = listData.size
+        }
         return maxItemShow ?: listData.size
     }
 }

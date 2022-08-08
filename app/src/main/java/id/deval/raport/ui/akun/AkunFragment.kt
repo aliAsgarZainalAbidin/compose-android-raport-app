@@ -1,6 +1,7 @@
 package id.deval.raport.ui.akun
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -35,23 +36,33 @@ class AkunFragment : BaseSkeletonFragment() {
         with(binding) {
             mtvAkunName.text = session.name
             with(cvAkunContainer){
-                mtvAkunGuru.text = dataGuru.size.toString()
+//                mtvAkunGuru.text = dataGuru.size.toString()
                 mtvAkunSiswa.text = dataSiswa.size.toString()
             }
 
-            includeRvGuru.mtvRvlayoutViewmore.show()
-            includeRvGuru.mtvRvlayoutViewmore.setOnClickListener {
-                mainNavController.navigate(R.id.action_baseFragment_to_registrasiGuruFragment)
+            Log.d("TAG", "onViewCreated: ${session.token}")
+
+            accountViewModel.getAllTeacher(session.token.toString()).observe(viewLifecycleOwner){
+                with(binding){
+                    mtvAkunGuru.text = it.result.toString()
+                    includeRvGuru.mtvRvlayoutViewmore.show()
+                    includeRvGuru.mtvRvlayoutViewmore.setOnClickListener {
+                        mainNavController.navigate(R.id.action_baseFragment_to_registrasiGuruFragment)
+                    }
+
+                    includeRvGuru.mtvRvlayoutAdd.invisible()
+                    includeRvGuru.rvRvlayoutContainer.apply {
+                        val adapter = RvAdapter<Account>("guru", OperationsTypeRv.READ, mainNavController,2)
+                        adapter.setData(it.data)
+                        adapter.notifyDataSetChanged()
+                        this.adapter = adapter
+                        layoutManager =
+                            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+                    }
+                }
             }
-            includeRvGuru.mtvRvlayoutAdd.invisible()
-            includeRvGuru.rvRvlayoutContainer.apply {
-                val adapter = RvAdapter<Account>("guru", OperationsTypeRv.READ, mainNavController,2)
-                adapter.setData(dataGuru)
-                adapter.notifyDataSetChanged()
-                this.adapter = adapter
-                layoutManager =
-                    LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-            }
+
+
 
             includeRvSiswa.mtvRvlayoutViewmore.show()
             includeRvSiswa.mtvRvlayoutViewmore.setOnClickListener {

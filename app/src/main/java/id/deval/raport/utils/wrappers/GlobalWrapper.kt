@@ -13,5 +13,8 @@ data class GlobalWrapper<T>(
     val message: String?,
 
     @field:SerializedName("data")
-    val data : T
+    val data : T,
+
+    @field:SerializedName("result")
+    val result: Int
 )

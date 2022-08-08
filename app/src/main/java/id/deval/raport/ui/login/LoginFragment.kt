@@ -34,6 +34,10 @@ class LoginFragment : BaseSkeletonFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         with(binding) {
+            ivLoginLogo.setOnClickListener {
+                session.logout()
+            }
+
             mbLoginLogin.setOnClickListener {
                 val username = tietLoginUsername.text.toString().trim()
                 val password = tietLoginPassword.text.toString().trim()

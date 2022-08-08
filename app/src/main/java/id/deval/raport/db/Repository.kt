@@ -13,4 +13,8 @@ class Repository @Inject constructor(
     suspend fun login(account: Account): GlobalWrapper<Account> {
         return apiInterface.login(account)
     }
+
+    suspend fun getAllTeacher(token : String): GlobalWrapper<ArrayList<Account>>{
+        return  apiInterface.getAccount("Bearer $token", "Guru")
+    }
 }

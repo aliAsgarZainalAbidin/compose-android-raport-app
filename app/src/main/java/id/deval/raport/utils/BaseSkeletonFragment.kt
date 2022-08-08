@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import dagger.hilt.android.AndroidEntryPoint
 import id.deval.raport.db.Session
+import id.deval.raport.viewModels.AccountViewModel
 import id.deval.raport.viewModels.LoginViewModel
 import javax.inject.Inject
 
@@ -19,6 +20,7 @@ open class BaseSkeletonFragment : Fragment() {
     lateinit var mainNavController : NavController
     lateinit var secNavController: NavController
     val loginViewModel: LoginViewModel by viewModels()
+    val accountViewModel : AccountViewModel by viewModels()
     @Inject
     lateinit var session: Session
 
