@@ -18,6 +18,7 @@ class AccountViewModel @Inject constructor(
 ) : ViewModel() {
 
     private lateinit var mutableAccount : MutableLiveData<GlobalWrapper<ArrayList<Account>>>
+    private lateinit var mutableAddTeacherResponse : MutableLiveData<GlobalWrapper<Account>>
 
     fun getAllTeacher(token : String) : LiveData<GlobalWrapper<ArrayList<Account>>>{
         mutableAccount = MutableLiveData()
@@ -26,5 +27,15 @@ class AccountViewModel @Inject constructor(
             mutableAccount.postValue(response)
         }
         return mutableAccount
+    }
+
+    fun addTeacher(token : String, account: Account) : LiveData<GlobalWrapper<Account>>{
+        mutableAddTeacherResponse = MutableLiveData()
+        GlobalScope.launch {
+            val response = repository.addAccountTeacher(token, account)
+            mutableAddTeacherResponse.postValue(response)
+        }
+
+        return mutableAddTeacherResponse
     }
 }

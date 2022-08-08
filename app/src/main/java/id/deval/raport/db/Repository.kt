@@ -22,4 +22,8 @@ class Repository @Inject constructor(
     suspend fun getAllSiswa(token: String): GlobalWrapper<ArrayList<Siswa>>{
         return apiInterface.getAllSiswa("Bearer $token")
     }
+
+    suspend fun addAccountTeacher(token: String, account: Account): GlobalWrapper<Account>{
+        return apiInterface.addAccountTeacher(token, account)
+    }
 }

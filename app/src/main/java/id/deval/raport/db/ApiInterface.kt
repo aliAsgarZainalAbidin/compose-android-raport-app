@@ -45,4 +45,10 @@ interface ApiInterface {
     suspend fun getAllSiswa(
         @Header("Authorization") token: String,
     ) : GlobalWrapper<ArrayList<Siswa>>
+
+    @POST("account/")
+    suspend fun addAccountTeacher(
+        @Header("Authorization") token: String,
+        @Body account: Account
+    ) : GlobalWrapper<Account>
 }
