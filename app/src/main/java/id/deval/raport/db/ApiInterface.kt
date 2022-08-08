@@ -1,5 +1,7 @@
 package id.deval.raport.db
 
+import id.deval.raport.db.models.Account
+import id.deval.raport.utils.wrappers.GlobalWrapper
 import retrofit2.http.*
 
 interface ApiInterface {
@@ -26,4 +28,9 @@ interface ApiInterface {
 //    suspend fun addSinder(
 //        @Body sinderRequest: SinderRequest, @Header("token") token: String
 //    ): MessageResponse
+
+    @POST("account/login")
+    suspend fun login(
+        @Body account: Account
+    ) : GlobalWrapper<Account>
 }

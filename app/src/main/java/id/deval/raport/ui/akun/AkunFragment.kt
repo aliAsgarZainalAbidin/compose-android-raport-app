@@ -33,7 +33,7 @@ class AkunFragment : BaseSkeletonFragment() {
         dataSiswa = DummyData().setDummyDataSiswa()
 
         with(binding) {
-            mtvAkunName.text = "Admin"
+            mtvAkunName.text = session.name
             with(cvAkunContainer){
                 mtvAkunGuru.text = dataGuru.size.toString()
                 mtvAkunSiswa.text = dataSiswa.size.toString()

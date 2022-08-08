@@ -34,7 +34,7 @@ class BaseFragment : BaseSkeletonFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        roleString = arguments?.getString(Constanta.USERNAME).toString()
+        roleString = session.role.toString().lowercase()
         val role: Role?
         when (roleString) {
             "admin" -> {

@@ -37,7 +37,7 @@
                 android:id="@+id/tiet_login_username"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                tools:text="2221231" />
+                android:text="adminali" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -58,7 +58,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
-                tools:text="2221231" />
+                android:text="ArogaN61" />
 
         </com.google.android.material.textfield.TextInputLayout>
 

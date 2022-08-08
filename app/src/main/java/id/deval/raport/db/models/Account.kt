@@ -31,5 +31,7 @@ data class Account(
 	val email: String? = null,
 
 	@field:SerializedName("username")
-	val username: String? = null
+	val username: String? = null,
+
+	val token : String? = null
 )
