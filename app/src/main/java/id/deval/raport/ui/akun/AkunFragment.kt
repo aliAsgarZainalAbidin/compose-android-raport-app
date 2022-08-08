@@ -37,7 +37,7 @@ class AkunFragment : BaseSkeletonFragment() {
             mtvAkunName.text = session.name
             with(cvAkunContainer){
 //                mtvAkunGuru.text = dataGuru.size.toString()
-                mtvAkunSiswa.text = dataSiswa.size.toString()
+//                mtvAkunSiswa.text = dataSiswa.size.toString()
             }
 
             Log.d("TAG", "onViewCreated: ${session.token}")
@@ -62,22 +62,25 @@ class AkunFragment : BaseSkeletonFragment() {
                 }
             }
 
+            siswaViewModel.getAllSiswa(session.token.toString()).observe(viewLifecycleOwner){
+                mtvAkunSiswa.text = it.data.size.toString()
 
+                includeRvSiswa.mtvRvlayoutViewmore.show()
+                includeRvSiswa.mtvRvlayoutViewmore.setOnClickListener {
+                    mainNavController.navigate(R.id.action_baseFragment_to_registrasiSiswaFragment)
+                }
+                includeRvSiswa.mtvRvlayoutAdd.invisible()
+                includeRvSiswa.mtvRvlayoutTitle.text = "Siswa"
+                includeRvSiswa.rvRvlayoutContainer.apply {
+                    val adapter = RvAdapter<Siswa>("siswa", OperationsTypeRv.READ, mainNavController,2)
+                    adapter.setData(it.data)
+                    adapter.notifyDataSetChanged()
+                    this.adapter = adapter
+                    layoutManager =
+                        LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+                }
+            }
 
-            includeRvSiswa.mtvRvlayoutViewmore.show()
-            includeRvSiswa.mtvRvlayoutViewmore.setOnClickListener {
-                mainNavController.navigate(R.id.action_baseFragment_to_registrasiSiswaFragment)
-            }
-            includeRvSiswa.mtvRvlayoutAdd.invisible()
-            includeRvSiswa.mtvRvlayoutTitle.text = "Siswa"
-            includeRvSiswa.rvRvlayoutContainer.apply {
-                val adapter = RvAdapter<Siswa>("siswa", OperationsTypeRv.READ, mainNavController,2)
-                adapter.setData(dataSiswa)
-                adapter.notifyDataSetChanged()
-                this.adapter = adapter
-                layoutManager =
-                    LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-            }
         }
     }
 

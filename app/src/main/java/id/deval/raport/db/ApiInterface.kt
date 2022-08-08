@@ -1,6 +1,7 @@
 package id.deval.raport.db
 
 import id.deval.raport.db.models.Account
+import id.deval.raport.db.models.Siswa
 import id.deval.raport.utils.wrappers.GlobalWrapper
 import retrofit2.http.*
 
@@ -39,4 +40,9 @@ interface ApiInterface {
         @Header("Authorization") token:String,
         @Query("role") role: String,
     ) : GlobalWrapper<ArrayList<Account>>
+
+    @GET("siswa/")
+    suspend fun getAllSiswa(
+        @Header("Authorization") token: String,
+    ) : GlobalWrapper<ArrayList<Siswa>>
 }

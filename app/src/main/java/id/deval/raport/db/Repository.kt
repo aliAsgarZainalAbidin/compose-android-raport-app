@@ -1,6 +1,7 @@
 package id.deval.raport.db
 
 import id.deval.raport.db.models.Account
+import id.deval.raport.db.models.Siswa
 import id.deval.raport.utils.wrappers.GlobalWrapper
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -16,5 +17,9 @@ class Repository @Inject constructor(
 
     suspend fun getAllTeacher(token : String): GlobalWrapper<ArrayList<Account>>{
         return  apiInterface.getAccount("Bearer $token", "Guru")
+    }
+
+    suspend fun getAllSiswa(token: String): GlobalWrapper<ArrayList<Siswa>>{
+        return apiInterface.getAllSiswa("Bearer $token")
     }
 }
