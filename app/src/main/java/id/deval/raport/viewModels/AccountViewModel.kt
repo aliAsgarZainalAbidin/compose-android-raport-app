@@ -11,6 +11,7 @@ import id.deval.raport.db.models.AccountUpdate
 import id.deval.raport.utils.wrappers.GlobalWrapper
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import retrofit2.Response
 import javax.inject.Inject
 
 @HiltViewModel
@@ -22,6 +23,7 @@ class AccountViewModel @Inject constructor(
     private lateinit var mutableAddTeacherResponse : MutableLiveData<GlobalWrapper<Account>>
     private lateinit var mutableUpdateTeacherResponse : MutableLiveData<GlobalWrapper<Account>>
     private lateinit var mutableGetTeacherIdResponse : MutableLiveData<GlobalWrapper<Account>>
+    private lateinit var mutableDeleteTeacher : MutableLiveData<Response<Unit>>
 
     fun getAllTeacher(token : String) : LiveData<GlobalWrapper<ArrayList<Account>>>{
         mutableAccount = MutableLiveData()
@@ -58,5 +60,14 @@ class AccountViewModel @Inject constructor(
             mutableGetTeacherIdResponse.postValue(response)
         }
         return mutableGetTeacherIdResponse
+    }
+
+    fun deleteTeacherById(token:String, id:String): LiveData<Response<Unit>>{
+        mutableDeleteTeacher = MutableLiveData()
+        GlobalScope.launch {
+            val response = repository.deleteTeacherById(token, id)
+            mutableDeleteTeacher.postValue(response)
+        }
+        return mutableDeleteTeacher
     }
 }

@@ -1,5 +1,6 @@
 package id.deval.raport.ui.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
@@ -7,6 +8,7 @@ import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
 import id.deval.raport.R
 import id.deval.raport.databinding.RvItemBinding
+import id.deval.raport.db.event.CommonParams
 import id.deval.raport.db.models.Account
 import id.deval.raport.db.models.Kelas
 import id.deval.raport.db.models.Mapel
@@ -14,6 +16,7 @@ import id.deval.raport.db.models.Siswa
 import id.deval.raport.utils.Constanta
 import id.deval.raport.utils.OperationsTypeRv
 import id.deval.raport.utils.show
+import org.greenrobot.eventbus.EventBus
 
 class RvAdapter<T>(
     private val typeAdapter: String,
@@ -23,6 +26,7 @@ class RvAdapter<T>(
 ) : RecyclerView.Adapter<RvAdapter.RvViewHolder>() {
 
     private var listData = arrayListOf<T>()
+    private var bus = EventBus.getDefault()
 
     fun setData(list: ArrayList<T>) {
         listData.clear()
@@ -30,7 +34,7 @@ class RvAdapter<T>(
     }
 
     class RvViewHolder(private var binding: RvItemBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun <T> bind(type: String, data: T, operationsTypeRv: OperationsTypeRv,navController: NavController, maxItemShow: Int?) {
+        fun <T> bind(type: String, data: T, operationsTypeRv: OperationsTypeRv,navController: NavController, maxItemShow: Int?, bus: EventBus) {
             with(binding) {
                 if (operationsTypeRv == OperationsTypeRv.EDIT){
                     ivRvitemDelete.show()
@@ -48,6 +52,11 @@ class RvAdapter<T>(
                             val bundle = bundleOf()
                             bundle.putString(Constanta.ID, data.id)
                             navController.navigate(R.id.action_registrasiGuruFragment_to_addGuruFragment,bundle)
+                        }
+
+                        ivRvitemDelete.setOnClickListener {
+                            Log.d("TAG", "bind: ONCLICK DELETE ITEM")
+                            bus.post(CommonParams(data.id.toString()))
                         }
                         true
                     }
@@ -143,7 +152,7 @@ class RvAdapter<T>(
     }
 
     override fun onBindViewHolder(holder: RvViewHolder, position: Int) {
-        holder.bind(typeAdapter, listData[position], typeOperation,navController, maxItemShow)
+        holder.bind(typeAdapter, listData[position], typeOperation,navController, maxItemShow, bus)
     }
 
     override fun getItemCount(): Int {

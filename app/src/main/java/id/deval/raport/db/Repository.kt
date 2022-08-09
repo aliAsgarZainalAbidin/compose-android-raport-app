@@ -4,6 +4,7 @@ import id.deval.raport.db.models.Account
 import id.deval.raport.db.models.AccountUpdate
 import id.deval.raport.db.models.Siswa
 import id.deval.raport.utils.wrappers.GlobalWrapper
+import retrofit2.Response
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -34,5 +35,9 @@ class Repository @Inject constructor(
 
     suspend fun getTeacherById(token: String, id: String): GlobalWrapper<Account>{
         return apiInterface.getTeacherById("Bearer $token", id)
+    }
+
+    suspend fun deleteTeacherById(token: String, id:String) : Response<Unit>{
+        return apiInterface.deleteTeacherById("Bearer $token", id)
     }
 }

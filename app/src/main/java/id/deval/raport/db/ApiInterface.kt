@@ -4,6 +4,7 @@ import id.deval.raport.db.models.Account
 import id.deval.raport.db.models.AccountUpdate
 import id.deval.raport.db.models.Siswa
 import id.deval.raport.utils.wrappers.GlobalWrapper
+import retrofit2.Response
 import retrofit2.http.*
 
 interface ApiInterface {
@@ -65,4 +66,10 @@ interface ApiInterface {
         @Header("Authorization") token: String,
         @Path("id") id: String,
     ) : GlobalWrapper<Account>
+
+    @DELETE("account/{id}")
+    suspend fun deleteTeacherById(
+        @Header("Authorization") token:String,
+        @Path("id") id:String
+    ) : Response<Unit>
 }

@@ -7,9 +7,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import id.deval.raport.R
 import id.deval.raport.databinding.FragmentRegistrasiGuruBinding
+import id.deval.raport.db.event.CommonParams
 import id.deval.raport.db.models.Account
 import id.deval.raport.ui.adapter.RvAdapter
 import id.deval.raport.utils.*
+import org.greenrobot.eventbus.Subscribe
 
 class RegistrasiGuruFragment : BaseSkeletonFragment() {
 
@@ -29,21 +31,7 @@ class RegistrasiGuruFragment : BaseSkeletonFragment() {
         super.onViewCreated(view, savedInstanceState)
         dataGuru = DummyData().setDummyGuru()
         with(binding) {
-            accountViewModel.getAllTeacher(session.token.toString()).observe(viewLifecycleOwner){
-                dataGuru = it.data
-                mtvRegistrasiguruGuru.text = it.data.size.toString()
-
-                includeRvGuru.mtvRvlayoutAdd.invisible()
-                includeRvGuru.mtvRvlayoutViewmore.hide()
-                includeRvGuru.rvRvlayoutContainer.apply {
-                    val adapter = RvAdapter<Account>("guru", OperationsTypeRv.EDIT,mainNavController)
-                    adapter.setData(dataGuru)
-                    adapter.notifyDataSetChanged()
-                    this.adapter = adapter
-                    layoutManager =
-                        LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-                }
-            }
+            refreshRecyclerViewTeacher()
 
             mbRegistrasiguruAdd.setOnClickListener {
                 mainNavController.navigate(R.id.action_registrasiGuruFragment_to_addGuruFragment)
@@ -52,8 +40,35 @@ class RegistrasiGuruFragment : BaseSkeletonFragment() {
             ivRegistrasiguruBack.setOnClickListener {
                 mainNavController.popBackStack()
             }
+        }
+    }
 
+    @Subscribe
+    override fun deleteItem(commonParams: CommonParams) {
+        accountViewModel.deleteTeacherById(session.token.toString(), commonParams.id).observe(viewLifecycleOwner){
+            requireContext().showToast("Success")
+            refreshRecyclerViewTeacher()
+        }
+    }
 
+    fun refreshRecyclerViewTeacher() {
+        with(binding) {
+            accountViewModel.getAllTeacher(session.token.toString()).observe(viewLifecycleOwner) {
+                dataGuru = it.data
+                mtvRegistrasiguruGuru.text = it.data.size.toString()
+
+                includeRvGuru.mtvRvlayoutAdd.invisible()
+                includeRvGuru.mtvRvlayoutViewmore.hide()
+                includeRvGuru.rvRvlayoutContainer.apply {
+                    val adapter =
+                        RvAdapter<Account>("guru", OperationsTypeRv.EDIT, mainNavController)
+                    adapter.setData(dataGuru)
+                    adapter.notifyDataSetChanged()
+                    this.adapter = adapter
+                    layoutManager =
+                        LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+                }
+            }
         }
     }
 

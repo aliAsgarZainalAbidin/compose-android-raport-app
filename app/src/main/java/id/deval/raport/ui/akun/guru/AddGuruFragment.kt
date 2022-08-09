@@ -34,7 +34,7 @@ class AddGuruFragment : BaseSkeletonFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        id = arguments?.getString(Constanta.ID).toString()
+        id = arguments?.getString(Constanta.ID) ?: ""
         with(binding) {
 
             if (id.isNotEmpty()) {
@@ -128,11 +128,8 @@ class AddGuruFragment : BaseSkeletonFragment() {
                                 mainNavController.popBackStack()
                             }
                     }
-
                 }
-
             }
-
         }
     }
 }

@@ -10,19 +10,23 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import dagger.hilt.android.AndroidEntryPoint
 import id.deval.raport.db.Session
+import id.deval.raport.db.event.CommonParams
 import id.deval.raport.viewModels.AccountViewModel
 import id.deval.raport.viewModels.LoginViewModel
 import id.deval.raport.viewModels.SiswaViewModel
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
 import javax.inject.Inject
 
 @AndroidEntryPoint
 open class BaseSkeletonFragment : Fragment() {
 
-    lateinit var mainNavController : NavController
+    lateinit var mainNavController: NavController
     lateinit var secNavController: NavController
     val loginViewModel: LoginViewModel by viewModels()
-    val accountViewModel : AccountViewModel by viewModels()
-    val siswaViewModel : SiswaViewModel by viewModels()
+    val accountViewModel: AccountViewModel by viewModels()
+    val siswaViewModel: SiswaViewModel by viewModels()
+    val bus = EventBus.getDefault()
 
     @Inject
     lateinit var session: Session
@@ -39,5 +43,20 @@ open class BaseSkeletonFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         mainNavController = requireActivity().getMainNavController()
         secNavController = this.getSecNavController()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        bus.register(this)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        bus.unregister(this)
+    }
+
+    @Subscribe
+    open fun deleteItem(commonParams: CommonParams){
+
     }
 }
