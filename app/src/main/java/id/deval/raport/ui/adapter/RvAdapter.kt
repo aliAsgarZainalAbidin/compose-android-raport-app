@@ -62,6 +62,11 @@ class RvAdapter<T>(
                     }
                     "siswa" -> {
                         bindingSiswaRv(data as Siswa)
+                        ivRvitemEdit.setOnClickListener {
+                            val bundle = bundleOf()
+                            bundle.putString(Constanta.ID, data.id)
+                            navController.navigate(R.id.action_registrasiSiswaFragment_to_addSiswaFragment, bundle)
+                        }
                         true
                     }
                     "siswa-raport" -> {

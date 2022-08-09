@@ -1,4 +1,4 @@
-package id.deval.raport.db.models
+package id.deval.raport.db.models.request
 
 import android.os.Parcel
 import android.os.Parcelable

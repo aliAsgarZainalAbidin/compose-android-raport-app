@@ -533,6 +533,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="Kelas"
+            android:visibility="gone"
             android:textColor="@color/white"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
@@ -542,6 +543,7 @@
             android:id="@+id/til_addsiswa_kelas"
             style="@style/AutoCompleteTextView.Custom"
             android:layout_width="match_parent"
+            android:visibility="gone"
             android:layout_height="wrap_content"
             android:layout_marginTop="0dp"
             app:layout_constraintTop_toBottomOf="@+id/mtv_addsiswa_kelas">

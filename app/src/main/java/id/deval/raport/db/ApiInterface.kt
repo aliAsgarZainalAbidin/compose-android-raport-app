@@ -1,7 +1,7 @@
 package id.deval.raport.db
 
 import id.deval.raport.db.models.Account
-import id.deval.raport.db.models.AccountUpdate
+import id.deval.raport.db.models.request.AccountUpdate
 import id.deval.raport.db.models.Siswa
 import id.deval.raport.utils.wrappers.GlobalWrapper
 import retrofit2.Response
@@ -47,6 +47,12 @@ interface ApiInterface {
     suspend fun getAllSiswa(
         @Header("Authorization") token: String,
     ) : GlobalWrapper<ArrayList<Siswa>>
+
+    @POST("siswa/")
+    suspend fun addSiswa(
+        @Header("Authorization") token: String,
+        @Body siswa: Siswa
+    ) : GlobalWrapper<Siswa>
 
     @POST("account/")
     suspend fun addAccountTeacher(

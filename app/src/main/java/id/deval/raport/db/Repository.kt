@@ -1,7 +1,7 @@
 package id.deval.raport.db
 
 import id.deval.raport.db.models.Account
-import id.deval.raport.db.models.AccountUpdate
+import id.deval.raport.db.models.request.AccountUpdate
 import id.deval.raport.db.models.Siswa
 import id.deval.raport.utils.wrappers.GlobalWrapper
 import retrofit2.Response
@@ -23,6 +23,10 @@ class Repository @Inject constructor(
 
     suspend fun getAllSiswa(token: String): GlobalWrapper<ArrayList<Siswa>>{
         return apiInterface.getAllSiswa("Bearer $token")
+    }
+
+    suspend fun addSiswa(token:String, siswa: Siswa): GlobalWrapper<Siswa>{
+        return apiInterface.addSiswa("Bearer $token", siswa)
     }
 
     suspend fun addAccountTeacher(token: String, account: Account): GlobalWrapper<Account>{
