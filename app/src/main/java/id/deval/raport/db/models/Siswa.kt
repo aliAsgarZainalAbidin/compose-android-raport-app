@@ -1,7 +1,10 @@
 package id.deval.raport.db.models
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class Siswa(
 
 	@field:SerializedName("_id")
@@ -57,4 +60,4 @@ data class Siswa(
 
 	@field:SerializedName("pekerjaanIbu")
 	val pekerjaanIbu: String? = null
-)
+) : Parcelable
