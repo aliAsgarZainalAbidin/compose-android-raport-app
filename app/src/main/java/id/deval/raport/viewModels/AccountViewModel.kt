@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import id.deval.raport.db.Repository
 import id.deval.raport.db.models.Account
+import id.deval.raport.db.models.AccountUpdate
 import id.deval.raport.utils.wrappers.GlobalWrapper
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -19,6 +20,8 @@ class AccountViewModel @Inject constructor(
 
     private lateinit var mutableAccount : MutableLiveData<GlobalWrapper<ArrayList<Account>>>
     private lateinit var mutableAddTeacherResponse : MutableLiveData<GlobalWrapper<Account>>
+    private lateinit var mutableUpdateTeacherResponse : MutableLiveData<GlobalWrapper<Account>>
+    private lateinit var mutableGetTeacherIdResponse : MutableLiveData<GlobalWrapper<Account>>
 
     fun getAllTeacher(token : String) : LiveData<GlobalWrapper<ArrayList<Account>>>{
         mutableAccount = MutableLiveData()
@@ -37,5 +40,23 @@ class AccountViewModel @Inject constructor(
         }
 
         return mutableAddTeacherResponse
+    }
+
+    fun updateTeacher(token: String, id :String, account: AccountUpdate): LiveData<GlobalWrapper<Account>>{
+        mutableUpdateTeacherResponse = MutableLiveData()
+        GlobalScope.launch {
+            val response = repository.updateTeacher(token,id, account)
+            mutableUpdateTeacherResponse.postValue(response)
+        }
+        return mutableUpdateTeacherResponse
+    }
+
+    fun getTeacherById(token:String, id:String): LiveData<GlobalWrapper<Account>>{
+        mutableGetTeacherIdResponse = MutableLiveData()
+        GlobalScope.launch {
+            val response = repository.getTeacherById(token, id)
+            mutableGetTeacherIdResponse.postValue(response)
+        }
+        return mutableGetTeacherIdResponse
     }
 }

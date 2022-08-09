@@ -1,6 +1,7 @@
 package id.deval.raport.db
 
 import id.deval.raport.db.models.Account
+import id.deval.raport.db.models.AccountUpdate
 import id.deval.raport.db.models.Siswa
 import id.deval.raport.utils.wrappers.GlobalWrapper
 import retrofit2.http.*
@@ -50,5 +51,18 @@ interface ApiInterface {
     suspend fun addAccountTeacher(
         @Header("Authorization") token: String,
         @Body account: Account
+    ) : GlobalWrapper<Account>
+
+    @PUT("account/{id}")
+    suspend fun updateAccountTeacher(
+        @Header("Authorization") token: String,
+        @Path("id") id: String,
+        @Body account: AccountUpdate
+    ) : GlobalWrapper<Account>
+
+    @GET("account/{id}")
+    suspend fun getTeacherById(
+        @Header("Authorization") token: String,
+        @Path("id") id: String,
     ) : GlobalWrapper<Account>
 }

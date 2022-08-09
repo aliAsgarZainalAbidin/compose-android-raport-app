@@ -1,6 +1,7 @@
 package id.deval.raport.ui.akun.guru
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -9,7 +10,9 @@ import androidx.navigation.NavController
 import id.deval.raport.R
 import id.deval.raport.databinding.FragmentAddGuruBinding
 import id.deval.raport.db.models.Account
+import id.deval.raport.db.models.AccountUpdate
 import id.deval.raport.utils.BaseSkeletonFragment
+import id.deval.raport.utils.Constanta
 import id.deval.raport.utils.HelperView
 import id.deval.raport.utils.showToast
 
@@ -17,6 +20,7 @@ class AddGuruFragment : BaseSkeletonFragment() {
 
     private lateinit var _binding: FragmentAddGuruBinding
     private val binding get() = _binding
+    private lateinit var id: String
     private var isValid = false
 
     override fun onCreateView(
@@ -30,10 +34,29 @@ class AddGuruFragment : BaseSkeletonFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        id = arguments?.getString(Constanta.ID).toString()
         with(binding) {
+
+            if (id.isNotEmpty()) {
+                tilAddguruNik.isEnabled = false
+
+                Log.d("TAG", "onViewCreated: $id")
+                accountViewModel.getTeacherById(session.token.toString(), id)
+                    .observe(viewLifecycleOwner) {
+                        val data = it.data
+                        tietAddguruNamalengkap.setText(data.name)
+                        tietAddguruHp.setText(data.phone)
+                        tietAddguruEmail.setText(data.email)
+                        tietAddguruAlamat.setText(data.address)
+                        tietAddguruPassword.setText("")
+                        tietAddguruNik.setText(data.username)
+                    }
+            }
+
             ivAddguruBack.setOnClickListener {
                 mainNavController.popBackStack()
             }
+
             mbAddguruSimpan.setOnClickListener {
                 val namaLengkap = tietAddguruNamalengkap.text.toString()
                 val nik = tietAddguruNik.text.toString()
@@ -90,11 +113,22 @@ class AddGuruFragment : BaseSkeletonFragment() {
                         null
                     )
 
-                    accountViewModel.addTeacher(session.token.toString(), account)
-                        .observe(viewLifecycleOwner) {
-                            requireContext().showToast("${it.message}, Berhasil menambahkan data Guru")
-                            mainNavController.popBackStack()
-                        }
+                    Log.d("TAG", "onViewCreated: $id")
+                    if (id.isEmpty()) {
+                        accountViewModel.addTeacher(session.token.toString(), account)
+                            .observe(viewLifecycleOwner) {
+                                requireContext().showToast("${it.status}, Berhasil menambahkan data Guru")
+                                mainNavController.popBackStack()
+                            }
+                    } else {
+                        val accountUpdate = AccountUpdate(password, alamat, nomorHp, namaLengkap, email)
+                        accountViewModel.updateTeacher(session.token.toString(), id, accountUpdate)
+                            .observe(viewLifecycleOwner) {
+                                requireContext().showToast("${it.status}, Berhasil memperbaharui data Guru")
+                                mainNavController.popBackStack()
+                            }
+                    }
+
                 }
 
             }

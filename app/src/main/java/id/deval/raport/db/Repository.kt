@@ -1,6 +1,7 @@
 package id.deval.raport.db
 
 import id.deval.raport.db.models.Account
+import id.deval.raport.db.models.AccountUpdate
 import id.deval.raport.db.models.Siswa
 import id.deval.raport.utils.wrappers.GlobalWrapper
 import javax.inject.Inject
@@ -25,5 +26,13 @@ class Repository @Inject constructor(
 
     suspend fun addAccountTeacher(token: String, account: Account): GlobalWrapper<Account>{
         return apiInterface.addAccountTeacher("Bearer $token", account)
+    }
+
+    suspend fun updateTeacher(token: String,id : String, account: AccountUpdate): GlobalWrapper<Account>{
+        return apiInterface.updateAccountTeacher("Bearer $token",id, account)
+    }
+
+    suspend fun getTeacherById(token: String, id: String): GlobalWrapper<Account>{
+        return apiInterface.getTeacherById("Bearer $token", id)
     }
 }

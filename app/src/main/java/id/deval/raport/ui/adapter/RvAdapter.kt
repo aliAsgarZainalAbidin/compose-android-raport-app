@@ -44,6 +44,11 @@ class RvAdapter<T>(
                         mtvRvitemTitlenis.text = "NIK"
                         mtvRvitemName.text = data.name
                         mtvRvitemNis.text = data.username
+                        ivRvitemEdit.setOnClickListener {
+                            val bundle = bundleOf()
+                            bundle.putString(Constanta.ID, data.id)
+                            navController.navigate(R.id.action_registrasiGuruFragment_to_addGuruFragment,bundle)
+                        }
                         true
                     }
                     "siswa" -> {
