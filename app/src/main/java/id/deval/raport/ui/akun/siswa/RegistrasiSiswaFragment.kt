@@ -13,8 +13,7 @@ import id.deval.raport.utils.*
 
 class RegistrasiSiswaFragment : BaseSkeletonFragment() {
 
-    private lateinit var _binding : FragmentRegistrasiSiswaBinding
-    private lateinit var dataSiswa : ArrayList<Siswa>
+    private lateinit var _binding: FragmentRegistrasiSiswaBinding
     private val binding get() = _binding
 
     override fun onCreateView(
@@ -28,18 +27,11 @@ class RegistrasiSiswaFragment : BaseSkeletonFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        dataSiswa = DummyData().setDummyDataSiswa()
-        with(binding){
+        with(binding) {
             includeRvGuru.mtvRvlayoutTitle.text = "Siswa"
             includeRvGuru.mtvRvlayoutViewmore.hide()
             includeRvGuru.mtvRvlayoutAdd.invisible()
-            includeRvGuru.rvRvlayoutContainer.apply {
-                val adapter = RvAdapter<Siswa>("siswa", OperationsTypeRv.EDIT,mainNavController)
-                adapter.setData(dataSiswa)
-                adapter.notifyDataSetChanged()
-                this.adapter = adapter
-                layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-            }
+            refreshRecyclerViewSiswa()
 
             mbRegistrasisiswaAdd.setOnClickListener {
                 mainNavController.navigate(R.id.action_registrasiSiswaFragment_to_addSiswaFragment)
@@ -47,6 +39,23 @@ class RegistrasiSiswaFragment : BaseSkeletonFragment() {
 
             ivRegistrasisiswaBack.setOnClickListener {
                 mainNavController.popBackStack()
+            }
+        }
+    }
+
+    fun refreshRecyclerViewSiswa() {
+        with(binding) {
+            siswaViewModel.getAllSiswa(session.token.toString()).observe(viewLifecycleOwner) {
+                mtvRegistrasisiswaGuru.text = it.data.size.toString()
+                includeRvGuru.rvRvlayoutContainer.apply {
+                    val adapter =
+                        RvAdapter<Siswa>("siswa", OperationsTypeRv.EDIT, mainNavController)
+                    adapter.setData(it.data)
+                    adapter.notifyDataSetChanged()
+                    this.adapter = adapter
+                    layoutManager =
+                        LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+                }
             }
         }
     }

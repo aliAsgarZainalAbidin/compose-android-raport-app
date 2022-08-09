@@ -17,7 +17,6 @@ class RegistrasiGuruFragment : BaseSkeletonFragment() {
 
     private lateinit var _binding: FragmentRegistrasiGuruBinding
     private val binding get() = _binding
-    private var dataGuru = arrayListOf<Account>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,7 +28,6 @@ class RegistrasiGuruFragment : BaseSkeletonFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        dataGuru = DummyData().setDummyGuru()
         with(binding) {
             refreshRecyclerViewTeacher()
 
@@ -54,7 +52,6 @@ class RegistrasiGuruFragment : BaseSkeletonFragment() {
     fun refreshRecyclerViewTeacher() {
         with(binding) {
             accountViewModel.getAllTeacher(session.token.toString()).observe(viewLifecycleOwner) {
-                dataGuru = it.data
                 mtvRegistrasiguruGuru.text = it.data.size.toString()
 
                 includeRvGuru.mtvRvlayoutAdd.invisible()
@@ -62,7 +59,7 @@ class RegistrasiGuruFragment : BaseSkeletonFragment() {
                 includeRvGuru.rvRvlayoutContainer.apply {
                     val adapter =
                         RvAdapter<Account>("guru", OperationsTypeRv.EDIT, mainNavController)
-                    adapter.setData(dataGuru)
+                    adapter.setData(it.data)
                     adapter.notifyDataSetChanged()
                     this.adapter = adapter
                     layoutManager =
