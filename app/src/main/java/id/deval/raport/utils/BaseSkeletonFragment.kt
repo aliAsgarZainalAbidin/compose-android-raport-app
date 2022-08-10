@@ -20,24 +20,13 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 open class BaseSkeletonFragment : Fragment() {
-
     lateinit var mainNavController: NavController
     lateinit var secNavController: NavController
     val loginViewModel: LoginViewModel by viewModels()
     val accountViewModel: AccountViewModel by viewModels()
     val siswaViewModel: SiswaViewModel by viewModels()
     val bus = EventBus.getDefault()
-
-    @Inject
-    lateinit var session: Session
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return super.onCreateView(inflater, container, savedInstanceState)
-    }
+    @Inject lateinit var session: Session
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -56,7 +45,5 @@ open class BaseSkeletonFragment : Fragment() {
     }
 
     @Subscribe
-    open fun deleteItem(commonParams: CommonParams){
-
-    }
+    open fun deleteItem(commonParams: CommonParams){}
 }

@@ -59,5 +59,8 @@ data class Siswa(
 	val pekerjaanAyah: String? = null,
 
 	@field:SerializedName("pekerjaanIbu")
-	val pekerjaanIbu: String? = null
+	val pekerjaanIbu: String? = null,
+
+	@field:SerializedName("photo")
+	val photo: String? = null
 ) : Parcelable

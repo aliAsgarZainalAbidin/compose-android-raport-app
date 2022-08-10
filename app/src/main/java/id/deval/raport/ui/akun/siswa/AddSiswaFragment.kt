@@ -2,10 +2,7 @@ package id.deval.raport.ui.akun.siswa
 
 import android.Manifest
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
-import android.database.Cursor
-import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
@@ -14,6 +11,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.os.bundleOf
+import com.bumptech.glide.Glide
+import id.deval.raport.BuildConfig.BASE_URL
 import id.deval.raport.R
 import id.deval.raport.databinding.FragmentAddSiswaBinding
 import id.deval.raport.db.models.Siswa
@@ -86,7 +85,31 @@ class AddSiswaFragment : BaseSkeletonFragment() {
             }
 
             if (id.isNotEmpty()) {
-                TODO()
+                tietAddsiswaNisn.isEnabled = false
+                siswaViewModel.getSiswa(session.token.toString(),id).observe(viewLifecycleOwner){
+                    val siswa = it.data
+                    tietAddsiswaNamalengkap.setText(siswa.name)
+                    tietAddsiswaNisn.setText(siswa.nis)
+                    tietAddsiswaTempatlahir.setText(siswa.tempatLahir)
+                    tietAddsiswaTanggalLahir.setText(siswa.tanggalLahir)
+                    tietAddsiswaGender.setText(siswa.gender)
+                    tietAddsiswaReligion.setText(siswa.religion)
+                    tietAddsiswaEducation.setText(siswa.education)
+                    tietAddsiswaAddress.setText(siswa.address)
+                    tietAddsiswaNamaAyah.setText(siswa.namaAyah)
+                    tietAddsiswaNamaIbu.setText(siswa.namaIbu)
+                    tietAddsiswaPekerjaanAyah.setText(siswa.pekerjaanAyah)
+                    tietAddsiswaPekerjaanIbu.setText(siswa.pekerjaanIbu)
+                    tietAddsiswaNamaWali.setText(siswa.namaWali)
+                    tietAddsiswaPekerjaanWali.setText(siswa.pekerjaanWali)
+                    tietAddsiswaAlamatWali.setText(siswa.alamatWali)
+                    tietAddsiswaHp.setText(siswa.phone)
+                    //IMPLEMENTASI IMAGE
+                    val urlPhoto = "${BASE_URL}siswa/file/${siswa.photo}"
+                    Glide.with(requireContext())
+                        .load(urlPhoto)
+                        .into(ivAddsiswaPhoto)
+                }
             }
 
             when (role) {

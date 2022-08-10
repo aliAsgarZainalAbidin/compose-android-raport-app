@@ -20,6 +20,16 @@ class SiswaViewModel @Inject constructor(
 
     private lateinit var mutablelistSiswa: MutableLiveData<GlobalWrapper<ArrayList<Siswa>>>
     private lateinit var mutableAddSiswa: MutableLiveData<GlobalWrapper<Siswa>>
+    private lateinit var mutableSiswa: MutableLiveData<GlobalWrapper<Siswa>>
+
+    fun getSiswa(token:String, id:String): LiveData<GlobalWrapper<Siswa>>{
+        mutableSiswa = MutableLiveData()
+        GlobalScope.launch {
+            val response = repository.getSiswa(token, id)
+            mutableSiswa.postValue(response)
+        }
+        return mutableSiswa
+    }
 
     fun getAllSiswa(token: String): LiveData<GlobalWrapper<ArrayList<Siswa>>> {
         mutablelistSiswa = MutableLiveData()

@@ -26,6 +26,10 @@ class Repository @Inject constructor(
         return apiInterface.getAllSiswa("Bearer $token")
     }
 
+    suspend fun getSiswa(token: String, id:String): GlobalWrapper<Siswa>{
+        return apiInterface.getSiswa("Bearer $token", id)
+    }
+
     suspend fun addSiswa(
         token: String,
         name: MultipartBody.Part,
