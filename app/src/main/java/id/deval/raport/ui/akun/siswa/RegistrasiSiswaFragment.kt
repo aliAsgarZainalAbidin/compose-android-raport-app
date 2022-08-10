@@ -1,6 +1,7 @@
 package id.deval.raport.ui.akun.siswa
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,9 +9,11 @@ import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.LinearLayoutManager
 import id.deval.raport.R
 import id.deval.raport.databinding.FragmentRegistrasiSiswaBinding
+import id.deval.raport.db.event.CommonParams
 import id.deval.raport.db.models.Siswa
 import id.deval.raport.ui.adapter.RvAdapter
 import id.deval.raport.utils.*
+import org.greenrobot.eventbus.Subscribe
 
 class RegistrasiSiswaFragment : BaseSkeletonFragment() {
 
@@ -37,7 +40,10 @@ class RegistrasiSiswaFragment : BaseSkeletonFragment() {
             mbRegistrasisiswaAdd.setOnClickListener {
                 val bundle = bundleOf()
                 bundle.putString(Constanta.ROLE, "admin")
-                mainNavController.navigate(R.id.action_registrasiSiswaFragment_to_addSiswaFragment, bundle)
+                mainNavController.navigate(
+                    R.id.action_registrasiSiswaFragment_to_addSiswaFragment,
+                    bundle
+                )
             }
 
             ivRegistrasisiswaBack.setOnClickListener {
@@ -60,6 +66,21 @@ class RegistrasiSiswaFragment : BaseSkeletonFragment() {
                         LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
                 }
             }
+        }
+    }
+
+    @Subscribe
+    override fun deleteItem(commonParams: CommonParams) {
+        super.deleteItem(commonParams)
+        accountViewModel.deleteAccountByUsername(
+            session.token.toString(),
+            commonParams.username.toString()
+        ).observe(viewLifecycleOwner) {
+            Log.d("TAG", "deleteItem: ${commonParams.id}")
+            siswaViewModel.deleteSiswaById(session.token.toString(), commonParams.id)
+                .observe(viewLifecycleOwner) {
+                    refreshRecyclerViewSiswa()
+                }
         }
     }
 

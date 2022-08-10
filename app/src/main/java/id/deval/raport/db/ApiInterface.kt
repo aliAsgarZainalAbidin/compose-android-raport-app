@@ -94,6 +94,12 @@ interface ApiInterface {
         @Body siswa: Siswa
     ) : GlobalWrapper<Siswa>
 
+    @DELETE("siswa/{id}")
+    suspend fun deleteSiswa(
+        @Header("Authorization") token: String,
+        @Path("id") id: String
+    ) : Response<Unit>
+
     @POST("account/")
     suspend fun addAccountTeacher(
         @Header("Authorization") token: String,
@@ -124,4 +130,11 @@ interface ApiInterface {
         @Header("Authorization") token: String,
         @Path("username") username:String
     ) : GlobalWrapper<Account>
+
+    @DELETE("account/detail/{username}")
+    suspend fun deleteAccountByUsername(
+        @Header("Authorization") token: String,
+        @Path("username") username:String
+    ) : Response<Unit>
+
 }

@@ -77,6 +77,10 @@ class Repository @Inject constructor(
         return apiInterface.updateSiswa("Bearer $token", id, siswa)
     }
 
+    suspend fun deleteSiswaById(token: String, id: String): Response<Unit>{
+        return apiInterface.deleteSiswa("Bearer $token", id)
+    }
+
     suspend fun uploadPhoto(token: String, id: String, photo: MultipartBody.Part) : GlobalWrapper<Siswa>{
         return apiInterface.uploadPhoto("Bearer $token", id, photo)
     }
@@ -104,4 +108,9 @@ class Repository @Inject constructor(
     suspend fun getAccountByUsername(token: String, username: String): GlobalWrapper<Account>{
         return apiInterface.getAccountByUsername("Bearer $token", username)
     }
+
+    suspend fun deleteAccountByUsername(token: String, username: String): Response<Unit> {
+        return apiInterface.deleteAccountByUsername("Bearer $token", username)
+    }
+
 }

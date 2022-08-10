@@ -11,6 +11,7 @@ import id.deval.raport.utils.wrappers.GlobalWrapper
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import okhttp3.MultipartBody
+import retrofit2.Response
 import javax.inject.Inject
 
 
@@ -24,6 +25,7 @@ class SiswaViewModel @Inject constructor(
     private lateinit var mutableSiswa: MutableLiveData<GlobalWrapper<SiswaUpdate>>
     private lateinit var mutableUpdateSiswa : MutableLiveData<GlobalWrapper<Siswa>>
     private lateinit var mutableUploadPhoto : MutableLiveData<GlobalWrapper<Siswa>>
+    private lateinit var mutableDeleteSiswa : MutableLiveData<Response<Unit>>
 
     fun getSiswa(token:String, id:String): LiveData<GlobalWrapper<SiswaUpdate>>{
         mutableSiswa = MutableLiveData()
@@ -105,6 +107,15 @@ class SiswaViewModel @Inject constructor(
             mutableUploadPhoto.postValue(response)
         }
         return mutableUploadPhoto
+    }
+
+    fun deleteSiswaById(token: String, id: String): LiveData<Response<Unit>>{
+        mutableDeleteSiswa = MutableLiveData()
+        GlobalScope.launch {
+            val response = repository.deleteSiswaById(token, id)
+            mutableDeleteSiswa.postValue(response)
+        }
+        return mutableDeleteSiswa
     }
 
 }

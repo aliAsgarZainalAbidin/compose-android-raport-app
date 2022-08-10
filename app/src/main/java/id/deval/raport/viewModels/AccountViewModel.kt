@@ -25,6 +25,7 @@ class AccountViewModel @Inject constructor(
     private lateinit var mutableUpdateTeacherResponse : MutableLiveData<GlobalWrapper<Account>>
     private lateinit var mutableGetTeacherIdResponse : MutableLiveData<GlobalWrapper<Account>>
     private lateinit var mutableDeleteTeacher : MutableLiveData<Response<Unit>>
+    private lateinit var mutableDeleteAccount : MutableLiveData<Response<Unit>>
     private lateinit var mutableDetailAccount : MutableLiveData<GlobalWrapper<Account>>
 
     fun getAllTeacher(token : String) : LiveData<GlobalWrapper<ArrayList<Account>>>{
@@ -75,6 +76,15 @@ class AccountViewModel @Inject constructor(
             mutableDeleteTeacher.postValue(response)
         }
         return mutableDeleteTeacher
+    }
+
+    fun deleteAccountByUsername(token:String, username:String): LiveData<Response<Unit>>{
+        mutableDeleteAccount = MutableLiveData()
+        GlobalScope.launch {
+            val response = repository.deleteAccountByUsername(token, username)
+            mutableDeleteAccount.postValue(response)
+        }
+        return mutableDeleteAccount
     }
 
     fun getAccountByUsername(token: String, username:String): LiveData<GlobalWrapper<Account>>{

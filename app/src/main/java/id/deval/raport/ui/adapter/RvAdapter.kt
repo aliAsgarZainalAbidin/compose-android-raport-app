@@ -68,6 +68,11 @@ class RvAdapter<T>(
                             bundle.putString(Constanta.ROLE, "admin")
                             navController.navigate(R.id.action_registrasiSiswaFragment_to_addSiswaFragment, bundle)
                         }
+
+                        ivRvitemDelete.setOnClickListener {
+                            Log.d("TAG", "bind: ONCLICK DELETE ITEM")
+                            bus.post(CommonParams(data.id.toString(), data.nis))
+                        }
                         true
                     }
                     "siswa-raport" -> {
