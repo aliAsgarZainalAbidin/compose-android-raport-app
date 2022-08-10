@@ -100,4 +100,8 @@ class Repository @Inject constructor(
     suspend fun deleteTeacherById(token: String, id: String): Response<Unit> {
         return apiInterface.deleteTeacherById("Bearer $token", id)
     }
+
+    suspend fun getAccountByUsername(token: String, username: String): GlobalWrapper<Account>{
+        return apiInterface.getAccountByUsername("Bearer $token", username)
+    }
 }

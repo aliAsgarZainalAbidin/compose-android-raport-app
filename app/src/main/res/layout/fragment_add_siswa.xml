@@ -574,7 +574,7 @@
             style="@style/MaterialButton.Custom"
             android:layout_width="match_parent"
             android:layout_marginTop="48dp"
-            android:text="Simpan"
+            android:text="Selanjutnya"
             app:layout_constraintTop_toBottomOf="@id/iv_addsiswa_photo" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

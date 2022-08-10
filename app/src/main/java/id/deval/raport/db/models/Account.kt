@@ -33,5 +33,8 @@ data class Account(
 	@field:SerializedName("username")
 	val username: String? = null,
 
+	@field:SerializedName("tanggalLahir")
+	val tanggalLahir: String? = null,
+
 	val token : String? = null
 )

@@ -308,6 +308,11 @@ class AddSiswaFragment : BaseSkeletonFragment() {
                                 Log.d(TAG, "viewAsAdmin: UPDATE PHOTO")
                             }
                             Log.d(TAG, "viewAsAdmin: UPDATE SISWA")
+
+                            val bundle = bundleOf()
+                            bundle.putParcelable(Constanta.PARCELABLE_ITEM, siswa)
+                            bundle.putString(Constanta.USERNAME, nisn)
+                            mainNavController.navigate(R.id.action_addSiswaFragment_to_addOrangTuaFragment, bundle)
                         }
                     }
                 }

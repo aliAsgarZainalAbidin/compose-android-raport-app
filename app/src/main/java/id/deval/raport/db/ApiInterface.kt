@@ -118,4 +118,10 @@ interface ApiInterface {
         @Header("Authorization") token:String,
         @Path("id") id:String
     ) : Response<Unit>
+
+    @GET("account/detail/{username}")
+    suspend fun getAccountByUsername(
+        @Header("Authorization") token: String,
+        @Path("username") username:String
+    ) : GlobalWrapper<Account>
 }
