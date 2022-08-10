@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import id.deval.raport.db.Repository
 import id.deval.raport.db.models.Siswa
+import id.deval.raport.db.models.request.SiswaUpdate
 import id.deval.raport.utils.wrappers.GlobalWrapper
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -20,9 +21,11 @@ class SiswaViewModel @Inject constructor(
 
     private lateinit var mutablelistSiswa: MutableLiveData<GlobalWrapper<ArrayList<Siswa>>>
     private lateinit var mutableAddSiswa: MutableLiveData<GlobalWrapper<Siswa>>
-    private lateinit var mutableSiswa: MutableLiveData<GlobalWrapper<Siswa>>
+    private lateinit var mutableSiswa: MutableLiveData<GlobalWrapper<SiswaUpdate>>
+    private lateinit var mutableUpdateSiswa : MutableLiveData<GlobalWrapper<Siswa>>
+    private lateinit var mutableUploadPhoto : MutableLiveData<GlobalWrapper<Siswa>>
 
-    fun getSiswa(token:String, id:String): LiveData<GlobalWrapper<Siswa>>{
+    fun getSiswa(token:String, id:String): LiveData<GlobalWrapper<SiswaUpdate>>{
         mutableSiswa = MutableLiveData()
         GlobalScope.launch {
             val response = repository.getSiswa(token, id)
@@ -84,6 +87,24 @@ class SiswaViewModel @Inject constructor(
             mutableAddSiswa.postValue(response)
         }
         return mutableAddSiswa
+    }
+
+    fun updateSiswa(token: String, id: String, siswa: Siswa) : LiveData<GlobalWrapper<Siswa>>{
+        mutableUpdateSiswa = MutableLiveData()
+        GlobalScope.launch {
+            val response = repository.updateSiswa(token, id, siswa)
+            mutableUpdateSiswa.postValue(response)
+        }
+        return mutableUpdateSiswa
+    }
+
+    fun uploadPhotoSiswa(token: String, id: String, photo: MultipartBody.Part) : LiveData<GlobalWrapper<Siswa>>{
+        mutableUploadPhoto = MutableLiveData()
+        GlobalScope.launch {
+            val response = repository.uploadPhoto(token, id, photo)
+            mutableUploadPhoto.postValue(response)
+        }
+        return mutableUploadPhoto
     }
 
 }

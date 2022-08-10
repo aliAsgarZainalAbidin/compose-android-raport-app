@@ -65,6 +65,7 @@ class RvAdapter<T>(
                         ivRvitemEdit.setOnClickListener {
                             val bundle = bundleOf()
                             bundle.putString(Constanta.ID, data.id)
+                            bundle.putString(Constanta.ROLE, "admin")
                             navController.navigate(R.id.action_registrasiSiswaFragment_to_addSiswaFragment, bundle)
                         }
                         true

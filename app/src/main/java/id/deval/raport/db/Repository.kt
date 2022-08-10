@@ -3,6 +3,7 @@ package id.deval.raport.db
 import id.deval.raport.db.models.Account
 import id.deval.raport.db.models.request.AccountUpdate
 import id.deval.raport.db.models.Siswa
+import id.deval.raport.db.models.request.SiswaUpdate
 import id.deval.raport.utils.wrappers.GlobalWrapper
 import okhttp3.MultipartBody
 import retrofit2.Response
@@ -26,7 +27,7 @@ class Repository @Inject constructor(
         return apiInterface.getAllSiswa("Bearer $token")
     }
 
-    suspend fun getSiswa(token: String, id:String): GlobalWrapper<Siswa>{
+    suspend fun getSiswa(token: String, id:String): GlobalWrapper<SiswaUpdate>{
         return apiInterface.getSiswa("Bearer $token", id)
     }
 
@@ -70,6 +71,14 @@ class Repository @Inject constructor(
             phone,
             photo
         )
+    }
+
+    suspend fun updateSiswa(token: String, id: String, siswa: Siswa) : GlobalWrapper<Siswa>{
+        return apiInterface.updateSiswa("Bearer $token", id, siswa)
+    }
+
+    suspend fun uploadPhoto(token: String, id: String, photo: MultipartBody.Part) : GlobalWrapper<Siswa>{
+        return apiInterface.uploadPhoto("Bearer $token", id, photo)
     }
 
     suspend fun addAccountTeacher(token: String, account: Account): GlobalWrapper<Account> {

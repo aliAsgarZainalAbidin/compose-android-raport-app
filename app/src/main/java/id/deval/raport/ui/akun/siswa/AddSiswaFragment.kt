@@ -2,6 +2,7 @@ package id.deval.raport.ui.akun.siswa
 
 import android.Manifest
 import android.app.Activity
+import android.content.ContentValues.TAG
 import android.content.Intent
 import android.os.Bundle
 import android.provider.MediaStore
@@ -17,9 +18,14 @@ import id.deval.raport.BuildConfig.BASE_URL
 import id.deval.raport.R
 import id.deval.raport.databinding.FragmentAddSiswaBinding
 import id.deval.raport.db.models.Siswa
+import id.deval.raport.db.models.request.SiswaUpdate
 import id.deval.raport.utils.BaseSkeletonFragment
 import id.deval.raport.utils.Constanta
 import id.deval.raport.utils.hide
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import java.io.File
 
 class AddSiswaFragment : BaseSkeletonFragment() {
 
@@ -36,7 +42,8 @@ class AddSiswaFragment : BaseSkeletonFragment() {
             )
         }
 
-    private val startPickImageLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { it ->
+    private val startPickImageLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { it ->
             if (it.resultCode == Activity.RESULT_OK) {
                 if (it.data != null && it.data!!.data != null) {
                     val selectedImageUri = it.data!!.data!!
@@ -77,6 +84,17 @@ class AddSiswaFragment : BaseSkeletonFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val adapterReligion = ArrayAdapter(
+            requireContext(),
+            R.layout.list_item,
+            resources.getStringArray(R.array.religion)
+        )
+
+        val adapterGender = ArrayAdapter(
+            requireContext(),
+            R.layout.list_item,
+            resources.getStringArray(R.array.gender)
+        )
 
         val role = arguments?.getString(Constanta.ROLE).toString()
         id = arguments?.getString(Constanta.ID) ?: ""
@@ -85,16 +103,17 @@ class AddSiswaFragment : BaseSkeletonFragment() {
                 mainNavController.popBackStack()
             }
 
+            Log.d(TAG, "onViewCreated: $id")
             if (id.isNotEmpty()) {
                 tietAddsiswaNisn.isEnabled = false
-                siswaViewModel.getSiswa(session.token.toString(),id).observe(viewLifecycleOwner){
+                siswaViewModel.getSiswa(session.token.toString(), id).observe(viewLifecycleOwner) {
                     val siswa = it.data
                     tietAddsiswaNamalengkap.setText(siswa.name)
                     tietAddsiswaNisn.setText(siswa.nis)
                     tietAddsiswaTempatlahir.setText(siswa.tempatLahir)
                     tietAddsiswaTanggalLahir.setText(siswa.tanggalLahir)
-                    tietAddsiswaGender.setText(siswa.gender)
-                    tietAddsiswaReligion.setText(siswa.religion)
+                    tietAddsiswaGender.setText(siswa.gender, false)
+                    tietAddsiswaReligion.setText(siswa.religion, false)
                     tietAddsiswaEducation.setText(siswa.education)
                     tietAddsiswaAddress.setText(siswa.address)
                     tietAddsiswaNamaAyah.setText(siswa.namaAyah)
@@ -106,15 +125,14 @@ class AddSiswaFragment : BaseSkeletonFragment() {
                     tietAddsiswaAlamatWali.setText(siswa.alamatWali)
                     tietAddsiswaHp.setText(siswa.phone)
                     val urlPhoto = "${BASE_URL}siswa/file/${siswa.photo}"
+                    pathImage = siswa.photo
                     Glide.with(requireContext())
                         .load(urlPhoto)
                         .into(ivAddsiswaPhoto)
                 }
             }
 
-            val adapterGender = ArrayAdapter(requireContext(), R.layout.list_item, resources.getStringArray(R.array.gender))
             tietAddsiswaGender.setAdapter(adapterGender)
-            val adapterReligion = ArrayAdapter(requireContext(), R.layout.list_item, resources.getStringArray(R.array.religion))
             tietAddsiswaReligion.setAdapter(adapterReligion)
 
             when (role) {
@@ -243,8 +261,9 @@ class AddSiswaFragment : BaseSkeletonFragment() {
                     isValid = true
                 }
 
-
+                Log.d(TAG, "viewAsAdmin: PRA VALID")
                 if (isValid) {
+                    Log.d(TAG, "viewAsAdmin: POST VALID")
                     val siswa = Siswa(
                         null,
                         address,
@@ -266,19 +285,38 @@ class AddSiswaFragment : BaseSkeletonFragment() {
                         pekerjaanIbu
                     )
 
-                    val bundle = bundleOf()
-                    bundle.putParcelable(Constanta.PARCELABLE_ITEM, siswa)
-                    bundle.putString(Constanta.PATH_IMAGE, pathImage)
-                    mainNavController.navigate(
-                        R.id.action_addSiswaFragment_to_addOrangTuaFragment,
-                        bundle
-                    )
+                    if (id.isEmpty()) {
+                        val bundle = bundleOf()
+                        bundle.putParcelable(Constanta.PARCELABLE_ITEM, siswa)
+                        bundle.putString(Constanta.PATH_IMAGE, pathImage)
+                        mainNavController.navigate(
+                            R.id.action_addSiswaFragment_to_addOrangTuaFragment,
+                            bundle
+                        )
+                    } else {
+                        siswaViewModel.updateSiswa(session.token.toString(), id, siswa).observe(viewLifecycleOwner){
+                            if (!pathImage!!.startsWith("siswa")) {
+                                val imageBitmap = File(pathImage)
+                                val requestImageBody =
+                                    imageBitmap.asRequestBody("image/jpeg".toMediaTypeOrNull())
+                                val photo = MultipartBody.Part.createFormData(
+                                    "photo",
+                                    imageBitmap.name,
+                                    requestImageBody
+                                )
+                                siswaViewModel.uploadPhotoSiswa(session.token.toString(),id, photo)
+                                Log.d(TAG, "viewAsAdmin: UPDATE PHOTO")
+                            }
+                            Log.d(TAG, "viewAsAdmin: UPDATE SISWA")
+                        }
+                    }
                 }
             }
         }
     }
 
     fun viewAsOrangtua() {
+        Log.d(TAG, "viewAsOrangtua: MASUK CUY")
         with(binding) {
             mtvAddsiswaName.text = "Profile Siswa"
 

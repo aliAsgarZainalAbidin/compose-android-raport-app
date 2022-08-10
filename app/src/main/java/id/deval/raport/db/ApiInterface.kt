@@ -3,6 +3,7 @@ package id.deval.raport.db
 import id.deval.raport.db.models.Account
 import id.deval.raport.db.models.request.AccountUpdate
 import id.deval.raport.db.models.Siswa
+import id.deval.raport.db.models.request.SiswaUpdate
 import id.deval.raport.utils.wrappers.GlobalWrapper
 import okhttp3.MultipartBody
 import retrofit2.Response
@@ -53,7 +54,7 @@ interface ApiInterface {
     suspend fun getSiswa(
         @Header("Authorization") token: String,
         @Path("id") id:String
-    ) : GlobalWrapper<Siswa>
+    ) : GlobalWrapper<SiswaUpdate>
 
     @Multipart
     @POST("siswa/")
@@ -76,6 +77,21 @@ interface ApiInterface {
         @Part alamatWali: MultipartBody.Part,
         @Part phone: MultipartBody.Part,
         @Part image : MultipartBody.Part
+    ) : GlobalWrapper<Siswa>
+
+    @Multipart
+    @POST("siswa/updatePhoto/{id}")
+    suspend fun uploadPhoto(
+        @Header("Authorization") token: String,
+        @Path("id") id: String,
+        @Part image: MultipartBody.Part
+    ) : GlobalWrapper<Siswa>
+
+    @PUT("siswa/{id}")
+    suspend fun updateSiswa(
+        @Header("Authorization") token: String,
+        @Path("id") id: String,
+        @Body siswa: Siswa
     ) : GlobalWrapper<Siswa>
 
     @POST("account/")
