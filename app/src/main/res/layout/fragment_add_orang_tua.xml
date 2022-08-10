@@ -213,7 +213,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/bg_til_android_blue"
-                android:inputType="phone"
+                android:inputType="textEmailAddress"
                 tools:text="IRT" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -244,7 +244,7 @@
                 android:layout_height="wrap_content"
                 android:enabled="false"
                 android:background="@drawable/bg_til_android_blue"
-                android:inputType="phone"
+                android:inputType="textEmailAddress"
                 tools:text="IRT" />
 
         </com.google.android.material.textfield.TextInputLayout>

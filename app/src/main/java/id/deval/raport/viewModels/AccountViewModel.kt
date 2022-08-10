@@ -1,9 +1,11 @@
 package id.deval.raport.viewModels
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import id.deval.raport.BuildConfig.TAG
 import id.deval.raport.db.Repository
 import id.deval.raport.db.models.Account
 import id.deval.raport.db.models.request.AccountUpdate
@@ -36,8 +38,12 @@ class AccountViewModel @Inject constructor(
     fun addTeacher(token : String, account: Account) : LiveData<GlobalWrapper<Account>>{
         mutableAddTeacherResponse = MutableLiveData()
         GlobalScope.launch {
-            val response = repository.addAccountTeacher(token, account)
-            mutableAddTeacherResponse.postValue(response)
+            try {
+                val response = repository.addAccountTeacher(token, account)
+                mutableAddTeacherResponse.postValue(response)
+            } catch (e : Exception){
+                Log.d(TAG, "addTeacher: $e")
+            }
         }
 
         return mutableAddTeacherResponse

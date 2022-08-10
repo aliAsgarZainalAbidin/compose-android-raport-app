@@ -4,6 +4,7 @@ import id.deval.raport.db.models.Account
 import id.deval.raport.db.models.request.AccountUpdate
 import id.deval.raport.db.models.Siswa
 import id.deval.raport.utils.wrappers.GlobalWrapper
+import okhttp3.MultipartBody
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -48,10 +49,27 @@ interface ApiInterface {
         @Header("Authorization") token: String,
     ) : GlobalWrapper<ArrayList<Siswa>>
 
+    @Multipart
     @POST("siswa/")
     suspend fun addSiswa(
         @Header("Authorization") token: String,
-        @Body siswa: Siswa
+        @Part name: MultipartBody.Part,
+        @Part nis: MultipartBody.Part,
+        @Part tempatLahir: MultipartBody.Part,
+        @Part tanggalLahir: MultipartBody.Part,
+        @Part address: MultipartBody.Part,
+        @Part education: MultipartBody.Part,
+        @Part religion: MultipartBody.Part,
+        @Part gender: MultipartBody.Part,
+        @Part namaAyah: MultipartBody.Part,
+        @Part namaIbu: MultipartBody.Part,
+        @Part pekerjaanAyah: MultipartBody.Part,
+        @Part pekerjaanIbu: MultipartBody.Part,
+        @Part namaWali: MultipartBody.Part,
+        @Part pekerjaanWali: MultipartBody.Part,
+        @Part alamatWali: MultipartBody.Part,
+        @Part phone: MultipartBody.Part,
+        @Part image : MultipartBody.Part
     ) : GlobalWrapper<Siswa>
 
     @POST("account/")

@@ -1,10 +1,18 @@
 package id.deval.raport.ui.akun.siswa
 
+import android.Manifest
+import android.app.Activity
+import android.content.Context
+import android.content.Intent
+import android.database.Cursor
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.os.bundleOf
 import id.deval.raport.R
 import id.deval.raport.databinding.FragmentAddSiswaBinding
@@ -12,7 +20,6 @@ import id.deval.raport.db.models.Siswa
 import id.deval.raport.utils.BaseSkeletonFragment
 import id.deval.raport.utils.Constanta
 import id.deval.raport.utils.hide
-import id.deval.raport.utils.showToast
 
 class AddSiswaFragment : BaseSkeletonFragment() {
 
@@ -20,6 +27,45 @@ class AddSiswaFragment : BaseSkeletonFragment() {
     private val binding get() = _binding
     private lateinit var id: String
     private var isValid = false
+    private var pathImage: String? = null
+    private val requestPermission =
+        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) {
+            Log.d(
+                "TAG",
+                "requestPermission: ${it[Manifest.permission.READ_EXTERNAL_STORAGE]}  ${it[Manifest.permission.WRITE_EXTERNAL_STORAGE]}"
+            )
+        }
+
+    private val startPickImageLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { it ->
+            if (it.resultCode == Activity.RESULT_OK) {
+                if (it.data != null && it.data!!.data != null) {
+                    val selectedImageUri = it.data!!.data!!
+                    val selectedImage = MediaStore.Images.Media.getBitmap(
+                        requireActivity().contentResolver,
+                        selectedImageUri
+                    )
+                    selectedImageUri.let {
+                        val cursor = requireActivity().contentResolver.query(
+                            it,
+                            arrayOf(MediaStore.Images.Media.DATA),
+                            null,
+                            null,
+                            null
+                        )
+                        if (cursor == null) {
+                            pathImage = selectedImageUri.path.toString()
+                        } else {
+                            cursor.moveToFirst()
+                            val idx = cursor.getColumnIndex(MediaStore.Images.Media.DATA)
+                            pathImage = cursor.getString(idx)
+                            cursor.close()
+                        }
+                    }
+                    Log.d("TAG", "startPickImageLauncher: $pathImage")
+                    binding.ivAddsiswaPhoto.setImageBitmap(selectedImage)
+                }
+            }
+        }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -53,6 +99,20 @@ class AddSiswaFragment : BaseSkeletonFragment() {
     fun viewAsAdmin() {
         with(binding) {
             Log.d("TAG", "viewAsAdmin: ADMIN")
+            requestPermission.launch(
+                arrayOf(
+                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+                )
+            )
+
+            ivAddsiswaPhoto.setOnClickListener {
+                val intent = Intent()
+                intent.type = "image/jpeg"
+                intent.action = Intent.ACTION_GET_CONTENT
+                startPickImageLauncher.launch(intent)
+            }
+
             mbAddsiswaSimpan.setOnClickListener {
                 val namaLengkap = tietAddsiswaNamalengkap.text.toString()
                 val nisn = tietAddsiswaNisn.text.toString()
@@ -180,7 +240,11 @@ class AddSiswaFragment : BaseSkeletonFragment() {
 
                     val bundle = bundleOf()
                     bundle.putParcelable(Constanta.PARCELABLE_ITEM, siswa)
-                    mainNavController.navigate(R.id.action_addSiswaFragment_to_addOrangTuaFragment, bundle)
+                    bundle.putString(Constanta.PATH_IMAGE, pathImage)
+                    mainNavController.navigate(
+                        R.id.action_addSiswaFragment_to_addOrangTuaFragment,
+                        bundle
+                    )
                 }
             }
         }
@@ -211,5 +275,4 @@ class AddSiswaFragment : BaseSkeletonFragment() {
             ivAddsiswaPhoto.isEnabled = false
         }
     }
-
 }

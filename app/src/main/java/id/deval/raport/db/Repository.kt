@@ -4,6 +4,7 @@ import id.deval.raport.db.models.Account
 import id.deval.raport.db.models.request.AccountUpdate
 import id.deval.raport.db.models.Siswa
 import id.deval.raport.utils.wrappers.GlobalWrapper
+import okhttp3.MultipartBody
 import retrofit2.Response
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -17,31 +18,73 @@ class Repository @Inject constructor(
         return apiInterface.login(account)
     }
 
-    suspend fun getAllTeacher(token : String): GlobalWrapper<ArrayList<Account>>{
-        return  apiInterface.getAccount("Bearer $token", "Guru")
+    suspend fun getAllTeacher(token: String): GlobalWrapper<ArrayList<Account>> {
+        return apiInterface.getAccount("Bearer $token", "Guru")
     }
 
-    suspend fun getAllSiswa(token: String): GlobalWrapper<ArrayList<Siswa>>{
+    suspend fun getAllSiswa(token: String): GlobalWrapper<ArrayList<Siswa>> {
         return apiInterface.getAllSiswa("Bearer $token")
     }
 
-    suspend fun addSiswa(token:String, siswa: Siswa): GlobalWrapper<Siswa>{
-        return apiInterface.addSiswa("Bearer $token", siswa)
+    suspend fun addSiswa(
+        token: String,
+        name: MultipartBody.Part,
+        nis: MultipartBody.Part,
+        tempatLahir: MultipartBody.Part,
+        tanggalLahir: MultipartBody.Part,
+        address: MultipartBody.Part,
+        education: MultipartBody.Part,
+        religion: MultipartBody.Part,
+        gender: MultipartBody.Part,
+        namaAyah: MultipartBody.Part,
+        namaIbu: MultipartBody.Part,
+        pekerjaanAyah: MultipartBody.Part,
+        pekerjaanIbu: MultipartBody.Part,
+        namaWali: MultipartBody.Part,
+        pekerjaanWali: MultipartBody.Part,
+        alamatWali: MultipartBody.Part,
+        phone: MultipartBody.Part,
+        photo: MultipartBody.Part
+    ): GlobalWrapper<Siswa> {
+        return apiInterface.addSiswa(
+            "Bearer $token",
+            name,
+            nis,
+            tempatLahir,
+            tanggalLahir,
+            address,
+            education,
+            religion,
+            gender,
+            namaAyah,
+            namaIbu,
+            pekerjaanAyah,
+            pekerjaanIbu,
+            namaWali,
+            pekerjaanWali,
+            alamatWali,
+            phone,
+            photo
+        )
     }
 
-    suspend fun addAccountTeacher(token: String, account: Account): GlobalWrapper<Account>{
+    suspend fun addAccountTeacher(token: String, account: Account): GlobalWrapper<Account> {
         return apiInterface.addAccountTeacher("Bearer $token", account)
     }
 
-    suspend fun updateTeacher(token: String,id : String, account: AccountUpdate): GlobalWrapper<Account>{
-        return apiInterface.updateAccountTeacher("Bearer $token",id, account)
+    suspend fun updateTeacher(
+        token: String,
+        id: String,
+        account: AccountUpdate
+    ): GlobalWrapper<Account> {
+        return apiInterface.updateAccountTeacher("Bearer $token", id, account)
     }
 
-    suspend fun getTeacherById(token: String, id: String): GlobalWrapper<Account>{
+    suspend fun getTeacherById(token: String, id: String): GlobalWrapper<Account> {
         return apiInterface.getTeacherById("Bearer $token", id)
     }
 
-    suspend fun deleteTeacherById(token: String, id:String) : Response<Unit>{
+    suspend fun deleteTeacherById(token: String, id: String): Response<Unit> {
         return apiInterface.deleteTeacherById("Bearer $token", id)
     }
 }
