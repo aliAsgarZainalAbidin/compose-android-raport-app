@@ -9,6 +9,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.os.bundleOf
 import com.bumptech.glide.Glide
@@ -104,13 +105,17 @@ class AddSiswaFragment : BaseSkeletonFragment() {
                     tietAddsiswaPekerjaanWali.setText(siswa.pekerjaanWali)
                     tietAddsiswaAlamatWali.setText(siswa.alamatWali)
                     tietAddsiswaHp.setText(siswa.phone)
-                    //IMPLEMENTASI IMAGE
                     val urlPhoto = "${BASE_URL}siswa/file/${siswa.photo}"
                     Glide.with(requireContext())
                         .load(urlPhoto)
                         .into(ivAddsiswaPhoto)
                 }
             }
+
+            val adapterGender = ArrayAdapter(requireContext(), R.layout.list_item, resources.getStringArray(R.array.gender))
+            tietAddsiswaGender.setAdapter(adapterGender)
+            val adapterReligion = ArrayAdapter(requireContext(), R.layout.list_item, resources.getStringArray(R.array.religion))
+            tietAddsiswaReligion.setAdapter(adapterReligion)
 
             when (role) {
                 "orangtua" -> viewAsOrangtua()

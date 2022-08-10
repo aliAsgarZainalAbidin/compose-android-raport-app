@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import id.deval.raport.R
 import id.deval.raport.databinding.FragmentAddMapelBinding
 import id.deval.raport.utils.BaseSkeletonFragment
@@ -30,6 +31,9 @@ class AddMapelFragment : BaseSkeletonFragment() {
             ivAddmapelBack.setOnClickListener {
                 mainNavController.popBackStack()
             }
+
+            val adapterKategori = ArrayAdapter(requireContext(), R.layout.list_item, resources.getStringArray(R.array.kategori))
+            tietAddmapelGuru.setAdapter(adapterKategori)
             mbAddmapelSimpan.setOnClickListener {
                 mainNavController.popBackStack()
             }
