@@ -18,8 +18,7 @@ class AddKelasFragment : BaseSkeletonFragment() {
     private lateinit var _binding: FragmentAddKelasBinding
     private lateinit var dataMapel: ArrayList<Mapel>
     private lateinit var dataSiswa: ArrayList<Siswa>
-    private var dataStringSiswa : ArrayList<StringSiswa> = arrayListOf()
-    private var dataStringMapel : ArrayList<StringMapel> = arrayListOf()
+    private var isValid = false
     private val binding get() = _binding
 
     override fun onCreateView(
@@ -35,12 +34,15 @@ class AddKelasFragment : BaseSkeletonFragment() {
 
         dataMapel = arrayListOf()
         dataSiswa = arrayListOf()
+        val listGuru = mutableListOf<String>()
+        val listAccountGuru = mutableListOf<Account>()
 
         with(binding) {
             siswaViewModel.getAllLocalSiswa().observe(viewLifecycleOwner) {
                 dataSiswa.addAll(it)
                 includeRvSiswa.rvRvlayoutContainer.apply {
-                    val adapter = RvAdapter<Siswa>("siswa", OperationsTypeRv.READ, mainNavController)
+                    val adapter =
+                        RvAdapter<Siswa>("siswa", OperationsTypeRv.READ, mainNavController)
                     adapter.setData(dataSiswa)
                     adapter.notifyDataSetChanged()
                     this.adapter = adapter
@@ -49,10 +51,11 @@ class AddKelasFragment : BaseSkeletonFragment() {
                 }
             }
 
-            mapelViewModel.getAllLocalMapel().observe(viewLifecycleOwner){
+            mapelViewModel.getAllLocalMapel().observe(viewLifecycleOwner) {
                 dataMapel.addAll(it)
                 includeRvMapel.rvRvlayoutContainer.apply {
-                    val adapter = RvAdapter<Mapel>("mapel", OperationsTypeRv.READ, mainNavController)
+                    val adapter =
+                        RvAdapter<Mapel>("mapel", OperationsTypeRv.READ, mainNavController)
                     adapter.setData(dataMapel)
                     adapter.notifyDataSetChanged()
                     this.adapter = adapter
@@ -62,15 +65,17 @@ class AddKelasFragment : BaseSkeletonFragment() {
             }
 
             accountViewModel.getAllTeacher(session.token.toString()).observe(viewLifecycleOwner) {
-                val listGuru = mutableListOf<String>()
                 it.data.forEach {
                     listGuru.add("${it.name}/${it.username}")
                 }
+                listAccountGuru.addAll(it.data)
                 val guruAdapter = ArrayAdapter(requireActivity(), R.layout.list_item, listGuru)
                 tietAddkelasGuru.setAdapter(guruAdapter)
             }
 
             ivAddkelasBack.setOnClickListener {
+                mapelViewModel.clearTableMapel()
+                siswaViewModel.clearTableSiswa()
                 mainNavController.popBackStack()
             }
             includeRvSiswa.mtvRvlayoutTitle.setTextColor(resources.getColor(R.color.white))
@@ -92,7 +97,58 @@ class AddKelasFragment : BaseSkeletonFragment() {
             includeRvMapel.mtvRvlayoutViewmore.hide()
 
             mbAddkelasSimpan.setOnClickListener {
-                mainNavController.popBackStack()
+                val nameKelas = tietAddkelasNama.text.toString()
+                val semester = tietAddkelasSemester.text.toString()
+                val tahunAjaran = tietAddkelasTahunajaran.text.toString()
+                var guru = tietAddkelasGuru.text.toString().split("/")[1]
+                guru = listAccountGuru.find { it.username == guru }!!.id.toString()
+
+                if (nameKelas.isEmpty()) {
+                    tietAddkelasNama.error = resources.getString(R.string.tiet_empty)
+                    isValid = false
+                }
+                if (semester.isEmpty()) {
+                    tietAddkelasSemester.error = resources.getString(R.string.tiet_empty)
+                    isValid = false
+                }
+                if (tahunAjaran.isEmpty()) {
+                    tietAddkelasTahunajaran.error = resources.getString(R.string.tiet_empty)
+                    isValid = false
+                }
+                if (guru.isEmpty()) {
+                    tietAddkelasGuru.error = resources.getString(R.string.tiet_empty)
+                    isValid = false
+                }
+
+                if (nameKelas.isNotEmpty() && semester.isNotEmpty() && tahunAjaran.isNotEmpty() && guru.isNotEmpty()) {
+                    isValid = true
+                }
+
+                val siswaId = arrayListOf<String>()
+                val mapelId = arrayListOf<String>()
+
+                dataSiswa.forEach {
+                    siswaId.add(it.id)
+                }
+                dataMapel.forEach {
+                    mapelId.add(it.id)
+                }
+
+                if (isValid) {
+                    val kelas = Kelas(
+                        null,
+                        siswaId,
+                        nameKelas, mapelId, semester.toInt(), tahunAjaran, guru
+                    )
+
+                    kelasViewModel.addClass(session.token.toString(), kelas)
+                        .observe(viewLifecycleOwner) {
+                            mapelViewModel.clearTableMapel()
+                            siswaViewModel.clearTableSiswa()
+                            mainNavController.popBackStack()
+                            requireContext().showToast("${it.status} menambahkan data kelas")
+                        }
+                }
             }
         }
     }

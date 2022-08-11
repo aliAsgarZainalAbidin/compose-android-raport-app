@@ -15,6 +15,10 @@ interface MapelDao {
     @Delete
     fun delete(mapel: Mapel)
 
+    @Query("DELETE FROM MAPEL")
+    fun clearTableMapel()
+
     @Query("SELECT * FROM Mapel")
     fun getAllMapel() : List<Mapel>
+
 }

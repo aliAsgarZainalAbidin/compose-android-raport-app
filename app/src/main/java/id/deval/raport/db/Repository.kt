@@ -121,6 +121,10 @@ class Repository @Inject constructor(
         return apiInterface.getAllClass("Bearer $token")
     }
 
+    suspend fun addClass(token: String, kelas: Kelas): GlobalWrapper<Kelas>{
+        return apiInterface.addClass("Bearer $token", kelas)
+    }
+
     suspend fun getAllMapel(token: String): GlobalWrapper<ArrayList<Mapel>>{
         return apiInterface.getAllMapel("Bearer $token")
     }
@@ -143,6 +147,12 @@ class Repository @Inject constructor(
         }
     }
 
+    suspend fun clearTableSiswa(){
+        withContext(Dispatchers.IO){
+            database.siswaDao().clearTableSiswa()
+        }
+    }
+
     fun getAllSiswa():List<Siswa>{
         return database.siswaDao().getAllSiswa()
     }
@@ -162,6 +172,11 @@ class Repository @Inject constructor(
     suspend fun deleteLocalMapel(mapel: Mapel){
         withContext(Dispatchers.IO){
             database.mapelDao().delete(mapel)
+        }
+    }
+    suspend fun clearTableMapel(){
+        withContext(Dispatchers.IO){
+            database.mapelDao().clearTableMapel()
         }
     }
 

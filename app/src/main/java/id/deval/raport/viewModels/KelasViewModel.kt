@@ -17,6 +17,7 @@ class KelasViewModel @Inject constructor(
 ) : ViewModel(){
 
     private lateinit var mutableAllClass : MutableLiveData<GlobalWrapper<ArrayList<Kelas>>>
+    private lateinit var mutableAddClass : MutableLiveData<GlobalWrapper<Kelas>>
 
     fun getAllClass(token: String): LiveData<GlobalWrapper<ArrayList<Kelas>>>{
         mutableAllClass = MutableLiveData()
@@ -25,5 +26,14 @@ class KelasViewModel @Inject constructor(
             mutableAllClass.postValue(response)
         }
         return mutableAllClass
+    }
+
+    fun addClass(token: String, kelas: Kelas): LiveData<GlobalWrapper<Kelas>>{
+        mutableAddClass = MutableLiveData()
+        GlobalScope.launch {
+            val response = repository.addClass(token, kelas)
+            mutableAddClass.postValue(response)
+        }
+        return mutableAddClass
     }
 }

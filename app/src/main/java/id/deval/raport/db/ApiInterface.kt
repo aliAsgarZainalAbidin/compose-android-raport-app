@@ -150,6 +150,12 @@ interface ApiInterface {
         @Header("Authorization") token: String
     ): GlobalWrapper<ArrayList<Kelas>>
 
+    @POST("class/")
+    suspend fun addClass(
+        @Header("Authorization") token: String,
+        @Body kelas: Kelas
+    ): GlobalWrapper<Kelas>
+
 
     @GET("mapel/")
     suspend fun getAllMapel(

@@ -146,6 +146,11 @@ class SiswaViewModel @Inject constructor(
             repository.deleteSiswa(siswa)
         }
     }
+    fun clearTableSiswa(){
+        GlobalScope.launch {
+            repository.clearTableSiswa()
+        }
+    }
 
     fun getAllLocalSiswa():MutableLiveData<List<Siswa>>{
         mutableAllSiswa = MutableLiveData()

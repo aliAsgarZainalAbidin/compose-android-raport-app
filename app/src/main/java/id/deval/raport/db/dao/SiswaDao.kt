@@ -15,6 +15,9 @@ interface SiswaDao {
     @Delete
     fun delete(siswa: Siswa)
 
+    @Query("DELETE FROM SISWA")
+    fun clearTableSiswa()
+
     @Query("SELECT * FROM Siswa")
     fun getAllSiswa() : List<Siswa>
 }

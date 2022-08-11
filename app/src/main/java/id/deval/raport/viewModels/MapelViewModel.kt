@@ -45,6 +45,11 @@ class MapelViewModel @Inject constructor(
             repository.deleteLocalMapel(mapel)
         }
     }
+    fun clearTableMapel(){
+        GlobalScope.launch {
+            repository.clearTableMapel()
+        }
+    }
 
     fun getAllLocalMapel():MutableLiveData<List<Mapel>>{
         mutableAllLocalMapel = MutableLiveData()
