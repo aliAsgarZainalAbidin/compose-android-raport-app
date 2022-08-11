@@ -12,6 +12,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import id.deval.raport.db.Session
 import id.deval.raport.db.event.CommonParams
 import id.deval.raport.viewModels.AccountViewModel
+import id.deval.raport.viewModels.KelasViewModel
 import id.deval.raport.viewModels.LoginViewModel
 import id.deval.raport.viewModels.SiswaViewModel
 import org.greenrobot.eventbus.EventBus
@@ -25,6 +26,7 @@ open class BaseSkeletonFragment : Fragment() {
     val loginViewModel: LoginViewModel by viewModels()
     val accountViewModel: AccountViewModel by viewModels()
     val siswaViewModel: SiswaViewModel by viewModels()
+    val kelasViewModel: KelasViewModel by viewModels()
     val bus = EventBus.getDefault()
     @Inject lateinit var session: Session
 

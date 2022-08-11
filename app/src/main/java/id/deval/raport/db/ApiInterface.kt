@@ -1,6 +1,7 @@
 package id.deval.raport.db
 
 import id.deval.raport.db.models.Account
+import id.deval.raport.db.models.Kelas
 import id.deval.raport.db.models.request.AccountUpdate
 import id.deval.raport.db.models.Siswa
 import id.deval.raport.db.models.request.SiswaUpdate
@@ -37,24 +38,24 @@ interface ApiInterface {
     @POST("account/login")
     suspend fun login(
         @Body account: Account
-    ) : GlobalWrapper<Account>
+    ): GlobalWrapper<Account>
 
     @GET("account/")
     suspend fun getAccount(
-        @Header("Authorization") token:String,
+        @Header("Authorization") token: String,
         @Query("role") role: String,
-    ) : GlobalWrapper<ArrayList<Account>>
+    ): GlobalWrapper<ArrayList<Account>>
 
     @GET("siswa/")
     suspend fun getAllSiswa(
         @Header("Authorization") token: String,
-    ) : GlobalWrapper<ArrayList<Siswa>>
+    ): GlobalWrapper<ArrayList<Siswa>>
 
     @GET("siswa/{id}")
     suspend fun getSiswa(
         @Header("Authorization") token: String,
-        @Path("id") id:String
-    ) : GlobalWrapper<SiswaUpdate>
+        @Path("id") id: String
+    ): GlobalWrapper<SiswaUpdate>
 
     @Multipart
     @POST("siswa/")
@@ -76,8 +77,8 @@ interface ApiInterface {
         @Part pekerjaanWali: MultipartBody.Part,
         @Part alamatWali: MultipartBody.Part,
         @Part phone: MultipartBody.Part,
-        @Part image : MultipartBody.Part
-    ) : GlobalWrapper<Siswa>
+        @Part image: MultipartBody.Part
+    ): GlobalWrapper<Siswa>
 
     @Multipart
     @POST("siswa/updatePhoto/{id}")
@@ -85,56 +86,61 @@ interface ApiInterface {
         @Header("Authorization") token: String,
         @Path("id") id: String,
         @Part image: MultipartBody.Part
-    ) : GlobalWrapper<Siswa>
+    ): GlobalWrapper<Siswa>
 
     @PUT("siswa/{id}")
     suspend fun updateSiswa(
         @Header("Authorization") token: String,
         @Path("id") id: String,
         @Body siswa: Siswa
-    ) : GlobalWrapper<Siswa>
+    ): GlobalWrapper<Siswa>
 
     @DELETE("siswa/{id}")
     suspend fun deleteSiswa(
         @Header("Authorization") token: String,
         @Path("id") id: String
-    ) : Response<Unit>
+    ): Response<Unit>
 
     @POST("account/")
     suspend fun addAccountTeacher(
         @Header("Authorization") token: String,
         @Body account: Account
-    ) : GlobalWrapper<Account>
+    ): GlobalWrapper<Account>
 
     @PUT("account/{id}")
     suspend fun updateAccountTeacher(
         @Header("Authorization") token: String,
         @Path("id") id: String,
         @Body account: AccountUpdate
-    ) : GlobalWrapper<Account>
+    ): GlobalWrapper<Account>
 
     @GET("account/{id}")
     suspend fun getTeacherById(
         @Header("Authorization") token: String,
         @Path("id") id: String,
-    ) : GlobalWrapper<Account>
+    ): GlobalWrapper<Account>
 
     @DELETE("account/{id}")
     suspend fun deleteTeacherById(
-        @Header("Authorization") token:String,
-        @Path("id") id:String
-    ) : Response<Unit>
+        @Header("Authorization") token: String,
+        @Path("id") id: String
+    ): Response<Unit>
 
     @GET("account/detail/{username}")
     suspend fun getAccountByUsername(
         @Header("Authorization") token: String,
-        @Path("username") username:String
-    ) : GlobalWrapper<Account>
+        @Path("username") username: String
+    ): GlobalWrapper<Account>
 
     @DELETE("account/detail/{username}")
     suspend fun deleteAccountByUsername(
         @Header("Authorization") token: String,
-        @Path("username") username:String
-    ) : Response<Unit>
+        @Path("username") username: String
+    ): Response<Unit>
+
+    @GET("class/")
+    suspend fun getAllClass(
+        @Header("Authorization") token: String
+    ): GlobalWrapper<ArrayList<Kelas>>
 
 }

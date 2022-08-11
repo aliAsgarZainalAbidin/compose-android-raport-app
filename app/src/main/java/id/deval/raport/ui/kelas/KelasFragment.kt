@@ -33,8 +33,7 @@ class KelasFragment : BaseSkeletonFragment() {
 
         with(binding) {
 
-            mtvKelasName.text = "Ibu Ica"
-            mtvKelasTotalKelas.text = dataKelas.size.toString()
+            mtvKelasName.text = session.name
             includeRvGuru.mtvRvlayoutTitle.text = "Kelas"
             includeRvGuru.mtvRvlayoutAdd.show()
             includeRvGuru.mtvRvlayoutAdd.setOnClickListener {
@@ -43,13 +42,17 @@ class KelasFragment : BaseSkeletonFragment() {
             includeRvGuru.mtvRvlayoutAdd.text = "Tambah Kelas"
             includeRvGuru.mtvRvlayoutViewmore.hide()
 
-            includeRvGuru.rvRvlayoutContainer.apply {
-                val adapter = RvAdapter<Kelas>("kelas", OperationsTypeRv.EDIT,mainNavController)
-                adapter.setData(dataKelas)
-                adapter.notifyDataSetChanged()
-                this.adapter = adapter
-                layoutManager =
-                    LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+            kelasViewModel.getAllClass(session.token.toString()).observe(viewLifecycleOwner) {
+                mtvKelasTotalKelas.text = it.data.size.toString()
+                includeRvGuru.rvRvlayoutContainer.apply {
+                    val adapter =
+                        RvAdapter<Kelas>("kelas", OperationsTypeRv.EDIT, mainNavController)
+                    adapter.setData(it.data)
+                    adapter.notifyDataSetChanged()
+                    this.adapter = adapter
+                    layoutManager =
+                        LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+                }
             }
         }
     }

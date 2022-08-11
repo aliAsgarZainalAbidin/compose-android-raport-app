@@ -1,6 +1,7 @@
 package id.deval.raport.db
 
 import id.deval.raport.db.models.Account
+import id.deval.raport.db.models.Kelas
 import id.deval.raport.db.models.request.AccountUpdate
 import id.deval.raport.db.models.Siswa
 import id.deval.raport.db.models.request.SiswaUpdate
@@ -113,4 +114,7 @@ class Repository @Inject constructor(
         return apiInterface.deleteAccountByUsername("Bearer $token", username)
     }
 
+    suspend fun getAllClass(token: String): GlobalWrapper<ArrayList<Kelas>>{
+        return apiInterface.getAllClass("Bearer $token")
+    }
 }
