@@ -265,7 +265,7 @@ class AddSiswaFragment : BaseSkeletonFragment() {
                 if (isValid) {
                     Log.d(TAG, "viewAsAdmin: POST VALID")
                     val siswa = Siswa(
-                        null,
+                        "",
                         address,
                         eduction,
                         gender,

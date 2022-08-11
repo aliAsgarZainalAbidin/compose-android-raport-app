@@ -7,16 +7,16 @@ import id.deval.raport.databinding.RvChooseItemBinding
 import id.deval.raport.db.event.CommonParams
 import id.deval.raport.db.event.CommonParamsAdd
 import id.deval.raport.db.event.CommonParamsDelete
+import id.deval.raport.db.event.LocalDatabaseEvent
 import id.deval.raport.db.models.Mapel
 import id.deval.raport.db.models.Siswa
-import id.deval.raport.db.models.StringMapel
 import id.deval.raport.db.models.StringSiswa
 import id.deval.raport.utils.hide
 import id.deval.raport.utils.show
 import org.greenrobot.eventbus.EventBus
 
 class RvChooseMapelAdapter<T>(
-    private val oldList: ArrayList<StringMapel>
+    private val oldList: ArrayList<Mapel>
 ) : RecyclerView.Adapter<RvChooseMapelAdapter.RvChooseViewHolder>() {
 
     private var data = arrayListOf<T>()
@@ -27,30 +27,27 @@ class RvChooseMapelAdapter<T>(
         data.addAll(list)
     }
 
-
     class RvChooseViewHolder(private val binding: RvChooseItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun <T> bind(data: T, oldList: ArrayList<StringMapel>, bus: EventBus) {
+        fun <T> bind(data: T, oldList: ArrayList<Mapel>, bus: EventBus) {
             with(binding) {
                 mtvRvChooseItemTitlename.text = "Nama Mapel"
                 mtvRvChooseItemTitlenis.text = "Kategori"
                 data as Mapel
                 mtvRvChooseItemName.text = data.name
                 mtvRvChooseItemNis.text = data.category
-                oldList.forEach {
-                    val mapel = it as StringMapel
-                    if (mapel.id == data.id) {
-                        isAlreadyAdded(true)
-                    } else {
-                        isAlreadyAdded(false)
-                    }
+                val isSame = oldList.find { it.id == data.id }
+                if (isSame != null) {
+                    isAlreadyAdded(true)
+                } else {
+                    isAlreadyAdded(false)
                 }
                 ivRvChooseItemEdit.setOnClickListener {
-                    bus.post(CommonParamsAdd(data.id.toString()))
+                    bus.post(LocalDatabaseEvent<Mapel>(data, "add"))
                     isAlreadyAdded(true)
                 }
                 ivRvChooseItemDelete.setOnClickListener {
-                    bus.post(CommonParamsDelete(data.id.toString()))
+                    bus.post(LocalDatabaseEvent<Mapel>(data, "delete"))
                     isAlreadyAdded(false)
                 }
             }

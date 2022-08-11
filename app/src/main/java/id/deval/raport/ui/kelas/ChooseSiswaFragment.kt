@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import id.deval.raport.databinding.FragmentChooseSiswaBinding
 import id.deval.raport.db.event.CommonParamsAdd
 import id.deval.raport.db.event.CommonParamsDelete
+import id.deval.raport.db.event.LocalDatabaseEvent
 import id.deval.raport.db.models.Siswa
 import id.deval.raport.db.models.StringSiswa
 import id.deval.raport.ui.adapter.RvChooseSiswaAdapter
@@ -19,7 +20,7 @@ import org.greenrobot.eventbus.Subscribe
 class ChooseSiswaFragment : BaseSkeletonFragment() {
 
     private lateinit var _binding: FragmentChooseSiswaBinding
-    private lateinit var dataSiswa: ArrayList<StringSiswa>
+    private lateinit var dataSiswa: ArrayList<Siswa>
     private val binding get() = _binding
 
     override fun onCreateView(
@@ -34,15 +35,15 @@ class ChooseSiswaFragment : BaseSkeletonFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         dataSiswa = arrayListOf()
-        stringSiswaViewModel.getAllSiswa().observe(viewLifecycleOwner){
-            dataSiswa.addAll(it)
-        }
         with(binding) {
             ivChoosesiswaBack.setOnClickListener {
                 mainNavController.popBackStack()
             }
-            siswaViewModel.getAllSiswa(session.token.toString()).observe(viewLifecycleOwner) {
-                refreshRecyclerViewSiswa(it.data)
+            siswaViewModel.getAllLocalSiswa().observe(viewLifecycleOwner) {
+                dataSiswa.addAll(it)
+                siswaViewModel.getAllSiswa(session.token.toString()).observe(viewLifecycleOwner) {
+                    refreshRecyclerViewSiswa(it.data, dataSiswa)
+                }
             }
 
             mbChoosesiswaSimpan.setOnClickListener {
@@ -52,29 +53,26 @@ class ChooseSiswaFragment : BaseSkeletonFragment() {
     }
 
     @Subscribe
-    fun addToListSiswa(commonParamsAdd: CommonParamsAdd){
-        val stringSiswa = StringSiswa(commonParamsAdd.id)
-        dataSiswa.add(stringSiswa)
-        stringSiswaViewModel.insertAllSiswa(dataSiswa)
-        Log.d(TAG, "addToListSiswa: $dataSiswa")
-    }
-
-    @Subscribe
-    fun deleteFromListSiswa(commonParamsDelete: CommonParamsDelete){
-        val stringSiswa = StringSiswa(commonParamsDelete.id)
-        dataSiswa.forEachIndexed { index, s ->
-            if (s.id == commonParamsDelete.id){
-                dataSiswa.removeAt(index)
-                stringSiswaViewModel.deleteSiswa(stringSiswa)
+    fun addOrDeleteLocalSiswa(localDatabaseEvent: LocalDatabaseEvent<Siswa>) {
+        when (localDatabaseEvent.type) {
+            "add" -> {
+                siswaViewModel.insertLocalSiswa(localDatabaseEvent.data)
+            }
+            "delete" -> {
+                siswaViewModel.deleteLocalSiswa(localDatabaseEvent.data)
             }
         }
-        Log.d(TAG, "addToListSiswa: $dataSiswa")
+        siswaViewModel.getAllLocalSiswa().observe(viewLifecycleOwner) {
+            it.forEach {
+                Log.d(TAG, "addOrDeleteLocalSiswa: ${it.name}")
+            }
+        }
     }
 
-    fun refreshRecyclerViewSiswa(data: ArrayList<Siswa>) {
+    fun refreshRecyclerViewSiswa(data: ArrayList<Siswa>, localData: ArrayList<Siswa>) {
         with(binding) {
             rvChoosesiswaContainer.apply {
-                val adapter = RvChooseSiswaAdapter<Siswa>(dataSiswa)
+                val adapter = RvChooseSiswaAdapter<Siswa>(localData)
                 adapter.setData(data)
                 adapter.notifyDataSetChanged()
                 this.adapter = adapter

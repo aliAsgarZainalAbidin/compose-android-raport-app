@@ -1,14 +1,18 @@
 package id.deval.raport.db.models
 
 import android.os.Parcelable
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
+@Entity
 data class Siswa(
 
+	@PrimaryKey
 	@field:SerializedName("_id")
-	val id: String? = null,
+	val id: String="",
 
 	@field:SerializedName("address")
 	val address: String? = null,

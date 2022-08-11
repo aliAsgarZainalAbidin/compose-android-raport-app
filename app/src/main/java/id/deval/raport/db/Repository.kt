@@ -31,6 +31,9 @@ class Repository @Inject constructor(
     suspend fun getSiswa(token: String, id:String): GlobalWrapper<SiswaUpdate>{
         return apiInterface.getSiswa("Bearer $token", id)
     }
+    suspend fun getSiswaById(token: String, id:String): GlobalWrapper<Siswa>{
+        return apiInterface.getSiswaById("Bearer $token", id)
+    }
 
     suspend fun addSiswa(
         token: String,
@@ -122,47 +125,47 @@ class Repository @Inject constructor(
         return apiInterface.getAllMapel("Bearer $token")
     }
 
-    suspend fun insertSiswa(siswa: StringSiswa){
+    suspend fun insertSiswa(siswa: Siswa){
         withContext(Dispatchers.IO){
-            database.stringSiswaDao().addSiswa(siswa)
+            database.siswaDao().addSiswa(siswa)
         }
     }
 
-    suspend fun insertAllSiswa(siswa: List<StringSiswa>){
+    suspend fun insertAllSiswa(siswa: List<Siswa>){
         withContext(Dispatchers.IO){
-            database.stringSiswaDao().insertAllSiswa(siswa)
+            database.siswaDao().insertAllSiswa(siswa)
         }
     }
 
-    suspend fun deleteSiswa(siswa: StringSiswa){
+    suspend fun deleteSiswa(siswa: Siswa){
         withContext(Dispatchers.IO){
-            database.stringSiswaDao().delete(siswa)
+            database.siswaDao().delete(siswa)
         }
     }
 
-    fun getAllSiswa():List<StringSiswa>{
-        return database.stringSiswaDao().getAllStringSiswa()
+    fun getAllSiswa():List<Siswa>{
+        return database.siswaDao().getAllSiswa()
     }
 
-    suspend fun insertMapel(mapel: StringMapel){
+    suspend fun insertLocalMapel(mapel: Mapel){
         withContext(Dispatchers.IO){
-            database.stringMapelDao().addMapel(mapel)
+            database.mapelDao().addMapel(mapel)
         }
     }
 
-    suspend fun insertAllMapel(mapel: List<StringMapel>){
+    suspend fun insertAllLocalMapel(mapel: List<Mapel>){
         withContext(Dispatchers.IO){
-            database.stringMapelDao().insertAllMapel(mapel)
+            database.mapelDao().insertAllMapel(mapel)
         }
     }
 
-    suspend fun deleteMapel(mapel: StringMapel){
+    suspend fun deleteLocalMapel(mapel: Mapel){
         withContext(Dispatchers.IO){
-            database.stringMapelDao().delete(mapel)
+            database.mapelDao().delete(mapel)
         }
     }
 
-    fun getAllMapel():List<StringMapel>{
-        return database.stringMapelDao().getAllStringMapel()
+    fun getAllLocalMapel():List<Mapel>{
+        return database.mapelDao().getAllMapel()
     }
 }

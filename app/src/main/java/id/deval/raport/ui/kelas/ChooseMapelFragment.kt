@@ -1,6 +1,8 @@
 package id.deval.raport.ui.kelas
 
+import android.content.ContentValues
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import id.deval.raport.databinding.FragmentChooseMapelBinding
 import id.deval.raport.db.event.CommonParamsAdd
 import id.deval.raport.db.event.CommonParamsDelete
+import id.deval.raport.db.event.LocalDatabaseEvent
 import id.deval.raport.db.models.Mapel
 import id.deval.raport.db.models.Siswa
 import id.deval.raport.db.models.StringMapel
@@ -20,7 +23,7 @@ class ChooseMapelFragment : BaseSkeletonFragment() {
 
     private lateinit var _binding: FragmentChooseMapelBinding
     private val binding get() = _binding
-    private lateinit var dataMapel: ArrayList<StringMapel>
+    private lateinit var dataMapel: ArrayList<Mapel>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,8 +42,11 @@ class ChooseMapelFragment : BaseSkeletonFragment() {
                 mainNavController.popBackStack()
             }
 
-            mapelViewModel.getAllMapel(session.token.toString()).observe(viewLifecycleOwner) {
-                refreshRecyclerViewSiswa(it.data)
+            mapelViewModel.getAllLocalMapel().observe(viewLifecycleOwner){
+                dataMapel.addAll(it)
+                mapelViewModel.getAllMapel(session.token.toString()).observe(viewLifecycleOwner) {
+                    refreshRecyclerViewSiswa(it.data)
+                }
             }
 
             mbChoosemapelSimpan.setOnClickListener {
@@ -50,19 +56,18 @@ class ChooseMapelFragment : BaseSkeletonFragment() {
     }
 
     @Subscribe
-    fun addToListMapel(commonParamsAdd: CommonParamsAdd){
-        val stringMapel = StringMapel(commonParamsAdd.id)
-        dataMapel.add(stringMapel)
-        stringMapelViewModel.insertAllMapel(dataMapel)
-    }
-
-    @Subscribe
-    fun deleteFromListMapel(commonParamsDelete: CommonParamsDelete){
-        val stringMapel = StringMapel(commonParamsDelete.id)
-        dataMapel.forEachIndexed { index, s ->
-            if (stringMapel.id == s.id){
-                dataMapel.removeAt(index)
-                stringMapelViewModel.deleteMapel(stringMapel)
+    fun addOrDeleteLocalMapel(localDatabaseEvent: LocalDatabaseEvent<Mapel>) {
+        when (localDatabaseEvent.type) {
+            "add" -> {
+                mapelViewModel.insertLocalMapel(localDatabaseEvent.data)
+            }
+            "delete" -> {
+                mapelViewModel.deleteLocalMapel(localDatabaseEvent.data)
+            }
+        }
+        mapelViewModel.getAllLocalMapel().observe(viewLifecycleOwner) {
+            it.forEach {
+                Log.d(ContentValues.TAG, "addOrDeleteLocalSiswa: ${it.name}")
             }
         }
     }

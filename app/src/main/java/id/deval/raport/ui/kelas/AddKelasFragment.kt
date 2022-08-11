@@ -1,6 +1,7 @@
 package id.deval.raport.ui.kelas
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,9 +9,7 @@ import android.widget.ArrayAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import id.deval.raport.R
 import id.deval.raport.databinding.FragmentAddKelasBinding
-import id.deval.raport.db.models.Account
-import id.deval.raport.db.models.Mapel
-import id.deval.raport.db.models.Siswa
+import id.deval.raport.db.models.*
 import id.deval.raport.ui.adapter.RvAdapter
 import id.deval.raport.utils.*
 
@@ -19,6 +18,8 @@ class AddKelasFragment : BaseSkeletonFragment() {
     private lateinit var _binding: FragmentAddKelasBinding
     private lateinit var dataMapel: ArrayList<Mapel>
     private lateinit var dataSiswa: ArrayList<Siswa>
+    private var dataStringSiswa : ArrayList<StringSiswa> = arrayListOf()
+    private var dataStringMapel : ArrayList<StringMapel> = arrayListOf()
     private val binding get() = _binding
 
     override fun onCreateView(
@@ -32,9 +33,33 @@ class AddKelasFragment : BaseSkeletonFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        dataMapel = DummyData().setDummyDataMapel()
-        dataSiswa = DummyData().setDummyDataSiswa()
+        dataMapel = arrayListOf()
+        dataSiswa = arrayListOf()
+
         with(binding) {
+            siswaViewModel.getAllLocalSiswa().observe(viewLifecycleOwner) {
+                dataSiswa.addAll(it)
+                includeRvSiswa.rvRvlayoutContainer.apply {
+                    val adapter = RvAdapter<Siswa>("siswa", OperationsTypeRv.READ, mainNavController)
+                    adapter.setData(dataSiswa)
+                    adapter.notifyDataSetChanged()
+                    this.adapter = adapter
+                    layoutManager =
+                        LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+                }
+            }
+
+            mapelViewModel.getAllLocalMapel().observe(viewLifecycleOwner){
+                dataMapel.addAll(it)
+                includeRvMapel.rvRvlayoutContainer.apply {
+                    val adapter = RvAdapter<Mapel>("mapel", OperationsTypeRv.READ, mainNavController)
+                    adapter.setData(dataMapel)
+                    adapter.notifyDataSetChanged()
+                    this.adapter = adapter
+                    layoutManager =
+                        LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+                }
+            }
 
             accountViewModel.getAllTeacher(session.token.toString()).observe(viewLifecycleOwner) {
                 val listGuru = mutableListOf<String>()
@@ -56,14 +81,6 @@ class AddKelasFragment : BaseSkeletonFragment() {
             }
             includeRvSiswa.mtvRvlayoutAdd.text = "Tambah Siswa"
             includeRvSiswa.mtvRvlayoutViewmore.hide()
-            includeRvSiswa.rvRvlayoutContainer.apply {
-                val adapter = RvAdapter<Siswa>("siswa", OperationsTypeRv.READ, mainNavController)
-                adapter.setData(dataSiswa)
-                adapter.notifyDataSetChanged()
-                this.adapter = adapter
-                layoutManager =
-                    LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-            }
 
             includeRvMapel.mtvRvlayoutTitle.setTextColor(resources.getColor(R.color.white))
             includeRvMapel.mtvRvlayoutTitle.text = "Mapel"
@@ -73,14 +90,6 @@ class AddKelasFragment : BaseSkeletonFragment() {
             }
             includeRvMapel.mtvRvlayoutAdd.text = "Tambah Mapel"
             includeRvMapel.mtvRvlayoutViewmore.hide()
-            includeRvMapel.rvRvlayoutContainer.apply {
-                val adapter = RvAdapter<Mapel>("mapel", OperationsTypeRv.READ, mainNavController)
-                adapter.setData(dataMapel)
-                adapter.notifyDataSetChanged()
-                this.adapter = adapter
-                layoutManager =
-                    LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-            }
 
             mbAddkelasSimpan.setOnClickListener {
                 mainNavController.popBackStack()

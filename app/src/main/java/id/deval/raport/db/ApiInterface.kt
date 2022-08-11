@@ -58,6 +58,12 @@ interface ApiInterface {
         @Path("id") id: String
     ): GlobalWrapper<SiswaUpdate>
 
+    @GET("siswa/{id}")
+    suspend fun getSiswaById(
+        @Header("Authorization") token: String,
+        @Path("id") id: String
+    ): GlobalWrapper<Siswa>
+
     @Multipart
     @POST("siswa/")
     suspend fun addSiswa(

@@ -23,9 +23,11 @@ class SiswaViewModel @Inject constructor(
     private lateinit var mutablelistSiswa: MutableLiveData<GlobalWrapper<ArrayList<Siswa>>>
     private lateinit var mutableAddSiswa: MutableLiveData<GlobalWrapper<Siswa>>
     private lateinit var mutableSiswa: MutableLiveData<GlobalWrapper<SiswaUpdate>>
+    private lateinit var mutableSiswaById: MutableLiveData<GlobalWrapper<Siswa>>
     private lateinit var mutableUpdateSiswa : MutableLiveData<GlobalWrapper<Siswa>>
     private lateinit var mutableUploadPhoto : MutableLiveData<GlobalWrapper<Siswa>>
     private lateinit var mutableDeleteSiswa : MutableLiveData<Response<Unit>>
+    private lateinit var mutableAllSiswa : MutableLiveData<List<Siswa>>
 
     fun getSiswa(token:String, id:String): LiveData<GlobalWrapper<SiswaUpdate>>{
         mutableSiswa = MutableLiveData()
@@ -34,6 +36,15 @@ class SiswaViewModel @Inject constructor(
             mutableSiswa.postValue(response)
         }
         return mutableSiswa
+    }
+
+    fun getSiswaById(token: String, id: String) : LiveData<GlobalWrapper<Siswa>>{
+        mutableSiswaById = MutableLiveData()
+        GlobalScope.launch {
+            val response = repository.getSiswaById(token, id)
+            mutableSiswaById.postValue(response)
+        }
+        return mutableSiswaById
     }
 
     fun getAllSiswa(token: String): LiveData<GlobalWrapper<ArrayList<Siswa>>> {
@@ -116,6 +127,32 @@ class SiswaViewModel @Inject constructor(
             mutableDeleteSiswa.postValue(response)
         }
         return mutableDeleteSiswa
+    }
+
+    fun insertLocalSiswa(siswa: Siswa){
+        GlobalScope.launch {
+            repository.insertSiswa(siswa)
+        }
+    }
+
+    fun insertAllLocalSiswa(list : ArrayList<Siswa>){
+        GlobalScope.launch {
+            repository.insertAllSiswa(list)
+        }
+    }
+
+    fun deleteLocalSiswa(siswa: Siswa){
+        GlobalScope.launch {
+            repository.deleteSiswa(siswa)
+        }
+    }
+
+    fun getAllLocalSiswa():MutableLiveData<List<Siswa>>{
+        mutableAllSiswa = MutableLiveData()
+        GlobalScope.launch {
+            mutableAllSiswa.postValue(repository.getAllSiswa())
+        }
+        return mutableAllSiswa
     }
 
 }

@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import id.deval.raport.databinding.RvChooseItemBinding
 import id.deval.raport.db.event.CommonParamsAdd
 import id.deval.raport.db.event.CommonParamsDelete
+import id.deval.raport.db.event.LocalDatabaseEvent
 import id.deval.raport.db.models.Mapel
 import id.deval.raport.db.models.Siswa
 import id.deval.raport.db.models.StringMapel
@@ -15,7 +16,7 @@ import id.deval.raport.utils.show
 import org.greenrobot.eventbus.EventBus
 
 class RvChooseSiswaAdapter<T>(
-    private val oldList: ArrayList<StringSiswa>
+    private val oldList: ArrayList<Siswa>
 ) : RecyclerView.Adapter<RvChooseSiswaAdapter.RvChooseViewHolder>() {
 
     private var data = arrayListOf<T>()
@@ -28,35 +29,33 @@ class RvChooseSiswaAdapter<T>(
 
     class RvChooseViewHolder(private val binding: RvChooseItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun <T> bind(data: T, oldList: ArrayList<StringSiswa>, bus: EventBus) {
+        fun <T> bind(data: T, oldList: ArrayList<Siswa>, bus: EventBus) {
             with(binding) {
                 mtvRvChooseItemTitlename.text = "Nama"
                 mtvRvChooseItemTitlenis.text = "NIS"
                 data as Siswa
                 mtvRvChooseItemName.text = data.name
                 mtvRvChooseItemNis.text = data.nis
-                oldList.forEach {
-                    val siswa = it as StringSiswa
-                    if (siswa.id == data.id) {
-                        isAlreadyAdded(true)
-                    } else {
-                        isAlreadyAdded(false)
-                    }
+                val isSame = oldList.find { it.id == data.id }
+                if (isSame != null) {
+                    isAlreadyAdded(true)
+                } else {
+                    isAlreadyAdded(false)
                 }
                 ivRvChooseItemEdit.setOnClickListener {
-                    bus.post(CommonParamsAdd(data.id.toString()))
+                    bus.post(LocalDatabaseEvent<Siswa>(data, "add"))
                     isAlreadyAdded(true)
                 }
                 ivRvChooseItemDelete.setOnClickListener {
-                    bus.post(CommonParamsDelete(data.id.toString()))
+                    bus.post(LocalDatabaseEvent<Siswa>(data, "delete"))
                     isAlreadyAdded(false)
                 }
             }
         }
 
-        fun isAlreadyAdded(boolean: Boolean){
-            with(binding){
-                if (boolean){
+        fun isAlreadyAdded(boolean: Boolean) {
+            with(binding) {
+                if (boolean) {
                     ivRvChooseItemEdit.hide()
                     ivRvChooseItemDelete.show()
                 } else {

@@ -2,16 +2,12 @@ package id.deval.raport.db
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import id.deval.raport.db.dao.ExampleDao
-import id.deval.raport.db.dao.StringMapelDao
-import id.deval.raport.db.dao.StringSiswaDao
-import id.deval.raport.db.models.ExampleEntity
-import id.deval.raport.db.models.StringMapel
-import id.deval.raport.db.models.StringSiswa
+import id.deval.raport.db.dao.*
+import id.deval.raport.db.models.*
 
-@Database(entities = [ExampleEntity::class, StringSiswa::class, StringMapel::class], version = 1, exportSchema = false)
+@Database(entities = [ExampleEntity::class, Siswa::class, Mapel::class], version = 1, exportSchema = false)
 abstract class Database() : RoomDatabase(){
     abstract fun exampleDao(): ExampleDao
-    abstract fun stringSiswaDao(): StringSiswaDao
-    abstract fun stringMapelDao():StringMapelDao
+    abstract fun siswaDao(): SiswaDao
+    abstract fun mapelDao():MapelDao
 }
