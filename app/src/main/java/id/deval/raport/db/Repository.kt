@@ -1,11 +1,11 @@
 package id.deval.raport.db
 
-import id.deval.raport.db.models.Account
-import id.deval.raport.db.models.Kelas
+import id.deval.raport.db.models.*
 import id.deval.raport.db.models.request.AccountUpdate
-import id.deval.raport.db.models.Siswa
 import id.deval.raport.db.models.request.SiswaUpdate
 import id.deval.raport.utils.wrappers.GlobalWrapper
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import okhttp3.MultipartBody
 import retrofit2.Response
 import javax.inject.Inject
@@ -116,5 +116,53 @@ class Repository @Inject constructor(
 
     suspend fun getAllClass(token: String): GlobalWrapper<ArrayList<Kelas>>{
         return apiInterface.getAllClass("Bearer $token")
+    }
+
+    suspend fun getAllMapel(token: String): GlobalWrapper<ArrayList<Mapel>>{
+        return apiInterface.getAllMapel("Bearer $token")
+    }
+
+    suspend fun insertSiswa(siswa: StringSiswa){
+        withContext(Dispatchers.IO){
+            database.stringSiswaDao().addSiswa(siswa)
+        }
+    }
+
+    suspend fun insertAllSiswa(siswa: List<StringSiswa>){
+        withContext(Dispatchers.IO){
+            database.stringSiswaDao().insertAllSiswa(siswa)
+        }
+    }
+
+    suspend fun deleteSiswa(siswa: StringSiswa){
+        withContext(Dispatchers.IO){
+            database.stringSiswaDao().delete(siswa)
+        }
+    }
+
+    fun getAllSiswa():List<StringSiswa>{
+        return database.stringSiswaDao().getAllStringSiswa()
+    }
+
+    suspend fun insertMapel(mapel: StringMapel){
+        withContext(Dispatchers.IO){
+            database.stringMapelDao().addMapel(mapel)
+        }
+    }
+
+    suspend fun insertAllMapel(mapel: List<StringMapel>){
+        withContext(Dispatchers.IO){
+            database.stringMapelDao().insertAllMapel(mapel)
+        }
+    }
+
+    suspend fun deleteMapel(mapel: StringMapel){
+        withContext(Dispatchers.IO){
+            database.stringMapelDao().delete(mapel)
+        }
+    }
+
+    fun getAllMapel():List<StringMapel>{
+        return database.stringMapelDao().getAllStringMapel()
     }
 }

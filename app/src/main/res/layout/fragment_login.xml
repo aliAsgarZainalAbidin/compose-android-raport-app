@@ -37,7 +37,8 @@
                 android:id="@+id/tiet_login_username"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="adminali" />
+                android:inputType="number"
+                android:text="111111" />
 
         </com.google.android.material.textfield.TextInputLayout>
 

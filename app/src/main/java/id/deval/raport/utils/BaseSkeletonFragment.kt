@@ -11,10 +11,7 @@ import androidx.navigation.NavController
 import dagger.hilt.android.AndroidEntryPoint
 import id.deval.raport.db.Session
 import id.deval.raport.db.event.CommonParams
-import id.deval.raport.viewModels.AccountViewModel
-import id.deval.raport.viewModels.KelasViewModel
-import id.deval.raport.viewModels.LoginViewModel
-import id.deval.raport.viewModels.SiswaViewModel
+import id.deval.raport.viewModels.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import javax.inject.Inject
@@ -27,6 +24,9 @@ open class BaseSkeletonFragment : Fragment() {
     val accountViewModel: AccountViewModel by viewModels()
     val siswaViewModel: SiswaViewModel by viewModels()
     val kelasViewModel: KelasViewModel by viewModels()
+    val stringSiswaViewModel: StringSiswaViewModel by viewModels()
+    val mapelViewModel : MapelViewModel by viewModels()
+    val stringMapelViewModel : StringMapelViewModel by viewModels()
     val bus = EventBus.getDefault()
     @Inject lateinit var session: Session
 

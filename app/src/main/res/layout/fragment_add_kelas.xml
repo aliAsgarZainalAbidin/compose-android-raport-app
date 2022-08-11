@@ -159,7 +159,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableEnd="@drawable/ic_menu_down"
-                android:text="Ali" />
+                tools:text="Ali" />
 
         </com.google.android.material.textfield.TextInputLayout>
 

@@ -2,6 +2,7 @@ package id.deval.raport.db
 
 import id.deval.raport.db.models.Account
 import id.deval.raport.db.models.Kelas
+import id.deval.raport.db.models.Mapel
 import id.deval.raport.db.models.request.AccountUpdate
 import id.deval.raport.db.models.Siswa
 import id.deval.raport.db.models.request.SiswaUpdate
@@ -142,5 +143,13 @@ interface ApiInterface {
     suspend fun getAllClass(
         @Header("Authorization") token: String
     ): GlobalWrapper<ArrayList<Kelas>>
+
+
+    @GET("mapel/")
+    suspend fun getAllMapel(
+        @Header("Authorization") token: String
+    ): GlobalWrapper<ArrayList<Mapel>>
+
+
 
 }

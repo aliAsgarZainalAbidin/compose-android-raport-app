@@ -4,9 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import id.deval.raport.R
 import id.deval.raport.databinding.FragmentAddKelasBinding
+import id.deval.raport.db.models.Account
 import id.deval.raport.db.models.Mapel
 import id.deval.raport.db.models.Siswa
 import id.deval.raport.ui.adapter.RvAdapter
@@ -34,6 +36,15 @@ class AddKelasFragment : BaseSkeletonFragment() {
         dataSiswa = DummyData().setDummyDataSiswa()
         with(binding) {
 
+            accountViewModel.getAllTeacher(session.token.toString()).observe(viewLifecycleOwner) {
+                val listGuru = mutableListOf<String>()
+                it.data.forEach {
+                    listGuru.add("${it.name}/${it.username}")
+                }
+                val guruAdapter = ArrayAdapter(requireActivity(), R.layout.list_item, listGuru)
+                tietAddkelasGuru.setAdapter(guruAdapter)
+            }
+
             ivAddkelasBack.setOnClickListener {
                 mainNavController.popBackStack()
             }
@@ -46,7 +57,7 @@ class AddKelasFragment : BaseSkeletonFragment() {
             includeRvSiswa.mtvRvlayoutAdd.text = "Tambah Siswa"
             includeRvSiswa.mtvRvlayoutViewmore.hide()
             includeRvSiswa.rvRvlayoutContainer.apply {
-                val adapter = RvAdapter<Siswa>("siswa", OperationsTypeRv.READ,mainNavController)
+                val adapter = RvAdapter<Siswa>("siswa", OperationsTypeRv.READ, mainNavController)
                 adapter.setData(dataSiswa)
                 adapter.notifyDataSetChanged()
                 this.adapter = adapter
@@ -63,7 +74,7 @@ class AddKelasFragment : BaseSkeletonFragment() {
             includeRvMapel.mtvRvlayoutAdd.text = "Tambah Mapel"
             includeRvMapel.mtvRvlayoutViewmore.hide()
             includeRvMapel.rvRvlayoutContainer.apply {
-                val adapter = RvAdapter<Mapel>("mapel", OperationsTypeRv.READ,mainNavController)
+                val adapter = RvAdapter<Mapel>("mapel", OperationsTypeRv.READ, mainNavController)
                 adapter.setData(dataMapel)
                 adapter.notifyDataSetChanged()
                 this.adapter = adapter
