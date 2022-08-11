@@ -125,6 +125,10 @@ class Repository @Inject constructor(
         return apiInterface.addClass("Bearer $token", kelas)
     }
 
+    suspend fun deleteClass(token: String, id: String): Response<Unit>{
+        return apiInterface.deleteClass("Bearer $token", id)
+    }
+
     suspend fun getAllMapel(token: String): GlobalWrapper<ArrayList<Mapel>>{
         return apiInterface.getAllMapel("Bearer $token")
     }

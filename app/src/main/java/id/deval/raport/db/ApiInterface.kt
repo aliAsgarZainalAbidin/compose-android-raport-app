@@ -156,12 +156,15 @@ interface ApiInterface {
         @Body kelas: Kelas
     ): GlobalWrapper<Kelas>
 
+    @DELETE("class/{id}")
+    suspend fun deleteClass(
+        @Header("Authorization") token: String,
+        @Path("id") id:String
+    ): Response<Unit>
 
     @GET("mapel/")
     suspend fun getAllMapel(
         @Header("Authorization") token: String
     ): GlobalWrapper<ArrayList<Mapel>>
-
-
 
 }

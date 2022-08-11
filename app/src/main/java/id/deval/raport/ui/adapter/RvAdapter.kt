@@ -95,6 +95,17 @@ class RvAdapter<T>(
                         mtvRvitemTitlenis.text = "Jumlah Siswa"
                         mtvRvitemName.text = data.name
                         mtvRvitemNis.text = data.siswaId?.size.toString()
+
+                        ivRvitemEdit.setOnClickListener {
+                            val bundle = bundleOf()
+                            bundle.putString(Constanta.ID, data.id)
+                            navController.navigate(R.id.action_baseFragment_to_addKelasFragment, bundle)
+                        }
+
+                        ivRvitemDelete.setOnClickListener {
+                            bus.post(CommonParams(data.id.toString()))
+                        }
+
                         true
                     }
                     "mapel-absen" -> {

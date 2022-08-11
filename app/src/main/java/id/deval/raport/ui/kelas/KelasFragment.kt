@@ -1,15 +1,18 @@
 package id.deval.raport.ui.kelas
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import id.deval.raport.R
 import id.deval.raport.databinding.FragmentKelasBinding
+import id.deval.raport.db.event.CommonParams
 import id.deval.raport.db.models.Kelas
 import id.deval.raport.ui.adapter.RvAdapter
 import id.deval.raport.utils.*
+import org.greenrobot.eventbus.Subscribe
 
 class KelasFragment : BaseSkeletonFragment() {
 
@@ -42,6 +45,12 @@ class KelasFragment : BaseSkeletonFragment() {
             includeRvGuru.mtvRvlayoutAdd.text = "Tambah Kelas"
             includeRvGuru.mtvRvlayoutViewmore.hide()
 
+            refreshRecyclerViewKelas()
+        }
+    }
+
+    fun refreshRecyclerViewKelas() {
+        with(binding) {
             kelasViewModel.getAllClass(session.token.toString()).observe(viewLifecycleOwner) {
                 mtvKelasTotalKelas.text = it.data.size.toString()
                 includeRvGuru.rvRvlayoutContainer.apply {
@@ -55,5 +64,15 @@ class KelasFragment : BaseSkeletonFragment() {
                 }
             }
         }
+    }
+
+
+    @Subscribe
+    override fun deleteItem(commonParams: CommonParams) {
+        super.deleteItem(commonParams)
+        kelasViewModel.deleteClass(session.token.toString(), commonParams.id)
+            .observe(viewLifecycleOwner) {
+                refreshRecyclerViewKelas()
+            }
     }
 }

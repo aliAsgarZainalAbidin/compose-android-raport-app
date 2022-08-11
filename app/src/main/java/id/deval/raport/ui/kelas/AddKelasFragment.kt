@@ -148,6 +148,7 @@ class AddKelasFragment : BaseSkeletonFragment() {
                             mainNavController.popBackStack()
                             requireContext().showToast("${it.status} menambahkan data kelas")
                         }
+
                 }
             }
         }
