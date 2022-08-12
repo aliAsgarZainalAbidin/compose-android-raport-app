@@ -7,6 +7,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import id.deval.raport.db.Repository
 import id.deval.raport.db.models.Attendance
 import id.deval.raport.db.models.request.AttendanceAdd
+import id.deval.raport.db.response.ResponseAttendance
 import id.deval.raport.utils.wrappers.GlobalWrapper
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -18,6 +19,7 @@ class AbsenViewModel @Inject constructor(
 ) : ViewModel() {
 
     private lateinit var mutableAddAttendance : MutableLiveData<GlobalWrapper<Attendance>>
+    private lateinit var mutableAttendanceById : MutableLiveData<GlobalWrapper<ArrayList<ResponseAttendance>>>
     private lateinit var mutableGetAttendance : MutableLiveData<GlobalWrapper<ArrayList<Attendance>>>
 
     fun addAttendance(token: String, attendance: AttendanceAdd): LiveData<GlobalWrapper<Attendance>> {
@@ -28,6 +30,16 @@ class AbsenViewModel @Inject constructor(
         }
         return mutableAddAttendance
     }
+
+    fun getAttendanceById(token: String, id: String): LiveData<GlobalWrapper<ArrayList<ResponseAttendance>>> {
+        mutableAttendanceById = MutableLiveData()
+        GlobalScope.launch {
+            val response = repository.getAttendanceById(token, id)
+            mutableAttendanceById.postValue(response)
+        }
+        return mutableAttendanceById
+    }
+
     fun getAttendance(token: String, classId:String, mapelId:String): LiveData<GlobalWrapper<ArrayList<Attendance>>> {
         mutableGetAttendance = MutableLiveData()
         GlobalScope.launch {

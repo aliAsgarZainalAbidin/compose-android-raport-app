@@ -3,11 +3,13 @@ package id.deval.raport.ui.adapter
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
 import id.deval.raport.R
 import id.deval.raport.databinding.RvAbsensiBinding
 import id.deval.raport.db.models.Attendance
+import id.deval.raport.utils.Constanta
 import id.deval.raport.utils.show
 
 class RvAbsensiAdapter(
@@ -36,7 +38,10 @@ class RvAbsensiAdapter(
                 }
                 if (siswaId == null){
                     clRvabsensiContainer.setOnClickListener {
-                        navController.navigate(R.id.action_listAbsenFragment_to_absenDetailFragment)
+                        val bundle = bundleOf()
+                        bundle.putString(Constanta.DATE,data.tanggalAbsen)
+                        bundle.putString(Constanta.ID, data.id)
+                        navController.navigate(R.id.action_listAbsenFragment_to_absenDetailFragment, bundle)
                     }
                 }
             }

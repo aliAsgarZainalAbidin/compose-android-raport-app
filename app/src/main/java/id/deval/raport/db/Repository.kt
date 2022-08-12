@@ -2,6 +2,7 @@ package id.deval.raport.db
 
 import id.deval.raport.db.models.*
 import id.deval.raport.db.models.request.*
+import id.deval.raport.db.response.ResponseAttendance
 import id.deval.raport.db.response.ResponseDetailKelas
 import id.deval.raport.utils.wrappers.GlobalWrapper
 import kotlinx.coroutines.Dispatchers
@@ -182,6 +183,10 @@ class Repository @Inject constructor(
 
     suspend fun getAttendance(token:String, classId:String, mapelId:String): GlobalWrapper<ArrayList<Attendance>>{
         return apiInterface.getAttendance("Bearer $token", classId, mapelId)
+    }
+
+    suspend fun getAttendanceById(token:String, id:String): GlobalWrapper<ArrayList<ResponseAttendance>>{
+        return apiInterface.getAttendanceById("Bearer $token", id)
     }
 
     suspend fun insertSiswa(siswa: Siswa) {

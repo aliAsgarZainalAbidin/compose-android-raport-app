@@ -1,11 +1,14 @@
 package id.deval.raport.ui.absen
 
+import android.app.DatePickerDialog
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.DatePicker
+import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.LinearLayoutManager
 import id.deval.raport.R
 import id.deval.raport.databinding.FragmentListAbsenBinding
@@ -56,16 +59,38 @@ class ListAbsenFragment : BaseSkeletonFragment() {
                 }
 
             mbListabsenAdd.setOnClickListener {
-                val formatter = SimpleDateFormat("dd/M/yyyy")
-                val date = formatter.format(Date())
-                val attendance = AttendanceAdd(
-                    classId, mapelId, date, null
+                val calendar = Calendar.getInstance()
+                val year = calendar.get(Calendar.YEAR)
+                val month = calendar.get(Calendar.MONTH)
+                val day = calendar.get(Calendar.DAY_OF_MONTH)
+                var date: String
+
+                val datePickerDialog = DatePickerDialog(
+                    requireContext(),
+                    object : DatePickerDialog.OnDateSetListener {
+                        override fun onDateSet(p0: DatePicker?, p1: Int, p2: Int, p3: Int) {
+                            date = "$p3-$p2-$p1"
+                            val attendance = AttendanceAdd(
+                                classId, mapelId, date, null
+                            )
+                            absenViewModel.addAttendance(session.token.toString(), attendance)
+                                .observe(viewLifecycleOwner) {
+                                    Log.d("TAG", "onViewCreated: ${it.data}")
+                                    val bundle = bundleOf()
+                                    bundle.putString(Constanta.DATE, date)
+                                    bundle.putString(Constanta.ID, it.data.id)
+                                    mainNavController.navigate(
+                                        R.id.action_listAbsenFragment_to_absenDetailFragment,
+                                        bundle
+                                    )
+                                }
+                        }
+                    },
+                    year,
+                    month,
+                    day
                 )
-                absenViewModel.addAttendance(session.token.toString(), attendance)
-                    .observe(viewLifecycleOwner) {
-                        Log.d("TAG", "onViewCreated: ${it.data}")
-                        mainNavController.navigate(R.id.action_listAbsenFragment_to_absenDetailFragment)
-                    }
+                datePickerDialog.show()
             }
         }
     }

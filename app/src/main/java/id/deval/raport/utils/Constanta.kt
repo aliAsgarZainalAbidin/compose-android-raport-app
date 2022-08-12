@@ -8,4 +8,5 @@ object Constanta {
     val PARCELABLE_ITEM = "PARCELABLE_ITEM"
     val CLASS_ID = "CLASS_ID"
     val MAPEL_ID = "MAPEL_ID"
+    val DATE = "DATE"
 }

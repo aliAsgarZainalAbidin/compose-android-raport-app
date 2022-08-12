@@ -7,7 +7,7 @@ data class ResponseAttendance(
 	@field:SerializedName("classId")
 	val classId: String? = null,
 
-	@field:SerializedName("detailSiswa")
+	@field:SerializedName("siswaDetail")
 	val detailSiswa: List<DetailSiswaItem?>? = null,
 
 	@field:SerializedName("__v")

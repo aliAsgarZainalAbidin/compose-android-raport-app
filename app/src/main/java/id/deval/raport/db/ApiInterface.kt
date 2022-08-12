@@ -2,6 +2,7 @@ package id.deval.raport.db
 
 import id.deval.raport.db.models.*
 import id.deval.raport.db.models.request.*
+import id.deval.raport.db.response.ResponseAttendance
 import id.deval.raport.db.response.ResponseDetailKelas
 import id.deval.raport.utils.wrappers.GlobalWrapper
 import okhttp3.MultipartBody
@@ -220,4 +221,10 @@ interface ApiInterface {
         @Query("classId") classId: String,
         @Query("mapelId") mapelId: String
     ): GlobalWrapper<ArrayList<Attendance>>
+
+    @GET("attendance/{id}")
+    suspend fun getAttendanceById(
+        @Header("Authorization") token: String,
+        @Path("id") id:String
+    ): GlobalWrapper<ArrayList<ResponseAttendance>>
 }
