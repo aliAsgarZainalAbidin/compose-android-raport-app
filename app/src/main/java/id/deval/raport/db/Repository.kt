@@ -3,6 +3,7 @@ package id.deval.raport.db
 import id.deval.raport.db.models.*
 import id.deval.raport.db.models.request.AccountUpdate
 import id.deval.raport.db.models.request.SiswaUpdate
+import id.deval.raport.db.response.ResponseDetailKelas
 import id.deval.raport.utils.wrappers.GlobalWrapper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -127,6 +128,10 @@ class Repository @Inject constructor(
 
     suspend fun deleteClass(token: String, id: String): Response<Unit>{
         return apiInterface.deleteClass("Bearer $token", id)
+    }
+
+    suspend fun getClassById(token: String, id: String): GlobalWrapper<ArrayList<ResponseDetailKelas>>{
+        return apiInterface.getClassById("Bearer $token", id)
     }
 
     suspend fun getAllMapel(token: String): GlobalWrapper<ArrayList<Mapel>>{

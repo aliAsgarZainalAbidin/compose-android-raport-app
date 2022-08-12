@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import id.deval.raport.db.Repository
 import id.deval.raport.db.models.Kelas
+import id.deval.raport.db.response.ResponseDetailKelas
 import id.deval.raport.utils.wrappers.GlobalWrapper
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -20,6 +21,7 @@ class KelasViewModel @Inject constructor(
     private lateinit var mutableAllClass : MutableLiveData<GlobalWrapper<ArrayList<Kelas>>>
     private lateinit var mutableAddClass : MutableLiveData<GlobalWrapper<Kelas>>
     private lateinit var mutableDeleteClass : MutableLiveData<Response<Unit>>
+    private lateinit var mutableClassById : MutableLiveData<GlobalWrapper<ArrayList<ResponseDetailKelas>>>
 
     fun getAllClass(token: String): LiveData<GlobalWrapper<ArrayList<Kelas>>>{
         mutableAllClass = MutableLiveData()
@@ -45,5 +47,14 @@ class KelasViewModel @Inject constructor(
             mutableDeleteClass.postValue(response)
         }
         return mutableDeleteClass
+    }
+
+    fun getClassById(token: String, id: String): LiveData<GlobalWrapper<ArrayList<ResponseDetailKelas>>>{
+        mutableClassById = MutableLiveData()
+        GlobalScope.launch {
+            val response = repository.getClassById(token, id)
+            mutableClassById.postValue(response)
+        }
+        return mutableClassById
     }
 }

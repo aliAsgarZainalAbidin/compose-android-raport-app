@@ -66,7 +66,6 @@ class KelasFragment : BaseSkeletonFragment() {
         }
     }
 
-
     @Subscribe
     override fun deleteItem(commonParams: CommonParams) {
         super.deleteItem(commonParams)

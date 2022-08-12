@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import androidx.activity.OnBackPressedCallback
+import androidx.activity.addCallback
 import androidx.recyclerview.widget.LinearLayoutManager
 import id.deval.raport.R
 import id.deval.raport.databinding.FragmentAddKelasBinding
@@ -26,6 +28,19 @@ class AddKelasFragment : BaseSkeletonFragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentAddKelasBinding.inflate(inflater, container, false)
+//        requireActivity().onBackPressedDispatcher.addCallback {
+//            object : OnBackPressedCallback(true) {
+//                override fun handleOnBackPressed() {
+//                    mapelViewModel.clearTableMapel()
+//                    siswaViewModel.clearTableSiswa()
+//                    dataMapel.clear()
+//                    dataSiswa.clear()
+//                    with(binding){
+//                        ivAddkelasBack.isPressed = true
+//                    }
+//                }
+//            }
+//        }
         return binding.root
     }
 
@@ -36,32 +51,59 @@ class AddKelasFragment : BaseSkeletonFragment() {
         dataSiswa = arrayListOf()
         val listGuru = mutableListOf<String>()
         val listAccountGuru = mutableListOf<Account>()
+        val id = arguments?.getString(Constanta.ID, "")
 
         with(binding) {
-            siswaViewModel.getAllLocalSiswa().observe(viewLifecycleOwner) {
-                dataSiswa.addAll(it)
-                includeRvSiswa.rvRvlayoutContainer.apply {
-                    val adapter =
-                        RvAdapter<Siswa>("siswa", OperationsTypeRv.READ, mainNavController)
-                    adapter.setData(dataSiswa)
-                    adapter.notifyDataSetChanged()
-                    this.adapter = adapter
-                    layoutManager =
-                        LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-                }
-            }
+            if (!id.isNullOrEmpty()) {
+                kelasViewModel.getClassById(session.token.toString(), id)
+                    .observe(viewLifecycleOwner) {
+                        tietAddkelasNama.setText(it.data[0].name)
+                        tietAddkelasSemester.setText(it.data[0].semester.toString())
+                        tietAddkelasTahunajaran.setText(it.data[0].tahunAjaran)
+                        val guru = it.data[0].detailGuru?.get(0)
+                        if (guru != null) {
+                            val macGuru = "${guru.name}/${guru.username}"
+                            tietAddkelasGuru.setText(macGuru, false)
+                        }
+                        dataMapel.clear()
+                        it.data[0].mapelDetail?.forEach {
+                            if (it != null) {
+                                dataMapel.add(it)
+                            }
+                        }
+                        dataSiswa.clear()
+                        it.data[0].siswaDetail?.forEach {
+                            if (it != null) {
+                                dataSiswa.add(it)
+                            }
+                        }
+                        siswaViewModel.insertAllLocalSiswa(dataSiswa)
+                        mapelViewModel.insertAllLocalMapel(dataMapel)
 
-            mapelViewModel.getAllLocalMapel().observe(viewLifecycleOwner) {
-                dataMapel.addAll(it)
-                includeRvMapel.rvRvlayoutContainer.apply {
-                    val adapter =
-                        RvAdapter<Mapel>("mapel", OperationsTypeRv.READ, mainNavController)
-                    adapter.setData(dataMapel)
-                    adapter.notifyDataSetChanged()
-                    this.adapter = adapter
-                    layoutManager =
-                        LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-                }
+                        Log.d("TAG", "onViewCreated: $dataSiswa")
+                        Log.d("TAG", "onViewCreated: $dataMapel")
+                        includeRvSiswa.rvRvlayoutContainer.apply {
+                            val adapter =
+                                RvAdapter<Siswa>("siswa", OperationsTypeRv.READ, mainNavController)
+                            adapter.setData(dataSiswa)
+                            adapter.notifyDataSetChanged()
+                            this.adapter = adapter
+                            layoutManager =
+                                LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+                        }
+                        includeRvMapel.rvRvlayoutContainer.apply {
+                            val adapter =
+                                RvAdapter<Mapel>("mapel", OperationsTypeRv.READ, mainNavController)
+                            adapter.setData(dataMapel)
+                            adapter.notifyDataSetChanged()
+                            this.adapter = adapter
+                            layoutManager =
+                                LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+                        }
+                    }
+            } else {
+                refreshRvSiswa()
+                refreshRvMapel()
             }
 
             accountViewModel.getAllTeacher(session.token.toString()).observe(viewLifecycleOwner) {
@@ -76,6 +118,8 @@ class AddKelasFragment : BaseSkeletonFragment() {
             ivAddkelasBack.setOnClickListener {
                 mapelViewModel.clearTableMapel()
                 siswaViewModel.clearTableSiswa()
+                dataMapel.clear()
+                dataSiswa.clear()
                 mainNavController.popBackStack()
             }
             includeRvSiswa.mtvRvlayoutTitle.setTextColor(resources.getColor(R.color.white))
@@ -145,10 +189,46 @@ class AddKelasFragment : BaseSkeletonFragment() {
                         .observe(viewLifecycleOwner) {
                             mapelViewModel.clearTableMapel()
                             siswaViewModel.clearTableSiswa()
+                            dataMapel.clear()
+                            dataSiswa.clear()
                             mainNavController.popBackStack()
                             requireContext().showToast("${it.status} menambahkan data kelas")
                         }
 
+                }
+            }
+        }
+    }
+
+    fun refreshRvSiswa() {
+        with(binding) {
+            siswaViewModel.getAllLocalSiswa().observe(viewLifecycleOwner) {
+                dataSiswa.addAll(it)
+                includeRvSiswa.rvRvlayoutContainer.apply {
+                    val adapter =
+                        RvAdapter<Siswa>("siswa", OperationsTypeRv.READ, mainNavController)
+                    adapter.setData(dataSiswa)
+                    adapter.notifyDataSetChanged()
+                    this.adapter = adapter
+                    layoutManager =
+                        LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+                }
+            }
+        }
+    }
+
+    fun refreshRvMapel() {
+        with(binding) {
+            mapelViewModel.getAllLocalMapel().observe(viewLifecycleOwner) {
+                dataMapel.addAll(it)
+                includeRvMapel.rvRvlayoutContainer.apply {
+                    val adapter =
+                        RvAdapter<Mapel>("mapel", OperationsTypeRv.READ, mainNavController)
+                    adapter.setData(dataMapel)
+                    adapter.notifyDataSetChanged()
+                    this.adapter = adapter
+                    layoutManager =
+                        LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
                 }
             }
         }

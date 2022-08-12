@@ -6,6 +6,7 @@ import id.deval.raport.db.models.Mapel
 import id.deval.raport.db.models.request.AccountUpdate
 import id.deval.raport.db.models.Siswa
 import id.deval.raport.db.models.request.SiswaUpdate
+import id.deval.raport.db.response.ResponseDetailKelas
 import id.deval.raport.utils.wrappers.GlobalWrapper
 import okhttp3.MultipartBody
 import retrofit2.Response
@@ -161,6 +162,12 @@ interface ApiInterface {
         @Header("Authorization") token: String,
         @Path("id") id:String
     ): Response<Unit>
+
+    @GET("class/{id}")
+    suspend fun getClassById(
+        @Header("Authorization") token: String,
+        @Path("id") id:String
+    ): GlobalWrapper<ArrayList<ResponseDetailKelas>>
 
     @GET("mapel/")
     suspend fun getAllMapel(
