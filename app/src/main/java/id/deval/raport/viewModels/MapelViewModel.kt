@@ -21,6 +21,7 @@ class MapelViewModel @Inject constructor(
     private lateinit var mutableAllLocalMapel : MutableLiveData<List<Mapel>>
     private lateinit var mutableAddMapel : MutableLiveData<GlobalWrapper<Mapel>>
     private lateinit var mutableMapelById : MutableLiveData<GlobalWrapper<Mapel>>
+    private lateinit var mutableUpdateMapelById : MutableLiveData<GlobalWrapper<Mapel>>
 
     fun getAllMapel(token : String): LiveData<GlobalWrapper<ArrayList<Mapel>>>{
         mutableAllMapel = MutableLiveData()
@@ -47,6 +48,15 @@ class MapelViewModel @Inject constructor(
             mutableMapelById.postValue(response)
         }
         return mutableMapelById
+    }
+
+    fun updateMapelById(token: String, id:String, mapel: MapelAdd): LiveData<GlobalWrapper<Mapel>>{
+        mutableUpdateMapelById = MutableLiveData()
+        GlobalScope.launch {
+            val response = repository.updateMapelById(token, id, mapel)
+            mutableUpdateMapelById.postValue(response)
+        }
+        return mutableUpdateMapelById
     }
 
     fun insertLocalMapel(mapel: Mapel){

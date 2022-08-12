@@ -194,4 +194,11 @@ interface ApiInterface {
         @Header("Authorization") token: String,
         @Path("id") id:String
     ) : GlobalWrapper<Mapel>
+
+    @PUT("mapel/{id}")
+    suspend fun updateMapelById(
+        @Header("Authorization") token: String,
+        @Path("id") id:String,
+        @Body mapel: MapelAdd
+    ) : GlobalWrapper<Mapel>
 }

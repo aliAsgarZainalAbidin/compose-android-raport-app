@@ -38,7 +38,6 @@ class AddMapelFragment : BaseSkeletonFragment() {
                 mainNavController.popBackStack()
             }
 
-            Log.d("TAG", "onViewCreated: $id")
             if (!id.isNullOrEmpty()){
                 mapelViewModel.getMapelById(session.token.toString(), id).observe(viewLifecycleOwner){
                     val data = it.data
@@ -74,11 +73,18 @@ class AddMapelFragment : BaseSkeletonFragment() {
                 if (isValid) {
                     val mapel = MapelAdd(nama, kategori)
 
-                    mapelViewModel.addMapel(session.token.toString(), mapel)
-                        .observe(viewLifecycleOwner) {
-                            requireContext().showToast("${it.status} menambahkan data")
+                    if (id.isNullOrEmpty()){
+                        mapelViewModel.addMapel(session.token.toString(), mapel)
+                            .observe(viewLifecycleOwner) {
+                                requireContext().showToast("${it.status} menambahkan data")
+                                mainNavController.popBackStack()
+                            }
+                    } else {
+                        mapelViewModel.updateMapelById(session.token.toString(), id, mapel).observe(viewLifecycleOwner){
+                            requireContext().showToast("${it.status} men-update data")
                             mainNavController.popBackStack()
                         }
+                    }
                 }
 
             }
