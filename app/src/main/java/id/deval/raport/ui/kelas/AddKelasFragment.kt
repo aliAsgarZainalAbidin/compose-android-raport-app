@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import id.deval.raport.R
 import id.deval.raport.databinding.FragmentAddKelasBinding
 import id.deval.raport.db.models.*
+import id.deval.raport.db.models.request.KelasUpdate
 import id.deval.raport.ui.adapter.RvAdapter
 import id.deval.raport.utils.*
 
@@ -47,23 +48,24 @@ class AddKelasFragment : BaseSkeletonFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        requireActivity().getOnBackPressedDispatcher().addCallback(object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                if (isEnabled) {
-                    // Handle back press
-                    mapelViewModel.clearTableMapel()
-                    siswaViewModel.clearTableSiswa()
-                    dataMapel.clear()
-                    dataSiswa.clear()
-                    mainNavController.popBackStack()
-                } else {
-                    // If you want to get default implementation of onBackPressed, use this
-                    this.remove();
-                    requireActivity().onBackPressed();
+        requireActivity().getOnBackPressedDispatcher()
+            .addCallback(object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    if (isEnabled) {
+                        // Handle back press
+                        mapelViewModel.clearTableMapel()
+                        siswaViewModel.clearTableSiswa()
+                        dataMapel.clear()
+                        dataSiswa.clear()
+                        mainNavController.popBackStack()
+                    } else {
+                        // If you want to get default implementation of onBackPressed, use this
+                        this.remove();
+                        requireActivity().onBackPressed();
+                    }
                 }
-            }
 
-        });
+            });
 
         dataMapel = arrayListOf()
         dataSiswa = arrayListOf()
@@ -107,7 +109,11 @@ class AddKelasFragment : BaseSkeletonFragment() {
                             adapter.notifyDataSetChanged()
                             this.adapter = adapter
                             layoutManager =
-                                LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+                                LinearLayoutManager(
+                                    requireContext(),
+                                    LinearLayoutManager.VERTICAL,
+                                    false
+                                )
                         }
                         includeRvMapel.rvRvlayoutContainer.apply {
                             val adapter =
@@ -116,7 +122,11 @@ class AddKelasFragment : BaseSkeletonFragment() {
                             adapter.notifyDataSetChanged()
                             this.adapter = adapter
                             layoutManager =
-                                LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+                                LinearLayoutManager(
+                                    requireContext(),
+                                    LinearLayoutManager.VERTICAL,
+                                    false
+                                )
                         }
                     }
             } else {
@@ -197,21 +207,34 @@ class AddKelasFragment : BaseSkeletonFragment() {
                 }
 
                 if (isValid) {
-                    val kelas = Kelas(
-                        null,
-                        siswaId,
-                        nameKelas, mapelId, semester.toInt(), tahunAjaran, guru
-                    )
+                    if (id.isNullOrEmpty()) {
+                        val kelas = Kelas(
+                            null,
+                            siswaId,
+                            nameKelas, mapelId, semester.toInt(), tahunAjaran, guru
+                        )
 
-                    kelasViewModel.addClass(session.token.toString(), kelas)
-                        .observe(viewLifecycleOwner) {
-                            mapelViewModel.clearTableMapel()
-                            siswaViewModel.clearTableSiswa()
-                            dataMapel.clear()
-                            dataSiswa.clear()
-                            mainNavController.popBackStack()
-                            requireContext().showToast("${it.status} menambahkan data kelas")
-                        }
+                        kelasViewModel.addClass(session.token.toString(), kelas)
+                            .observe(viewLifecycleOwner) {
+                                mapelViewModel.clearTableMapel()
+                                siswaViewModel.clearTableSiswa()
+                                dataMapel.clear()
+                                dataSiswa.clear()
+                                mainNavController.popBackStack()
+                                requireContext().showToast("${it.status} menambahkan data kelas")
+                            }
+                    } else {
+                        val kelas = KelasUpdate(
+                            siswaId,
+                            nameKelas, mapelId, semester.toInt(), tahunAjaran, guru
+                        )
+
+                        kelasViewModel.updateClassById(session.token.toString(), id, kelas)
+                            .observe(viewLifecycleOwner) {
+                                requireContext().showToast("${it.status} men-update data")
+                                ivAddkelasBack.performClick()
+                            }
+                    }
 
                 }
             }

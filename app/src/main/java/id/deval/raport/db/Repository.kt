@@ -2,6 +2,7 @@ package id.deval.raport.db
 
 import id.deval.raport.db.models.*
 import id.deval.raport.db.models.request.AccountUpdate
+import id.deval.raport.db.models.request.KelasUpdate
 import id.deval.raport.db.models.request.SiswaUpdate
 import id.deval.raport.db.response.ResponseDetailKelas
 import id.deval.raport.utils.wrappers.GlobalWrapper
@@ -132,6 +133,10 @@ class Repository @Inject constructor(
 
     suspend fun getClassById(token: String, id: String): GlobalWrapper<ArrayList<ResponseDetailKelas>>{
         return apiInterface.getClassById("Bearer $token", id)
+    }
+
+    suspend fun updateClassById(token: String, id: String, kelas: KelasUpdate): GlobalWrapper<Kelas>{
+        return apiInterface.updateClassById("Bearer $token", id, kelas)
     }
 
     suspend fun getAllMapel(token: String): GlobalWrapper<ArrayList<Mapel>>{

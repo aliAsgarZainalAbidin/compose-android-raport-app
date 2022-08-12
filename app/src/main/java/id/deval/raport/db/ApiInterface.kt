@@ -5,6 +5,7 @@ import id.deval.raport.db.models.Kelas
 import id.deval.raport.db.models.Mapel
 import id.deval.raport.db.models.request.AccountUpdate
 import id.deval.raport.db.models.Siswa
+import id.deval.raport.db.models.request.KelasUpdate
 import id.deval.raport.db.models.request.SiswaUpdate
 import id.deval.raport.db.response.ResponseDetailKelas
 import id.deval.raport.utils.wrappers.GlobalWrapper
@@ -168,6 +169,13 @@ interface ApiInterface {
         @Header("Authorization") token: String,
         @Path("id") id:String
     ): GlobalWrapper<ArrayList<ResponseDetailKelas>>
+
+    @PUT("class/{id}")
+    suspend fun updateClassById(
+        @Header("Authorization") token: String,
+        @Path("id") id: String,
+        @Body kelas: KelasUpdate
+    ): GlobalWrapper<Kelas>
 
     @GET("mapel/")
     suspend fun getAllMapel(
