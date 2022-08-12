@@ -235,7 +235,6 @@ class AddKelasFragment : BaseSkeletonFragment() {
                                 ivAddkelasBack.performClick()
                             }
                     }
-
                 }
             }
         }

@@ -13,7 +13,7 @@ import id.deval.raport.utils.*
 
 class MapelFragment : BaseSkeletonFragment() {
 
-    private lateinit var _binding : FragmentMapelBinding
+    private lateinit var _binding: FragmentMapelBinding
     private val binding get() = _binding
 
     override fun onCreateView(
@@ -27,10 +27,9 @@ class MapelFragment : BaseSkeletonFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val dataMapel = DummyData().setDummyDataMapel()
-        with(binding){
-            mtvMapelName.text = "Admin"
-            mtvMapelTotalmapel.text = dataMapel.size.toString()
+        val dataMapel = arrayListOf<Mapel>()
+        with(binding) {
+            mtvMapelName.text = session.name
             includeRvMapel.mtvRvlayoutAdd.show()
             includeRvMapel.mtvRvlayoutAdd.text = "Tambah Mapel"
             includeRvMapel.mtvRvlayoutAdd.setOnClickListener {
@@ -38,12 +37,19 @@ class MapelFragment : BaseSkeletonFragment() {
             }
             includeRvMapel.mtvRvlayoutTitle.text = "Mata Pelajaran"
             includeRvMapel.mtvRvlayoutViewmore.hide()
-            includeRvMapel.rvRvlayoutContainer.apply {
-                val adapter = RvAdapter<Mapel>("mapel",OperationsTypeRv.READ,mainNavController)
-                adapter.setData(dataMapel)
-                adapter.notifyDataSetChanged()
-                this.adapter = adapter
-                layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+            mapelViewModel.getAllMapel(session.token.toString()).observe(viewLifecycleOwner) {
+                includeRvMapel.rvRvlayoutContainer.apply {
+                    val adapter =
+                        RvAdapter<Mapel>("mapel", OperationsTypeRv.EDIT, mainNavController)
+                    dataMapel.addAll(it.data)
+                    mtvMapelTotalmapel.text = dataMapel.size.toString()
+
+                    adapter.setData(dataMapel)
+                    adapter.notifyDataSetChanged()
+                    this.adapter = adapter
+                    layoutManager =
+                        LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+                }
             }
         }
     }
