@@ -195,6 +195,12 @@ interface ApiInterface {
         @Path("id") id:String
     ) : GlobalWrapper<Mapel>
 
+    @DELETE("mapel/{id}")
+    suspend fun deleteMapelById(
+        @Header("Authorization") token: String,
+        @Path("id") id:String
+    ) : Response<Unit>
+
     @PUT("mapel/{id}")
     suspend fun updateMapelById(
         @Header("Authorization") token: String,

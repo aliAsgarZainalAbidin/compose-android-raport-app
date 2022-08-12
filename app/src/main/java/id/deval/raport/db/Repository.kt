@@ -164,6 +164,10 @@ class Repository @Inject constructor(
         return apiInterface.getMapelById("Bearer $token", id)
     }
 
+    suspend fun deleteMapelById(token: String, id:String): Response<Unit> {
+        return apiInterface.deleteMapelById("Bearer $token", id)
+    }
+
     suspend fun updateMapelById(token: String, id:String, mapel: MapelAdd): GlobalWrapper<Mapel> {
         return apiInterface.updateMapelById("Bearer $token", id, mapel)
     }

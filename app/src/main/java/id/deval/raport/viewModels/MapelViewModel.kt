@@ -11,6 +11,7 @@ import id.deval.raport.db.models.request.MapelAdd
 import id.deval.raport.utils.wrappers.GlobalWrapper
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import retrofit2.Response
 import javax.inject.Inject
 
 @HiltViewModel
@@ -21,6 +22,7 @@ class MapelViewModel @Inject constructor(
     private lateinit var mutableAllLocalMapel : MutableLiveData<List<Mapel>>
     private lateinit var mutableAddMapel : MutableLiveData<GlobalWrapper<Mapel>>
     private lateinit var mutableMapelById : MutableLiveData<GlobalWrapper<Mapel>>
+    private lateinit var mutableDeleteMapelById : MutableLiveData<Response<Unit>>
     private lateinit var mutableUpdateMapelById : MutableLiveData<GlobalWrapper<Mapel>>
 
     fun getAllMapel(token : String): LiveData<GlobalWrapper<ArrayList<Mapel>>>{
@@ -48,6 +50,15 @@ class MapelViewModel @Inject constructor(
             mutableMapelById.postValue(response)
         }
         return mutableMapelById
+    }
+
+    fun deleteMapelById(token: String, id:String): LiveData<Response<Unit>>{
+        mutableDeleteMapelById = MutableLiveData()
+        GlobalScope.launch {
+            val response = repository.deleteMapelById(token, id)
+            mutableDeleteMapelById.postValue(response)
+        }
+        return mutableDeleteMapelById
     }
 
     fun updateMapelById(token: String, id:String, mapel: MapelAdd): LiveData<GlobalWrapper<Mapel>>{

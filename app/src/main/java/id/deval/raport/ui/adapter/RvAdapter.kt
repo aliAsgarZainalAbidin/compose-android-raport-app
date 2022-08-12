@@ -129,6 +129,10 @@ class RvAdapter<T>(
                             bundle.putString(Constanta.ID, data.id)
                             navController.navigate(R.id.action_baseFragment_to_addMapelFragment, bundle)
                         }
+
+                        ivRvitemDelete.setOnClickListener {
+                            bus.post(CommonParams(data.id))
+                        }
                         true
                     }
                     "mapel-raport" -> {

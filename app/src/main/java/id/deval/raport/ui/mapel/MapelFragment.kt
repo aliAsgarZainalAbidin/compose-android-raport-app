@@ -7,14 +7,17 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import id.deval.raport.R
 import id.deval.raport.databinding.FragmentMapelBinding
+import id.deval.raport.db.event.CommonParams
 import id.deval.raport.db.models.Mapel
 import id.deval.raport.ui.adapter.RvAdapter
 import id.deval.raport.utils.*
+import org.greenrobot.eventbus.Subscribe
 
 class MapelFragment : BaseSkeletonFragment() {
 
     private lateinit var _binding: FragmentMapelBinding
     private val binding get() = _binding
+    lateinit var dataMapel : ArrayList<Mapel>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -27,7 +30,7 @@ class MapelFragment : BaseSkeletonFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val dataMapel = arrayListOf<Mapel>()
+        dataMapel = arrayListOf()
         with(binding) {
             mtvMapelName.text = session.name
             includeRvMapel.mtvRvlayoutAdd.show()
@@ -37,20 +40,36 @@ class MapelFragment : BaseSkeletonFragment() {
             }
             includeRvMapel.mtvRvlayoutTitle.text = "Mata Pelajaran"
             includeRvMapel.mtvRvlayoutViewmore.hide()
+
+            refreshRecyclerView()
+        }
+    }
+
+    fun refreshRecyclerView(){
+        with(binding){
             mapelViewModel.getAllMapel(session.token.toString()).observe(viewLifecycleOwner) {
                 includeRvMapel.rvRvlayoutContainer.apply {
                     val adapter =
                         RvAdapter<Mapel>("mapel", OperationsTypeRv.EDIT, mainNavController)
-                    dataMapel.addAll(it.data)
-                    mtvMapelTotalmapel.text = dataMapel.size.toString()
+//                    dataMapel.addAll(it.data)
+                    mtvMapelTotalmapel.text = it.data.size.toString()
 
-                    adapter.setData(dataMapel)
+                    adapter.setData(it.data)
                     adapter.notifyDataSetChanged()
                     this.adapter = adapter
                     layoutManager =
                         LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
                 }
             }
+        }
+    }
+
+    @Subscribe
+    override fun deleteItem(commonParams: CommonParams) {
+        super.deleteItem(commonParams)
+        mapelViewModel.deleteMapelById(session.token.toString(), commonParams.id).observe(viewLifecycleOwner){
+            requireContext().showToast("Berhasil menghapus data")
+            refreshRecyclerView()
         }
     }
 }
