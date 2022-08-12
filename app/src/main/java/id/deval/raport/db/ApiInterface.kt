@@ -171,6 +171,12 @@ interface ApiInterface {
         @Path("id") id: String
     ): GlobalWrapper<ArrayList<ResponseDetailKelas>>
 
+    @GET("class/guru/{id}")
+    suspend fun getClassByIdGuru(
+        @Header("Authorization") token: String,
+        @Path("id") id: String
+    ): GlobalWrapper<ResponseDetailKelas>
+
     @PUT("class/{id}")
     suspend fun updateClassById(
         @Header("Authorization") token: String,

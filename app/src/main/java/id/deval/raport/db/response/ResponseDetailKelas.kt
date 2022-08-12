@@ -18,6 +18,9 @@ data class ResponseDetailKelas(
 	@field:SerializedName("siswaDetail")
 	val siswaDetail: ArrayList<Siswa?>? = null,
 
+	@field:SerializedName("siswaId")
+	val siswaId: ArrayList<String?>? = null,
+
 	@field:SerializedName("semester")
 	val semester: Int? = null,
 

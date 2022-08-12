@@ -144,6 +144,13 @@ class Repository @Inject constructor(
         return apiInterface.getClassById("Bearer $token", id)
     }
 
+    suspend fun getClassByIdGuru(
+        token: String,
+        id: String
+    ): GlobalWrapper<ResponseDetailKelas> {
+        return apiInterface.getClassByIdGuru("Bearer $token", id)
+    }
+
     suspend fun updateClassById(
         token: String,
         id: String,

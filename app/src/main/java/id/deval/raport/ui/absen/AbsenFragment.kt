@@ -15,10 +15,9 @@ import id.deval.raport.utils.*
 
 class AbsenFragment : BaseSkeletonFragment() {
 
-    private lateinit var _binding : FragmentAbsenBinding
+    private lateinit var _binding: FragmentAbsenBinding
     private val binding get() = _binding
     private lateinit var dataMapel: ArrayList<Mapel>
-    private lateinit var dataSiswa: ArrayList<Siswa>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,44 +32,68 @@ class AbsenFragment : BaseSkeletonFragment() {
 
         val role = arguments?.getString(Constanta.ROLE).toString()
 
-        dataMapel = DummyData().setDummyDataMapel()
-        dataSiswa = DummyData().setDummyDataSiswa()
-        with(binding){
-            mtvAbsenMapel.text = dataMapel.size.toString()
-            mtvAbsenSiswa.text = dataSiswa.size.toString()
+//        dataMapel = DummyData().setDummyDataMapel()
+        dataMapel = arrayListOf()
+        with(binding) {
+            mtvAbsenName.text = session.name
+            includeRvMapel.rvRvlayoutContainer.layoutManager = LinearLayoutManager(
+                requireContext(),
+                LinearLayoutManager.VERTICAL,
+                false
+            )
+
+            kelasViewModel.getClassByIdGuru(session.token.toString(), session.id.toString())
+                .observe(viewLifecycleOwner) {
+                    mtvAbsenMapel.text = it.data.mapelDetail?.size.toString()
+                    mtvAbsenSiswa.text = it.data.siswaId?.size.toString()
+
+                    it.data.mapelDetail?.forEach { mapel->
+                        if (mapel!=null){
+                            dataMapel.add(mapel)
+                        }
+                    }
+
+                    when (role) {
+                        "guru" -> {
+                            includeRvMapel.rvRvlayoutContainer.apply {
+                                val adapter = RvAdapter<Mapel>(
+                                    "mapel-absen",
+                                    OperationsTypeRv.READ,
+                                    mainNavController
+                                )
+                                adapter.setData(dataMapel)
+                                adapter.notifyDataSetChanged()
+                                this.adapter = adapter
+                            }
+                        }
+                        "orangtua" -> {
+                            ivAbsenPerson.setOnClickListener {
+                                val bundle = bundleOf()
+                                bundle.putString(Constanta.ROLE, role)
+                                mainNavController.navigate(
+                                    R.id.action_baseFragment_to_addSiswaFragment,
+                                    bundle
+                                )
+                            }
+
+                            includeRvMapel.rvRvlayoutContainer.apply {
+                                val adapter = RvAdapter<Mapel>(
+                                    "mapel-absen-orangtua",
+                                    OperationsTypeRv.READ,
+                                    mainNavController
+                                )
+                                adapter.setData(dataMapel)
+                                adapter.notifyDataSetChanged()
+                                this.adapter = adapter
+                            }
+                        }
+                        else -> false
+                    }
+                }
 
             includeRvMapel.mtvRvlayoutTitle.text = "Mata Pelajaran"
             includeRvMapel.mtvRvlayoutAdd.invisible()
             includeRvMapel.mtvRvlayoutViewmore.invisible()
-            when(role){
-                "guru" -> {
-                    includeRvMapel.rvRvlayoutContainer.apply {
-                        val adapter = RvAdapter<Mapel>("mapel-absen", OperationsTypeRv.READ, mainNavController)
-                        adapter.setData(dataMapel)
-                        adapter.notifyDataSetChanged()
-                        this.adapter = adapter
-                        layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-                    }
-                }
-                "orangtua" -> {
-                    ivAbsenPerson.setOnClickListener {
-                        val bundle = bundleOf()
-                        bundle.putString(Constanta.ROLE, role)
-                        mainNavController.navigate(R.id.action_baseFragment_to_addSiswaFragment, bundle)
-                    }
-
-                    includeRvMapel.rvRvlayoutContainer.apply {
-                        val adapter = RvAdapter<Mapel>("mapel-absen-orangtua", OperationsTypeRv.READ, mainNavController)
-                        adapter.setData(dataMapel)
-                        adapter.notifyDataSetChanged()
-                        this.adapter = adapter
-                        layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-                    }
-                }
-                else -> false
-            }
-
-
         }
     }
 }
