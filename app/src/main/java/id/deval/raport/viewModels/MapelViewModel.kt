@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import id.deval.raport.db.Repository
+import id.deval.raport.db.models.Attendance
 import id.deval.raport.db.models.Mapel
 import id.deval.raport.db.models.Siswa
 import id.deval.raport.db.models.request.MapelAdd

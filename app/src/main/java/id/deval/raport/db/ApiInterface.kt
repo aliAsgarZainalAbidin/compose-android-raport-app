@@ -1,13 +1,7 @@
 package id.deval.raport.db
 
-import id.deval.raport.db.models.Account
-import id.deval.raport.db.models.Kelas
-import id.deval.raport.db.models.Mapel
-import id.deval.raport.db.models.request.AccountUpdate
-import id.deval.raport.db.models.Siswa
-import id.deval.raport.db.models.request.KelasUpdate
-import id.deval.raport.db.models.request.MapelAdd
-import id.deval.raport.db.models.request.SiswaUpdate
+import id.deval.raport.db.models.*
+import id.deval.raport.db.models.request.*
 import id.deval.raport.db.response.ResponseDetailKelas
 import id.deval.raport.utils.wrappers.GlobalWrapper
 import okhttp3.MultipartBody
@@ -213,4 +207,10 @@ interface ApiInterface {
         @Path("id") id:String,
         @Body mapel: MapelAdd
     ) : GlobalWrapper<Mapel>
+
+    @POST("attendance/")
+    suspend fun addAttendance(
+        @Header("Authorization") token: String,
+        @Body attendance: AttendanceAdd
+    ) : GlobalWrapper<Attendance>
 }

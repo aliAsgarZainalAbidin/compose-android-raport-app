@@ -111,7 +111,7 @@ class RvAdapter<T>(
                     "mapel-absen" -> {
                         bindingMapelRv(data as Mapel)
                         clIvitemContainer.setOnClickListener {
-                            navController.navigate(R.id.action_baseFragment_to_listAbsenFragment)
+                            bus.post(CommonParams(data.id))
                         }
                         true
                     }

@@ -1,10 +1,7 @@
 package id.deval.raport.db
 
 import id.deval.raport.db.models.*
-import id.deval.raport.db.models.request.AccountUpdate
-import id.deval.raport.db.models.request.KelasUpdate
-import id.deval.raport.db.models.request.MapelAdd
-import id.deval.raport.db.models.request.SiswaUpdate
+import id.deval.raport.db.models.request.*
 import id.deval.raport.db.response.ResponseDetailKelas
 import id.deval.raport.utils.wrappers.GlobalWrapper
 import kotlinx.coroutines.Dispatchers
@@ -177,6 +174,10 @@ class Repository @Inject constructor(
 
     suspend fun updateMapelById(token: String, id:String, mapel: MapelAdd): GlobalWrapper<Mapel> {
         return apiInterface.updateMapelById("Bearer $token", id, mapel)
+    }
+
+    suspend fun addAttendance(token:String, attendance: AttendanceAdd): GlobalWrapper<Attendance>{
+        return apiInterface.addAttendance("Bearer $token", attendance)
     }
 
     suspend fun insertSiswa(siswa: Siswa) {

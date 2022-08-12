@@ -8,16 +8,19 @@ import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.LinearLayoutManager
 import id.deval.raport.R
 import id.deval.raport.databinding.FragmentAbsenBinding
+import id.deval.raport.db.event.CommonParams
 import id.deval.raport.db.models.Mapel
 import id.deval.raport.db.models.Siswa
 import id.deval.raport.ui.adapter.RvAdapter
 import id.deval.raport.utils.*
+import org.greenrobot.eventbus.Subscribe
 
 class AbsenFragment : BaseSkeletonFragment() {
 
     private lateinit var _binding: FragmentAbsenBinding
     private val binding get() = _binding
     private lateinit var dataMapel: ArrayList<Mapel>
+    private lateinit var classId: String
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,6 +49,7 @@ class AbsenFragment : BaseSkeletonFragment() {
                 .observe(viewLifecycleOwner) {
                     mtvAbsenMapel.text = it.data.mapelDetail?.size.toString()
                     mtvAbsenSiswa.text = it.data.siswaId?.size.toString()
+                    classId = it.data.id.toString()
 
                     it.data.mapelDetail?.forEach { mapel->
                         if (mapel!=null){
@@ -95,5 +99,13 @@ class AbsenFragment : BaseSkeletonFragment() {
             includeRvMapel.mtvRvlayoutAdd.invisible()
             includeRvMapel.mtvRvlayoutViewmore.invisible()
         }
+    }
+
+    @Subscribe
+    fun navigateToListAbsenFragment(commonParams: CommonParams){
+        val bundle = bundleOf()
+        bundle.putString(Constanta.CLASS_ID, classId)
+        bundle.putString(Constanta.MAPEL_ID, commonParams.id)
+        mainNavController.navigate(R.id.action_baseFragment_to_listAbsenFragment, bundle)
     }
 }
