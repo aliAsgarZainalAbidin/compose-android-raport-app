@@ -192,25 +192,32 @@ interface ApiInterface {
     @GET("mapel/{id}")
     suspend fun getMapelById(
         @Header("Authorization") token: String,
-        @Path("id") id:String
-    ) : GlobalWrapper<Mapel>
+        @Path("id") id: String
+    ): GlobalWrapper<Mapel>
 
     @DELETE("mapel/{id}")
     suspend fun deleteMapelById(
         @Header("Authorization") token: String,
-        @Path("id") id:String
-    ) : Response<Unit>
+        @Path("id") id: String
+    ): Response<Unit>
 
     @PUT("mapel/{id}")
     suspend fun updateMapelById(
         @Header("Authorization") token: String,
-        @Path("id") id:String,
+        @Path("id") id: String,
         @Body mapel: MapelAdd
-    ) : GlobalWrapper<Mapel>
+    ): GlobalWrapper<Mapel>
 
     @POST("attendance/")
     suspend fun addAttendance(
         @Header("Authorization") token: String,
         @Body attendance: AttendanceAdd
-    ) : GlobalWrapper<Attendance>
+    ): GlobalWrapper<Attendance>
+
+    @GET("attendance/")
+    suspend fun getAttendance(
+        @Header("Authorization") token: String,
+        @Query("classId") classId: String,
+        @Query("mapelId") mapelId: String
+    ): GlobalWrapper<ArrayList<Attendance>>
 }

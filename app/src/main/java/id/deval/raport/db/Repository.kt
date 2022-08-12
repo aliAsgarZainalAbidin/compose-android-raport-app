@@ -180,6 +180,10 @@ class Repository @Inject constructor(
         return apiInterface.addAttendance("Bearer $token", attendance)
     }
 
+    suspend fun getAttendance(token:String, classId:String, mapelId:String): GlobalWrapper<ArrayList<Attendance>>{
+        return apiInterface.getAttendance("Bearer $token", classId, mapelId)
+    }
+
     suspend fun insertSiswa(siswa: Siswa) {
         withContext(Dispatchers.IO) {
             database.siswaDao().addSiswa(siswa)

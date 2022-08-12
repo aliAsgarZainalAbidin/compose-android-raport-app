@@ -20,10 +20,10 @@ import java.util.*
 
 class ListAbsenFragment : BaseSkeletonFragment() {
 
-    private lateinit var _binding : FragmentListAbsenBinding
+    private lateinit var _binding: FragmentListAbsenBinding
     private val binding get() = _binding
-    private var classId :String = ""
-    private var mapelId:String =""
+    private var classId: String = ""
+    private var mapelId: String = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,17 +36,24 @@ class ListAbsenFragment : BaseSkeletonFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val dataTanggal = DummyData().setDummyAttendance()
         classId = arguments?.getString(Constanta.CLASS_ID) ?: ""
         mapelId = arguments?.getString(Constanta.MAPEL_ID) ?: ""
-        with(binding){
-            mtvListabsenAbsen.text = dataTanggal.size.toString()
-            rvListabsenDate.apply {
-                val adapter = RvAbsensiAdapter(dataTanggal, mainNavController, null)
-                adapter.notifyDataSetChanged()
-                this.adapter = adapter
-                layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-            }
+        with(binding) {
+            absenViewModel.getAttendance(session.token.toString(), classId, mapelId)
+                .observe(viewLifecycleOwner) {
+                    mtvListabsenAbsen.text = it.data.size.toString()
+
+                    rvListabsenDate.apply {
+                        val adapter = RvAbsensiAdapter(it.data, mainNavController, null)
+                        adapter.notifyDataSetChanged()
+                        this.adapter = adapter
+                        layoutManager = LinearLayoutManager(
+                            requireContext(),
+                            LinearLayoutManager.VERTICAL,
+                            false
+                        )
+                    }
+                }
 
             mbListabsenAdd.setOnClickListener {
                 val formatter = SimpleDateFormat("dd/M/yyyy")
@@ -54,10 +61,11 @@ class ListAbsenFragment : BaseSkeletonFragment() {
                 val attendance = AttendanceAdd(
                     classId, mapelId, date, null
                 )
-                absenViewModel.addAttendance(session.token.toString(), attendance).observe(viewLifecycleOwner){
-                    Log.d("TAG", "onViewCreated: ${it.data}")
-                    mainNavController.navigate(R.id.action_listAbsenFragment_to_absenDetailFragment)
-                }
+                absenViewModel.addAttendance(session.token.toString(), attendance)
+                    .observe(viewLifecycleOwner) {
+                        Log.d("TAG", "onViewCreated: ${it.data}")
+                        mainNavController.navigate(R.id.action_listAbsenFragment_to_absenDetailFragment)
+                    }
             }
         }
     }

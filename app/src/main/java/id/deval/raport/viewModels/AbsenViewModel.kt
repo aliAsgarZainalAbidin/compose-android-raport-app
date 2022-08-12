@@ -18,6 +18,7 @@ class AbsenViewModel @Inject constructor(
 ) : ViewModel() {
 
     private lateinit var mutableAddAttendance : MutableLiveData<GlobalWrapper<Attendance>>
+    private lateinit var mutableGetAttendance : MutableLiveData<GlobalWrapper<ArrayList<Attendance>>>
 
     fun addAttendance(token: String, attendance: AttendanceAdd): LiveData<GlobalWrapper<Attendance>> {
         mutableAddAttendance = MutableLiveData()
@@ -26,5 +27,13 @@ class AbsenViewModel @Inject constructor(
             mutableAddAttendance.postValue(response)
         }
         return mutableAddAttendance
+    }
+    fun getAttendance(token: String, classId:String, mapelId:String): LiveData<GlobalWrapper<ArrayList<Attendance>>> {
+        mutableGetAttendance = MutableLiveData()
+        GlobalScope.launch {
+            val response = repository.getAttendance(token, classId, mapelId)
+            mutableGetAttendance.postValue(response)
+        }
+        return mutableGetAttendance
     }
 }
