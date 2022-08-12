@@ -47,6 +47,24 @@ class AddKelasFragment : BaseSkeletonFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        requireActivity().getOnBackPressedDispatcher().addCallback(object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (isEnabled) {
+                    // Handle back press
+                    mapelViewModel.clearTableMapel()
+                    siswaViewModel.clearTableSiswa()
+                    dataMapel.clear()
+                    dataSiswa.clear()
+                    mainNavController.popBackStack()
+                } else {
+                    // If you want to get default implementation of onBackPressed, use this
+                    this.remove();
+                    requireActivity().onBackPressed();
+                }
+            }
+
+        });
+
         dataMapel = arrayListOf()
         dataSiswa = arrayListOf()
         val listGuru = mutableListOf<String>()
