@@ -124,6 +124,11 @@ class RvAdapter<T>(
                     }
                     "mapel" -> {
                         bindingMapelRv(data as Mapel)
+                        ivRvitemEdit.setOnClickListener {
+                            val bundle = bundleOf()
+                            bundle.putString(Constanta.ID, data.id)
+                            navController.navigate(R.id.action_baseFragment_to_addMapelFragment, bundle)
+                        }
                         true
                     }
                     "mapel-raport" -> {

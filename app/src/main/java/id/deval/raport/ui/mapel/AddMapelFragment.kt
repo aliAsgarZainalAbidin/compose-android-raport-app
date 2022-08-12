@@ -1,6 +1,7 @@
 package id.deval.raport.ui.mapel
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,7 @@ import id.deval.raport.databinding.FragmentAddMapelBinding
 import id.deval.raport.db.models.Mapel
 import id.deval.raport.db.models.request.MapelAdd
 import id.deval.raport.utils.BaseSkeletonFragment
+import id.deval.raport.utils.Constanta
 import id.deval.raport.utils.showToast
 
 class AddMapelFragment : BaseSkeletonFragment() {
@@ -30,9 +32,19 @@ class AddMapelFragment : BaseSkeletonFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val id = arguments?.getString(Constanta.ID, "")
         with(binding) {
             ivAddmapelBack.setOnClickListener {
                 mainNavController.popBackStack()
+            }
+
+            Log.d("TAG", "onViewCreated: $id")
+            if (!id.isNullOrEmpty()){
+                mapelViewModel.getMapelById(session.token.toString(), id).observe(viewLifecycleOwner){
+                    val data = it.data
+                    tietAddmapelNama.setText(data.name)
+                    tietAddmapelGuru.setText(data.category, false)
+                }
             }
 
             val adapterKategori = ArrayAdapter(

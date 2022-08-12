@@ -160,6 +160,10 @@ class Repository @Inject constructor(
         return apiInterface.addMapel("Bearer $token", mapel)
     }
 
+    suspend fun getMapelById(token: String, id:String): GlobalWrapper<Mapel> {
+        return apiInterface.getMapelById("Bearer $token", id)
+    }
+
     suspend fun insertSiswa(siswa: Siswa) {
         withContext(Dispatchers.IO) {
             database.siswaDao().addSiswa(siswa)

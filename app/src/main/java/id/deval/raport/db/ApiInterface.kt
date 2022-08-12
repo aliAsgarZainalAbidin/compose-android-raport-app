@@ -188,4 +188,10 @@ interface ApiInterface {
         @Header("Authorization") token: String,
         @Body mapel: MapelAdd
     ): GlobalWrapper<Mapel>
+
+    @GET("mapel/{id}")
+    suspend fun getMapelById(
+        @Header("Authorization") token: String,
+        @Path("id") id:String
+    ) : GlobalWrapper<Mapel>
 }
