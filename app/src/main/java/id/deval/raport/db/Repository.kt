@@ -3,6 +3,7 @@ package id.deval.raport.db
 import id.deval.raport.db.models.*
 import id.deval.raport.db.models.request.AccountUpdate
 import id.deval.raport.db.models.request.KelasUpdate
+import id.deval.raport.db.models.request.MapelAdd
 import id.deval.raport.db.models.request.SiswaUpdate
 import id.deval.raport.db.response.ResponseDetailKelas
 import id.deval.raport.utils.wrappers.GlobalWrapper
@@ -30,10 +31,11 @@ class Repository @Inject constructor(
         return apiInterface.getAllSiswa("Bearer $token")
     }
 
-    suspend fun getSiswa(token: String, id:String): GlobalWrapper<SiswaUpdate>{
+    suspend fun getSiswa(token: String, id: String): GlobalWrapper<SiswaUpdate> {
         return apiInterface.getSiswa("Bearer $token", id)
     }
-    suspend fun getSiswaById(token: String, id:String): GlobalWrapper<Siswa>{
+
+    suspend fun getSiswaById(token: String, id: String): GlobalWrapper<Siswa> {
         return apiInterface.getSiswaById("Bearer $token", id)
     }
 
@@ -79,15 +81,19 @@ class Repository @Inject constructor(
         )
     }
 
-    suspend fun updateSiswa(token: String, id: String, siswa: Siswa) : GlobalWrapper<Siswa>{
+    suspend fun updateSiswa(token: String, id: String, siswa: Siswa): GlobalWrapper<Siswa> {
         return apiInterface.updateSiswa("Bearer $token", id, siswa)
     }
 
-    suspend fun deleteSiswaById(token: String, id: String): Response<Unit>{
+    suspend fun deleteSiswaById(token: String, id: String): Response<Unit> {
         return apiInterface.deleteSiswa("Bearer $token", id)
     }
 
-    suspend fun uploadPhoto(token: String, id: String, photo: MultipartBody.Part) : GlobalWrapper<Siswa>{
+    suspend fun uploadPhoto(
+        token: String,
+        id: String,
+        photo: MultipartBody.Part
+    ): GlobalWrapper<Siswa> {
         return apiInterface.uploadPhoto("Bearer $token", id, photo)
     }
 
@@ -111,7 +117,7 @@ class Repository @Inject constructor(
         return apiInterface.deleteTeacherById("Bearer $token", id)
     }
 
-    suspend fun getAccountByUsername(token: String, username: String): GlobalWrapper<Account>{
+    suspend fun getAccountByUsername(token: String, username: String): GlobalWrapper<Account> {
         return apiInterface.getAccountByUsername("Bearer $token", username)
     }
 
@@ -119,82 +125,94 @@ class Repository @Inject constructor(
         return apiInterface.deleteAccountByUsername("Bearer $token", username)
     }
 
-    suspend fun getAllClass(token: String): GlobalWrapper<ArrayList<Kelas>>{
+    suspend fun getAllClass(token: String): GlobalWrapper<ArrayList<Kelas>> {
         return apiInterface.getAllClass("Bearer $token")
     }
 
-    suspend fun addClass(token: String, kelas: Kelas): GlobalWrapper<Kelas>{
+    suspend fun addClass(token: String, kelas: Kelas): GlobalWrapper<Kelas> {
         return apiInterface.addClass("Bearer $token", kelas)
     }
 
-    suspend fun deleteClass(token: String, id: String): Response<Unit>{
+    suspend fun deleteClass(token: String, id: String): Response<Unit> {
         return apiInterface.deleteClass("Bearer $token", id)
     }
 
-    suspend fun getClassById(token: String, id: String): GlobalWrapper<ArrayList<ResponseDetailKelas>>{
+    suspend fun getClassById(
+        token: String,
+        id: String
+    ): GlobalWrapper<ArrayList<ResponseDetailKelas>> {
         return apiInterface.getClassById("Bearer $token", id)
     }
 
-    suspend fun updateClassById(token: String, id: String, kelas: KelasUpdate): GlobalWrapper<Kelas>{
+    suspend fun updateClassById(
+        token: String,
+        id: String,
+        kelas: KelasUpdate
+    ): GlobalWrapper<Kelas> {
         return apiInterface.updateClassById("Bearer $token", id, kelas)
     }
 
-    suspend fun getAllMapel(token: String): GlobalWrapper<ArrayList<Mapel>>{
+    suspend fun getAllMapel(token: String): GlobalWrapper<ArrayList<Mapel>> {
         return apiInterface.getAllMapel("Bearer $token")
     }
 
-    suspend fun insertSiswa(siswa: Siswa){
-        withContext(Dispatchers.IO){
+    suspend fun addMapel(token: String, mapel: MapelAdd): GlobalWrapper<Mapel> {
+        return apiInterface.addMapel("Bearer $token", mapel)
+    }
+
+    suspend fun insertSiswa(siswa: Siswa) {
+        withContext(Dispatchers.IO) {
             database.siswaDao().addSiswa(siswa)
         }
     }
 
-    suspend fun insertAllSiswa(siswa: List<Siswa>){
-        withContext(Dispatchers.IO){
+    suspend fun insertAllSiswa(siswa: List<Siswa>) {
+        withContext(Dispatchers.IO) {
             database.siswaDao().insertAllSiswa(siswa)
         }
     }
 
-    suspend fun deleteSiswa(siswa: Siswa){
-        withContext(Dispatchers.IO){
+    suspend fun deleteSiswa(siswa: Siswa) {
+        withContext(Dispatchers.IO) {
             database.siswaDao().delete(siswa)
         }
     }
 
-    suspend fun clearTableSiswa(){
-        withContext(Dispatchers.IO){
+    suspend fun clearTableSiswa() {
+        withContext(Dispatchers.IO) {
             database.siswaDao().clearTableSiswa()
         }
     }
 
-    fun getAllSiswa():List<Siswa>{
+    fun getAllSiswa(): List<Siswa> {
         return database.siswaDao().getAllSiswa()
     }
 
-    suspend fun insertLocalMapel(mapel: Mapel){
-        withContext(Dispatchers.IO){
+    suspend fun insertLocalMapel(mapel: Mapel) {
+        withContext(Dispatchers.IO) {
             database.mapelDao().addMapel(mapel)
         }
     }
 
-    suspend fun insertAllLocalMapel(mapel: List<Mapel>){
-        withContext(Dispatchers.IO){
+    suspend fun insertAllLocalMapel(mapel: List<Mapel>) {
+        withContext(Dispatchers.IO) {
             database.mapelDao().insertAllMapel(mapel)
         }
     }
 
-    suspend fun deleteLocalMapel(mapel: Mapel){
-        withContext(Dispatchers.IO){
+    suspend fun deleteLocalMapel(mapel: Mapel) {
+        withContext(Dispatchers.IO) {
             database.mapelDao().delete(mapel)
         }
     }
-    suspend fun clearTableMapel(){
-        withContext(Dispatchers.IO){
+
+    suspend fun clearTableMapel() {
+        withContext(Dispatchers.IO) {
             database.mapelDao().clearTableMapel()
         }
     }
 
-    fun getAllLocalMapel():List<Mapel>{
+    fun getAllLocalMapel(): List<Mapel> {
         return database.mapelDao().getAllMapel()
     }
 }

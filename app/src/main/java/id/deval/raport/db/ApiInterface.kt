@@ -6,6 +6,7 @@ import id.deval.raport.db.models.Mapel
 import id.deval.raport.db.models.request.AccountUpdate
 import id.deval.raport.db.models.Siswa
 import id.deval.raport.db.models.request.KelasUpdate
+import id.deval.raport.db.models.request.MapelAdd
 import id.deval.raport.db.models.request.SiswaUpdate
 import id.deval.raport.db.response.ResponseDetailKelas
 import id.deval.raport.utils.wrappers.GlobalWrapper
@@ -161,13 +162,13 @@ interface ApiInterface {
     @DELETE("class/{id}")
     suspend fun deleteClass(
         @Header("Authorization") token: String,
-        @Path("id") id:String
+        @Path("id") id: String
     ): Response<Unit>
 
     @GET("class/{id}")
     suspend fun getClassById(
         @Header("Authorization") token: String,
-        @Path("id") id:String
+        @Path("id") id: String
     ): GlobalWrapper<ArrayList<ResponseDetailKelas>>
 
     @PUT("class/{id}")
@@ -182,4 +183,9 @@ interface ApiInterface {
         @Header("Authorization") token: String
     ): GlobalWrapper<ArrayList<Mapel>>
 
+    @POST("mapel/")
+    suspend fun addMapel(
+        @Header("Authorization") token: String,
+        @Body mapel: MapelAdd
+    ): GlobalWrapper<Mapel>
 }

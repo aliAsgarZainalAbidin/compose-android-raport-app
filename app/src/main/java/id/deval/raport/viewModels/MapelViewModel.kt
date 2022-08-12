@@ -7,6 +7,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import id.deval.raport.db.Repository
 import id.deval.raport.db.models.Mapel
 import id.deval.raport.db.models.Siswa
+import id.deval.raport.db.models.request.MapelAdd
 import id.deval.raport.utils.wrappers.GlobalWrapper
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -18,6 +19,7 @@ class MapelViewModel @Inject constructor(
 ) : ViewModel() {
     private lateinit var mutableAllMapel : MutableLiveData<GlobalWrapper<ArrayList<Mapel>>>
     private lateinit var mutableAllLocalMapel : MutableLiveData<List<Mapel>>
+    private lateinit var mutableAddMapel : MutableLiveData<GlobalWrapper<Mapel>>
 
     fun getAllMapel(token : String): LiveData<GlobalWrapper<ArrayList<Mapel>>>{
         mutableAllMapel = MutableLiveData()
@@ -26,6 +28,14 @@ class MapelViewModel @Inject constructor(
             mutableAllMapel.postValue(response)
         }
         return mutableAllMapel
+    }
+    fun addMapel(token: String, mapel: MapelAdd): LiveData<GlobalWrapper<Mapel>>{
+        mutableAddMapel = MutableLiveData()
+        GlobalScope.launch {
+            val response = repository.addMapel(token, mapel)
+            mutableAddMapel.postValue(response)
+        }
+        return mutableAddMapel
     }
 
     fun insertLocalMapel(mapel: Mapel){
