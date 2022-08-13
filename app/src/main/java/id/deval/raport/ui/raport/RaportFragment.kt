@@ -18,9 +18,10 @@ class RaportFragment : BaseSkeletonFragment() {
 
     private lateinit var _binding : FragmentRaportBinding
     private val binding get() = _binding
-    private lateinit var dataMapel: ArrayList<Mapel>
     private lateinit var dataSiswa: ArrayList<Siswa>
     private lateinit var role : String
+    private lateinit var dataMapel: ArrayList<Mapel>
+    private lateinit var classId: String
 
 
     override fun onCreateView(
@@ -34,13 +35,10 @@ class RaportFragment : BaseSkeletonFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        dataMapel = DummyData().setDummyDataMapel()
+        dataMapel = arrayListOf()
         dataSiswa = DummyData().setDummyDataSiswa()
         role = arguments?.getString(Constanta.ROLE).toString()
-        when(role){
-            "guru" -> viewAsGuru()
-            "orangtua" -> viewAsOrangTua()
-        }
+
 
         with(binding){
             mtvRaportMapel.text = dataMapel.size.toString()
@@ -49,6 +47,22 @@ class RaportFragment : BaseSkeletonFragment() {
             includeRvMapel.mtvRvlayoutTitle.text = "Mata Pelajaran"
             includeRvMapel.mtvRvlayoutAdd.invisible()
             includeRvMapel.mtvRvlayoutViewmore.invisible()
+
+            kelasViewModel.getClassByIdGuru(session.token.toString(), session.id.toString()).observe(viewLifecycleOwner){
+                mtvRaportMapel.text = it.data.mapelDetail?.size.toString()
+                mtvRaportSiswa.text = it.data.siswaId?.size.toString()
+                classId = it.data.id.toString()
+
+                it.data.mapelDetail?.forEach { mapel->
+                    if (mapel!=null){
+                        dataMapel.add(mapel)
+                    }
+                }
+                when(role){
+                    "guru" -> viewAsGuru()
+                    "orangtua" -> viewAsOrangTua()
+                }
+            }
         }
     }
 
