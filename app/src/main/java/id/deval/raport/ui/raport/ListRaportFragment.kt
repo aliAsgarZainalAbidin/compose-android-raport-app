@@ -43,12 +43,21 @@ class ListRaportFragment : BaseSkeletonFragment() {
             includeListraportContainer.mtvRvlayoutAdd.invisible()
             includeListraportContainer.mtvRvlayoutViewmore.invisible()
 
-            includeListraportContainer.rvRvlayoutContainer.apply {
-                val adapter = RvAdapter<Siswa>("siswa-raport", OperationsTypeRv.READ, mainNavController)
-                adapter.setData(DummyData().setDummyDataSiswa())
-                adapter.notifyDataSetChanged()
-                this.adapter = adapter
-                layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+            kelasViewModel.getClassById(session.token.toString(), classId).observe(viewLifecycleOwner){
+                val rawList = it.data[0].siswaDetail
+                val listSiswa = arrayListOf<Siswa>()
+                rawList?.forEach { siswa->
+                    if (siswa!=null){
+                        listSiswa.add(siswa)
+                    }
+                }
+                includeListraportContainer.rvRvlayoutContainer.apply {
+                    val adapter = RvAdapter<Siswa>("siswa-raport", OperationsTypeRv.READ, mainNavController)
+                    adapter.setData(listSiswa)
+                    adapter.notifyDataSetChanged()
+                    this.adapter = adapter
+                    layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+                }
             }
         }
     }
