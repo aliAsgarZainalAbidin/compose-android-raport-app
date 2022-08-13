@@ -1,11 +1,11 @@
-package id.deval.raport.db.models
+package id.deval.raport.db.models.request
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
 @Entity
-data class Tugas(
+data class TugasAdd(
 
 	@field:SerializedName("nama")
 	val nama: String? = null,
@@ -13,7 +13,6 @@ data class Tugas(
 	@field:SerializedName("nilai")
 	val nilai: Int? = null,
 
-	@field:SerializedName("_id")
-	@PrimaryKey
-	val id: String=""
+	@field:SerializedName("raportId")
+	val raportId: String? = null,
 )

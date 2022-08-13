@@ -78,7 +78,7 @@ class RvAdapter<T>(
                     "siswa-raport" -> {
                         bindingSiswaRv(data as Siswa)
                         clIvitemContainer.setOnClickListener {
-                            navController.navigate(R.id.action_listRaportFragment_to_detailRaportFragment)
+                            bus.post(CommonParams(data.id))
                         }
                         true
                     }

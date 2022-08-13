@@ -234,4 +234,18 @@ interface ApiInterface {
         @Path("id") id:String,
         @Body attendance: AttendanceAdd
     ): GlobalWrapper<ResponseAttendance>
+
+    @GET("raport/detail")
+    suspend fun getSpesifikRaport(
+        @Header("Authorization") token:String,
+        @Query("classId") classId:String,
+        @Query("mapelId") mapelId:String,
+        @Query("siswaId") siswaId:String,
+    ): GlobalWrapper<Raport>
+
+    @POST("tugas/")
+    suspend fun addTugas(
+        @Header("Authorization") token:String,
+        @Body tugas: TugasAdd
+    ): GlobalWrapper<Raport>
 }

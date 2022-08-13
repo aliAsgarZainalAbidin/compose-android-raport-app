@@ -193,6 +193,14 @@ class Repository @Inject constructor(
         return apiInterface.updateAttendanceById("Bearer $token", id, attendance)
     }
 
+    suspend fun getSpesifikRaport(token:String, classId:String, mapelId: String, siswaId:String) : GlobalWrapper<Raport>{
+        return apiInterface.getSpesifikRaport("Bearer $token", classId, mapelId, siswaId)
+    }
+
+    suspend fun addTugas(token:String, tugas: TugasAdd) : GlobalWrapper<Raport>{
+        return apiInterface.addTugas("Bearer $token", tugas)
+    }
+
     suspend fun insertSiswa(siswa: Siswa) {
         withContext(Dispatchers.IO) {
             database.siswaDao().addSiswa(siswa)
@@ -281,5 +289,39 @@ class Repository @Inject constructor(
 
     fun getAllAbsen(): List<Absen> {
         return database.absenDao().getAllAbsen()
+    }
+
+    suspend fun insertTugas(tugas: Tugas) {
+        withContext(Dispatchers.IO) {
+            database.tugasDao().addTugas(tugas)
+        }
+    }
+
+    suspend fun updateTugas(tugas: Tugas) {
+        withContext(Dispatchers.IO) {
+            database.tugasDao().updateTugas(tugas)
+        }
+    }
+
+    suspend fun insertAllTugas(tugas: List<Tugas>) {
+        withContext(Dispatchers.IO) {
+            database.tugasDao().insertAllTugas(tugas)
+        }
+    }
+
+    suspend fun deleteTugas(tugas: Tugas) {
+        withContext(Dispatchers.IO) {
+            database.tugasDao().delete(tugas)
+        }
+    }
+
+    suspend fun clearTableTugas() {
+        withContext(Dispatchers.IO) {
+            database.tugasDao().clearTableTugas()
+        }
+    }
+
+    fun getAllTugas(): List<Tugas> {
+        return database.tugasDao().getAllTugas()
     }
 }

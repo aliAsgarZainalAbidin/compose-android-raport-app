@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 data class Raport(
 
 	@field:SerializedName("tugasId")
-	val tugasId: List<Tugas?>? = null,
+	val tugasId: List<String?>? = null,
 
 	@field:SerializedName("nilaiSikap")
 	val nilaiSikap: Int? = null,
@@ -29,5 +29,8 @@ data class Raport(
 	val deskripsi: String? = null,
 
 	@field:SerializedName("nilaiUAS")
-	val nilaiUAS: Int? = null
+	val nilaiUAS: Int? = null,
+
+	@field:SerializedName("tugasDetail")
+	val tugasDetail: List<Tugas?>? = null
 )

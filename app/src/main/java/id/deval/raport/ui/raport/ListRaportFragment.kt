@@ -5,12 +5,15 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.LinearLayoutManager
 import id.deval.raport.R
 import id.deval.raport.databinding.FragmentListRaportBinding
+import id.deval.raport.db.event.CommonParams
 import id.deval.raport.db.models.Siswa
 import id.deval.raport.ui.adapter.RvAdapter
 import id.deval.raport.utils.*
+import org.greenrobot.eventbus.Subscribe
 
 class ListRaportFragment : BaseSkeletonFragment() {
 
@@ -60,6 +63,16 @@ class ListRaportFragment : BaseSkeletonFragment() {
                 }
             }
         }
+    }
+
+    @Subscribe
+    fun navigateToDetailRaportFragment(commonParams: CommonParams){
+        val bundle = bundleOf()
+        bundle.putString(Constanta.MAPEL_ID, mapelId)
+        bundle.putString(Constanta.CLASS_ID, classId)
+        bundle.putString(Constanta.SISWA_ID, commonParams.id)
+        bundle.putString(Constanta.ROLE, "guru")
+        mainNavController.navigate(R.id.action_listRaportFragment_to_detailRaportFragment, bundle)
     }
 
 }
