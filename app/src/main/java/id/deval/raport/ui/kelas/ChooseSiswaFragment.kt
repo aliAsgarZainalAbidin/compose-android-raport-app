@@ -12,7 +12,6 @@ import id.deval.raport.db.event.CommonParamsAdd
 import id.deval.raport.db.event.CommonParamsDelete
 import id.deval.raport.db.event.LocalDatabaseEvent
 import id.deval.raport.db.models.Siswa
-import id.deval.raport.db.models.StringSiswa
 import id.deval.raport.ui.adapter.RvChooseSiswaAdapter
 import id.deval.raport.utils.BaseSkeletonFragment
 import org.greenrobot.eventbus.Subscribe

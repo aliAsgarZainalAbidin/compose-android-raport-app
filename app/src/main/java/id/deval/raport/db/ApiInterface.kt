@@ -227,4 +227,11 @@ interface ApiInterface {
         @Header("Authorization") token: String,
         @Path("id") id:String
     ): GlobalWrapper<ArrayList<ResponseAttendance>>
+
+    @PUT("attendance/{id}")
+    suspend fun updateAttendanceById(
+        @Header("Authorization") token: String,
+        @Path("id") id:String,
+        @Body attendance: AttendanceAdd
+    ): GlobalWrapper<ResponseAttendance>
 }

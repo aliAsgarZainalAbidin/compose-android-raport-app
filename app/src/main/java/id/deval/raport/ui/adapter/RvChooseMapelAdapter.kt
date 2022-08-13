@@ -10,7 +10,6 @@ import id.deval.raport.db.event.CommonParamsDelete
 import id.deval.raport.db.event.LocalDatabaseEvent
 import id.deval.raport.db.models.Mapel
 import id.deval.raport.db.models.Siswa
-import id.deval.raport.db.models.StringSiswa
 import id.deval.raport.utils.hide
 import id.deval.raport.utils.show
 import org.greenrobot.eventbus.EventBus

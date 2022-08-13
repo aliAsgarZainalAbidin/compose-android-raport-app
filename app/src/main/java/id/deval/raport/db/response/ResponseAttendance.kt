@@ -48,4 +48,7 @@ data class DetailSiswaItem(
 
 	@field:SerializedName("kehadiran")
 	val kehadiran: String? = null,
+
+	@field:SerializedName("_id")
+	val id: String? = null,
 )

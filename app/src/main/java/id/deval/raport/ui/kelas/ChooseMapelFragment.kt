@@ -13,7 +13,6 @@ import id.deval.raport.db.event.CommonParamsDelete
 import id.deval.raport.db.event.LocalDatabaseEvent
 import id.deval.raport.db.models.Mapel
 import id.deval.raport.db.models.Siswa
-import id.deval.raport.db.models.StringMapel
 import id.deval.raport.ui.adapter.RvChooseMapelAdapter
 import id.deval.raport.ui.adapter.RvChooseSiswaAdapter
 import id.deval.raport.utils.BaseSkeletonFragment

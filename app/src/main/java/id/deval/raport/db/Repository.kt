@@ -189,6 +189,10 @@ class Repository @Inject constructor(
         return apiInterface.getAttendanceById("Bearer $token", id)
     }
 
+    suspend fun updateAttendanceById(token:String, id:String, attendance: AttendanceAdd): GlobalWrapper<ResponseAttendance>{
+        return apiInterface.updateAttendanceById("Bearer $token", id, attendance)
+    }
+
     suspend fun insertSiswa(siswa: Siswa) {
         withContext(Dispatchers.IO) {
             database.siswaDao().addSiswa(siswa)
@@ -243,5 +247,39 @@ class Repository @Inject constructor(
 
     fun getAllLocalMapel(): List<Mapel> {
         return database.mapelDao().getAllMapel()
+    }
+
+    suspend fun insertAbsen(absen: Absen) {
+        withContext(Dispatchers.IO) {
+            database.absenDao().addAbsen(absen)
+        }
+    }
+
+    suspend fun updateAbsen(absen: Absen) {
+        withContext(Dispatchers.IO) {
+            database.absenDao().updateAbsen(absen)
+        }
+    }
+
+    suspend fun insertAllAbsen(absen: List<Absen>) {
+        withContext(Dispatchers.IO) {
+            database.absenDao().insertAllAbsen(absen)
+        }
+    }
+
+    suspend fun deleteAbsen(absen: Absen) {
+        withContext(Dispatchers.IO) {
+            database.absenDao().delete(absen)
+        }
+    }
+
+    suspend fun clearTableAbsen() {
+        withContext(Dispatchers.IO) {
+            database.absenDao().clearTableAbsen()
+        }
+    }
+
+    fun getAllAbsen(): List<Absen> {
+        return database.absenDao().getAllAbsen()
     }
 }

@@ -5,17 +5,33 @@ import android.view.ViewGroup
 import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
 import id.deval.raport.databinding.RvAbsenSiswaBinding
+import id.deval.raport.db.event.CommonParams
 import id.deval.raport.db.response.DetailSiswaItem
+import org.greenrobot.eventbus.EventBus
 
 class RvAbsenSiswaAdapter(
     private val listSiswa: ArrayList<DetailSiswaItem>
 ) : RecyclerView.Adapter<RvAbsenSiswaAdapter.RvAbsenViewHolder>() {
+    private val bus = EventBus.getDefault()
+
     class RvAbsenViewHolder(private val binding: RvAbsenSiswaBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(siswa: DetailSiswaItem) {
+        fun bind(siswa: DetailSiswaItem, bus: EventBus) {
             with(binding) {
                 mtvRvitemName.text = siswa.name
                 mtvRvitemNis.text = siswa.nis
+                rbRvitemHadir.setOnClickListener {
+                    bus.post(CommonParams(siswa.id.toString(), "Hadir"))
+                }
+                rbRvitemSakit.setOnClickListener {
+                    bus.post(CommonParams(siswa.id.toString(), "Sakit"))
+                }
+                rbRvitemIzin.setOnClickListener {
+                    bus.post(CommonParams(siswa.id.toString(), "Izin"))
+                }
+                rbRvitemTanpaket.setOnClickListener {
+                    bus.post(CommonParams(siswa.id.toString(), "Tanpa Ket."))
+                }
                 when (siswa.kehadiran) {
                     "Hadir" -> {
                         rbRvitemHadir.isChecked = true
@@ -23,10 +39,12 @@ class RvAbsenSiswaAdapter(
                     }
                     "Sakit" -> {
                         rbRvitemSakit.isChecked = true
+
                         true
                     }
                     "Izin" -> {
                         rbRvitemIzin.isChecked = true
+
                         true
                     }
                     "Tanpa Ket." -> {
@@ -45,7 +63,7 @@ class RvAbsenSiswaAdapter(
     }
 
     override fun onBindViewHolder(holder: RvAbsenViewHolder, position: Int) {
-        holder.bind(listSiswa[position])
+        holder.bind(listSiswa[position], bus)
     }
 
     override fun getItemCount(): Int {

@@ -5,24 +5,24 @@ import com.google.gson.annotations.SerializedName
 data class AttendanceAdd(
 
 	@field:SerializedName("classId")
-	val classId: String? = null,
+	var classId: String? = null,
 
 	@field:SerializedName("mapelId")
-	val mapelId: String? = null,
+	var mapelId: String? = null,
 
 	@field:SerializedName("tanggalAbsen")
-	val tanggalAbsen: String? = null,
+	var tanggalAbsen: String? = null,
 
 	@field:SerializedName("attendance")
-	val attendance: List<AttendanceItem?>? = null
+	var attendance: List<AttendanceItem?>? = null
 )
 
 data class AttendanceItem(
 
 	@field:SerializedName("kehadiran")
-	val kehadiran: String? = null,
+	var kehadiran: String? = null,
 
 	@field:SerializedName("siswaId")
-	val siswaId: String? = null,
+	var siswaId: String? = null,
 
 )
