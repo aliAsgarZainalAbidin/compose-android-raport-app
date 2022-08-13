@@ -18,7 +18,7 @@ import id.deval.raport.utils.invisible
 
 class PesanFragment : BaseSkeletonFragment() {
 
-    private lateinit var _binding : FragmentPesanBinding
+    private lateinit var _binding: FragmentPesanBinding
     private val binding get() = _binding
     private lateinit var dataMapel: ArrayList<Mapel>
     private lateinit var dataSiswa: ArrayList<Siswa>
@@ -34,22 +34,34 @@ class PesanFragment : BaseSkeletonFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        dataMapel = DummyData().setDummyDataMapel()
-        dataSiswa = DummyData().setDummyDataSiswa()
-        with(binding){
-            mtvPesanMapel.text = dataMapel.size.toString()
-            mtvPesanSiswa.text = dataSiswa.size.toString()
-
+        dataMapel = arrayListOf()
+        dataSiswa = arrayListOf()
+        with(binding) {
             includeRvSiswa.mtvRvlayoutTitle.text = "Siswa"
             includeRvSiswa.mtvRvlayoutAdd.invisible()
             includeRvSiswa.mtvRvlayoutViewmore.invisible()
-            includeRvSiswa.rvRvlayoutContainer.apply {
-                val adapter = RvAdapter<Siswa>("siswa-pesan", OperationsTypeRv.READ, mainNavController)
-                adapter.setData(dataSiswa)
-                adapter.notifyDataSetChanged()
-                this.adapter = adapter
-                layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-            }
+            mtvPesanName.text = session.name
+
+            kelasViewModel.getClassByIdGuru(session.token.toString(), session.id.toString())
+                .observe(viewLifecycleOwner) {
+                    mtvPesanMapel.text = it.data.mapelDetail?.size.toString()
+                    it.data.siswaDetail?.forEach { siswa ->
+                        if (siswa!=null){
+                            dataSiswa.add(siswa)
+                        }
+                    }
+                    mtvPesanSiswa.text = dataSiswa.size.toString()
+
+                    includeRvSiswa.rvRvlayoutContainer.apply {
+                        val adapter =
+                            RvAdapter<Siswa>("siswa-pesan", OperationsTypeRv.READ, mainNavController)
+                        adapter.setData(dataSiswa)
+                        adapter.notifyDataSetChanged()
+                        this.adapter = adapter
+                        layoutManager =
+                            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+                    }
+                }
         }
     }
 

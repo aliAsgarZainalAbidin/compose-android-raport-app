@@ -213,6 +213,18 @@ class Repository @Inject constructor(
         return apiInterface.getTugasById("Bearer $token", id)
     }
 
+    suspend fun getPesanById(token: String, id:String): GlobalWrapper<Pesan>{
+        return apiInterface.getPesanById("Bearer $token", id)
+    }
+
+    suspend fun addGrowth(token: String, growthAdd: GrowthAdd): GlobalWrapper<Pesan>{
+        return apiInterface.addGrowth("Bearer $token", growthAdd)
+    }
+
+    suspend fun addNote(token: String, noteAdd: NoteAdd): GlobalWrapper<Pesan>{
+        return apiInterface.addNote("Bearer $token",noteAdd)
+    }
+
     suspend fun insertSiswa(siswa: Siswa) {
         withContext(Dispatchers.IO) {
             database.siswaDao().addSiswa(siswa)

@@ -27,6 +27,7 @@ open class BaseSkeletonFragment : Fragment() {
     val mapelViewModel : MapelViewModel by viewModels()
     val absenViewModel : AbsenViewModel by viewModels()
     val raportViewModel : RaportViewModel by viewModels()
+    val pesanViewModel: PesanViewModel by viewModels()
     val bus = EventBus.getDefault()
     @Inject lateinit var session: Session
 

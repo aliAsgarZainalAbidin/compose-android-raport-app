@@ -267,4 +267,22 @@ interface ApiInterface {
         @Header("Authorization") token: String,
         @Path("id") id:String
     ) : GlobalWrapper<Tugas>
+
+    @GET("pesan/")
+    suspend fun getPesanById(
+        @Header("Authorization") token:String,
+        @Query("siswaId") siswaId: String
+    ) : GlobalWrapper<Pesan>
+
+    @POST("growth/")
+    suspend fun addGrowth(
+        @Header("Authorization") token: String,
+        @Body growthAdd: GrowthAdd
+    ) : GlobalWrapper<Pesan>
+
+    @POST("note/")
+    suspend fun addNote(
+        @Header("Authorization") token: String,
+        @Body noteAdd: NoteAdd
+    ) : GlobalWrapper<Pesan>
 }

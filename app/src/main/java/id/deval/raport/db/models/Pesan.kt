@@ -8,11 +8,17 @@ data class Pesan(
 	val siswaId: String? = null,
 
 	@field:SerializedName("noteId")
-	val noteId: List<Note?>? = null,
+	val noteId: List<String?>? = null,
 
 	@field:SerializedName("_id")
 	val id: String? = null,
 
 	@field:SerializedName("growthId")
-	val growthId: List<Growth?>? = null
+	val growthId: List<String?>? = null,
+
+	@field:SerializedName("growthDetail")
+	val growthDetail: List<Growth?>? = null,
+
+	@field:SerializedName("noteDetail")
+	val noteDetail: List<Note?>? = null
 )

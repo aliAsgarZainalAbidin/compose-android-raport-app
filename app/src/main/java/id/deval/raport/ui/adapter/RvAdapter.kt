@@ -85,7 +85,9 @@ class RvAdapter<T>(
                     "siswa-pesan" -> {
                         bindingSiswaRv(data as Siswa)
                         clIvitemContainer.setOnClickListener {
-                            navController.navigate(R.id.action_baseFragment_to_addPesanFragment)
+                            val bundle = bundleOf()
+                            bundle.putString(Constanta.ID, data.id)
+                            navController.navigate(R.id.action_baseFragment_to_addPesanFragment, bundle)
                         }
                         true
                     }
