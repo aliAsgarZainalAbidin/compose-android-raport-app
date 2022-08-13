@@ -17,7 +17,7 @@ import id.deval.raport.utils.showToast
 
 class AddTugasFragment : BaseSkeletonFragment() {
 
-    private lateinit var _binding : FragmentAddTugasBinding
+    private lateinit var _binding: FragmentAddTugasBinding
     private val binding get() = _binding
     private var isValid = false
 
@@ -33,34 +33,50 @@ class AddTugasFragment : BaseSkeletonFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val raportId = arguments?.getString(Constanta.ID)
-        with(binding){
+        val tugasId = arguments?.getString(Constanta.TUGAS_ID)
+        with(binding) {
             ivAddtugasBack.setOnClickListener {
                 mainNavController.popBackStack()
+            }
+
+            if (!tugasId.isNullOrEmpty()) {
+                raportViewModel.getTugasById(session.token.toString(), tugasId)
+                    .observe(viewLifecycleOwner) {
+                        tietAddtugasNama.setText(it.data.nama)
+                        tietAddtugasNilaitugas.setText(it.data.nilai.toString())
+                    }
             }
 
             mbAddtugasSimpan.setOnClickListener {
                 val nama = tietAddtugasNama.text.toString()
                 val nilai = tietAddtugasNilaitugas.text.toString()
 
-                if (nama.isEmpty()){
+                if (nama.isEmpty()) {
                     isValid = false
                     tietAddtugasNama.error = resources.getString(R.string.tiet_empty)
                 }
-                if (nilai.isEmpty()){
+                if (nilai.isEmpty()) {
                     isValid = false
                     tietAddtugasNilaitugas.error = resources.getString(R.string.tiet_empty)
                 }
 
-                if (nilai.isNotEmpty() && nama.isNotEmpty()){
+                if (nilai.isNotEmpty() && nama.isNotEmpty()) {
                     isValid = true
                 }
 
-                if (isValid){
-                    val tugas = TugasAdd(nama,nilai.toInt(),raportId)
-                    raportViewModel.addTugas(session.token.toString(), tugas).observe(viewLifecycleOwner){
-                        requireContext().showToast("${it.status} menambahkan tugas")
-                        Log.d(TAG, "onViewCreated: ${it.data}")
-                        mainNavController.popBackStack()
+                if (isValid) {
+                    val tugas = TugasAdd(nama, nilai.toInt(), raportId)
+                    if (!tugasId.isNullOrEmpty()) {
+                        raportViewModel.updateTugasById(session.token.toString(), tugasId, tugas)
+                            .observe(viewLifecycleOwner) {
+                                requireContext().showToast("${it.status} men-update tugas")
+                            }
+                    } else {
+                        raportViewModel.addTugas(session.token.toString(), tugas)
+                            .observe(viewLifecycleOwner) {
+                                requireContext().showToast("${it.status} menambahkan tugas")
+                                mainNavController.popBackStack()
+                            }
                     }
                 }
             }

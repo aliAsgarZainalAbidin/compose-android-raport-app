@@ -254,4 +254,17 @@ interface ApiInterface {
         @Header("Authorization") token:String,
         @Body raportAdd: RaportAdd,
     ): GlobalWrapper<Raport>
+
+    @PUT("tugas/{id}")
+    suspend fun updateTugasById(
+        @Header("Authorization") token:String,
+        @Path("id") id:String,
+        @Body tugas: TugasAdd
+    ) : GlobalWrapper<Tugas>
+
+    @GET("tugas/{id}")
+    suspend fun getTugasById(
+        @Header("Authorization") token: String,
+        @Path("id") id:String
+    ) : GlobalWrapper<Tugas>
 }

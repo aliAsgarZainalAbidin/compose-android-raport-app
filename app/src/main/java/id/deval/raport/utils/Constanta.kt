@@ -9,5 +9,6 @@ object Constanta {
     val CLASS_ID = "CLASS_ID"
     val MAPEL_ID = "MAPEL_ID"
     val SISWA_ID = "SISWA_ID"
+    val TUGAS_ID = "TUGAS_ID"
     val DATE = "DATE"
 }

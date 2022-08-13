@@ -21,6 +21,8 @@ class RaportViewModel @Inject constructor(
     private lateinit var mutableRaport : MutableLiveData<GlobalWrapper<Raport>>
     private lateinit var mutableUpdateRaport : MutableLiveData<GlobalWrapper<Raport>>
     private lateinit var mutableAddTugas : MutableLiveData<GlobalWrapper<Raport>>
+    private lateinit var mutableUpdateTugas : MutableLiveData<GlobalWrapper<Tugas>>
+    private lateinit var mutableGetTugasById : MutableLiveData<GlobalWrapper<Tugas>>
     private lateinit var mutableGetLocalTugas : MutableLiveData<List<Tugas>>
 
     fun getSpesifikRaport(token:String, classId:String, mapelId:String, siswaId:String) : LiveData<GlobalWrapper<Raport>>{
@@ -48,6 +50,24 @@ class RaportViewModel @Inject constructor(
             mutableUpdateRaport.postValue(response)
         }
         return mutableUpdateRaport
+    }
+
+    fun updateTugasById(token:String, id:String, tugas: TugasAdd) : LiveData<GlobalWrapper<Tugas>>{
+        mutableUpdateTugas = MutableLiveData()
+        GlobalScope.launch {
+            val response = repository.updateTugasById(token, id, tugas)
+            mutableUpdateTugas.postValue(response)
+        }
+        return mutableUpdateTugas
+    }
+
+    fun getTugasById(token:String, id:String) : LiveData<GlobalWrapper<Tugas>>{
+        mutableGetTugasById = MutableLiveData()
+        GlobalScope.launch {
+            val response = repository.getTugasById(token, id)
+            mutableGetTugasById.postValue(response)
+        }
+        return mutableGetTugasById
     }
 
     fun insertLocalTugas(tugas: Tugas){

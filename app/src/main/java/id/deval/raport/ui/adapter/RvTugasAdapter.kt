@@ -2,11 +2,13 @@ package id.deval.raport.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
 import id.deval.raport.R
 import id.deval.raport.databinding.RvTugasBinding
 import id.deval.raport.db.models.Tugas
+import id.deval.raport.utils.Constanta
 
 class RvTugasAdapter(
     private val listData : ArrayList<Tugas>,
@@ -21,7 +23,9 @@ class RvTugasAdapter(
 
                 if (navController != null){
                     clRvtugasContainer.setOnClickListener {
-                        navController.navigate(R.id.action_detailRaportFragment_to_addTugasFragment)
+                        val bundle = bundleOf()
+                        bundle.putString(Constanta.TUGAS_ID, data.id)
+                        navController.navigate(R.id.action_detailRaportFragment_to_addTugasFragment, bundle)
                     }
                 }
             }
