@@ -49,6 +49,7 @@ class AbsenFragment : BaseSkeletonFragment() {
                 .observe(viewLifecycleOwner) {
                     mtvAbsenMapel.text = it.data.mapelDetail?.size.toString()
                     mtvAbsenSiswa.text = it.data.siswaId?.size.toString()
+                    mtvAbsenTitletotal.text = "Total Mapel & Siswa ${it.data.name}"
                     classId = it.data.id.toString()
 
                     it.data.mapelDetail?.forEach { mapel->

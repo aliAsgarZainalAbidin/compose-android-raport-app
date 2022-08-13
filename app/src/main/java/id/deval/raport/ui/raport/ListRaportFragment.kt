@@ -10,15 +10,14 @@ import id.deval.raport.R
 import id.deval.raport.databinding.FragmentListRaportBinding
 import id.deval.raport.db.models.Siswa
 import id.deval.raport.ui.adapter.RvAdapter
-import id.deval.raport.utils.BaseSkeletonFragment
-import id.deval.raport.utils.DummyData
-import id.deval.raport.utils.OperationsTypeRv
-import id.deval.raport.utils.invisible
+import id.deval.raport.utils.*
 
 class ListRaportFragment : BaseSkeletonFragment() {
 
     private lateinit var _binding : FragmentListRaportBinding
     private val binding get() = _binding
+    private var classId = ""
+    private var mapelId = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,6 +30,9 @@ class ListRaportFragment : BaseSkeletonFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
+        classId = arguments?.getString(Constanta.CLASS_ID) ?: ""
+        mapelId = arguments?.getString(Constanta.MAPEL_ID) ?: ""
         viewAsGuru()
     }
 

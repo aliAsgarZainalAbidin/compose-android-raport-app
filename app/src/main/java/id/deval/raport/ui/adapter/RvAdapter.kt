@@ -138,7 +138,7 @@ class RvAdapter<T>(
                     "mapel-raport" -> {
                         bindingMapelRv(data as Mapel)
                         clIvitemContainer.setOnClickListener {
-                            navController.navigate(R.id.action_baseFragment_to_listRaportFragment)
+                            bus.post(CommonParams(data.id))
                         }
                         true
                     }

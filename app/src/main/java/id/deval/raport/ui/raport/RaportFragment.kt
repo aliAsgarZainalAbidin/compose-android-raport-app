@@ -9,10 +9,12 @@ import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.LinearLayoutManager
 import id.deval.raport.R
 import id.deval.raport.databinding.FragmentRaportBinding
+import id.deval.raport.db.event.CommonParams
 import id.deval.raport.db.models.Mapel
 import id.deval.raport.db.models.Siswa
 import id.deval.raport.ui.adapter.RvAdapter
 import id.deval.raport.utils.*
+import org.greenrobot.eventbus.Subscribe
 
 class RaportFragment : BaseSkeletonFragment() {
 
@@ -39,7 +41,6 @@ class RaportFragment : BaseSkeletonFragment() {
         dataSiswa = DummyData().setDummyDataSiswa()
         role = arguments?.getString(Constanta.ROLE).toString()
 
-
         with(binding){
             mtvRaportMapel.text = dataMapel.size.toString()
             mtvRaportSiswa.text = dataSiswa.size.toString()
@@ -51,6 +52,7 @@ class RaportFragment : BaseSkeletonFragment() {
             kelasViewModel.getClassByIdGuru(session.token.toString(), session.id.toString()).observe(viewLifecycleOwner){
                 mtvRaportMapel.text = it.data.mapelDetail?.size.toString()
                 mtvRaportSiswa.text = it.data.siswaId?.size.toString()
+                mtvRaportTitletotal.text = "Total Mapel & Siswa ${it.data.name}"
                 classId = it.data.id.toString()
 
                 it.data.mapelDetail?.forEach { mapel->
@@ -94,6 +96,15 @@ class RaportFragment : BaseSkeletonFragment() {
                 layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
             }
         }
+    }
+
+
+    @Subscribe
+    fun navigateToListRaportFragment(commonParams: CommonParams){
+        val bundle = bundleOf()
+        bundle.putString(Constanta.CLASS_ID, classId)
+        bundle.putString(Constanta.MAPEL_ID, commonParams.id)
+        mainNavController.navigate(R.id.action_baseFragment_to_listRaportFragment, bundle)
     }
 
 }
