@@ -201,6 +201,10 @@ class Repository @Inject constructor(
         return apiInterface.addTugas("Bearer $token", tugas)
     }
 
+    suspend fun updateRaport(token:String,raportAdd: RaportAdd) : GlobalWrapper<Raport>{
+        return apiInterface.updateRaport("Bearer $token", raportAdd)
+    }
+
     suspend fun insertSiswa(siswa: Siswa) {
         withContext(Dispatchers.IO) {
             database.siswaDao().addSiswa(siswa)

@@ -7,6 +7,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import id.deval.raport.db.Repository
 import id.deval.raport.db.models.Tugas
 import id.deval.raport.db.models.Raport
+import id.deval.raport.db.models.request.RaportAdd
 import id.deval.raport.db.models.request.TugasAdd
 import id.deval.raport.utils.wrappers.GlobalWrapper
 import kotlinx.coroutines.GlobalScope
@@ -18,6 +19,7 @@ class RaportViewModel @Inject constructor(
     private val repository: Repository
 ) : ViewModel() {
     private lateinit var mutableRaport : MutableLiveData<GlobalWrapper<Raport>>
+    private lateinit var mutableUpdateRaport : MutableLiveData<GlobalWrapper<Raport>>
     private lateinit var mutableAddTugas : MutableLiveData<GlobalWrapper<Raport>>
     private lateinit var mutableGetLocalTugas : MutableLiveData<List<Tugas>>
 
@@ -37,6 +39,15 @@ class RaportViewModel @Inject constructor(
             mutableRaport.postValue(response)
         }
         return mutableRaport
+    }
+
+    fun updateRaport(token:String, raportAdd: RaportAdd) : LiveData<GlobalWrapper<Raport>>{
+        mutableUpdateRaport = MutableLiveData()
+        GlobalScope.launch {
+            val response = repository.updateRaport(token, raportAdd)
+            mutableUpdateRaport.postValue(response)
+        }
+        return mutableUpdateRaport
     }
 
     fun insertLocalTugas(tugas: Tugas){

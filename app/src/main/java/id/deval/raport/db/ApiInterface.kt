@@ -248,4 +248,10 @@ interface ApiInterface {
         @Header("Authorization") token:String,
         @Body tugas: TugasAdd
     ): GlobalWrapper<Raport>
+
+    @PUT("raport/")
+    suspend fun updateRaport(
+        @Header("Authorization") token:String,
+        @Body raportAdd: RaportAdd,
+    ): GlobalWrapper<Raport>
 }

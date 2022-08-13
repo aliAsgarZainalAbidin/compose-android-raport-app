@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import id.deval.raport.R
 import id.deval.raport.databinding.FragmentDetailRaportBinding
 import id.deval.raport.db.models.Tugas
+import id.deval.raport.db.models.request.RaportAdd
 import id.deval.raport.ui.adapter.RvAdapter
 import id.deval.raport.ui.adapter.RvTugasAdapter
 import id.deval.raport.utils.*
@@ -20,6 +21,8 @@ class DetailRaportFragment : BaseSkeletonFragment() {
 
     private lateinit var _binding: FragmentDetailRaportBinding
     private val binding get() = _binding
+    private lateinit var listTugasId : ArrayList<String>
+    private var idRaport = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,8 +39,8 @@ class DetailRaportFragment : BaseSkeletonFragment() {
         val classId = arguments?.getString(Constanta.CLASS_ID)
         val mapelId = arguments?.getString(Constanta.MAPEL_ID)
         val siswaId = arguments?.getString(Constanta.SISWA_ID)
+        listTugasId = arrayListOf()
         with(binding) {
-            Log.d("TAG", "onViewCreated: $role")
             includeRvSiswa.mtvRvlayoutTitle.text = "Tugas"
             includeRvSiswa.mtvRvlayoutTitle.setTextColor(resources.getColor(R.color.white))
 
@@ -57,14 +60,15 @@ class DetailRaportFragment : BaseSkeletonFragment() {
                 var nilaiSikap= "0"
                 var nilaiUts= "0"
                 var nilaiUas= "0"
+
                 if (raport.nilaiSikap.toString() != "null") {
                     nilaiSikap = raport.nilaiSikap.toString()
                 }
                 if (raport.nilaiUTS.toString() != "null") {
-                    nilaiUts = raport.nilaiSikap.toString()
+                    nilaiUts = raport.nilaiUTS.toString()
                 }
                 if (raport.nilaiUAS.toString() != "null") {
-                    nilaiUas = raport.nilaiSikap.toString()
+                    nilaiUas = raport.nilaiUAS.toString()
                 }
                 tietDetailraportSikap.setText(nilaiSikap)
                 tilDetailraportKeterampilan.isEnabled = false
@@ -73,23 +77,40 @@ class DetailRaportFragment : BaseSkeletonFragment() {
                 tietDetailraportDesc.setText(raport.deskripsi)
 
                 val listTugas = arrayListOf<Tugas>()
+                var nilaiKeterampilan = 0
                 it.data.tugasDetail?.forEach { tugas ->
                     if (tugas!=null){
+                        listTugasId.add(tugas.id)
                         listTugas.add(tugas)
+                        nilaiKeterampilan += tugas.nilai!!
                     }
                 }
+                if (listTugas.size>0){
+                    nilaiKeterampilan = nilaiKeterampilan.div(listTugas.size)
+                }
+                tietDetailraportKeterampilan.setText(nilaiKeterampilan.toString())
 
-                Log.d(TAG, "onViewCreated: ${it.data.id}")
-
+                idRaport = it.data.id.toString()
                 when (role) {
-                    "guru" -> viewAsGuru(listTugas, it.data.id.toString())
+                    "guru" -> viewAsGuru(listTugas, idRaport)
                     "orangtua" -> viewAsOrangTua(listTugas)
                 }
-
-//                tietDetailraportKeterampilan.setText()
             }
 
+            mbDetailraportSimpan.setOnClickListener {
+                val nilaiSikap = tietDetailraportSikap.text.toString()
+                val uts = tietDetailraportUts.text.toString()
+                val uas = tietDetailraportUas.text.toString()
+                val desc = tietDetailraportDesc.text.toString()
 
+
+                val raport = RaportAdd(
+                    listTugasId, nilaiSikap.toInt(), uts.toInt(), desc, uas.toInt(), classId, siswaId, mapelId
+                )
+                raportViewModel.updateRaport(session.token.toString(), raport).observe(viewLifecycleOwner){
+                    requireContext().showToast("${it.status} men-update data raport")
+                }
+            }
         }
     }
 
