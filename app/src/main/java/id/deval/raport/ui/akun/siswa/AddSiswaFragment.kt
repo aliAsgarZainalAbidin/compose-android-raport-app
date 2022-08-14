@@ -344,6 +344,32 @@ class AddSiswaFragment : BaseSkeletonFragment() {
             tilAddsiswaTanggalLahir.isEnabled = false
             tilAddsiswaTempatlahir.isEnabled = false
             ivAddsiswaPhoto.isEnabled = false
+
+            siswaViewModel.getSiswaByNIS(session.token.toString(), session.username.toString())
+                .observe(viewLifecycleOwner){
+                    val siswa = it.data
+                    tietAddsiswaNamalengkap.setText(siswa.name)
+                    tietAddsiswaNisn.setText(siswa.nis)
+                    tietAddsiswaTempatlahir.setText(siswa.tempatLahir)
+                    tietAddsiswaTanggalLahir.setText(siswa.tanggalLahir)
+                    tietAddsiswaGender.setText(siswa.gender, false)
+                    tietAddsiswaReligion.setText(siswa.religion, false)
+                    tietAddsiswaEducation.setText(siswa.education)
+                    tietAddsiswaAddress.setText(siswa.address)
+                    tietAddsiswaNamaAyah.setText(siswa.namaAyah)
+                    tietAddsiswaNamaIbu.setText(siswa.namaIbu)
+                    tietAddsiswaPekerjaanAyah.setText(siswa.pekerjaanAyah)
+                    tietAddsiswaPekerjaanIbu.setText(siswa.pekerjaanIbu)
+                    tietAddsiswaNamaWali.setText(siswa.namaWali)
+                    tietAddsiswaPekerjaanWali.setText(siswa.pekerjaanWali)
+                    tietAddsiswaAlamatWali.setText(siswa.alamatWali)
+                    tietAddsiswaHp.setText(siswa.phone)
+                    val urlPhoto = "${BASE_URL}siswa/file/${siswa.photo}"
+                    pathImage = siswa.photo
+                    Glide.with(requireContext())
+                        .load(urlPhoto)
+                        .into(ivAddsiswaPhoto)
+                }
         }
     }
 }

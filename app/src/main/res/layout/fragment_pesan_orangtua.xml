@@ -56,95 +56,12 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cv_pesanorangtua_container"
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.12"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/padding_layout"
-            android:elevation="2dp"
-            app:cardCornerRadius="8dp"
-            app:layout_constraintBottom_toBottomOf="@id/cl_pesanorangtua_bgblue"
-            app:layout_constraintTop_toBottomOf="@id/cl_pesanorangtua_bgblue">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="71dp"
-                android:background="@color/white"
-                android:padding="12dp">
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/mtv_pesanorangtua_titletotal"
-                    style="@style/TextAppearance.MdcTypographyStyles.Subtitle2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Total Mapel &amp; Siswa Kelas IV B"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/mtv_pesanorangtua_titlemapel"
-                    style="@style/TextAppearance.MdcTypographyStyles.Subtitle2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Mapel"
-                    android:textColor="@color/gray3"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/gl"
-                    app:layout_constraintTop_toBottomOf="@id/mtv_pesanorangtua_titletotal" />
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/mtv_pesanorangtua_mapel"
-                    style="@style/TextAppearance.MdcTypographyStyles.Headline6"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/margin_rvitem_small"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="@id/mtv_pesanorangtua_titlemapel"
-                    app:layout_constraintStart_toEndOf="@id/gl"
-                    app:layout_constraintTop_toTopOf="@id/mtv_pesanorangtua_titlemapel"
-                    tools:text="12" />
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/mtv_pesanorangtua_titlesiswa"
-                    style="@style/TextAppearance.MdcTypographyStyles.Subtitle2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Siswa"
-                    android:textColor="@color/gray3"
-                    app:layout_constraintBottom_toBottomOf="@id/mtv_pesanorangtua_titlemapel"
-                    app:layout_constraintEnd_toStartOf="@id/gl2" />
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/mtv_pesanorangtua_siswa"
-                    style="@style/TextAppearance.MdcTypographyStyles.Headline6"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/margin_rvitem_small"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="@id/mtv_pesanorangtua_titlesiswa"
-                    app:layout_constraintStart_toEndOf="@id/gl2"
-                    app:layout_constraintTop_toTopOf="@id/mtv_pesanorangtua_titlesiswa"
-                    tools:text="144" />
-
-                <androidx.constraintlayout.widget.Guideline
-                    android:id="@+id/gl"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    app:layout_constraintGuide_percent="0.25" />
-
-                <androidx.constraintlayout.widget.Guideline
-                    android:id="@+id/gl2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    app:layout_constraintGuide_percent="0.75" />
-
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </androidx.cardview.widget.CardView>
+            android:layout_height="wrap_content"/>
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/mtv_pesanorangtua_titleperkembangan"
@@ -154,9 +71,10 @@
             android:layout_marginHorizontal="@dimen/padding_layout"
             android:layout_marginTop="@dimen/padding_layout"
             android:text="Perkembangan"
+            android:textColor="@color/white"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/cv_pesanorangtua_container" />
+            app:layout_constraintTop_toBottomOf="@id/gl" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_pesanorangtua_growth"

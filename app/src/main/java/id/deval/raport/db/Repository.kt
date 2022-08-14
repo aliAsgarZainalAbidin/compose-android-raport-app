@@ -37,6 +37,10 @@ class Repository @Inject constructor(
         return apiInterface.getSiswaById("Bearer $token", id)
     }
 
+    suspend fun getSiswaByNIS(token: String, id: String): GlobalWrapper<SiswaByNIS> {
+        return apiInterface.getSiswaByNIS("Bearer $token", id)
+    }
+
     suspend fun addSiswa(
         token: String,
         name: MultipartBody.Part,
@@ -149,6 +153,13 @@ class Repository @Inject constructor(
         return apiInterface.getClassByIdGuru("Bearer $token", id)
     }
 
+    suspend fun getClassByNis(
+        token: String,
+        id: String
+    ): GlobalWrapper<ResponseDetailKelas> {
+        return apiInterface.getClassByNis("Bearer $token", id)
+    }
+
     suspend fun updateClassById(
         token: String,
         id: String,
@@ -183,6 +194,10 @@ class Repository @Inject constructor(
 
     suspend fun getAttendance(token:String, classId:String, mapelId:String): GlobalWrapper<ArrayList<Attendance>>{
         return apiInterface.getAttendance("Bearer $token", classId, mapelId)
+    }
+
+    suspend fun getAttendanceBySiswaId(token:String, siswaId:String, mapelId:String): GlobalWrapper<ArrayList<Attendance>>{
+        return apiInterface.getAttendanceBySiswaId("Bearer $token", siswaId, mapelId)
     }
 
     suspend fun getAttendanceById(token:String, id:String): GlobalWrapper<ArrayList<ResponseAttendance>>{

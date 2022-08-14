@@ -25,6 +25,7 @@ class KelasViewModel @Inject constructor(
     private lateinit var mutableDeleteClass : MutableLiveData<Response<Unit>>
     private lateinit var mutableClassById : MutableLiveData<GlobalWrapper<ArrayList<ResponseDetailKelas>>>
     private lateinit var mutableClassByIdGuru : MutableLiveData<GlobalWrapper<ResponseDetailKelas>>
+    private lateinit var mutableClassByNis : MutableLiveData<GlobalWrapper<ResponseDetailKelas>>
 
     fun getAllClass(token: String): LiveData<GlobalWrapper<ArrayList<Kelas>>>{
         mutableAllClass = MutableLiveData()
@@ -68,6 +69,15 @@ class KelasViewModel @Inject constructor(
             mutableClassByIdGuru.postValue(response)
         }
         return mutableClassByIdGuru
+    }
+
+    fun getClassByNis(token: String, id: String): LiveData<GlobalWrapper<ResponseDetailKelas>>{
+        mutableClassByNis = MutableLiveData()
+        GlobalScope.launch {
+            val response = repository.getClassByNis(token, id)
+            mutableClassByNis.postValue(response)
+        }
+        return mutableClassByNis
     }
 
     fun updateClassById(token: String, id: String, kelas: KelasUpdate): LiveData<GlobalWrapper<Kelas>>{

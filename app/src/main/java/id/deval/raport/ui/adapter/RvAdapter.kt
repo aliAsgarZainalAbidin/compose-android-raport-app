@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import id.deval.raport.R
 import id.deval.raport.databinding.RvItemBinding
 import id.deval.raport.db.event.CommonParams
+import id.deval.raport.db.event.EventToDetailRaport
 import id.deval.raport.db.models.Account
 import id.deval.raport.db.models.Kelas
 import id.deval.raport.db.models.Mapel
@@ -120,7 +121,9 @@ class RvAdapter<T>(
                     "mapel-absen-orangtua" -> {
                         bindingMapelRv(data as Mapel)
                         clIvitemContainer.setOnClickListener {
-                            navController.navigate(R.id.action_baseFragment_to_absenOrangtuaFragment)
+                            val bundle = bundleOf()
+                            bundle.putString(Constanta.MAPEL_ID, data.id)
+                            navController.navigate(R.id.action_baseFragment_to_absenOrangtuaFragment, bundle)
                         }
                         true
                     }
@@ -146,10 +149,8 @@ class RvAdapter<T>(
                     }
                     "mapel-raport-orangtua" -> {
                         bindingMapelRv(data as Mapel)
-                        val bundle = bundleOf()
-                        bundle.putString(Constanta.ROLE, "orangtua")
                         clIvitemContainer.setOnClickListener {
-                            navController.navigate(R.id.action_baseFragment_to_detailRaportFragment, bundle)
+                            bus.post(EventToDetailRaport(data.id))
                         }
                         true
                     }

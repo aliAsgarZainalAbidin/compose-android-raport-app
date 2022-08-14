@@ -62,6 +62,12 @@ interface ApiInterface {
         @Path("id") id: String
     ): GlobalWrapper<Siswa>
 
+    @GET("siswa/nis/{id}")
+    suspend fun getSiswaByNIS(
+        @Header("Authorization") token: String,
+        @Path("id") id: String
+    ): GlobalWrapper<SiswaByNIS>
+
     @Multipart
     @POST("siswa/")
     suspend fun addSiswa(
@@ -172,6 +178,12 @@ interface ApiInterface {
         @Path("id") id: String
     ): GlobalWrapper<ResponseDetailKelas>
 
+    @GET("class/siswa/{id}")
+    suspend fun getClassByNis(
+        @Header("Authorization") token: String,
+        @Path("id") id: String
+    ): GlobalWrapper<ResponseDetailKelas>
+
     @PUT("class/{id}")
     suspend fun updateClassById(
         @Header("Authorization") token: String,
@@ -219,6 +231,13 @@ interface ApiInterface {
     suspend fun getAttendance(
         @Header("Authorization") token: String,
         @Query("classId") classId: String,
+        @Query("mapelId") mapelId: String
+    ): GlobalWrapper<ArrayList<Attendance>>
+
+    @GET("attendance/orangtua")
+    suspend fun getAttendanceBySiswaId(
+        @Header("Authorization") token: String,
+        @Query("siswaId") siswaId: String,
         @Query("mapelId") mapelId: String
     ): GlobalWrapper<ArrayList<Attendance>>
 

@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import id.deval.raport.R
 import id.deval.raport.databinding.FragmentRaportBinding
 import id.deval.raport.db.event.CommonParams
+import id.deval.raport.db.event.EventToDetailRaport
 import id.deval.raport.db.models.Mapel
 import id.deval.raport.db.models.Siswa
 import id.deval.raport.ui.adapter.RvAdapter
@@ -24,6 +25,7 @@ class RaportFragment : BaseSkeletonFragment() {
     private lateinit var role : String
     private lateinit var dataMapel: ArrayList<Mapel>
     private lateinit var classId: String
+    private var siswaId = ""
 
 
     override fun onCreateView(
@@ -44,26 +46,15 @@ class RaportFragment : BaseSkeletonFragment() {
         with(binding){
             mtvRaportMapel.text = dataMapel.size.toString()
             mtvRaportSiswa.text = dataSiswa.size.toString()
+            mtvRaportName.text = session.name
 
             includeRvMapel.mtvRvlayoutTitle.text = "Mata Pelajaran"
             includeRvMapel.mtvRvlayoutAdd.invisible()
             includeRvMapel.mtvRvlayoutViewmore.invisible()
 
-            kelasViewModel.getClassByIdGuru(session.token.toString(), session.id.toString()).observe(viewLifecycleOwner){
-                mtvRaportMapel.text = it.data.mapelDetail?.size.toString()
-                mtvRaportSiswa.text = it.data.siswaId?.size.toString()
-                mtvRaportTitletotal.text = "Total Mapel & Siswa ${it.data.name}"
-                classId = it.data.id.toString()
-
-                it.data.mapelDetail?.forEach { mapel->
-                    if (mapel!=null){
-                        dataMapel.add(mapel)
-                    }
-                }
-                when(role){
-                    "guru" -> viewAsGuru()
-                    "orangtua" -> viewAsOrangTua()
-                }
+            when(role){
+                "guru" -> viewAsGuru()
+                "orangtua" -> viewAsOrangTua()
             }
         }
     }
@@ -76,28 +67,57 @@ class RaportFragment : BaseSkeletonFragment() {
                 mainNavController.navigate(R.id.action_baseFragment_to_addSiswaFragment, bundle)
             }
 
-            includeRvMapel.rvRvlayoutContainer.apply {
-                val adapter = RvAdapter<Mapel>("mapel-raport-orangtua", OperationsTypeRv.READ, mainNavController)
-                adapter.setData(dataMapel)
-                adapter.notifyDataSetChanged()
-                this.adapter = adapter
-                layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+            siswaViewModel.getSiswaByNIS(session.token.toString(), session.username.toString()).observe(viewLifecycleOwner){
+                siswaId = it.data.id
+            }
+
+            kelasViewModel.getClassByNis(session.token.toString(), session.username.toString()).observe(viewLifecycleOwner){
+                mtvRaportMapel.text = it.data.mapelDetail?.size.toString()
+                mtvRaportSiswa.text = it.data.siswaId?.size.toString()
+                mtvRaportTitletotal.text = "Total Mapel & Siswa ${it.data.name}"
+                classId = it.data.id.toString()
+
+                it.data.mapelDetail?.forEach { mapel->
+                    if (mapel!=null){
+                        dataMapel.add(mapel)
+                    }
+                }
+
+                includeRvMapel.rvRvlayoutContainer.apply {
+                    val adapter = RvAdapter<Mapel>("mapel-raport-orangtua", OperationsTypeRv.READ, mainNavController)
+                    adapter.setData(dataMapel)
+                    adapter.notifyDataSetChanged()
+                    this.adapter = adapter
+                    layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+                }
             }
         }
     }
 
     fun viewAsGuru(){
         with(binding){
-            includeRvMapel.rvRvlayoutContainer.apply {
-                val adapter = RvAdapter<Mapel>("mapel-raport", OperationsTypeRv.READ, mainNavController)
-                adapter.setData(dataMapel)
-                adapter.notifyDataSetChanged()
-                this.adapter = adapter
-                layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+            kelasViewModel.getClassByIdGuru(session.token.toString(), session.id.toString()).observe(viewLifecycleOwner){
+                mtvRaportMapel.text = it.data.mapelDetail?.size.toString()
+                mtvRaportSiswa.text = it.data.siswaId?.size.toString()
+                mtvRaportTitletotal.text = "Total Mapel & Siswa ${it.data.name}"
+                classId = it.data.id.toString()
+
+                it.data.mapelDetail?.forEach { mapel->
+                    if (mapel!=null){
+                        dataMapel.add(mapel)
+                    }
+                }
+
+                includeRvMapel.rvRvlayoutContainer.apply {
+                    val adapter = RvAdapter<Mapel>("mapel-raport", OperationsTypeRv.READ, mainNavController)
+                    adapter.setData(dataMapel)
+                    adapter.notifyDataSetChanged()
+                    this.adapter = adapter
+                    layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+                }
             }
         }
     }
-
 
     @Subscribe
     fun navigateToListRaportFragment(commonParams: CommonParams){
@@ -105,6 +125,16 @@ class RaportFragment : BaseSkeletonFragment() {
         bundle.putString(Constanta.CLASS_ID, classId)
         bundle.putString(Constanta.MAPEL_ID, commonParams.id)
         mainNavController.navigate(R.id.action_baseFragment_to_listRaportFragment, bundle)
+    }
+
+    @Subscribe
+    fun navigateToDetailRaportFragment(eventToDetailRaport: EventToDetailRaport){
+        val bundle = bundleOf()
+        bundle.putString(Constanta.SISWA_ID, siswaId)
+        bundle.putString(Constanta.CLASS_ID, classId)
+        bundle.putString(Constanta.MAPEL_ID, eventToDetailRaport.id)
+        bundle.putString(Constanta.ROLE, role)
+        mainNavController.navigate(R.id.action_baseFragment_to_detailRaportFragment, bundle)
     }
 
 }

@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import id.deval.raport.db.Repository
 import id.deval.raport.db.models.Siswa
+import id.deval.raport.db.models.request.SiswaByNIS
 import id.deval.raport.db.models.request.SiswaUpdate
 import id.deval.raport.utils.wrappers.GlobalWrapper
 import kotlinx.coroutines.GlobalScope
@@ -24,6 +25,7 @@ class SiswaViewModel @Inject constructor(
     private lateinit var mutableAddSiswa: MutableLiveData<GlobalWrapper<Siswa>>
     private lateinit var mutableSiswa: MutableLiveData<GlobalWrapper<SiswaUpdate>>
     private lateinit var mutableSiswaById: MutableLiveData<GlobalWrapper<Siswa>>
+    private lateinit var mutableSiswaByNIS: MutableLiveData<GlobalWrapper<SiswaByNIS>>
     private lateinit var mutableUpdateSiswa : MutableLiveData<GlobalWrapper<Siswa>>
     private lateinit var mutableUploadPhoto : MutableLiveData<GlobalWrapper<Siswa>>
     private lateinit var mutableDeleteSiswa : MutableLiveData<Response<Unit>>
@@ -45,6 +47,15 @@ class SiswaViewModel @Inject constructor(
             mutableSiswaById.postValue(response)
         }
         return mutableSiswaById
+    }
+
+    fun getSiswaByNIS(token: String, id: String) : LiveData<GlobalWrapper<SiswaByNIS>>{
+        mutableSiswaByNIS = MutableLiveData()
+        GlobalScope.launch {
+            val response = repository.getSiswaByNIS(token, id)
+            mutableSiswaByNIS.postValue(response)
+        }
+        return mutableSiswaByNIS
     }
 
     fun getAllSiswa(token: String): LiveData<GlobalWrapper<ArrayList<Siswa>>> {

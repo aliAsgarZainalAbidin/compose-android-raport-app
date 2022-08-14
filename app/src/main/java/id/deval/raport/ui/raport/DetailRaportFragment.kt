@@ -50,6 +50,7 @@ class DetailRaportFragment : BaseSkeletonFragment() {
                     includeDetailraportContainer.mtvRvitemNis.text = it.data.nis
                 }
 
+            Log.d(TAG, "onViewCreated: $classId, $mapelId, $siswaId")
             raportViewModel.getSpesifikRaport(
                 session.token.toString(),
                 classId.toString(),

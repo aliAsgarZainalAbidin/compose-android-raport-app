@@ -45,21 +45,20 @@ class AbsenFragment : BaseSkeletonFragment() {
                 false
             )
 
-            kelasViewModel.getClassByIdGuru(session.token.toString(), session.id.toString())
-                .observe(viewLifecycleOwner) {
-                    mtvAbsenMapel.text = it.data.mapelDetail?.size.toString()
-                    mtvAbsenSiswa.text = it.data.siswaId?.size.toString()
-                    mtvAbsenTitletotal.text = "Total Mapel & Siswa ${it.data.name}"
-                    classId = it.data.id.toString()
+            when (role) {
+                "guru" -> {
+                    kelasViewModel.getClassByIdGuru(session.token.toString(), session.id.toString())
+                        .observe(viewLifecycleOwner) {
+                            mtvAbsenMapel.text = it.data.mapelDetail?.size.toString()
+                            mtvAbsenSiswa.text = it.data.siswaId?.size.toString()
+                            mtvAbsenTitletotal.text = "Total Mapel & Siswa ${it.data.name}"
+                            classId = it.data.id.toString()
 
-                    it.data.mapelDetail?.forEach { mapel->
-                        if (mapel!=null){
-                            dataMapel.add(mapel)
-                        }
-                    }
-
-                    when (role) {
-                        "guru" -> {
+                            it.data.mapelDetail?.forEach { mapel ->
+                                if (mapel != null) {
+                                    dataMapel.add(mapel)
+                                }
+                            }
                             includeRvMapel.rvRvlayoutContainer.apply {
                                 val adapter = RvAdapter<Mapel>(
                                     "mapel-absen",
@@ -71,31 +70,47 @@ class AbsenFragment : BaseSkeletonFragment() {
                                 this.adapter = adapter
                             }
                         }
-                        "orangtua" -> {
-                            ivAbsenPerson.setOnClickListener {
-                                val bundle = bundleOf()
-                                bundle.putString(Constanta.ROLE, role)
-                                mainNavController.navigate(
-                                    R.id.action_baseFragment_to_addSiswaFragment,
-                                    bundle
-                                )
-                            }
-
-                            includeRvMapel.rvRvlayoutContainer.apply {
-                                val adapter = RvAdapter<Mapel>(
-                                    "mapel-absen-orangtua",
-                                    OperationsTypeRv.READ,
-                                    mainNavController
-                                )
-                                adapter.setData(dataMapel)
-                                adapter.notifyDataSetChanged()
-                                this.adapter = adapter
-                            }
-                        }
-                        else -> false
-                    }
                 }
+                "orangtua" -> {
+                    ivAbsenPerson.setOnClickListener {
+                        val bundle = bundleOf()
+                        bundle.putString(Constanta.ROLE, role)
+                        mainNavController.navigate(
+                            R.id.action_baseFragment_to_addSiswaFragment,
+                            bundle
+                        )
+                    }
 
+                    kelasViewModel.getClassByNis(
+                        session.token.toString(),
+                        session.username.toString()
+                    ).observe(viewLifecycleOwner) {
+                        includeRvMapel.rvRvlayoutContainer.apply {
+                            mtvAbsenMapel.text = it.data.mapelDetail?.size.toString()
+                            mtvAbsenSiswa.text = it.data.siswaId?.size.toString()
+                            mtvAbsenTitletotal.text = "Total Mapel & Siswa ${it.data.name}"
+                            classId = it.data.id.toString()
+
+                            it.data.mapelDetail?.forEach { mapel ->
+                                if (mapel != null) {
+                                    dataMapel.add(mapel)
+                                }
+                            }
+
+                            val adapter = RvAdapter<Mapel>(
+                                "mapel-absen-orangtua",
+                                OperationsTypeRv.READ,
+                                mainNavController
+                            )
+                            adapter.setData(dataMapel)
+                            adapter.notifyDataSetChanged()
+                            this.adapter = adapter
+                        }
+                    }
+
+                }
+                else -> false
+            }
             includeRvMapel.mtvRvlayoutTitle.text = "Mata Pelajaran"
             includeRvMapel.mtvRvlayoutAdd.invisible()
             includeRvMapel.mtvRvlayoutViewmore.invisible()
@@ -103,7 +118,7 @@ class AbsenFragment : BaseSkeletonFragment() {
     }
 
     @Subscribe
-    fun navigateToListAbsenFragment(commonParams: CommonParams){
+    fun navigateToListAbsenFragment(commonParams: CommonParams) {
         val bundle = bundleOf()
         bundle.putString(Constanta.CLASS_ID, classId)
         bundle.putString(Constanta.MAPEL_ID, commonParams.id)
