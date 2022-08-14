@@ -11,5 +11,7 @@ data class Absen(
 
     @field:SerializedName("siswaId")
     @PrimaryKey
-    val siswaId: String=""
+    val siswaId: String="",
+
+    val nis:String? =null
 )

@@ -23,6 +23,7 @@ import id.deval.raport.utils.Constanta
 import id.deval.raport.utils.DummyData
 import id.deval.raport.utils.showToast
 import org.greenrobot.eventbus.Subscribe
+import kotlin.math.log
 
 class AbsenDetailFragment : BaseSkeletonFragment() {
 
@@ -56,22 +57,23 @@ class AbsenDetailFragment : BaseSkeletonFragment() {
                 refreshRecyclerViewAbsen(id)
 
                 mbDetailabsenAdd.setOnClickListener {
+
                     absenViewModel.getAllLocalAbsen().observe(viewLifecycleOwner) {
                         val listAttendanceItem = arrayListOf<AttendanceItem>()
                         it.forEach { absen ->
                             val attendanceItem = AttendanceItem(absen.kehadiran, absen.siswaId)
                             listAttendanceItem.add(attendanceItem)
                         }
-                        updateAttendance.attendance = listAttendanceItem
-                        Log.d(TAG, "onViewCreated: $updateAttendance")
-                        updateAttendanceSiswa(id)
+                        Log.d(TAG, "onViewCreated: $listAttendanceItem")
+                        updateAttendanceSiswa(id,listAttendanceItem)
                     }
                 }
             }
         }
     }
 
-    fun updateAttendanceSiswa(id: String) {
+    fun updateAttendanceSiswa(id: String, data : ArrayList<AttendanceItem>) {
+        updateAttendance.attendance = data
         absenViewModel.updateAttendanceById(session.token.toString(), id, updateAttendance)
             .observe(viewLifecycleOwner) {
                 requireContext().showToast("${it.status} men-update data")
@@ -93,13 +95,16 @@ class AbsenDetailFragment : BaseSkeletonFragment() {
                             it.data[0].attendance?.get(i)?.kehadiran,
                             siswa?.id
                         )
+                        Log.d(TAG, "refreshRecyclerViewAbsen: DETAIL ${detailSiswaItem.id} ${detailSiswaItem.kehadiran}")
                         arrayListDetailSiswaItem.add(detailSiswaItem)
                     }
-                    it.data[0].attendance?.forEach { attendance ->
+                    it.data[0].attendance?.forEachIndexed { index, attendance ->
                         val absen = Absen(
                             attendance?.kehadiran,
-                            attendance?.siswaId ?: ""
+                            attendance?.siswaId ?: "",
+                            it.data[0].detailSiswa?.get(index)?.nis
                         )
+                        Log.d(TAG, "refreshRecyclerViewAbsen: ATTENDANCE ${absen.siswaId} ${absen.kehadiran}")
                         absenViewModel.insertLocalAbsen(absen)
                     }
                     Log.d("TAG", "onViewCreated: $arrayListDetailSiswaItem")
@@ -124,7 +129,8 @@ class AbsenDetailFragment : BaseSkeletonFragment() {
     fun updateAttendanceInSiswa(commonParams: CommonParams) {
         val absen = Absen(
             commonParams.username,
-            commonParams.id
+            commonParams.id,
+            commonParams.nis
         )
         absenViewModel.updateLocalAbsen(absen)
         Log.d(TAG, "updateAttendanceInSiswa: ${absen.siswaId} ${absen.kehadiran}")

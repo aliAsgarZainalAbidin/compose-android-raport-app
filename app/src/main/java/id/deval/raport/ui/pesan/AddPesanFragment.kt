@@ -48,6 +48,10 @@ class AddPesanFragment : BaseSkeletonFragment() {
                 mainNavController.navigate(R.id.action_addPesanFragment_to_addGrowthFragment, bundle)
             }
 
+            mbAddpesanSimpan.setOnClickListener {
+                mainNavController.popBackStack()
+            }
+
             if (siswaId!=null){
                 siswaViewModel.getSiswaById(session.token.toString(), siswaId).observe(viewLifecycleOwner){
                     with(includeAddpesanContainer){
@@ -94,7 +98,7 @@ class AddPesanFragment : BaseSkeletonFragment() {
                 adapter.notifyDataSetChanged()
                 this.adapter = adapter
                 layoutManager =
-                    LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+                    LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, true)
             }
         }
     }
@@ -106,7 +110,7 @@ class AddPesanFragment : BaseSkeletonFragment() {
                 adapter.notifyDataSetChanged()
                 this.adapter = adapter
                 layoutManager =
-                    LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+                    LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, true)
             }
         }
     }

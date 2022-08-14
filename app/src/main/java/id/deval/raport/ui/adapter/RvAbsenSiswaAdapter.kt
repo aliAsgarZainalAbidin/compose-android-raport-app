@@ -21,16 +21,16 @@ class RvAbsenSiswaAdapter(
                 mtvRvitemName.text = siswa.name
                 mtvRvitemNis.text = siswa.nis
                 rbRvitemHadir.setOnClickListener {
-                    bus.post(CommonParams(siswa.id.toString(), "Hadir"))
+                    bus.post(CommonParams(siswa.id.toString(), "Hadir", siswa.nis))
                 }
                 rbRvitemSakit.setOnClickListener {
-                    bus.post(CommonParams(siswa.id.toString(), "Sakit"))
+                    bus.post(CommonParams(siswa.id.toString(), "Sakit", siswa.nis))
                 }
                 rbRvitemIzin.setOnClickListener {
-                    bus.post(CommonParams(siswa.id.toString(), "Izin"))
+                    bus.post(CommonParams(siswa.id.toString(), "Izin", siswa.nis))
                 }
                 rbRvitemTanpaket.setOnClickListener {
-                    bus.post(CommonParams(siswa.id.toString(), "Tanpa Ket."))
+                    bus.post(CommonParams(siswa.id.toString(), "Tanpa Ket.", siswa.nis))
                 }
                 when (siswa.kehadiran) {
                     "Hadir" -> {
