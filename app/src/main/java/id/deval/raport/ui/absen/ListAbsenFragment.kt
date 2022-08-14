@@ -1,6 +1,7 @@
 package id.deval.raport.ui.absen
 
 import android.app.DatePickerDialog
+import android.content.ContentValues.TAG
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -8,8 +9,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.DatePicker
+import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.gson.Gson
 import id.deval.raport.R
 import id.deval.raport.databinding.FragmentListAbsenBinding
 import id.deval.raport.db.models.Attendance
@@ -18,6 +21,11 @@ import id.deval.raport.ui.adapter.RvAbsensiAdapter
 import id.deval.raport.utils.BaseSkeletonFragment
 import id.deval.raport.utils.Constanta
 import id.deval.raport.utils.DummyData
+import id.deval.raport.utils.showToast
+import id.deval.raport.utils.wrappers.GlobalWrapper
+import okhttp3.Response
+import okhttp3.ResponseBody
+import org.json.JSONObject
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -77,14 +85,18 @@ class ListAbsenFragment : BaseSkeletonFragment() {
                             )
                             absenViewModel.addAttendance(session.token.toString(), attendance)
                                 .observe(viewLifecycleOwner) {
-                                    Log.d("TAG", "onViewCreated: ${it.data}")
-                                    val bundle = bundleOf()
-                                    bundle.putString(Constanta.DATE, date)
-                                    bundle.putString(Constanta.ID, it.data.id)
-                                    mainNavController.navigate(
-                                        R.id.action_listAbsenFragment_to_absenDetailFragment,
-                                        bundle
-                                    )
+                                    if (it.isSuccessful){
+                                        Log.d("TAG", "onViewCreated: ${it.body()?.data}")
+                                        val bundle = bundleOf()
+                                        bundle.putString(Constanta.DATE, date)
+                                        bundle.putString(Constanta.ID, it.body()?.data!!.id)
+                                        mainNavController.navigate(
+                                            R.id.action_listAbsenFragment_to_absenDetailFragment,
+                                            bundle
+                                        )
+                                    } else {
+                                        requireContext().showToast(it.message())
+                                    }
                                 }
                         }
                     },

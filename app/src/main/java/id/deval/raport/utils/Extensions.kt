@@ -23,6 +23,19 @@ fun View.invisible() {
     visibility = View.INVISIBLE
 }
 
+fun Int.showToast(errorCode:Int){
+    val message = when(errorCode){
+        401-> "Tidak memiliki izin"
+        404-> "Data tidak ditemukan"
+        in 400..451->{
+            "Client Sedang Error"
+        }
+        500-> "I"
+        in 500..599->""
+        else -> ""
+    }
+}
+
 fun Activity.getMainNavController() : NavController {
     return this.findNavController(R.id.fcm_mainActivity_basecontainer)
 }

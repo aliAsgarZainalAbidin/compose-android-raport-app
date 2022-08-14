@@ -188,7 +188,7 @@ class Repository @Inject constructor(
         return apiInterface.updateMapelById("Bearer $token", id, mapel)
     }
 
-    suspend fun addAttendance(token:String, attendance: AttendanceAdd): GlobalWrapper<Attendance>{
+    suspend fun addAttendance(token:String, attendance: AttendanceAdd): Response<GlobalWrapper<Attendance>>{
         return apiInterface.addAttendance("Bearer $token", attendance)
     }
 

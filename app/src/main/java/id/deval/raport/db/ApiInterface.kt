@@ -225,7 +225,7 @@ interface ApiInterface {
     suspend fun addAttendance(
         @Header("Authorization") token: String,
         @Body attendance: AttendanceAdd
-    ): GlobalWrapper<Attendance>
+    ): Response<GlobalWrapper<Attendance>>
 
     @GET("attendance/")
     suspend fun getAttendance(
