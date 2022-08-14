@@ -21,6 +21,7 @@ class ListRaportFragment : BaseSkeletonFragment() {
     private val binding get() = _binding
     private var classId = ""
     private var mapelId = ""
+    private var mapelName =""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,6 +37,8 @@ class ListRaportFragment : BaseSkeletonFragment() {
 
         classId = arguments?.getString(Constanta.CLASS_ID) ?: ""
         mapelId = arguments?.getString(Constanta.MAPEL_ID) ?: ""
+        mapelName = arguments?.getString(Constanta.MAPEL_NAME) ?: ""
+        binding.mtvListraportName.text = mapelName
         viewAsGuru()
     }
 

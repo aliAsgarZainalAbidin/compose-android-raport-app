@@ -33,8 +33,11 @@ class AbsenOrangtuaFragment : BaseSkeletonFragment() {
 
         val dataAttendance = DummyData().setDummyAttendance()
         val mapelId = arguments?.getString(Constanta.MAPEL_ID)
+        val mapelName = arguments?.getString(Constanta.MAPEL_NAME)
         var siswaId = ""
         with(binding) {
+            mtvAbsenorangtuaMapel.text = mapelName
+
             siswaViewModel.getSiswaByNIS(session.token.toString(), session.username.toString())
                 .observe(viewLifecycleOwner) {
                     mtvAbsenorangtuaName.text = it.data.name

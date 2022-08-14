@@ -11,4 +11,5 @@ object Constanta {
     val SISWA_ID = "SISWA_ID"
     val TUGAS_ID = "TUGAS_ID"
     val DATE = "DATE"
+    val MAPEL_NAME = "MAPEL_NAME"
 }

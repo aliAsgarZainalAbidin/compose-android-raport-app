@@ -122,6 +122,7 @@ class AbsenFragment : BaseSkeletonFragment() {
         val bundle = bundleOf()
         bundle.putString(Constanta.CLASS_ID, classId)
         bundle.putString(Constanta.MAPEL_ID, commonParams.id)
+        bundle.putString(Constanta.MAPEL_NAME, commonParams.username)
         mainNavController.navigate(R.id.action_baseFragment_to_listAbsenFragment, bundle)
     }
 }

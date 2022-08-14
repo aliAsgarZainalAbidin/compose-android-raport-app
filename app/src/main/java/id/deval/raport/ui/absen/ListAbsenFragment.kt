@@ -41,7 +41,9 @@ class ListAbsenFragment : BaseSkeletonFragment() {
 
         classId = arguments?.getString(Constanta.CLASS_ID) ?: ""
         mapelId = arguments?.getString(Constanta.MAPEL_ID) ?: ""
+        val mapelName = arguments?.getString(Constanta.MAPEL_NAME)
         with(binding) {
+            mtvListabsenName.text = mapelName
             absenViewModel.getAttendance(session.token.toString(), classId, mapelId)
                 .observe(viewLifecycleOwner) {
                     mtvListabsenAbsen.text = it.data.size.toString()

@@ -114,7 +114,7 @@ class RvAdapter<T>(
                     "mapel-absen" -> {
                         bindingMapelRv(data as Mapel)
                         clIvitemContainer.setOnClickListener {
-                            bus.post(CommonParams(data.id))
+                            bus.post(CommonParams(data.id,data.name))
                         }
                         true
                     }
@@ -123,6 +123,7 @@ class RvAdapter<T>(
                         clIvitemContainer.setOnClickListener {
                             val bundle = bundleOf()
                             bundle.putString(Constanta.MAPEL_ID, data.id)
+                            bundle.putString(Constanta.MAPEL_NAME, data.name)
                             navController.navigate(R.id.action_baseFragment_to_absenOrangtuaFragment, bundle)
                         }
                         true
@@ -143,14 +144,14 @@ class RvAdapter<T>(
                     "mapel-raport" -> {
                         bindingMapelRv(data as Mapel)
                         clIvitemContainer.setOnClickListener {
-                            bus.post(CommonParams(data.id))
+                            bus.post(CommonParams(data.id,data.name))
                         }
                         true
                     }
                     "mapel-raport-orangtua" -> {
                         bindingMapelRv(data as Mapel)
                         clIvitemContainer.setOnClickListener {
-                            bus.post(EventToDetailRaport(data.id))
+                            bus.post(EventToDetailRaport(data.id, data.name))
                         }
                         true
                     }

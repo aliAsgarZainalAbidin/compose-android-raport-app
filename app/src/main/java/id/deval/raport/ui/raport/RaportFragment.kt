@@ -124,6 +124,7 @@ class RaportFragment : BaseSkeletonFragment() {
         val bundle = bundleOf()
         bundle.putString(Constanta.CLASS_ID, classId)
         bundle.putString(Constanta.MAPEL_ID, commonParams.id)
+        bundle.putString(Constanta.MAPEL_NAME, commonParams.username)
         mainNavController.navigate(R.id.action_baseFragment_to_listRaportFragment, bundle)
     }
 
@@ -133,6 +134,7 @@ class RaportFragment : BaseSkeletonFragment() {
         bundle.putString(Constanta.SISWA_ID, siswaId)
         bundle.putString(Constanta.CLASS_ID, classId)
         bundle.putString(Constanta.MAPEL_ID, eventToDetailRaport.id)
+        bundle.putString(Constanta.MAPEL_NAME, eventToDetailRaport.username)
         bundle.putString(Constanta.ROLE, role)
         mainNavController.navigate(R.id.action_baseFragment_to_detailRaportFragment, bundle)
     }

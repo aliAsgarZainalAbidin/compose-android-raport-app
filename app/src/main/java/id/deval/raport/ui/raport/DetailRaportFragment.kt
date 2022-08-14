@@ -139,6 +139,7 @@ class DetailRaportFragment : BaseSkeletonFragment() {
         with(binding) {
             includeRvSiswa.mtvRvlayoutViewmore.invisible()
             includeRvSiswa.mtvRvlayoutAdd.invisible()
+            mbDetailraportSimpan.hide()
 
             tilDetailraportSikap.isEnabled = false
             tilDetailraportKeterampilan.isEnabled = false
