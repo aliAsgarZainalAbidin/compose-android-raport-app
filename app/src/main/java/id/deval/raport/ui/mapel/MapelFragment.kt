@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.LinearLayoutManager
 import id.deval.raport.R
 import id.deval.raport.databinding.FragmentMapelBinding
@@ -32,6 +33,12 @@ class MapelFragment : BaseSkeletonFragment() {
 
         dataMapel = arrayListOf()
         with(binding) {
+            ivMapelPerson.setOnClickListener {
+                val bundle = bundleOf()
+                bundle.putString(Constanta.ID, session.id)
+                bundle.putString(Constanta.ROLE, "admin")
+                mainNavController.navigate(R.id.action_baseFragment_to_addGuruFragment,bundle)
+            }
             mtvMapelName.text = session.name
             includeRvMapel.mtvRvlayoutAdd.show()
             includeRvMapel.mtvRvlayoutAdd.text = "Tambah Mapel"

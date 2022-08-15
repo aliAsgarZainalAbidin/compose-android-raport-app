@@ -578,6 +578,15 @@
             android:text="Selanjutnya"
             app:layout_constraintTop_toBottomOf="@id/iv_addsiswa_photo" />
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/mb_addsiswa_logout"
+            style="@style/MaterialButton.Custom"
+            android:layout_width="match_parent"
+            android:visibility="invisible"
+            android:layout_marginTop="48dp"
+            android:text="Logout"
+            app:layout_constraintTop_toBottomOf="@id/iv_addsiswa_photo" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.core.widget.NestedScrollView>

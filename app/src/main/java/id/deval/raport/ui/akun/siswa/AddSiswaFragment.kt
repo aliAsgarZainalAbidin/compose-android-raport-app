@@ -21,10 +21,7 @@ import id.deval.raport.R
 import id.deval.raport.databinding.FragmentAddSiswaBinding
 import id.deval.raport.db.models.Siswa
 import id.deval.raport.db.models.request.SiswaUpdate
-import id.deval.raport.utils.BaseSkeletonFragment
-import id.deval.raport.utils.Constanta
-import id.deval.raport.utils.hide
-import id.deval.raport.utils.showToast
+import id.deval.raport.utils.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
@@ -348,6 +345,10 @@ class AddSiswaFragment : BaseSkeletonFragment() {
         Log.d(TAG, "viewAsOrangtua: MASUK CUY")
         with(binding) {
             mtvAddsiswaName.text = "Profile Siswa"
+            mbAddsiswaLogout.show()
+            mbAddsiswaLogout.setOnClickListener {
+                session.logout()
+            }
 
             mbAddsiswaSimpan.hide()
             tilAddsiswaAddress.isEnabled = false

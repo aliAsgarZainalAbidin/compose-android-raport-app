@@ -1,5 +1,6 @@
 package id.deval.raport.ui.akun.guru
 
+import android.content.ContentValues.TAG
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -8,9 +9,7 @@ import android.view.ViewGroup
 import id.deval.raport.databinding.FragmentAddGuruBinding
 import id.deval.raport.db.models.Account
 import id.deval.raport.db.models.request.AccountUpdate
-import id.deval.raport.utils.BaseSkeletonFragment
-import id.deval.raport.utils.Constanta
-import id.deval.raport.utils.showToast
+import id.deval.raport.utils.*
 
 class AddGuruFragment : BaseSkeletonFragment() {
 
@@ -31,11 +30,10 @@ class AddGuruFragment : BaseSkeletonFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         id = arguments?.getString(Constanta.ID) ?: ""
+        val role = arguments?.getString(Constanta.ROLE)
         with(binding) {
-
             if (id.isNotEmpty()) {
                 tilAddguruNik.isEnabled = false
-
                 Log.d("TAG", "onViewCreated: $id")
                 accountViewModel.getTeacherById(session.token.toString(), id)
                     .observe(viewLifecycleOwner) {
@@ -51,10 +49,23 @@ class AddGuruFragment : BaseSkeletonFragment() {
                     }
             }
 
+            Log.d(TAG, "onViewCreated: $role")
+            if (!role.isNullOrEmpty()){
+                tietAddguruNamalengkap.isEnabled = false
+                tietAddguruHp.isEnabled = false
+                tietAddguruEmail.isEnabled = false
+                tietAddguruAlamat.isEnabled = false
+                tietAddguruPassword.isEnabled = false
+                tietAddguruNik.isEnabled = false
+                mbAddguruSimpan.hide()
+                mbAddguruLogout.show()
+                mbAddguruLogout.setOnClickListener {
+                    session.logout()
+                }
+            }
             ivAddguruBack.setOnClickListener {
                 mainNavController.popBackStack()
             }
-
             mbAddguruSimpan.setOnClickListener {
                 val namaLengkap = tietAddguruNamalengkap.text.toString()
                 val nik = tietAddguruNik.text.toString()

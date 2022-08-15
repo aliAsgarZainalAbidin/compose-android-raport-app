@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.LinearLayoutManager
 import id.deval.raport.R
 import id.deval.raport.databinding.FragmentPesanBinding
@@ -34,6 +35,12 @@ class PesanFragment : BaseSkeletonFragment() {
         dataMapel = arrayListOf()
         dataSiswa = arrayListOf()
         with(binding) {
+            ivPesanPerson.setOnClickListener {
+                val bundle = bundleOf()
+                bundle.putString(Constanta.ID, session.id)
+                bundle.putString(Constanta.ROLE, "admin")
+                mainNavController.navigate(R.id.action_baseFragment_to_addGuruFragment,bundle)
+            }
             includeRvSiswa.mtvRvlayoutTitle.text = "Siswa"
             includeRvSiswa.mtvRvlayoutAdd.invisible()
             includeRvSiswa.mtvRvlayoutViewmore.invisible()

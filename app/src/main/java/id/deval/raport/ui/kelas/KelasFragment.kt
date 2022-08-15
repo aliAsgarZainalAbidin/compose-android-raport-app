@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.LinearLayoutManager
 import id.deval.raport.R
 import id.deval.raport.databinding.FragmentKelasBinding
@@ -35,7 +36,12 @@ class KelasFragment : BaseSkeletonFragment() {
         dataKelas = DummyData().setDummyDataKelas()
 
         with(binding) {
-
+            ivKelasPerson.setOnClickListener {
+                val bundle = bundleOf()
+                bundle.putString(Constanta.ID, session.id)
+                bundle.putString(Constanta.ROLE, "admin")
+                mainNavController.navigate(R.id.action_baseFragment_to_addGuruFragment,bundle)
+            }
             mtvKelasName.text = session.name
             includeRvGuru.mtvRvlayoutTitle.text = "Kelas"
             includeRvGuru.mtvRvlayoutAdd.show()

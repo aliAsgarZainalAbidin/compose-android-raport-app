@@ -52,6 +52,9 @@
         <action
             android:id="@+id/action_baseFragment_to_addSiswaFragment"
             app:destination="@id/addSiswaFragment" />
+        <action
+            android:id="@+id/action_baseFragment_to_addGuruFragment"
+            app:destination="@id/addGuruFragment" />
     </fragment>
     <fragment
         android:id="@+id/registrasiGuruFragment"

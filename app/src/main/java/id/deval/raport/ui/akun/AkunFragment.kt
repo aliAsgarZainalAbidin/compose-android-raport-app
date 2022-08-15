@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.LinearLayoutManager
 import id.deval.raport.R
 import id.deval.raport.databinding.FragmentAkunBinding
@@ -45,13 +46,28 @@ class AkunFragment : BaseSkeletonFragment() {
             accountViewModel.getAllTeacher(session.token.toString()).observe(viewLifecycleOwner){
                 with(binding){
                     if (it.isSuccessful){
-                        mtvAkunGuru.text = it.body()?.result.toString()
-                        includeRvGuru.mtvRvlayoutViewmore.show()
-                        includeRvGuru.mtvRvlayoutViewmore.setOnClickListener {
-                            mainNavController.navigate(R.id.action_baseFragment_to_registrasiGuruFragment)
+                        ivAkunPerson.setOnClickListener {
+                            val bundle = bundleOf()
+                            bundle.putString(Constanta.ID, session.id)
+                            bundle.putString(Constanta.ROLE, "admin")
+                            mainNavController.navigate(R.id.action_baseFragment_to_addGuruFragment,bundle)
                         }
 
-                        includeRvGuru.mtvRvlayoutAdd.invisible()
+                        mtvAkunGuru.text = it.body()?.result.toString()
+                        if (it.body()?.data!!.size == 0){
+                            includeRvGuru.mtvRvlayoutViewmore.invisible()
+                            includeRvGuru.mtvRvlayoutAdd.show()
+                            includeRvGuru.mtvRvlayoutAdd.setOnClickListener {
+                                mainNavController.navigate(R.id.action_baseFragment_to_registrasiGuruFragment)
+                            }
+                        } else {
+                            includeRvGuru.mtvRvlayoutViewmore.show()
+                            includeRvGuru.mtvRvlayoutAdd.invisible()
+                            includeRvGuru.mtvRvlayoutViewmore.setOnClickListener {
+                                mainNavController.navigate(R.id.action_baseFragment_to_registrasiGuruFragment)
+                            }
+                        }
+
                         includeRvGuru.rvRvlayoutContainer.apply {
                             val adapter = RvAdapter<Account>("guru", OperationsTypeRv.READ, mainNavController,2)
                             adapter.setData(it.body()?.data!!)
@@ -70,12 +86,19 @@ class AkunFragment : BaseSkeletonFragment() {
             siswaViewModel.getAllSiswa(session.token.toString()).observe(viewLifecycleOwner){
                 if (it.isSuccessful){
                     mtvAkunSiswa.text = it.body()?.data!!.size.toString()
-
-                    includeRvSiswa.mtvRvlayoutViewmore.show()
-                    includeRvSiswa.mtvRvlayoutViewmore.setOnClickListener {
-                        mainNavController.navigate(R.id.action_baseFragment_to_registrasiSiswaFragment)
+                    if (it.body()?.data!!.size == 0){
+                        includeRvSiswa.mtvRvlayoutViewmore.invisible()
+                        includeRvSiswa.mtvRvlayoutAdd.show()
+                        includeRvSiswa.mtvRvlayoutAdd.setOnClickListener {
+                            mainNavController.navigate(R.id.action_baseFragment_to_registrasiSiswaFragment)
+                        }
+                    } else {
+                        includeRvSiswa.mtvRvlayoutViewmore.show()
+                        includeRvSiswa.mtvRvlayoutAdd.invisible()
+                        includeRvSiswa.mtvRvlayoutViewmore.setOnClickListener {
+                            mainNavController.navigate(R.id.action_baseFragment_to_registrasiSiswaFragment)
+                        }
                     }
-                    includeRvSiswa.mtvRvlayoutAdd.invisible()
                     includeRvSiswa.mtvRvlayoutTitle.text = "Siswa"
                     includeRvSiswa.rvRvlayoutContainer.apply {
                         val adapter = RvAdapter<Siswa>("siswa", OperationsTypeRv.READ, mainNavController,2)

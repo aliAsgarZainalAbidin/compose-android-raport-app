@@ -224,6 +224,15 @@
             app:layout_constraintTop_toBottomOf="@id/til_addguru_hp"
             android:text="Simpan"/>
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/mb_addguru_logout"
+            style="@style/MaterialButton.Custom"
+            android:layout_width="match_parent"
+            android:layout_marginTop="48dp"
+            android:visibility="invisible"
+            app:layout_constraintTop_toBottomOf="@id/til_addguru_hp"
+            android:text="Logout"/>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

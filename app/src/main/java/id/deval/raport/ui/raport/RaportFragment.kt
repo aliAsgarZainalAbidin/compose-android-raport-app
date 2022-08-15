@@ -104,6 +104,13 @@ class RaportFragment : BaseSkeletonFragment() {
 
     fun viewAsGuru(){
         with(binding){
+            ivRaportPerson.setOnClickListener {
+                val bundle = bundleOf()
+                bundle.putString(Constanta.ID, session.id)
+                bundle.putString(Constanta.ROLE, "admin")
+                mainNavController.navigate(R.id.action_baseFragment_to_addGuruFragment,bundle)
+            }
+
             kelasViewModel.getClassByIdGuru(session.token.toString(), session.id.toString()).observe(viewLifecycleOwner){
                 if (it.isSuccessful){
                     mtvRaportMapel.text = it.body()?.data!!.mapelDetail?.size.toString()
