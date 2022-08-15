@@ -68,27 +68,35 @@ class RaportFragment : BaseSkeletonFragment() {
             }
 
             siswaViewModel.getSiswaByNIS(session.token.toString(), session.username.toString()).observe(viewLifecycleOwner){
-                siswaId = it.data.id
+                if (it.isSuccessful){
+                    siswaId = it.body()?.data!!.id
+                } else {
+                    requireContext().showToast(it.message())
+                }
             }
 
             kelasViewModel.getClassByNis(session.token.toString(), session.username.toString()).observe(viewLifecycleOwner){
-                mtvRaportMapel.text = it.data.mapelDetail?.size.toString()
-                mtvRaportSiswa.text = it.data.siswaId?.size.toString()
-                mtvRaportTitletotal.text = "Total Mapel & Siswa ${it.data.name}"
-                classId = it.data.id.toString()
+                if (it.isSuccessful){
+                    mtvRaportMapel.text = it.body()?.data!!.mapelDetail?.size.toString()
+                    mtvRaportSiswa.text = it.body()?.data!!.siswaId?.size.toString()
+                    mtvRaportTitletotal.text = "Total Mapel & Siswa ${it.body()?.data!!.name}"
+                    classId = it.body()?.data!!.id.toString()
 
-                it.data.mapelDetail?.forEach { mapel->
-                    if (mapel!=null){
-                        dataMapel.add(mapel)
+                    it.body()?.data!!.mapelDetail?.forEach { mapel->
+                        if (mapel!=null){
+                            dataMapel.add(mapel)
+                        }
                     }
-                }
 
-                includeRvMapel.rvRvlayoutContainer.apply {
-                    val adapter = RvAdapter<Mapel>("mapel-raport-orangtua", OperationsTypeRv.READ, mainNavController)
-                    adapter.setData(dataMapel)
-                    adapter.notifyDataSetChanged()
-                    this.adapter = adapter
-                    layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+                    includeRvMapel.rvRvlayoutContainer.apply {
+                        val adapter = RvAdapter<Mapel>("mapel-raport-orangtua", OperationsTypeRv.READ, mainNavController)
+                        adapter.setData(dataMapel)
+                        adapter.notifyDataSetChanged()
+                        this.adapter = adapter
+                        layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+                    }
+                } else {
+                    requireContext().showToast(it.message())
                 }
             }
         }
@@ -97,23 +105,27 @@ class RaportFragment : BaseSkeletonFragment() {
     fun viewAsGuru(){
         with(binding){
             kelasViewModel.getClassByIdGuru(session.token.toString(), session.id.toString()).observe(viewLifecycleOwner){
-                mtvRaportMapel.text = it.data.mapelDetail?.size.toString()
-                mtvRaportSiswa.text = it.data.siswaId?.size.toString()
-                mtvRaportTitletotal.text = "Total Mapel & Siswa ${it.data.name}"
-                classId = it.data.id.toString()
+                if (it.isSuccessful){
+                    mtvRaportMapel.text = it.body()?.data!!.mapelDetail?.size.toString()
+                    mtvRaportSiswa.text = it.body()?.data!!.siswaId?.size.toString()
+                    mtvRaportTitletotal.text = "Total Mapel & Siswa ${it.body()?.data!!.name}"
+                    classId = it.body()?.data!!.id.toString()
 
-                it.data.mapelDetail?.forEach { mapel->
-                    if (mapel!=null){
-                        dataMapel.add(mapel)
+                    it.body()?.data!!.mapelDetail?.forEach { mapel->
+                        if (mapel!=null){
+                            dataMapel.add(mapel)
+                        }
                     }
-                }
 
-                includeRvMapel.rvRvlayoutContainer.apply {
-                    val adapter = RvAdapter<Mapel>("mapel-raport", OperationsTypeRv.READ, mainNavController)
-                    adapter.setData(dataMapel)
-                    adapter.notifyDataSetChanged()
-                    this.adapter = adapter
-                    layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+                    includeRvMapel.rvRvlayoutContainer.apply {
+                        val adapter = RvAdapter<Mapel>("mapel-raport", OperationsTypeRv.READ, mainNavController)
+                        adapter.setData(dataMapel)
+                        adapter.notifyDataSetChanged()
+                        this.adapter = adapter
+                        layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+                    }
+                } else {
+                    requireContext().showToast(it.message())
                 }
             }
         }

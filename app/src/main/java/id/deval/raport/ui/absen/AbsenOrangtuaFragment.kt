@@ -14,6 +14,7 @@ import id.deval.raport.ui.adapter.RvAbsensiAdapter
 import id.deval.raport.utils.BaseSkeletonFragment
 import id.deval.raport.utils.Constanta
 import id.deval.raport.utils.DummyData
+import id.deval.raport.utils.showToast
 
 class AbsenOrangtuaFragment : BaseSkeletonFragment() {
 
@@ -40,26 +41,30 @@ class AbsenOrangtuaFragment : BaseSkeletonFragment() {
 
             siswaViewModel.getSiswaByNIS(session.token.toString(), session.username.toString())
                 .observe(viewLifecycleOwner) {
-                    mtvAbsenorangtuaName.text = it.data.name
-                    mtvAbsenorangtuaNis.text = it.data.nis
-                    siswaId = it.data.id
+                    if (it.isSuccessful){
+                        mtvAbsenorangtuaName.text = it?.body()?.data!!.name
+                        mtvAbsenorangtuaNis.text = it.body()?.data!!.nis
+                        siswaId = it.body()?.data!!.id
 
-                    Log.d(TAG, "onViewCreated: $mapelId $siswaId")
+                        Log.d(TAG, "onViewCreated: $mapelId $siswaId")
 
-                    if (!mapelId.isNullOrEmpty()) {
-                        absenViewModel.getAttendanceBySiswaId(session.token.toString(), siswaId, mapelId)
-                            .observe(viewLifecycleOwner) {
+                        if (!mapelId.isNullOrEmpty()) {
+                            absenViewModel.getAttendanceBySiswaId(session.token.toString(), siswaId, mapelId)
+                                .observe(viewLifecycleOwner) {
 
-                                Log.d(TAG, "onViewCreated: ${it.data}")
+                                    Log.d(TAG, "onViewCreated: ${it?.body()?.data!!}")
 
-                                rvAbsenorangtuaDate.apply {
-                                    val adapter = RvAbsensiAdapter(it.data, mainNavController, siswaId)
-                                    adapter.notifyDataSetChanged()
-                                    this.adapter = adapter
-                                    layoutManager =
-                                        LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+                                    rvAbsenorangtuaDate.apply {
+                                        val adapter = RvAbsensiAdapter(it.body()?.data!!, mainNavController, siswaId)
+                                        adapter.notifyDataSetChanged()
+                                        this.adapter = adapter
+                                        layoutManager =
+                                            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+                                    }
                                 }
-                            }
+                        }
+                    } else {
+                        requireContext().showToast(it.message())
                     }
                 }
         }

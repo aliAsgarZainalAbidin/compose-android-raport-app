@@ -20,15 +20,15 @@ class AccountViewModel @Inject constructor(
     val repository: Repository
 ) : ViewModel() {
 
-    private lateinit var mutableAccount : MutableLiveData<GlobalWrapper<ArrayList<Account>>>
-    private lateinit var mutableAddTeacherResponse : MutableLiveData<GlobalWrapper<Account>>
-    private lateinit var mutableUpdateTeacherResponse : MutableLiveData<GlobalWrapper<Account>>
-    private lateinit var mutableGetTeacherIdResponse : MutableLiveData<GlobalWrapper<Account>>
-    private lateinit var mutableDeleteTeacher : MutableLiveData<Response<Unit>>
-    private lateinit var mutableDeleteAccount : MutableLiveData<Response<Unit>>
-    private lateinit var mutableDetailAccount : MutableLiveData<GlobalWrapper<Account>>
+    private lateinit var mutableAccount: MutableLiveData<Response<GlobalWrapper<ArrayList<Account>>>>
+    private lateinit var mutableAddTeacherResponse: MutableLiveData<Response<GlobalWrapper<Account>>>
+    private lateinit var mutableUpdateTeacherResponse: MutableLiveData<Response<GlobalWrapper<Account>>>
+    private lateinit var mutableGetTeacherIdResponse: MutableLiveData<Response<GlobalWrapper<Account>>>
+    private lateinit var mutableDeleteTeacher: MutableLiveData<Response<Unit>>
+    private lateinit var mutableDeleteAccount: MutableLiveData<Response<Unit>>
+    private lateinit var mutableDetailAccount: MutableLiveData<Response<GlobalWrapper<Account>>>
 
-    fun getAllTeacher(token : String) : LiveData<GlobalWrapper<ArrayList<Account>>>{
+    fun getAllTeacher(token: String): LiveData<Response<GlobalWrapper<ArrayList<Account>>>> {
         mutableAccount = MutableLiveData()
         GlobalScope.launch {
             val response = repository.getAllTeacher(token)
@@ -37,13 +37,13 @@ class AccountViewModel @Inject constructor(
         return mutableAccount
     }
 
-    fun addTeacher(token : String, account: Account) : LiveData<GlobalWrapper<Account>>{
+    fun addTeacher(token: String, account: Account): LiveData<Response<GlobalWrapper<Account>>> {
         mutableAddTeacherResponse = MutableLiveData()
         GlobalScope.launch {
             try {
                 val response = repository.addAccountTeacher(token, account)
                 mutableAddTeacherResponse.postValue(response)
-            } catch (e : Exception){
+            } catch (e: Exception) {
                 Log.d(TAG, "addTeacher: $e")
             }
         }
@@ -51,16 +51,20 @@ class AccountViewModel @Inject constructor(
         return mutableAddTeacherResponse
     }
 
-    fun updateTeacher(token: String, id :String, account: AccountUpdate): LiveData<GlobalWrapper<Account>>{
+    fun updateTeacher(
+        token: String,
+        id: String,
+        account: AccountUpdate
+    ): LiveData<Response<GlobalWrapper<Account>>> {
         mutableUpdateTeacherResponse = MutableLiveData()
         GlobalScope.launch {
-            val response = repository.updateTeacher(token,id, account)
+            val response = repository.updateTeacher(token, id, account)
             mutableUpdateTeacherResponse.postValue(response)
         }
         return mutableUpdateTeacherResponse
     }
 
-    fun getTeacherById(token:String, id:String): LiveData<GlobalWrapper<Account>>{
+    fun getTeacherById(token: String, id: String): LiveData<Response<GlobalWrapper<Account>>> {
         mutableGetTeacherIdResponse = MutableLiveData()
         GlobalScope.launch {
             val response = repository.getTeacherById(token, id)
@@ -69,7 +73,7 @@ class AccountViewModel @Inject constructor(
         return mutableGetTeacherIdResponse
     }
 
-    fun deleteTeacherById(token:String, id:String): LiveData<Response<Unit>>{
+    fun deleteTeacherById(token: String, id: String): LiveData<Response<Unit>> {
         mutableDeleteTeacher = MutableLiveData()
         GlobalScope.launch {
             val response = repository.deleteTeacherById(token, id)
@@ -78,7 +82,7 @@ class AccountViewModel @Inject constructor(
         return mutableDeleteTeacher
     }
 
-    fun deleteAccountByUsername(token:String, username:String): LiveData<Response<Unit>>{
+    fun deleteAccountByUsername(token: String, username: String): LiveData<Response<Unit>> {
         mutableDeleteAccount = MutableLiveData()
         GlobalScope.launch {
             val response = repository.deleteAccountByUsername(token, username)
@@ -87,7 +91,10 @@ class AccountViewModel @Inject constructor(
         return mutableDeleteAccount
     }
 
-    fun getAccountByUsername(token: String, username:String): LiveData<GlobalWrapper<Account>>{
+    fun getAccountByUsername(
+        token: String,
+        username: String
+    ): LiveData<Response<GlobalWrapper<Account>>> {
         mutableDetailAccount = MutableLiveData()
         GlobalScope.launch {
             val response = repository.getAccountByUsername(token, username)

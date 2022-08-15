@@ -54,17 +54,22 @@ class ListAbsenFragment : BaseSkeletonFragment() {
             mtvListabsenName.text = mapelName
             absenViewModel.getAttendance(session.token.toString(), classId, mapelId)
                 .observe(viewLifecycleOwner) {
-                    mtvListabsenAbsen.text = it.data.size.toString()
+                    if (it.isSuccessful) {
+                        mtvListabsenAbsen.text = it.body()?.data?.size.toString()
 
-                    rvListabsenDate.apply {
-                        val adapter = RvAbsensiAdapter(it.data, mainNavController, null)
-                        adapter.notifyDataSetChanged()
-                        this.adapter = adapter
-                        layoutManager = LinearLayoutManager(
-                            requireContext(),
-                            LinearLayoutManager.VERTICAL,
-                            false
-                        )
+                        rvListabsenDate.apply {
+                            val adapter =
+                                RvAbsensiAdapter(it.body()?.data!!, mainNavController, null)
+                            adapter.notifyDataSetChanged()
+                            this.adapter = adapter
+                            layoutManager = LinearLayoutManager(
+                                requireContext(),
+                                LinearLayoutManager.VERTICAL,
+                                false
+                            )
+                        }
+                    } else {
+                        requireActivity().showToast(it.message())
                     }
                 }
 
@@ -85,7 +90,7 @@ class ListAbsenFragment : BaseSkeletonFragment() {
                             )
                             absenViewModel.addAttendance(session.token.toString(), attendance)
                                 .observe(viewLifecycleOwner) {
-                                    if (it.isSuccessful){
+                                    if (it.isSuccessful) {
                                         Log.d("TAG", "onViewCreated: ${it.body()?.data}")
                                         val bundle = bundleOf()
                                         bundle.putString(Constanta.DATE, date)

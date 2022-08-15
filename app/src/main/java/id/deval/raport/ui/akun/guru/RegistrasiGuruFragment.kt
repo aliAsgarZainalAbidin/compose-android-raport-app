@@ -44,26 +44,34 @@ class RegistrasiGuruFragment : BaseSkeletonFragment() {
     @Subscribe
     override fun deleteItem(commonParams: CommonParams) {
         accountViewModel.deleteTeacherById(session.token.toString(), commonParams.id).observe(viewLifecycleOwner){
-            requireContext().showToast("Success")
-            refreshRecyclerViewTeacher()
+            if (it.isSuccessful){
+                requireContext().showToast("Success")
+                refreshRecyclerViewTeacher()
+            } else {
+                requireContext().showToast(it.message())
+            }
         }
     }
 
     fun refreshRecyclerViewTeacher() {
         with(binding) {
             accountViewModel.getAllTeacher(session.token.toString()).observe(viewLifecycleOwner) {
-                mtvRegistrasiguruGuru.text = it.data.size.toString()
+                if (it.isSuccessful){
+                    mtvRegistrasiguruGuru.text = it.body()?.data!!.size.toString()
 
-                includeRvGuru.mtvRvlayoutAdd.invisible()
-                includeRvGuru.mtvRvlayoutViewmore.hide()
-                includeRvGuru.rvRvlayoutContainer.apply {
-                    val adapter =
-                        RvAdapter<Account>("guru", OperationsTypeRv.EDIT, mainNavController)
-                    adapter.setData(it.data)
-                    adapter.notifyDataSetChanged()
-                    this.adapter = adapter
-                    layoutManager =
-                        LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+                    includeRvGuru.mtvRvlayoutAdd.invisible()
+                    includeRvGuru.mtvRvlayoutViewmore.hide()
+                    includeRvGuru.rvRvlayoutContainer.apply {
+                        val adapter =
+                            RvAdapter<Account>("guru", OperationsTypeRv.EDIT, mainNavController)
+                        adapter.setData(it.body()?.data!!)
+                        adapter.notifyDataSetChanged()
+                        this.adapter = adapter
+                        layoutManager =
+                            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+                    }
+                } else {
+                    requireContext().showToast(it.message())
                 }
             }
         }

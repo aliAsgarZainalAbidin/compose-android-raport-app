@@ -49,25 +49,29 @@ class AbsenFragment : BaseSkeletonFragment() {
                 "guru" -> {
                     kelasViewModel.getClassByIdGuru(session.token.toString(), session.id.toString())
                         .observe(viewLifecycleOwner) {
-                            mtvAbsenMapel.text = it.data.mapelDetail?.size.toString()
-                            mtvAbsenSiswa.text = it.data.siswaId?.size.toString()
-                            mtvAbsenTitletotal.text = "Total Mapel & Siswa ${it.data.name}"
-                            classId = it.data.id.toString()
+                            if (it.isSuccessful){
+                                mtvAbsenMapel.text = it.body()?.data?.mapelDetail?.size.toString()
+                                mtvAbsenSiswa.text = it.body()?.data?.siswaId?.size.toString()
+                                mtvAbsenTitletotal.text = "Total Mapel & Siswa ${it.body()?.data?.name}"
+                                classId = it.body()?.data?.id.toString()
 
-                            it.data.mapelDetail?.forEach { mapel ->
-                                if (mapel != null) {
-                                    dataMapel.add(mapel)
+                                it.body()?.data?.mapelDetail?.forEach { mapel ->
+                                    if (mapel != null) {
+                                        dataMapel.add(mapel)
+                                    }
                                 }
-                            }
-                            includeRvMapel.rvRvlayoutContainer.apply {
-                                val adapter = RvAdapter<Mapel>(
-                                    "mapel-absen",
-                                    OperationsTypeRv.READ,
-                                    mainNavController
-                                )
-                                adapter.setData(dataMapel)
-                                adapter.notifyDataSetChanged()
-                                this.adapter = adapter
+                                includeRvMapel.rvRvlayoutContainer.apply {
+                                    val adapter = RvAdapter<Mapel>(
+                                        "mapel-absen",
+                                        OperationsTypeRv.READ,
+                                        mainNavController
+                                    )
+                                    adapter.setData(dataMapel)
+                                    adapter.notifyDataSetChanged()
+                                    this.adapter = adapter
+                                }
+                            }else {
+                                requireActivity().showToast(it.message())
                             }
                         }
                 }
@@ -86,25 +90,29 @@ class AbsenFragment : BaseSkeletonFragment() {
                         session.username.toString()
                     ).observe(viewLifecycleOwner) {
                         includeRvMapel.rvRvlayoutContainer.apply {
-                            mtvAbsenMapel.text = it.data.mapelDetail?.size.toString()
-                            mtvAbsenSiswa.text = it.data.siswaId?.size.toString()
-                            mtvAbsenTitletotal.text = "Total Mapel & Siswa ${it.data.name}"
-                            classId = it.data.id.toString()
+                            if(it.isSuccessful){
+                                mtvAbsenMapel.text = it?.body()?.data?.mapelDetail?.size.toString()
+                                mtvAbsenSiswa.text = it?.body()?.data?.siswaId?.size.toString()
+                                mtvAbsenTitletotal.text = "Total Mapel & Siswa ${it?.body()?.data?.name}"
+                                classId = it?.body()?.data?.id.toString()
 
-                            it.data.mapelDetail?.forEach { mapel ->
-                                if (mapel != null) {
-                                    dataMapel.add(mapel)
+                                it?.body()?.data?.mapelDetail?.forEach { mapel ->
+                                    if (mapel != null) {
+                                        dataMapel.add(mapel)
+                                    }
                                 }
-                            }
 
-                            val adapter = RvAdapter<Mapel>(
-                                "mapel-absen-orangtua",
-                                OperationsTypeRv.READ,
-                                mainNavController
-                            )
-                            adapter.setData(dataMapel)
-                            adapter.notifyDataSetChanged()
-                            this.adapter = adapter
+                                val adapter = RvAdapter<Mapel>(
+                                    "mapel-absen-orangtua",
+                                    OperationsTypeRv.READ,
+                                    mainNavController
+                                )
+                                adapter.setData(dataMapel)
+                                adapter.notifyDataSetChanged()
+                                this.adapter = adapter
+                            } else {
+                                requireActivity().showToast(it.message())
+                            }
                         }
                     }
 

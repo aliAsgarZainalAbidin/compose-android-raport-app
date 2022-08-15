@@ -106,12 +106,24 @@
         android:id="@+id/chooseSiswaFragment"
         android:name="id.deval.raport.ui.kelas.ChooseSiswaFragment"
         android:label="fragment_choose_siswa"
-        tools:layout="@layout/fragment_choose_siswa" />
+        tools:layout="@layout/fragment_choose_siswa" >
+        <action
+            android:id="@+id/action_chooseSiswaFragment_to_addKelasFragment"
+            app:destination="@id/addKelasFragment"
+            app:popUpTo="@id/chooseSiswaFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
     <fragment
         android:id="@+id/chooseMapelFragment"
         android:name="id.deval.raport.ui.kelas.ChooseMapelFragment"
         android:label="fragment_choose_mapel"
-        tools:layout="@layout/fragment_choose_mapel" />
+        tools:layout="@layout/fragment_choose_mapel" >
+        <action
+            android:id="@+id/action_chooseMapelFragment_to_addKelasFragment"
+            app:destination="@id/addKelasFragment"
+            app:popUpTo="@id/chooseMapelFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
     <fragment
         android:id="@+id/addMapelFragment"
         android:name="id.deval.raport.ui.mapel.AddMapelFragment"

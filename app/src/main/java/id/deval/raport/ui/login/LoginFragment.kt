@@ -63,9 +63,11 @@ class LoginFragment : BaseSkeletonFragment() {
 //                    mainNavController.navigate(R.id.action_loginFragment_to_baseFragment, bundle)
                     val account = Account(username = username, password = password)
                     loginViewModel.login(account).observe(viewLifecycleOwner){
-                        if (it != null){
-                            session.login(it, loginViewModel.token)
+                        if (it.isSuccessful){
+                            session.login(it.body()?.data!!, loginViewModel.token)
                             mainNavController.navigate(R.id.action_loginFragment_to_baseFragment)
+                        } else {
+                            requireContext().showToast(it.message())
                         }
                     }
                 }

@@ -44,40 +44,49 @@ class AkunFragment : BaseSkeletonFragment() {
 
             accountViewModel.getAllTeacher(session.token.toString()).observe(viewLifecycleOwner){
                 with(binding){
-                    mtvAkunGuru.text = it.result.toString()
-                    includeRvGuru.mtvRvlayoutViewmore.show()
-                    includeRvGuru.mtvRvlayoutViewmore.setOnClickListener {
-                        mainNavController.navigate(R.id.action_baseFragment_to_registrasiGuruFragment)
-                    }
+                    if (it.isSuccessful){
+                        mtvAkunGuru.text = it.body()?.result.toString()
+                        includeRvGuru.mtvRvlayoutViewmore.show()
+                        includeRvGuru.mtvRvlayoutViewmore.setOnClickListener {
+                            mainNavController.navigate(R.id.action_baseFragment_to_registrasiGuruFragment)
+                        }
 
-                    includeRvGuru.mtvRvlayoutAdd.invisible()
-                    includeRvGuru.rvRvlayoutContainer.apply {
-                        val adapter = RvAdapter<Account>("guru", OperationsTypeRv.READ, mainNavController,2)
-                        adapter.setData(it.data)
-                        adapter.notifyDataSetChanged()
-                        this.adapter = adapter
-                        layoutManager =
-                            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+                        includeRvGuru.mtvRvlayoutAdd.invisible()
+                        includeRvGuru.rvRvlayoutContainer.apply {
+                            val adapter = RvAdapter<Account>("guru", OperationsTypeRv.READ, mainNavController,2)
+                            adapter.setData(it.body()?.data!!)
+                            adapter.notifyDataSetChanged()
+                            this.adapter = adapter
+                            layoutManager =
+                                LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+                        }
+                    } else {
+                        requireContext().showToast(it.message())
+
                     }
                 }
             }
 
             siswaViewModel.getAllSiswa(session.token.toString()).observe(viewLifecycleOwner){
-                mtvAkunSiswa.text = it.data.size.toString()
+                if (it.isSuccessful){
+                    mtvAkunSiswa.text = it.body()?.data!!.size.toString()
 
-                includeRvSiswa.mtvRvlayoutViewmore.show()
-                includeRvSiswa.mtvRvlayoutViewmore.setOnClickListener {
-                    mainNavController.navigate(R.id.action_baseFragment_to_registrasiSiswaFragment)
-                }
-                includeRvSiswa.mtvRvlayoutAdd.invisible()
-                includeRvSiswa.mtvRvlayoutTitle.text = "Siswa"
-                includeRvSiswa.rvRvlayoutContainer.apply {
-                    val adapter = RvAdapter<Siswa>("siswa", OperationsTypeRv.READ, mainNavController,2)
-                    adapter.setData(it.data)
-                    adapter.notifyDataSetChanged()
-                    this.adapter = adapter
-                    layoutManager =
-                        LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+                    includeRvSiswa.mtvRvlayoutViewmore.show()
+                    includeRvSiswa.mtvRvlayoutViewmore.setOnClickListener {
+                        mainNavController.navigate(R.id.action_baseFragment_to_registrasiSiswaFragment)
+                    }
+                    includeRvSiswa.mtvRvlayoutAdd.invisible()
+                    includeRvSiswa.mtvRvlayoutTitle.text = "Siswa"
+                    includeRvSiswa.rvRvlayoutContainer.apply {
+                        val adapter = RvAdapter<Siswa>("siswa", OperationsTypeRv.READ, mainNavController,2)
+                        adapter.setData(it.body()?.data!!)
+                        adapter.notifyDataSetChanged()
+                        this.adapter = adapter
+                        layoutManager =
+                            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+                    }
+                } else {
+                    requireContext().showToast(it.message())
                 }
             }
 

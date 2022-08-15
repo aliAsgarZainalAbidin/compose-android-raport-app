@@ -19,14 +19,14 @@ import javax.inject.Inject
 class MapelViewModel @Inject constructor(
   private val repository: Repository
 ) : ViewModel() {
-    private lateinit var mutableAllMapel : MutableLiveData<GlobalWrapper<ArrayList<Mapel>>>
+    private lateinit var mutableAllMapel : MutableLiveData<Response<GlobalWrapper<ArrayList<Mapel>>>>
     private lateinit var mutableAllLocalMapel : MutableLiveData<List<Mapel>>
-    private lateinit var mutableAddMapel : MutableLiveData<GlobalWrapper<Mapel>>
-    private lateinit var mutableMapelById : MutableLiveData<GlobalWrapper<Mapel>>
+    private lateinit var mutableAddMapel : MutableLiveData<Response<GlobalWrapper<Mapel>>>
+    private lateinit var mutableMapelById : MutableLiveData<Response<GlobalWrapper<Mapel>>>
     private lateinit var mutableDeleteMapelById : MutableLiveData<Response<Unit>>
-    private lateinit var mutableUpdateMapelById : MutableLiveData<GlobalWrapper<Mapel>>
+    private lateinit var mutableUpdateMapelById : MutableLiveData<Response<GlobalWrapper<Mapel>>>
 
-    fun getAllMapel(token : String): LiveData<GlobalWrapper<ArrayList<Mapel>>>{
+    fun getAllMapel(token : String): LiveData<Response<GlobalWrapper<ArrayList<Mapel>>>>{
         mutableAllMapel = MutableLiveData()
         GlobalScope.launch {
             val response = repository.getAllMapel(token)
@@ -35,7 +35,7 @@ class MapelViewModel @Inject constructor(
         return mutableAllMapel
     }
 
-    fun addMapel(token: String, mapel: MapelAdd): LiveData<GlobalWrapper<Mapel>>{
+    fun addMapel(token: String, mapel: MapelAdd): LiveData<Response<GlobalWrapper<Mapel>>>{
         mutableAddMapel = MutableLiveData()
         GlobalScope.launch {
             val response = repository.addMapel(token, mapel)
@@ -44,7 +44,7 @@ class MapelViewModel @Inject constructor(
         return mutableAddMapel
     }
 
-    fun getMapelById(token: String, id:String): LiveData<GlobalWrapper<Mapel>>{
+    fun getMapelById(token: String, id:String): LiveData<Response<GlobalWrapper<Mapel>>>{
         mutableMapelById = MutableLiveData()
         GlobalScope.launch {
             val response = repository.getMapelById(token, id)
@@ -62,7 +62,7 @@ class MapelViewModel @Inject constructor(
         return mutableDeleteMapelById
     }
 
-    fun updateMapelById(token: String, id:String, mapel: MapelAdd): LiveData<GlobalWrapper<Mapel>>{
+    fun updateMapelById(token: String, id:String, mapel: MapelAdd): LiveData<Response<GlobalWrapper<Mapel>>>{
         mutableUpdateMapelById = MutableLiveData()
         GlobalScope.launch {
             val response = repository.updateMapelById(token, id, mapel)

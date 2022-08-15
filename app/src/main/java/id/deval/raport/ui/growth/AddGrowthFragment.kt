@@ -75,8 +75,12 @@ class AddGrowthFragment : BaseSkeletonFragment() {
                         berat.toInt(), date, ket, tinggi.toInt(), bmi.toInt(), pesanId
                     )
                     pesanViewModel.addGrowth(session.token.toString(), growth).observe(viewLifecycleOwner){
-                        requireContext().showToast("${it.status} menambahkan data")
-                        mainNavController.popBackStack()
+                        if (it.isSuccessful){
+                            requireContext().showToast("${it.body()?.status} menambahkan data")
+                            mainNavController.popBackStack()
+                        } else {
+                            requireContext().showToast(it.message())
+                        }
                     }
                 }
             }

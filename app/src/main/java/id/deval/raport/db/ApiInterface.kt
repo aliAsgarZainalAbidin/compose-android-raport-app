@@ -37,36 +37,36 @@ interface ApiInterface {
     @POST("account/login")
     suspend fun login(
         @Body account: Account
-    ): GlobalWrapper<Account>
+    ): Response<GlobalWrapper<Account>>
 
     @GET("account/")
     suspend fun getAccount(
         @Header("Authorization") token: String,
         @Query("role") role: String,
-    ): GlobalWrapper<ArrayList<Account>>
+    ): Response<GlobalWrapper<ArrayList<Account>>>
 
     @GET("siswa/")
     suspend fun getAllSiswa(
         @Header("Authorization") token: String,
-    ): GlobalWrapper<ArrayList<Siswa>>
+    ): Response<GlobalWrapper<ArrayList<Siswa>>>
 
     @GET("siswa/{id}")
     suspend fun getSiswa(
         @Header("Authorization") token: String,
         @Path("id") id: String
-    ): GlobalWrapper<SiswaUpdate>
+    ): Response<GlobalWrapper<SiswaUpdate>>
 
     @GET("siswa/{id}")
     suspend fun getSiswaById(
         @Header("Authorization") token: String,
         @Path("id") id: String
-    ): GlobalWrapper<Siswa>
+    ): Response<GlobalWrapper<Siswa>>
 
     @GET("siswa/nis/{id}")
     suspend fun getSiswaByNIS(
         @Header("Authorization") token: String,
         @Path("id") id: String
-    ): GlobalWrapper<SiswaByNIS>
+    ): Response<GlobalWrapper<SiswaByNIS>>
 
     @Multipart
     @POST("siswa/")
@@ -89,7 +89,7 @@ interface ApiInterface {
         @Part alamatWali: MultipartBody.Part,
         @Part phone: MultipartBody.Part,
         @Part image: MultipartBody.Part
-    ): GlobalWrapper<Siswa>
+    ): Response<GlobalWrapper<Siswa>>
 
     @Multipart
     @POST("siswa/updatePhoto/{id}")
@@ -97,14 +97,14 @@ interface ApiInterface {
         @Header("Authorization") token: String,
         @Path("id") id: String,
         @Part image: MultipartBody.Part
-    ): GlobalWrapper<Siswa>
+    ): Response<GlobalWrapper<Siswa>>
 
     @PUT("siswa/{id}")
     suspend fun updateSiswa(
         @Header("Authorization") token: String,
         @Path("id") id: String,
         @Body siswa: Siswa
-    ): GlobalWrapper<Siswa>
+    ): Response<GlobalWrapper<Siswa>>
 
     @DELETE("siswa/{id}")
     suspend fun deleteSiswa(
@@ -116,20 +116,20 @@ interface ApiInterface {
     suspend fun addAccountTeacher(
         @Header("Authorization") token: String,
         @Body account: Account
-    ): GlobalWrapper<Account>
+    ): Response<GlobalWrapper<Account>>
 
     @PUT("account/{id}")
     suspend fun updateAccountTeacher(
         @Header("Authorization") token: String,
         @Path("id") id: String,
         @Body account: AccountUpdate
-    ): GlobalWrapper<Account>
+    ): Response<GlobalWrapper<Account>>
 
     @GET("account/{id}")
     suspend fun getTeacherById(
         @Header("Authorization") token: String,
         @Path("id") id: String,
-    ): GlobalWrapper<Account>
+    ): Response<GlobalWrapper<Account>>
 
     @DELETE("account/{id}")
     suspend fun deleteTeacherById(
@@ -141,7 +141,7 @@ interface ApiInterface {
     suspend fun getAccountByUsername(
         @Header("Authorization") token: String,
         @Path("username") username: String
-    ): GlobalWrapper<Account>
+    ): Response<GlobalWrapper<Account>>
 
     @DELETE("account/detail/{username}")
     suspend fun deleteAccountByUsername(
@@ -152,13 +152,13 @@ interface ApiInterface {
     @GET("class/")
     suspend fun getAllClass(
         @Header("Authorization") token: String
-    ): GlobalWrapper<ArrayList<Kelas>>
+    ): Response<GlobalWrapper<ArrayList<Kelas>>>
 
     @POST("class/")
     suspend fun addClass(
         @Header("Authorization") token: String,
         @Body kelas: Kelas
-    ): GlobalWrapper<Kelas>
+    ): Response<GlobalWrapper<Kelas>>
 
     @DELETE("class/{id}")
     suspend fun deleteClass(
@@ -170,43 +170,57 @@ interface ApiInterface {
     suspend fun getClassById(
         @Header("Authorization") token: String,
         @Path("id") id: String
-    ): GlobalWrapper<ArrayList<ResponseDetailKelas>>
+    ): Response<GlobalWrapper<ArrayList<ResponseDetailKelas>>>
 
     @GET("class/guru/{id}")
     suspend fun getClassByIdGuru(
         @Header("Authorization") token: String,
         @Path("id") id: String
-    ): GlobalWrapper<ResponseDetailKelas>
+    ): Response<GlobalWrapper<ResponseDetailKelas>>
 
     @GET("class/siswa/{id}")
     suspend fun getClassByNis(
         @Header("Authorization") token: String,
         @Path("id") id: String
-    ): GlobalWrapper<ResponseDetailKelas>
+    ): Response<GlobalWrapper<ResponseDetailKelas>>
 
     @PUT("class/{id}")
     suspend fun updateClassById(
         @Header("Authorization") token: String,
         @Path("id") id: String,
         @Body kelas: KelasUpdate
-    ): GlobalWrapper<Kelas>
+    ): Response<GlobalWrapper<Kelas>>
+
+    @PUT("class/{id}")
+    suspend fun updateMapelInClassById(
+        @Header("Authorization") token: String,
+        @Path("id") id: String,
+        @Body mapel: UpdateMapel
+    ): Response<GlobalWrapper<Kelas>>
+
+    @PUT("class/{id}")
+    suspend fun updateSiswaInClassById(
+        @Header("Authorization") token: String,
+        @Path("id") id: String,
+        @Body siswa: UpdateSiswa
+    ): Response<GlobalWrapper<Kelas>>
 
     @GET("mapel/")
     suspend fun getAllMapel(
         @Header("Authorization") token: String
-    ): GlobalWrapper<ArrayList<Mapel>>
+    ): Response<GlobalWrapper<ArrayList<Mapel>>>
 
     @POST("mapel/")
     suspend fun addMapel(
         @Header("Authorization") token: String,
         @Body mapel: MapelAdd
-    ): GlobalWrapper<Mapel>
+    ): Response<GlobalWrapper<Mapel>>
 
     @GET("mapel/{id}")
     suspend fun getMapelById(
         @Header("Authorization") token: String,
         @Path("id") id: String
-    ): GlobalWrapper<Mapel>
+    ): Response<GlobalWrapper<Mapel>>
 
     @DELETE("mapel/{id}")
     suspend fun deleteMapelById(
@@ -219,7 +233,7 @@ interface ApiInterface {
         @Header("Authorization") token: String,
         @Path("id") id: String,
         @Body mapel: MapelAdd
-    ): GlobalWrapper<Mapel>
+    ): Response<GlobalWrapper<Mapel>>
 
     @POST("attendance/")
     suspend fun addAttendance(
@@ -232,27 +246,27 @@ interface ApiInterface {
         @Header("Authorization") token: String,
         @Query("classId") classId: String,
         @Query("mapelId") mapelId: String
-    ): GlobalWrapper<ArrayList<Attendance>>
+    ): Response<GlobalWrapper<ArrayList<Attendance>>>
 
     @GET("attendance/orangtua")
     suspend fun getAttendanceBySiswaId(
         @Header("Authorization") token: String,
         @Query("siswaId") siswaId: String,
         @Query("mapelId") mapelId: String
-    ): GlobalWrapper<ArrayList<Attendance>>
+    ): Response<GlobalWrapper<ArrayList<Attendance>>>
 
     @GET("attendance/{id}")
     suspend fun getAttendanceById(
         @Header("Authorization") token: String,
         @Path("id") id:String
-    ): GlobalWrapper<ArrayList<ResponseAttendance>>
+    ): Response<GlobalWrapper<ArrayList<ResponseAttendance>>>
 
     @PUT("attendance/{id}")
     suspend fun updateAttendanceById(
         @Header("Authorization") token: String,
         @Path("id") id:String,
         @Body attendance: AttendanceAdd
-    ): GlobalWrapper<ResponseAttendance>
+    ): Response<GlobalWrapper<ResponseAttendance>>
 
     @GET("raport/detail")
     suspend fun getSpesifikRaport(
@@ -260,48 +274,48 @@ interface ApiInterface {
         @Query("classId") classId:String,
         @Query("mapelId") mapelId:String,
         @Query("siswaId") siswaId:String,
-    ): GlobalWrapper<Raport>
+    ): Response<GlobalWrapper<Raport>>
 
     @POST("tugas/")
     suspend fun addTugas(
         @Header("Authorization") token:String,
         @Body tugas: TugasAdd
-    ): GlobalWrapper<Raport>
+    ): Response<GlobalWrapper<Raport>>
 
     @PUT("raport/")
     suspend fun updateRaport(
         @Header("Authorization") token:String,
         @Body raportAdd: RaportAdd,
-    ): GlobalWrapper<Raport>
+    ): Response<GlobalWrapper<Raport>>
 
     @PUT("tugas/{id}")
     suspend fun updateTugasById(
         @Header("Authorization") token:String,
         @Path("id") id:String,
         @Body tugas: TugasAdd
-    ) : GlobalWrapper<Tugas>
+    ) : Response<GlobalWrapper<Tugas>>
 
     @GET("tugas/{id}")
     suspend fun getTugasById(
         @Header("Authorization") token: String,
         @Path("id") id:String
-    ) : GlobalWrapper<Tugas>
+    ) : Response<GlobalWrapper<Tugas>>
 
     @GET("pesan/")
     suspend fun getPesanById(
         @Header("Authorization") token:String,
         @Query("siswaId") siswaId: String
-    ) : GlobalWrapper<Pesan>
+    ) : Response<GlobalWrapper<Pesan>>
 
     @POST("growth/")
     suspend fun addGrowth(
         @Header("Authorization") token: String,
         @Body growthAdd: GrowthAdd
-    ) : GlobalWrapper<Pesan>
+    ) : Response<GlobalWrapper<Pesan>>
 
     @POST("note/")
     suspend fun addNote(
         @Header("Authorization") token: String,
         @Body noteAdd: NoteAdd
-    ) : GlobalWrapper<Pesan>
+    ) : Response<GlobalWrapper<Pesan>>
 }

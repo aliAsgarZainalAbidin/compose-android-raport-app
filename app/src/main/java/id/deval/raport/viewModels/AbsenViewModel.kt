@@ -28,10 +28,10 @@ class AbsenViewModel @Inject constructor(
 
     private lateinit var mutableAddAttendance: MutableLiveData<Response<GlobalWrapper<Attendance>>>
     private lateinit var mutableGetLocalAbsen: MutableLiveData<List<Absen>>
-    private lateinit var mutableAttendanceById: MutableLiveData<GlobalWrapper<ArrayList<ResponseAttendance>>>
-    private lateinit var mutableUpdateAttendanceById: MutableLiveData<GlobalWrapper<ResponseAttendance>>
-    private lateinit var mutableGetAttendance: MutableLiveData<GlobalWrapper<ArrayList<Attendance>>>
-    private lateinit var mutableGetAttendanceBySiswaId: MutableLiveData<GlobalWrapper<ArrayList<Attendance>>>
+    private lateinit var mutableAttendanceById: MutableLiveData<Response<GlobalWrapper<ArrayList<ResponseAttendance>>>>
+    private lateinit var mutableUpdateAttendanceById: MutableLiveData<Response<GlobalWrapper<ResponseAttendance>>>
+    private lateinit var mutableGetAttendance: MutableLiveData<Response<GlobalWrapper<ArrayList<Attendance>>>>
+    private lateinit var mutableGetAttendanceBySiswaId: MutableLiveData<Response<GlobalWrapper<ArrayList<Attendance>>>>
 
     fun addAttendance(
         token: String,
@@ -48,7 +48,7 @@ class AbsenViewModel @Inject constructor(
     fun getAttendanceById(
         token: String,
         id: String
-    ): LiveData<GlobalWrapper<ArrayList<ResponseAttendance>>> {
+    ): LiveData<Response<GlobalWrapper<ArrayList<ResponseAttendance>>>> {
         mutableAttendanceById = MutableLiveData()
         GlobalScope.launch {
             val response = repository.getAttendanceById(token, id)
@@ -61,7 +61,7 @@ class AbsenViewModel @Inject constructor(
         token: String,
         id: String,
         attendance: AttendanceAdd
-    ): LiveData<GlobalWrapper<ResponseAttendance>> {
+    ): LiveData<Response<GlobalWrapper<ResponseAttendance>>> {
         mutableUpdateAttendanceById = MutableLiveData()
         GlobalScope.launch {
             val response = repository.updateAttendanceById(token, id, attendance)
@@ -74,7 +74,7 @@ class AbsenViewModel @Inject constructor(
         token: String,
         classId: String,
         mapelId: String
-    ): LiveData<GlobalWrapper<ArrayList<Attendance>>> {
+    ): LiveData<Response<GlobalWrapper<ArrayList<Attendance>>>> {
         mutableGetAttendance = MutableLiveData()
         GlobalScope.launch {
             val response = repository.getAttendance(token, classId, mapelId)
@@ -87,7 +87,7 @@ class AbsenViewModel @Inject constructor(
         token: String,
         siswaId: String,
         mapelId: String
-    ): LiveData<GlobalWrapper<ArrayList<Attendance>>> {
+    ): LiveData<Response<GlobalWrapper<ArrayList<Attendance>>>> {
         mutableGetAttendanceBySiswaId = MutableLiveData()
         GlobalScope.launch {
             val response = repository.getAttendanceBySiswaId(token, siswaId, mapelId)

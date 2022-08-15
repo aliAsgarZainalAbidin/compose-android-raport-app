@@ -36,10 +36,6 @@ class PesanOrangtuaFragment : BaseSkeletonFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        val dataMapel = DummyData().setDummyDataMapel()
-        val dataSiswa = DummyData().setDummyDataSiswa()
-
         listGrowth = arrayListOf()
         listNote = arrayListOf()
         var siswaId = ""
@@ -53,38 +49,42 @@ class PesanOrangtuaFragment : BaseSkeletonFragment() {
             mtvPesanorangtuaName.text = session.name
 
             siswaViewModel.getSiswaByNIS(session.token.toString(), session.username.toString()).observe(viewLifecycleOwner){
-                siswaId = it.data.id
+                siswaId = it.body()?.data!!.id
 
                 pesanViewModel.getPesanById(session.token.toString(), siswaId).observe(viewLifecycleOwner){
-                    it.data.growthDetail?.forEach { growth->
-                        if (growth != null){
-                            listGrowth.add(growth)
+                    if (it.isSuccessful){
+                        it.body()?.data!!.growthDetail?.forEach { growth->
+                            if (growth != null){
+                                listGrowth.add(growth)
+                            }
                         }
-                    }
 
-                    Log.d(ContentValues.TAG, "onViewCreated: LIST GROWTH ${it.data.growthId}")
-                    Log.d(ContentValues.TAG, "onViewCreated: LIST NOTE ${it.data.noteId}")
+                        Log.d(ContentValues.TAG, "onViewCreated: LIST GROWTH ${it.body()?.data!!.growthId}")
+                        Log.d(ContentValues.TAG, "onViewCreated: LIST NOTE ${it.body()?.data!!.noteId}")
 
-                    it.data.noteDetail?.forEach { note ->
-                        if (note!=null){
-                            listNote.add(note)
+                        it.body()?.data!!.noteDetail?.forEach { note ->
+                            if (note!=null){
+                                listNote.add(note)
+                            }
                         }
-                    }
 
-                    rvPesanorangtuaGrowth.apply {
-                        val adapter = RvGrowthAdapter(listGrowth)
-                        adapter.notifyDataSetChanged()
-                        this.adapter = adapter
-                        layoutManager =
-                            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, true)
-                    }
+                        rvPesanorangtuaGrowth.apply {
+                            val adapter = RvGrowthAdapter(listGrowth)
+                            adapter.notifyDataSetChanged()
+                            this.adapter = adapter
+                            layoutManager =
+                                LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, true)
+                        }
 
-                    rvPesanorangtuaNote.apply {
-                        val adapter = RvNoteAdapter(listNote)
-                        adapter.notifyDataSetChanged()
-                        this.adapter = adapter
-                        layoutManager =
-                            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, true)
+                        rvPesanorangtuaNote.apply {
+                            val adapter = RvNoteAdapter(listNote)
+                            adapter.notifyDataSetChanged()
+                            this.adapter = adapter
+                            layoutManager =
+                                LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, true)
+                        }
+                    } else {
+                        requireContext().showToast(it.message())
                     }
                 }
             }

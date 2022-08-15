@@ -42,8 +42,12 @@ class AddTugasFragment : BaseSkeletonFragment() {
             if (!tugasId.isNullOrEmpty()) {
                 raportViewModel.getTugasById(session.token.toString(), tugasId)
                     .observe(viewLifecycleOwner) {
-                        tietAddtugasNama.setText(it.data.nama)
-                        tietAddtugasNilaitugas.setText(it.data.nilai.toString())
+                        if (it.isSuccessful){
+                            tietAddtugasNama.setText(it.body()?.data!!.nama)
+                            tietAddtugasNilaitugas.setText(it.body()?.data!!.nilai.toString())
+                        } else {
+                            requireContext().showToast(it.message())
+                        }
                     }
             }
 
@@ -69,13 +73,21 @@ class AddTugasFragment : BaseSkeletonFragment() {
                     if (!tugasId.isNullOrEmpty()) {
                         raportViewModel.updateTugasById(session.token.toString(), tugasId, tugas)
                             .observe(viewLifecycleOwner) {
-                                requireContext().showToast("${it.status} men-update tugas")
+                                if (it.isSuccessful){
+                                    requireContext().showToast("${it.body()?.status} men-update tugas")
+                                } else {
+                                    requireContext().showToast(it.message())
+                                }
                             }
                     } else {
                         raportViewModel.addTugas(session.token.toString(), tugas)
                             .observe(viewLifecycleOwner) {
-                                requireContext().showToast("${it.status} menambahkan tugas")
-                                mainNavController.popBackStack()
+                                if (it.isSuccessful){
+                                    requireContext().showToast("${it.body()?.status} menambahkan tugas")
+                                    mainNavController.popBackStack()
+                                } else {
+                                    requireContext().showToast(it.message())
+                                }
                             }
                     }
                 }

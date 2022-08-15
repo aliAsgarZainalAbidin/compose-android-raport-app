@@ -12,4 +12,5 @@ object Constanta {
     val TUGAS_ID = "TUGAS_ID"
     val DATE = "DATE"
     val MAPEL_NAME = "MAPEL_NAME"
+    val BACKPRESSED = "BACKPRESSED"
 }

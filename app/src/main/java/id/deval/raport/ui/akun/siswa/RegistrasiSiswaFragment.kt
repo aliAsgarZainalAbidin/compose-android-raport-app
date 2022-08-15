@@ -55,15 +55,19 @@ class RegistrasiSiswaFragment : BaseSkeletonFragment() {
     fun refreshRecyclerViewSiswa() {
         with(binding) {
             siswaViewModel.getAllSiswa(session.token.toString()).observe(viewLifecycleOwner) {
-                mtvRegistrasisiswaGuru.text = it.data.size.toString()
-                includeRvGuru.rvRvlayoutContainer.apply {
-                    val adapter =
-                        RvAdapter<Siswa>("siswa", OperationsTypeRv.EDIT, mainNavController)
-                    adapter.setData(it.data)
-                    adapter.notifyDataSetChanged()
-                    this.adapter = adapter
-                    layoutManager =
-                        LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+                if (it.isSuccessful){
+                    mtvRegistrasisiswaGuru.text = it.body()?.data!!.size.toString()
+                    includeRvGuru.rvRvlayoutContainer.apply {
+                        val adapter =
+                            RvAdapter<Siswa>("siswa", OperationsTypeRv.EDIT, mainNavController)
+                        adapter.setData(it.body()?.data!!)
+                        adapter.notifyDataSetChanged()
+                        this.adapter = adapter
+                        layoutManager =
+                            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+                    }
+                } else {
+                    requireContext().showToast(it.message())
                 }
             }
         }

@@ -18,6 +18,7 @@ import id.deval.raport.ui.adapter.RvNoteAdapter
 import id.deval.raport.utils.BaseSkeletonFragment
 import id.deval.raport.utils.Constanta
 import id.deval.raport.utils.DummyData
+import id.deval.raport.utils.showToast
 
 class AddPesanFragment : BaseSkeletonFragment() {
 
@@ -55,30 +56,38 @@ class AddPesanFragment : BaseSkeletonFragment() {
             if (siswaId!=null){
                 siswaViewModel.getSiswaById(session.token.toString(), siswaId).observe(viewLifecycleOwner){
                     with(includeAddpesanContainer){
-                        mtvRvitemName.setText(it.data.name)
-                        mtvRvitemNis.setText(it.data.nis)
+                        if (it.isSuccessful){
+                            mtvRvitemName.setText(it.body()?.data!!.name)
+                            mtvRvitemNis.setText(it.body()?.data!!.nis)
+                        } else {
+                            requireContext().showToast(it.message())
+                        }
                     }
                 }
 
                 pesanViewModel.getPesanById(session.token.toString(), siswaId).observe(viewLifecycleOwner){
-                    it.data.growthDetail?.forEach { growth->
-                        if (growth != null){
-                            listGrowth.add(growth)
+                    if (it.isSuccessful){
+                        it.body()?.data!!.growthDetail?.forEach { growth->
+                            if (growth != null){
+                                listGrowth.add(growth)
+                            }
                         }
-                    }
 
-                    Log.d(TAG, "onViewCreated: LIST GROWTH ${it.data.growthId}")
-                    Log.d(TAG, "onViewCreated: LIST NOTE ${it.data.noteId}")
+                        Log.d(TAG, "onViewCreated: LIST GROWTH ${it.body()?.data!!.growthId}")
+                        Log.d(TAG, "onViewCreated: LIST NOTE ${it.body()?.data!!.noteId}")
 
-                    it.data.noteDetail?.forEach { note ->
-                        if (note!=null){
-                            listNote.add(note)
+                        it.body()?.data!!.noteDetail?.forEach { note ->
+                            if (note!=null){
+                                listNote.add(note)
+                            }
                         }
-                    }
 
-                    refreshRVGrowth()
-                    refreshRVNote()
-                    pesanId = it.data.id.toString()
+                        refreshRVGrowth()
+                        refreshRVNote()
+                        pesanId = it.body()?.data!!.id.toString()
+                    } else {
+                        requireContext().showToast(it.message())
+                    }
                 }
             }
 

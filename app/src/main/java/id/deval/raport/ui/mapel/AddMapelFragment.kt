@@ -40,9 +40,13 @@ class AddMapelFragment : BaseSkeletonFragment() {
 
             if (!id.isNullOrEmpty()){
                 mapelViewModel.getMapelById(session.token.toString(), id).observe(viewLifecycleOwner){
-                    val data = it.data
-                    tietAddmapelNama.setText(data.name)
-                    tietAddmapelGuru.setText(data.category, false)
+                    if (it.isSuccessful){
+                        val data = it.body()?.data!!
+                        tietAddmapelNama.setText(data.name)
+                        tietAddmapelGuru.setText(data.category, false)
+                    } else {
+                        requireContext().showToast(it.message())
+                    }
                 }
             }
 
@@ -76,13 +80,21 @@ class AddMapelFragment : BaseSkeletonFragment() {
                     if (id.isNullOrEmpty()){
                         mapelViewModel.addMapel(session.token.toString(), mapel)
                             .observe(viewLifecycleOwner) {
-                                requireContext().showToast("${it.status} menambahkan data")
-                                mainNavController.popBackStack()
+                                if (it.isSuccessful){
+                                    requireContext().showToast("${it.body()?.status} menambahkan data")
+                                    mainNavController.popBackStack()
+                                } else {
+                                    requireContext().showToast(it.message())
+                                }
                             }
                     } else {
                         mapelViewModel.updateMapelById(session.token.toString(), id, mapel).observe(viewLifecycleOwner){
-                            requireContext().showToast("${it.status} men-update data")
-                            mainNavController.popBackStack()
+                            if (it.isSuccessful){
+                                requireContext().showToast("${it.body()?.status} men-update data")
+                                mainNavController.popBackStack()
+                            } else {
+                                requireContext().showToast(it.message())
+                            }
                         }
                     }
                 }

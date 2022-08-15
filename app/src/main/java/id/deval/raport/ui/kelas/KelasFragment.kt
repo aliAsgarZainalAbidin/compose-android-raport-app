@@ -52,15 +52,23 @@ class KelasFragment : BaseSkeletonFragment() {
     fun refreshRecyclerViewKelas() {
         with(binding) {
             kelasViewModel.getAllClass(session.token.toString()).observe(viewLifecycleOwner) {
-                mtvKelasTotalKelas.text = it.data.size.toString()
-                includeRvGuru.rvRvlayoutContainer.apply {
-                    val adapter =
-                        RvAdapter<Kelas>("kelas", OperationsTypeRv.EDIT, mainNavController)
-                    adapter.setData(it.data)
-                    adapter.notifyDataSetChanged()
-                    this.adapter = adapter
-                    layoutManager =
-                        LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+                if (it.isSuccessful) {
+                    mtvKelasTotalKelas.text = it.body()?.data!!.size.toString()
+                    includeRvGuru.rvRvlayoutContainer.apply {
+                        val adapter =
+                            RvAdapter<Kelas>("kelas", OperationsTypeRv.EDIT, mainNavController)
+                        adapter.setData(it.body()?.data!!)
+                        adapter.notifyDataSetChanged()
+                        this.adapter = adapter
+                        layoutManager =
+                            LinearLayoutManager(
+                                requireContext(),
+                                LinearLayoutManager.VERTICAL,
+                                false
+                            )
+                    }
+                } else {
+                    requireContext().showToast(it.message())
                 }
             }
         }

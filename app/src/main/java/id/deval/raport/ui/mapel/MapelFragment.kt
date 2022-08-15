@@ -48,17 +48,22 @@ class MapelFragment : BaseSkeletonFragment() {
     fun refreshRecyclerView(){
         with(binding){
             mapelViewModel.getAllMapel(session.token.toString()).observe(viewLifecycleOwner) {
-                includeRvMapel.rvRvlayoutContainer.apply {
-                    val adapter =
-                        RvAdapter<Mapel>("mapel", OperationsTypeRv.EDIT, mainNavController)
-//                    dataMapel.addAll(it.data)
-                    mtvMapelTotalmapel.text = it.data.size.toString()
+                if (it.isSuccessful){
+                    includeRvMapel.rvRvlayoutContainer.apply {
+                        val adapter =
+                            RvAdapter<Mapel>("mapel", OperationsTypeRv.EDIT, mainNavController)
+//                    dataMapel.addAll(it.body()?.data!!)
+                        mtvMapelTotalmapel.text = it.body()?.data!!.size.toString()
 
-                    adapter.setData(it.data)
-                    adapter.notifyDataSetChanged()
-                    this.adapter = adapter
-                    layoutManager =
-                        LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+                        adapter.setData(it.body()?.data!!)
+                        adapter.notifyDataSetChanged()
+                        this.adapter = adapter
+                        layoutManager =
+                            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+
+                    }
+                } else {
+                    requireContext().showToast(it.message())
                 }
             }
         }

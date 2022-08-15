@@ -21,17 +21,17 @@ class SiswaViewModel @Inject constructor(
     private val repository: Repository
 ) : ViewModel() {
 
-    private lateinit var mutablelistSiswa: MutableLiveData<GlobalWrapper<ArrayList<Siswa>>>
-    private lateinit var mutableAddSiswa: MutableLiveData<GlobalWrapper<Siswa>>
-    private lateinit var mutableSiswa: MutableLiveData<GlobalWrapper<SiswaUpdate>>
-    private lateinit var mutableSiswaById: MutableLiveData<GlobalWrapper<Siswa>>
-    private lateinit var mutableSiswaByNIS: MutableLiveData<GlobalWrapper<SiswaByNIS>>
-    private lateinit var mutableUpdateSiswa : MutableLiveData<GlobalWrapper<Siswa>>
-    private lateinit var mutableUploadPhoto : MutableLiveData<GlobalWrapper<Siswa>>
+    private lateinit var mutablelistSiswa: MutableLiveData<Response<GlobalWrapper<ArrayList<Siswa>>>>
+    private lateinit var mutableAddSiswa: MutableLiveData<Response<GlobalWrapper<Siswa>>>
+    private lateinit var mutableSiswa: MutableLiveData<Response<GlobalWrapper<SiswaUpdate>>>
+    private lateinit var mutableSiswaById: MutableLiveData<Response<GlobalWrapper<Siswa>>>
+    private lateinit var mutableSiswaByNIS: MutableLiveData<Response<GlobalWrapper<SiswaByNIS>>>
+    private lateinit var mutableUpdateSiswa : MutableLiveData<Response<GlobalWrapper<Siswa>>>
+    private lateinit var mutableUploadPhoto : MutableLiveData<Response<GlobalWrapper<Siswa>>>
     private lateinit var mutableDeleteSiswa : MutableLiveData<Response<Unit>>
     private lateinit var mutableAllSiswa : MutableLiveData<List<Siswa>>
 
-    fun getSiswa(token:String, id:String): LiveData<GlobalWrapper<SiswaUpdate>>{
+    fun getSiswa(token:String, id:String): LiveData<Response<GlobalWrapper<SiswaUpdate>>>{
         mutableSiswa = MutableLiveData()
         GlobalScope.launch {
             val response = repository.getSiswa(token, id)
@@ -40,7 +40,7 @@ class SiswaViewModel @Inject constructor(
         return mutableSiswa
     }
 
-    fun getSiswaById(token: String, id: String) : LiveData<GlobalWrapper<Siswa>>{
+    fun getSiswaById(token: String, id: String) : LiveData<Response<GlobalWrapper<Siswa>>>{
         mutableSiswaById = MutableLiveData()
         GlobalScope.launch {
             val response = repository.getSiswaById(token, id)
@@ -49,7 +49,7 @@ class SiswaViewModel @Inject constructor(
         return mutableSiswaById
     }
 
-    fun getSiswaByNIS(token: String, id: String) : LiveData<GlobalWrapper<SiswaByNIS>>{
+    fun getSiswaByNIS(token: String, id: String) : LiveData<Response<GlobalWrapper<SiswaByNIS>>>{
         mutableSiswaByNIS = MutableLiveData()
         GlobalScope.launch {
             val response = repository.getSiswaByNIS(token, id)
@@ -58,7 +58,7 @@ class SiswaViewModel @Inject constructor(
         return mutableSiswaByNIS
     }
 
-    fun getAllSiswa(token: String): LiveData<GlobalWrapper<ArrayList<Siswa>>> {
+    fun getAllSiswa(token: String): LiveData<Response<GlobalWrapper<ArrayList<Siswa>>>> {
         mutablelistSiswa = MutableLiveData()
         GlobalScope.launch {
             val response = repository.getAllSiswa(token)
@@ -85,7 +85,7 @@ class SiswaViewModel @Inject constructor(
         alamatWali: MultipartBody.Part,
         phone: MultipartBody.Part,
         photo: MultipartBody.Part
-    ): LiveData<GlobalWrapper<Siswa>> {
+    ): LiveData<Response<GlobalWrapper<Siswa>>> {
         mutableAddSiswa = MutableLiveData()
         GlobalScope.launch {
             val response = repository.addSiswa(
@@ -113,7 +113,7 @@ class SiswaViewModel @Inject constructor(
         return mutableAddSiswa
     }
 
-    fun updateSiswa(token: String, id: String, siswa: Siswa) : LiveData<GlobalWrapper<Siswa>>{
+    fun updateSiswa(token: String, id: String, siswa: Siswa) : LiveData<Response<GlobalWrapper<Siswa>>>{
         mutableUpdateSiswa = MutableLiveData()
         GlobalScope.launch {
             val response = repository.updateSiswa(token, id, siswa)
@@ -122,7 +122,7 @@ class SiswaViewModel @Inject constructor(
         return mutableUpdateSiswa
     }
 
-    fun uploadPhotoSiswa(token: String, id: String, photo: MultipartBody.Part) : LiveData<GlobalWrapper<Siswa>>{
+    fun uploadPhotoSiswa(token: String, id: String, photo: MultipartBody.Part) : LiveData<Response<GlobalWrapper<Siswa>>>{
         mutableUploadPhoto = MutableLiveData()
         GlobalScope.launch {
             val response = repository.uploadPhoto(token, id, photo)

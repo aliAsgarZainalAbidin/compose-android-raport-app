@@ -2,6 +2,7 @@ package id.deval.raport.ui.akun.siswa
 
 import android.Manifest
 import android.app.Activity
+import android.app.DatePickerDialog
 import android.content.ContentValues.TAG
 import android.content.Intent
 import android.os.Bundle
@@ -11,6 +12,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.DatePicker
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.os.bundleOf
 import com.bumptech.glide.Glide
@@ -22,10 +24,12 @@ import id.deval.raport.db.models.request.SiswaUpdate
 import id.deval.raport.utils.BaseSkeletonFragment
 import id.deval.raport.utils.Constanta
 import id.deval.raport.utils.hide
+import id.deval.raport.utils.showToast
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
+import java.util.*
 
 class AddSiswaFragment : BaseSkeletonFragment() {
 
@@ -103,32 +107,52 @@ class AddSiswaFragment : BaseSkeletonFragment() {
                 mainNavController.popBackStack()
             }
 
+            tietAddsiswaTanggalLahir.setOnClickListener {
+                val calendar = Calendar.getInstance()
+                val year = calendar.get(Calendar.YEAR)
+                val month = calendar.get(Calendar.MONTH)
+                val day = calendar.get(Calendar.DAY_OF_WEEK)
+
+                val datePickerDialog =
+                    DatePickerDialog(requireContext(), object : DatePickerDialog.OnDateSetListener {
+                        override fun onDateSet(p0: DatePicker?, p1: Int, p2: Int, p3: Int) {
+                            tietAddsiswaTanggalLahir.setText("$p3-$p2-$p1")
+                        }
+
+                    }, year, month, day)
+                datePickerDialog.show()
+            }
+
             Log.d(TAG, "onViewCreated: $id")
             if (id.isNotEmpty()) {
                 tietAddsiswaNisn.isEnabled = false
                 siswaViewModel.getSiswa(session.token.toString(), id).observe(viewLifecycleOwner) {
-                    val siswa = it.data
-                    tietAddsiswaNamalengkap.setText(siswa.name)
-                    tietAddsiswaNisn.setText(siswa.nis)
-                    tietAddsiswaTempatlahir.setText(siswa.tempatLahir)
-                    tietAddsiswaTanggalLahir.setText(siswa.tanggalLahir)
-                    tietAddsiswaGender.setText(siswa.gender, false)
-                    tietAddsiswaReligion.setText(siswa.religion, false)
-                    tietAddsiswaEducation.setText(siswa.education)
-                    tietAddsiswaAddress.setText(siswa.address)
-                    tietAddsiswaNamaAyah.setText(siswa.namaAyah)
-                    tietAddsiswaNamaIbu.setText(siswa.namaIbu)
-                    tietAddsiswaPekerjaanAyah.setText(siswa.pekerjaanAyah)
-                    tietAddsiswaPekerjaanIbu.setText(siswa.pekerjaanIbu)
-                    tietAddsiswaNamaWali.setText(siswa.namaWali)
-                    tietAddsiswaPekerjaanWali.setText(siswa.pekerjaanWali)
-                    tietAddsiswaAlamatWali.setText(siswa.alamatWali)
-                    tietAddsiswaHp.setText(siswa.phone)
-                    val urlPhoto = "${BASE_URL}siswa/file/${siswa.photo}"
-                    pathImage = siswa.photo
-                    Glide.with(requireContext())
-                        .load(urlPhoto)
-                        .into(ivAddsiswaPhoto)
+                    if (it.isSuccessful){
+                        val siswa = it.body()?.data!!
+                        tietAddsiswaNamalengkap.setText(siswa.name)
+                        tietAddsiswaNisn.setText(siswa.nis)
+                        tietAddsiswaTempatlahir.setText(siswa.tempatLahir)
+                        tietAddsiswaTanggalLahir.setText(siswa.tanggalLahir)
+                        tietAddsiswaGender.setText(siswa.gender, false)
+                        tietAddsiswaReligion.setText(siswa.religion, false)
+                        tietAddsiswaEducation.setText(siswa.education)
+                        tietAddsiswaAddress.setText(siswa.address)
+                        tietAddsiswaNamaAyah.setText(siswa.namaAyah)
+                        tietAddsiswaNamaIbu.setText(siswa.namaIbu)
+                        tietAddsiswaPekerjaanAyah.setText(siswa.pekerjaanAyah)
+                        tietAddsiswaPekerjaanIbu.setText(siswa.pekerjaanIbu)
+                        tietAddsiswaNamaWali.setText(siswa.namaWali)
+                        tietAddsiswaPekerjaanWali.setText(siswa.pekerjaanWali)
+                        tietAddsiswaAlamatWali.setText(siswa.alamatWali)
+                        tietAddsiswaHp.setText(siswa.phone)
+                        val urlPhoto = "${BASE_URL}siswa/file/${siswa.photo}"
+                        pathImage = siswa.photo
+                        Glide.with(requireContext())
+                            .load(urlPhoto)
+                            .into(ivAddsiswaPhoto)
+                    } else {
+                        requireContext().showToast(it.message())
+                    }
                 }
             }
 
@@ -347,28 +371,32 @@ class AddSiswaFragment : BaseSkeletonFragment() {
 
             siswaViewModel.getSiswaByNIS(session.token.toString(), session.username.toString())
                 .observe(viewLifecycleOwner){
-                    val siswa = it.data
-                    tietAddsiswaNamalengkap.setText(siswa.name)
-                    tietAddsiswaNisn.setText(siswa.nis)
-                    tietAddsiswaTempatlahir.setText(siswa.tempatLahir)
-                    tietAddsiswaTanggalLahir.setText(siswa.tanggalLahir)
-                    tietAddsiswaGender.setText(siswa.gender, false)
-                    tietAddsiswaReligion.setText(siswa.religion, false)
-                    tietAddsiswaEducation.setText(siswa.education)
-                    tietAddsiswaAddress.setText(siswa.address)
-                    tietAddsiswaNamaAyah.setText(siswa.namaAyah)
-                    tietAddsiswaNamaIbu.setText(siswa.namaIbu)
-                    tietAddsiswaPekerjaanAyah.setText(siswa.pekerjaanAyah)
-                    tietAddsiswaPekerjaanIbu.setText(siswa.pekerjaanIbu)
-                    tietAddsiswaNamaWali.setText(siswa.namaWali)
-                    tietAddsiswaPekerjaanWali.setText(siswa.pekerjaanWali)
-                    tietAddsiswaAlamatWali.setText(siswa.alamatWali)
-                    tietAddsiswaHp.setText(siswa.phone)
-                    val urlPhoto = "${BASE_URL}siswa/file/${siswa.photo}"
-                    pathImage = siswa.photo
-                    Glide.with(requireContext())
-                        .load(urlPhoto)
-                        .into(ivAddsiswaPhoto)
+                    if (it.isSuccessful){
+                        val siswa = it.body()?.data!!
+                        tietAddsiswaNamalengkap.setText(siswa.name)
+                        tietAddsiswaNisn.setText(siswa.nis)
+                        tietAddsiswaTempatlahir.setText(siswa.tempatLahir)
+                        tietAddsiswaTanggalLahir.setText(siswa.tanggalLahir)
+                        tietAddsiswaGender.setText(siswa.gender, false)
+                        tietAddsiswaReligion.setText(siswa.religion, false)
+                        tietAddsiswaEducation.setText(siswa.education)
+                        tietAddsiswaAddress.setText(siswa.address)
+                        tietAddsiswaNamaAyah.setText(siswa.namaAyah)
+                        tietAddsiswaNamaIbu.setText(siswa.namaIbu)
+                        tietAddsiswaPekerjaanAyah.setText(siswa.pekerjaanAyah)
+                        tietAddsiswaPekerjaanIbu.setText(siswa.pekerjaanIbu)
+                        tietAddsiswaNamaWali.setText(siswa.namaWali)
+                        tietAddsiswaPekerjaanWali.setText(siswa.pekerjaanWali)
+                        tietAddsiswaAlamatWali.setText(siswa.alamatWali)
+                        tietAddsiswaHp.setText(siswa.phone)
+                        val urlPhoto = "${BASE_URL}siswa/file/${siswa.photo}"
+                        pathImage = siswa.photo
+                        Glide.with(requireContext())
+                            .load(urlPhoto)
+                            .into(ivAddsiswaPhoto)
+                    } else {
+                        requireContext().showToast(it.message())
+                    }
                 }
         }
     }

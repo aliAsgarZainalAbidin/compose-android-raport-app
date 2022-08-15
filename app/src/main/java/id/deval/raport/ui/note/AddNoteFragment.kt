@@ -76,8 +76,12 @@ class AddNoteFragment : BaseSkeletonFragment() {
                         ket, date, pesanId
                     )
                     pesanViewModel.addNote(session.token.toString(),note).observe(viewLifecycleOwner){
-                        requireContext().showToast("${it.status} menambahkan data")
-                        mainNavController.popBackStack()
+                        if (it.isSuccessful){
+                            requireContext().showToast("${it.body()?.status} menambahkan data")
+                            mainNavController.popBackStack()
+                        } else {
+                            requireContext().showToast(it.message())
+                        }
                     }
                 }
             }

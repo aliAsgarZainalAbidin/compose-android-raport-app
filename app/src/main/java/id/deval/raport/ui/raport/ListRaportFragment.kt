@@ -17,11 +17,11 @@ import org.greenrobot.eventbus.Subscribe
 
 class ListRaportFragment : BaseSkeletonFragment() {
 
-    private lateinit var _binding : FragmentListRaportBinding
+    private lateinit var _binding: FragmentListRaportBinding
     private val binding get() = _binding
     private var classId = ""
     private var mapelId = ""
-    private var mapelName =""
+    private var mapelName = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,34 +42,47 @@ class ListRaportFragment : BaseSkeletonFragment() {
         viewAsGuru()
     }
 
-    fun viewAsGuru(){
-        with(binding){
+    fun viewAsGuru() {
+        with(binding) {
             includeListraportContainer.mtvRvlayoutTitle.text = "Siswa"
             includeListraportContainer.mtvRvlayoutTitle.setTextColor(resources.getColor(R.color.white))
             includeListraportContainer.mtvRvlayoutAdd.invisible()
             includeListraportContainer.mtvRvlayoutViewmore.invisible()
 
-            kelasViewModel.getClassById(session.token.toString(), classId).observe(viewLifecycleOwner){
-                val rawList = it.data[0].siswaDetail
-                val listSiswa = arrayListOf<Siswa>()
-                rawList?.forEach { siswa->
-                    if (siswa!=null){
-                        listSiswa.add(siswa)
+            kelasViewModel.getClassById(session.token.toString(), classId)
+                .observe(viewLifecycleOwner) {
+                    if (it.isSuccessful) {
+                        val rawList = it.body()?.data!![0].siswaDetail
+                        val listSiswa = arrayListOf<Siswa>()
+                        rawList?.forEach { siswa ->
+                            if (siswa != null) {
+                                listSiswa.add(siswa)
+                            }
+                        }
+                        includeListraportContainer.rvRvlayoutContainer.apply {
+                            val adapter = RvAdapter<Siswa>(
+                                "siswa-raport",
+                                OperationsTypeRv.READ,
+                                mainNavController
+                            )
+                            adapter.setData(listSiswa)
+                            adapter.notifyDataSetChanged()
+                            this.adapter = adapter
+                            layoutManager = LinearLayoutManager(
+                                requireContext(),
+                                LinearLayoutManager.VERTICAL,
+                                false
+                            )
+                        }
+                    } else {
+                        requireContext().showToast(it.message())
                     }
                 }
-                includeListraportContainer.rvRvlayoutContainer.apply {
-                    val adapter = RvAdapter<Siswa>("siswa-raport", OperationsTypeRv.READ, mainNavController)
-                    adapter.setData(listSiswa)
-                    adapter.notifyDataSetChanged()
-                    this.adapter = adapter
-                    layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-                }
-            }
         }
     }
 
     @Subscribe
-    fun navigateToDetailRaportFragment(commonParams: CommonParams){
+    fun navigateToDetailRaportFragment(commonParams: CommonParams) {
         val bundle = bundleOf()
         bundle.putString(Constanta.MAPEL_ID, mapelId)
         bundle.putString(Constanta.CLASS_ID, classId)

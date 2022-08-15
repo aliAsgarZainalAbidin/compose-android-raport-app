@@ -1,11 +1,13 @@
 package id.deval.raport.ui.akun.siswa
 
+import android.app.DatePickerDialog
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.DatePicker
 import com.google.gson.Gson
 import id.deval.raport.R
 import id.deval.raport.databinding.FragmentAddOrangTuaBinding
@@ -21,6 +23,7 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
+import java.util.*
 import javax.inject.Inject
 
 class AddOrangTuaFragment : BaseSkeletonFragment() {
@@ -53,15 +56,33 @@ class AddOrangTuaFragment : BaseSkeletonFragment() {
                 isUpdateMode = true
                 accountViewModel.getAccountByUsername(session.token.toString(), username)
                     .observe(viewLifecycleOwner) {
-                        val account = it.data
-                        tietAddorangtuaNamalengkap.setText(account.name)
-                        tietAddorangtuaNisn.setText(account.username)
-                        tietAddorangtuaTanggalLahir.setText(account.tanggalLahir)
-                        tietAddorangtuaAlamat.setText(account.address)
-                        tietAddorangtuaEmail.setText(account.email)
-                        tietAddorangtuaHp.setText(account.phone)
-                        id = it.data.id.toString()
+                        if (it.isSuccessful) {
+                            val account = it?.body()?.data!!
+                            tietAddorangtuaNamalengkap.setText(account.name)
+                            tietAddorangtuaNisn.setText(account.username)
+                            tietAddorangtuaTanggalLahir.setText(account.tanggalLahir)
+                            tietAddorangtuaAlamat.setText(account.address)
+                            tietAddorangtuaEmail.setText(account.email)
+                            tietAddorangtuaHp.setText(account.phone)
+                            id = it?.body()?.data!!.id.toString()
+                        }
                     }
+            }
+
+            tietAddorangtuaTanggalLahir.setOnClickListener {
+                val calendar = Calendar.getInstance()
+                val year = calendar.get(Calendar.YEAR)
+                val month = calendar.get(Calendar.MONTH)
+                val day = calendar.get(Calendar.DAY_OF_WEEK)
+
+                val datePickerDialog =
+                    DatePickerDialog(requireContext(), object : DatePickerDialog.OnDateSetListener {
+                        override fun onDateSet(p0: DatePicker?, p1: Int, p2: Int, p3: Int) {
+                            tietAddorangtuaTanggalLahir.setText("$p3-$p2-$p1")
+                        }
+
+                    }, year, month, day)
+                datePickerDialog.show()
             }
 
             if (siswa != null) {
@@ -190,7 +211,7 @@ class AddOrangTuaFragment : BaseSkeletonFragment() {
 
                         accountViewModel.addTeacher(session.token.toString(), account)
                             .observe(viewLifecycleOwner) {
-                                if (it.status == "Success") {
+                                if (it.isSuccessful) {
                                     siswaViewModel.addSiswa(
                                         session.token.toString(),
                                         name,
@@ -212,18 +233,18 @@ class AddOrangTuaFragment : BaseSkeletonFragment() {
                                         photo
                                     )
                                         .observe(viewLifecycleOwner) {
-                                            if (it.status == "Success") {
+                                            if (it.isSuccessful) {
                                                 requireContext().showToast("Berhasil registrasi Siswa & Orang Tua")
                                                 mainNavController.popBackStack(
                                                     R.id.addSiswaFragment,
                                                     true
                                                 )
                                             } else {
-                                                requireContext().showToast(it.message.toString())
+                                                requireContext().showToast(it.message())
                                             }
                                         }
                                 } else {
-                                    requireContext().showToast(it.message.toString())
+                                    requireContext().showToast(it.message())
                                 }
                             }
                     } else {
@@ -238,8 +259,12 @@ class AddOrangTuaFragment : BaseSkeletonFragment() {
                             )
                         accountViewModel.updateTeacher(session.token.toString(), id, accountUpdate)
                             .observe(viewLifecycleOwner) {
-                                requireContext().showToast("${it.status}, Berhasil memperbaharui data OrangTua")
-                                mainNavController.popBackStack(R.id.addSiswaFragment, true)
+                                if (it.isSuccessful) {
+                                    requireContext().showToast("${it.body()?.status}, Berhasil memperbaharui data OrangTua")
+                                    mainNavController.popBackStack(R.id.addSiswaFragment, true)
+                                } else {
+                                    requireContext().showToast(it.message())
+                                }
                             }
                     }
                 }

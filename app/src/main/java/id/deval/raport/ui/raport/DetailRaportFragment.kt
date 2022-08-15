@@ -46,8 +46,8 @@ class DetailRaportFragment : BaseSkeletonFragment() {
 
             siswaViewModel.getSiswaById(session.token.toString(), siswaId.toString())
                 .observe(viewLifecycleOwner) {
-                    includeDetailraportContainer.mtvRvitemName.text = it.data.name
-                    includeDetailraportContainer.mtvRvitemNis.text = it.data.nis
+                    includeDetailraportContainer.mtvRvitemName.text = it.body()?.data!!.name
+                    includeDetailraportContainer.mtvRvitemNis.text = it.body()?.data!!.nis
                 }
 
             Log.d(TAG, "onViewCreated: $classId, $mapelId, $siswaId")
@@ -57,44 +57,48 @@ class DetailRaportFragment : BaseSkeletonFragment() {
                 mapelId.toString(),
                 siswaId.toString()
             ).observe(viewLifecycleOwner) {
-                val raport = it.data
-                var nilaiSikap= "0"
-                var nilaiUts= "0"
-                var nilaiUas= "0"
+                if (it.isSuccessful){
+                    val raport = it.body()?.data!!
+                    var nilaiSikap= "0"
+                    var nilaiUts= "0"
+                    var nilaiUas= "0"
 
-                if (raport.nilaiSikap.toString() != "null") {
-                    nilaiSikap = raport.nilaiSikap.toString()
-                }
-                if (raport.nilaiUTS.toString() != "null") {
-                    nilaiUts = raport.nilaiUTS.toString()
-                }
-                if (raport.nilaiUAS.toString() != "null") {
-                    nilaiUas = raport.nilaiUAS.toString()
-                }
-                tietDetailraportSikap.setText(nilaiSikap)
-                tilDetailraportKeterampilan.isEnabled = false
-                tietDetailraportUts.setText(nilaiUts)
-                tietDetailraportUas.setText(nilaiUas)
-                tietDetailraportDesc.setText(raport.deskripsi)
-
-                val listTugas = arrayListOf<Tugas>()
-                var nilaiKeterampilan = 0
-                it.data.tugasDetail?.forEach { tugas ->
-                    if (tugas!=null){
-                        listTugasId.add(tugas.id)
-                        listTugas.add(tugas)
-                        nilaiKeterampilan += tugas.nilai!!
+                    if (raport.nilaiSikap.toString() != "null") {
+                        nilaiSikap = raport.nilaiSikap.toString()
                     }
-                }
-                if (listTugas.size>0){
-                    nilaiKeterampilan = nilaiKeterampilan.div(listTugas.size)
-                }
-                tietDetailraportKeterampilan.setText(nilaiKeterampilan.toString())
+                    if (raport.nilaiUTS.toString() != "null") {
+                        nilaiUts = raport.nilaiUTS.toString()
+                    }
+                    if (raport.nilaiUAS.toString() != "null") {
+                        nilaiUas = raport.nilaiUAS.toString()
+                    }
+                    tietDetailraportSikap.setText(nilaiSikap)
+                    tilDetailraportKeterampilan.isEnabled = false
+                    tietDetailraportUts.setText(nilaiUts)
+                    tietDetailraportUas.setText(nilaiUas)
+                    tietDetailraportDesc.setText(raport.deskripsi)
 
-                idRaport = it.data.id.toString()
-                when (role) {
-                    "guru" -> viewAsGuru(listTugas, idRaport)
-                    "orangtua" -> viewAsOrangTua(listTugas)
+                    val listTugas = arrayListOf<Tugas>()
+                    var nilaiKeterampilan = 0
+                    it.body()?.data!!.tugasDetail?.forEach { tugas ->
+                        if (tugas!=null){
+                            listTugasId.add(tugas.id)
+                            listTugas.add(tugas)
+                            nilaiKeterampilan += tugas.nilai!!
+                        }
+                    }
+                    if (listTugas.size>0){
+                        nilaiKeterampilan = nilaiKeterampilan.div(listTugas.size)
+                    }
+                    tietDetailraportKeterampilan.setText(nilaiKeterampilan.toString())
+
+                    idRaport = it.body()?.data!!.id.toString()
+                    when (role) {
+                        "guru" -> viewAsGuru(listTugas, idRaport)
+                        "orangtua" -> viewAsOrangTua(listTugas)
+                    }
+                } else {
+                    requireContext().showToast(it.message())
                 }
             }
 
@@ -109,7 +113,11 @@ class DetailRaportFragment : BaseSkeletonFragment() {
                     listTugasId, nilaiSikap.toInt(), uts.toInt(), desc, uas.toInt(), classId, siswaId, mapelId
                 )
                 raportViewModel.updateRaport(session.token.toString(), raport).observe(viewLifecycleOwner){
-                    requireContext().showToast("${it.status} men-update data raport")
+                    if (it.isSuccessful){
+                        requireContext().showToast("${it.body()?.status} men-update data raport")
+                    } else {
+                        requireContext().showToast(it.message())
+                    }
                 }
             }
         }

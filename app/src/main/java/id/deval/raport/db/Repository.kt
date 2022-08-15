@@ -17,27 +17,27 @@ class Repository @Inject constructor(
     val database: Database,
     val apiInterface: ApiInterface
 ) {
-    suspend fun login(account: Account): GlobalWrapper<Account> {
+    suspend fun login(account: Account): Response<GlobalWrapper<Account>> {
         return apiInterface.login(account)
     }
 
-    suspend fun getAllTeacher(token: String): GlobalWrapper<ArrayList<Account>> {
+    suspend fun getAllTeacher(token: String): Response<GlobalWrapper<ArrayList<Account>>> {
         return apiInterface.getAccount("Bearer $token", "Guru")
     }
 
-    suspend fun getAllSiswa(token: String): GlobalWrapper<ArrayList<Siswa>> {
+    suspend fun getAllSiswa(token: String): Response<GlobalWrapper<ArrayList<Siswa>>> {
         return apiInterface.getAllSiswa("Bearer $token")
     }
 
-    suspend fun getSiswa(token: String, id: String): GlobalWrapper<SiswaUpdate> {
+    suspend fun getSiswa(token: String, id: String): Response<GlobalWrapper<SiswaUpdate>> {
         return apiInterface.getSiswa("Bearer $token", id)
     }
 
-    suspend fun getSiswaById(token: String, id: String): GlobalWrapper<Siswa> {
+    suspend fun getSiswaById(token: String, id: String): Response<GlobalWrapper<Siswa>> {
         return apiInterface.getSiswaById("Bearer $token", id)
     }
 
-    suspend fun getSiswaByNIS(token: String, id: String): GlobalWrapper<SiswaByNIS> {
+    suspend fun getSiswaByNIS(token: String, id: String): Response<GlobalWrapper<SiswaByNIS>> {
         return apiInterface.getSiswaByNIS("Bearer $token", id)
     }
 
@@ -60,7 +60,7 @@ class Repository @Inject constructor(
         alamatWali: MultipartBody.Part,
         phone: MultipartBody.Part,
         photo: MultipartBody.Part
-    ): GlobalWrapper<Siswa> {
+    ): Response<GlobalWrapper<Siswa>> {
         return apiInterface.addSiswa(
             "Bearer $token",
             name,
@@ -83,7 +83,7 @@ class Repository @Inject constructor(
         )
     }
 
-    suspend fun updateSiswa(token: String, id: String, siswa: Siswa): GlobalWrapper<Siswa> {
+    suspend fun updateSiswa(token: String, id: String, siswa: Siswa): Response<GlobalWrapper<Siswa>> {
         return apiInterface.updateSiswa("Bearer $token", id, siswa)
     }
 
@@ -95,11 +95,11 @@ class Repository @Inject constructor(
         token: String,
         id: String,
         photo: MultipartBody.Part
-    ): GlobalWrapper<Siswa> {
+    ): Response<GlobalWrapper<Siswa>> {
         return apiInterface.uploadPhoto("Bearer $token", id, photo)
     }
 
-    suspend fun addAccountTeacher(token: String, account: Account): GlobalWrapper<Account> {
+    suspend fun addAccountTeacher(token: String, account: Account): Response<GlobalWrapper<Account>> {
         return apiInterface.addAccountTeacher("Bearer $token", account)
     }
 
@@ -107,11 +107,11 @@ class Repository @Inject constructor(
         token: String,
         id: String,
         account: AccountUpdate
-    ): GlobalWrapper<Account> {
+    ): Response<GlobalWrapper<Account>> {
         return apiInterface.updateAccountTeacher("Bearer $token", id, account)
     }
 
-    suspend fun getTeacherById(token: String, id: String): GlobalWrapper<Account> {
+    suspend fun getTeacherById(token: String, id: String): Response<GlobalWrapper<Account>> {
         return apiInterface.getTeacherById("Bearer $token", id)
     }
 
@@ -119,7 +119,7 @@ class Repository @Inject constructor(
         return apiInterface.deleteTeacherById("Bearer $token", id)
     }
 
-    suspend fun getAccountByUsername(token: String, username: String): GlobalWrapper<Account> {
+    suspend fun getAccountByUsername(token: String, username: String): Response<GlobalWrapper<Account>> {
         return apiInterface.getAccountByUsername("Bearer $token", username)
     }
 
@@ -127,11 +127,11 @@ class Repository @Inject constructor(
         return apiInterface.deleteAccountByUsername("Bearer $token", username)
     }
 
-    suspend fun getAllClass(token: String): GlobalWrapper<ArrayList<Kelas>> {
+    suspend fun getAllClass(token: String): Response<GlobalWrapper<ArrayList<Kelas>>> {
         return apiInterface.getAllClass("Bearer $token")
     }
 
-    suspend fun addClass(token: String, kelas: Kelas): GlobalWrapper<Kelas> {
+    suspend fun addClass(token: String, kelas: Kelas): Response<GlobalWrapper<Kelas>> {
         return apiInterface.addClass("Bearer $token", kelas)
     }
 
@@ -142,21 +142,21 @@ class Repository @Inject constructor(
     suspend fun getClassById(
         token: String,
         id: String
-    ): GlobalWrapper<ArrayList<ResponseDetailKelas>> {
+    ): Response<GlobalWrapper<ArrayList<ResponseDetailKelas>>> {
         return apiInterface.getClassById("Bearer $token", id)
     }
 
     suspend fun getClassByIdGuru(
         token: String,
         id: String
-    ): GlobalWrapper<ResponseDetailKelas> {
+    ): Response<GlobalWrapper<ResponseDetailKelas>> {
         return apiInterface.getClassByIdGuru("Bearer $token", id)
     }
 
     suspend fun getClassByNis(
         token: String,
         id: String
-    ): GlobalWrapper<ResponseDetailKelas> {
+    ): Response<GlobalWrapper<ResponseDetailKelas>> {
         return apiInterface.getClassByNis("Bearer $token", id)
     }
 
@@ -164,19 +164,35 @@ class Repository @Inject constructor(
         token: String,
         id: String,
         kelas: KelasUpdate
-    ): GlobalWrapper<Kelas> {
+    ): Response<GlobalWrapper<Kelas>> {
         return apiInterface.updateClassById("Bearer $token", id, kelas)
     }
 
-    suspend fun getAllMapel(token: String): GlobalWrapper<ArrayList<Mapel>> {
+    suspend fun updateMapelInClassById(
+        token: String,
+        id: String,
+        mapel: UpdateMapel
+    ): Response<GlobalWrapper<Kelas>> {
+        return apiInterface.updateMapelInClassById("Bearer $token", id, mapel)
+    }
+
+    suspend fun updateSiswaInClassById(
+        token: String,
+        id: String,
+        siswa: UpdateSiswa
+    ): Response<GlobalWrapper<Kelas>> {
+        return apiInterface.updateSiswaInClassById("Bearer $token", id, siswa)
+    }
+
+    suspend fun getAllMapel(token: String): Response<GlobalWrapper<ArrayList<Mapel>>> {
         return apiInterface.getAllMapel("Bearer $token")
     }
 
-    suspend fun addMapel(token: String, mapel: MapelAdd): GlobalWrapper<Mapel> {
+    suspend fun addMapel(token: String, mapel: MapelAdd): Response<GlobalWrapper<Mapel>> {
         return apiInterface.addMapel("Bearer $token", mapel)
     }
 
-    suspend fun getMapelById(token: String, id:String): GlobalWrapper<Mapel> {
+    suspend fun getMapelById(token: String, id:String): Response<GlobalWrapper<Mapel>> {
         return apiInterface.getMapelById("Bearer $token", id)
     }
 
@@ -184,7 +200,7 @@ class Repository @Inject constructor(
         return apiInterface.deleteMapelById("Bearer $token", id)
     }
 
-    suspend fun updateMapelById(token: String, id:String, mapel: MapelAdd): GlobalWrapper<Mapel> {
+    suspend fun updateMapelById(token: String, id:String, mapel: MapelAdd): Response<GlobalWrapper<Mapel>> {
         return apiInterface.updateMapelById("Bearer $token", id, mapel)
     }
 
@@ -192,51 +208,51 @@ class Repository @Inject constructor(
         return apiInterface.addAttendance("Bearer $token", attendance)
     }
 
-    suspend fun getAttendance(token:String, classId:String, mapelId:String): GlobalWrapper<ArrayList<Attendance>>{
+    suspend fun getAttendance(token:String, classId:String, mapelId:String): Response<GlobalWrapper<ArrayList<Attendance>>>{
         return apiInterface.getAttendance("Bearer $token", classId, mapelId)
     }
 
-    suspend fun getAttendanceBySiswaId(token:String, siswaId:String, mapelId:String): GlobalWrapper<ArrayList<Attendance>>{
+    suspend fun getAttendanceBySiswaId(token:String, siswaId:String, mapelId:String): Response<GlobalWrapper<ArrayList<Attendance>>>{
         return apiInterface.getAttendanceBySiswaId("Bearer $token", siswaId, mapelId)
     }
 
-    suspend fun getAttendanceById(token:String, id:String): GlobalWrapper<ArrayList<ResponseAttendance>>{
+    suspend fun getAttendanceById(token:String, id:String): Response<GlobalWrapper<ArrayList<ResponseAttendance>>>{
         return apiInterface.getAttendanceById("Bearer $token", id)
     }
 
-    suspend fun updateAttendanceById(token:String, id:String, attendance: AttendanceAdd): GlobalWrapper<ResponseAttendance>{
+    suspend fun updateAttendanceById(token:String, id:String, attendance: AttendanceAdd): Response<GlobalWrapper<ResponseAttendance>>{
         return apiInterface.updateAttendanceById("Bearer $token", id, attendance)
     }
 
-    suspend fun getSpesifikRaport(token:String, classId:String, mapelId: String, siswaId:String) : GlobalWrapper<Raport>{
+    suspend fun getSpesifikRaport(token:String, classId:String, mapelId: String, siswaId:String) : Response<GlobalWrapper<Raport>>{
         return apiInterface.getSpesifikRaport("Bearer $token", classId, mapelId, siswaId)
     }
 
-    suspend fun addTugas(token:String, tugas: TugasAdd) : GlobalWrapper<Raport>{
+    suspend fun addTugas(token:String, tugas: TugasAdd) : Response<GlobalWrapper<Raport>>{
         return apiInterface.addTugas("Bearer $token", tugas)
     }
 
-    suspend fun updateRaport(token:String,raportAdd: RaportAdd) : GlobalWrapper<Raport>{
+    suspend fun updateRaport(token:String,raportAdd: RaportAdd) : Response<GlobalWrapper<Raport>>{
         return apiInterface.updateRaport("Bearer $token", raportAdd)
     }
 
-    suspend fun updateTugasById(token: String, id:String, tugas:TugasAdd): GlobalWrapper<Tugas>{
+    suspend fun updateTugasById(token: String, id:String, tugas:TugasAdd): Response<GlobalWrapper<Tugas>>{
         return apiInterface.updateTugasById("Bearer $token", id, tugas)
     }
 
-    suspend fun getTugasById(token: String, id:String): GlobalWrapper<Tugas>{
+    suspend fun getTugasById(token: String, id:String): Response<GlobalWrapper<Tugas>>{
         return apiInterface.getTugasById("Bearer $token", id)
     }
 
-    suspend fun getPesanById(token: String, id:String): GlobalWrapper<Pesan>{
+    suspend fun getPesanById(token: String, id:String): Response<GlobalWrapper<Pesan>>{
         return apiInterface.getPesanById("Bearer $token", id)
     }
 
-    suspend fun addGrowth(token: String, growthAdd: GrowthAdd): GlobalWrapper<Pesan>{
+    suspend fun addGrowth(token: String, growthAdd: GrowthAdd): Response<GlobalWrapper<Pesan>>{
         return apiInterface.addGrowth("Bearer $token", growthAdd)
     }
 
-    suspend fun addNote(token: String, noteAdd: NoteAdd): GlobalWrapper<Pesan>{
+    suspend fun addNote(token: String, noteAdd: NoteAdd): Response<GlobalWrapper<Pesan>>{
         return apiInterface.addNote("Bearer $token",noteAdd)
     }
 

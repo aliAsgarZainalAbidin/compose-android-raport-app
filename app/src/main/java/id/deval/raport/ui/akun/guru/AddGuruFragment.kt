@@ -39,13 +39,15 @@ class AddGuruFragment : BaseSkeletonFragment() {
                 Log.d("TAG", "onViewCreated: $id")
                 accountViewModel.getTeacherById(session.token.toString(), id)
                     .observe(viewLifecycleOwner) {
-                        val data = it.data
-                        tietAddguruNamalengkap.setText(data.name)
-                        tietAddguruHp.setText(data.phone)
-                        tietAddguruEmail.setText(data.email)
-                        tietAddguruAlamat.setText(data.address)
-                        tietAddguruPassword.setText("")
-                        tietAddguruNik.setText(data.username)
+                        if (it.isSuccessful){
+                            val data = it.body()?.data!!
+                            tietAddguruNamalengkap.setText(data.name)
+                            tietAddguruHp.setText(data.phone)
+                            tietAddguruEmail.setText(data.email)
+                            tietAddguruAlamat.setText(data.address)
+                            tietAddguruPassword.setText("")
+                            tietAddguruNik.setText(data.username)
+                        }
                     }
             }
 
@@ -113,15 +115,23 @@ class AddGuruFragment : BaseSkeletonFragment() {
                     if (id.isEmpty()) {
                         accountViewModel.addTeacher(session.token.toString(), account)
                             .observe(viewLifecycleOwner) {
-                                requireContext().showToast("${it.status}, Berhasil menambahkan data Guru")
-                                mainNavController.popBackStack()
+                                if (it.isSuccessful){
+                                    requireContext().showToast("${it.body()?.status}, Berhasil menambahkan data Guru")
+                                    mainNavController.popBackStack()
+                                } else {
+                                    requireContext().showToast(it.message())
+                                }
                             }
                     } else {
                         val accountUpdate = AccountUpdate(password, alamat, nomorHp, namaLengkap, email)
                         accountViewModel.updateTeacher(session.token.toString(), id, accountUpdate)
                             .observe(viewLifecycleOwner) {
-                                requireContext().showToast("${it.status}, Berhasil memperbaharui data Guru")
-                                mainNavController.popBackStack()
+                                if (it.isSuccessful){
+                                    requireContext().showToast("${it.body()?.status}, Berhasil memperbaharui data Guru")
+                                    mainNavController.popBackStack()
+                                } else {
+                                    requireContext().showToast(it.message())
+                                }
                             }
                     }
                 }

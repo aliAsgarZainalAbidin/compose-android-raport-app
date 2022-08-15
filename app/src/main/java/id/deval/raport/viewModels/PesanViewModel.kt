@@ -11,17 +11,18 @@ import id.deval.raport.db.models.request.NoteAdd
 import id.deval.raport.utils.wrappers.GlobalWrapper
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import retrofit2.Response
 import javax.inject.Inject
 
 @HiltViewModel
 class PesanViewModel @Inject constructor(
     private val repository: Repository
 ) : ViewModel() {
-    private lateinit var mutableGetPesanById : MutableLiveData<GlobalWrapper<Pesan>>
-    private lateinit var mutableAddGrowth : MutableLiveData<GlobalWrapper<Pesan>>
-    private lateinit var mutableAddNote : MutableLiveData<GlobalWrapper<Pesan>>
+    private lateinit var mutableGetPesanById : MutableLiveData<Response<GlobalWrapper<Pesan>>>
+    private lateinit var mutableAddGrowth : MutableLiveData<Response<GlobalWrapper<Pesan>>>
+    private lateinit var mutableAddNote : MutableLiveData<Response<GlobalWrapper<Pesan>>>
 
-    fun getPesanById(token:String, id:String): LiveData<GlobalWrapper<Pesan>>{
+    fun getPesanById(token:String, id:String): LiveData<Response<GlobalWrapper<Pesan>>>{
         mutableGetPesanById = MutableLiveData()
         GlobalScope.launch {
             val response = repository.getPesanById(token, id)
@@ -29,7 +30,7 @@ class PesanViewModel @Inject constructor(
         }
         return mutableGetPesanById
     }
-    fun addNote(token:String, noteAdd: NoteAdd): LiveData<GlobalWrapper<Pesan>>{
+    fun addNote(token:String, noteAdd: NoteAdd): LiveData<Response<GlobalWrapper<Pesan>>>{
         mutableAddNote = MutableLiveData()
         GlobalScope.launch {
             val response = repository.addNote(token, noteAdd)
@@ -37,7 +38,7 @@ class PesanViewModel @Inject constructor(
         }
         return mutableAddNote
     }
-    fun addGrowth(token:String, growthAdd: GrowthAdd): LiveData<GlobalWrapper<Pesan>>{
+    fun addGrowth(token:String, growthAdd: GrowthAdd): LiveData<Response<GlobalWrapper<Pesan>>>{
         mutableAddGrowth = MutableLiveData()
         GlobalScope.launch {
             val response = repository.addGrowth(token, growthAdd)

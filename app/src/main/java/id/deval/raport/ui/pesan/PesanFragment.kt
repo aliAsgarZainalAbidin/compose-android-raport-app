@@ -11,10 +11,7 @@ import id.deval.raport.databinding.FragmentPesanBinding
 import id.deval.raport.db.models.Mapel
 import id.deval.raport.db.models.Siswa
 import id.deval.raport.ui.adapter.RvAdapter
-import id.deval.raport.utils.BaseSkeletonFragment
-import id.deval.raport.utils.DummyData
-import id.deval.raport.utils.OperationsTypeRv
-import id.deval.raport.utils.invisible
+import id.deval.raport.utils.*
 
 class PesanFragment : BaseSkeletonFragment() {
 
@@ -44,22 +41,34 @@ class PesanFragment : BaseSkeletonFragment() {
 
             kelasViewModel.getClassByIdGuru(session.token.toString(), session.id.toString())
                 .observe(viewLifecycleOwner) {
-                    mtvPesanMapel.text = it.data.mapelDetail?.size.toString()
-                    it.data.siswaDetail?.forEach { siswa ->
-                        if (siswa!=null){
-                            dataSiswa.add(siswa)
+                    if (it.isSuccessful) {
+                        mtvPesanMapel.text = it.body()?.data!!.mapelDetail?.size.toString()
+                        it.body()?.data!!.siswaDetail?.forEach { siswa ->
+                            if (siswa != null) {
+                                dataSiswa.add(siswa)
+                            }
                         }
-                    }
-                    mtvPesanSiswa.text = dataSiswa.size.toString()
+                        mtvPesanSiswa.text = dataSiswa.size.toString()
 
-                    includeRvSiswa.rvRvlayoutContainer.apply {
-                        val adapter =
-                            RvAdapter<Siswa>("siswa-pesan", OperationsTypeRv.READ, mainNavController)
-                        adapter.setData(dataSiswa)
-                        adapter.notifyDataSetChanged()
-                        this.adapter = adapter
-                        layoutManager =
-                            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+                        includeRvSiswa.rvRvlayoutContainer.apply {
+                            val adapter =
+                                RvAdapter<Siswa>(
+                                    "siswa-pesan",
+                                    OperationsTypeRv.READ,
+                                    mainNavController
+                                )
+                            adapter.setData(dataSiswa)
+                            adapter.notifyDataSetChanged()
+                            this.adapter = adapter
+                            layoutManager =
+                                LinearLayoutManager(
+                                    requireContext(),
+                                    LinearLayoutManager.VERTICAL,
+                                    false
+                                )
+                        }
+                    } else {
+                        requireContext().showToast(it.message())
                     }
                 }
         }

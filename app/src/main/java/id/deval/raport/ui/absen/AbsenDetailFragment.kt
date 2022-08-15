@@ -76,7 +76,11 @@ class AbsenDetailFragment : BaseSkeletonFragment() {
         updateAttendance.attendance = data
         absenViewModel.updateAttendanceById(session.token.toString(), id, updateAttendance)
             .observe(viewLifecycleOwner) {
-                requireContext().showToast("${it.status} men-update data")
+                if (it.isSuccessful){
+                    requireContext().showToast("${it.body()?.status} men-update data")
+                } else {
+                    requireActivity().showToast(it.message())
+                }
             }
     }
 
@@ -84,42 +88,46 @@ class AbsenDetailFragment : BaseSkeletonFragment() {
         with(binding) {
             absenViewModel.getAttendanceById(session.token.toString(), id)
                 .observe(viewLifecycleOwner) {
-                    updateAttendance.classId = it.data[0].classId
-                    updateAttendance.mapelId = it.data[0].mapelId
-                    updateAttendance.tanggalAbsen = it.data[0].tanggalAbsen
+                    if (it.isSuccessful){
+                        updateAttendance.classId = it.body()!!.data[0].classId
+                        updateAttendance.mapelId = it.body()!!.data[0].mapelId
+                        updateAttendance.tanggalAbsen = it.body()!!.data[0].tanggalAbsen
 
-                    it.data[0].detailSiswa?.forEachIndexed { i, siswa ->
-                        val detailSiswaItem = DetailSiswaItem(
-                            siswa?.name,
-                            siswa?.nis,
-                            it.data[0].attendance?.get(i)?.kehadiran,
-                            siswa?.id
-                        )
-                        Log.d(TAG, "refreshRecyclerViewAbsen: DETAIL ${detailSiswaItem.id} ${detailSiswaItem.kehadiran}")
-                        arrayListDetailSiswaItem.add(detailSiswaItem)
-                    }
-                    it.data[0].attendance?.forEachIndexed { index, attendance ->
-                        val absen = Absen(
-                            attendance?.kehadiran,
-                            attendance?.siswaId ?: "",
-                            it.data[0].detailSiswa?.get(index)?.nis
-                        )
-                        Log.d(TAG, "refreshRecyclerViewAbsen: ATTENDANCE ${absen.siswaId} ${absen.kehadiran}")
-                        absenViewModel.insertLocalAbsen(absen)
-                    }
-                    Log.d("TAG", "onViewCreated: $arrayListDetailSiswaItem")
-
-                    mtvDetailabsenAbsen.text = arrayListDetailSiswaItem.size.toString()
-                    rvDetailabsenDate.apply {
-                        val adapter = RvAbsenSiswaAdapter(arrayListDetailSiswaItem)
-                        adapter.notifyDataSetChanged()
-                        this.adapter = adapter
-                        layoutManager =
-                            LinearLayoutManager(
-                                requireContext(),
-                                LinearLayoutManager.VERTICAL,
-                                false
+                        it.body()!!.data[0].detailSiswa?.forEachIndexed { i, siswa ->
+                            val detailSiswaItem = DetailSiswaItem(
+                                siswa?.name,
+                                siswa?.nis,
+                                it.body()!!.data[0].attendance?.get(i)?.kehadiran,
+                                siswa?.id
                             )
+                            Log.d(TAG, "refreshRecyclerViewAbsen: DETAIL ${detailSiswaItem.id} ${detailSiswaItem.kehadiran}")
+                            arrayListDetailSiswaItem.add(detailSiswaItem)
+                        }
+                        it.body()!!.data[0].attendance?.forEachIndexed { index, attendance ->
+                            val absen = Absen(
+                                attendance?.kehadiran,
+                                attendance?.siswaId ?: "",
+                                it.body()!!.data[0].detailSiswa?.get(index)?.nis
+                            )
+                            Log.d(TAG, "refreshRecyclerViewAbsen: ATTENDANCE ${absen.siswaId} ${absen.kehadiran}")
+                            absenViewModel.insertLocalAbsen(absen)
+                        }
+                        Log.d("TAG", "onViewCreated: $arrayListDetailSiswaItem")
+
+                        mtvDetailabsenAbsen.text = arrayListDetailSiswaItem.size.toString()
+                        rvDetailabsenDate.apply {
+                            val adapter = RvAbsenSiswaAdapter(arrayListDetailSiswaItem)
+                            adapter.notifyDataSetChanged()
+                            this.adapter = adapter
+                            layoutManager =
+                                LinearLayoutManager(
+                                    requireContext(),
+                                    LinearLayoutManager.VERTICAL,
+                                    false
+                                )
+                        }
+                    } else {
+                        requireActivity().showToast(it.message())
                     }
                 }
         }
