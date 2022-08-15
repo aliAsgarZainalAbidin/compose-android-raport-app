@@ -34,8 +34,9 @@ class LoginFragment : BaseSkeletonFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         with(binding) {
-            ivLoginLogo.setOnClickListener {
-                session.logout()
+
+            if(!session.token.isNullOrEmpty()){
+                mainNavController.navigate(R.id.action_loginFragment_to_baseFragment)
             }
 
             mbLoginLogin.setOnClickListener {

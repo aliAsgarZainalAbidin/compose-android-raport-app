@@ -18,7 +18,7 @@ class LoginViewModel @Inject constructor(
 ) : ViewModel() {
 
     private lateinit var mutableUserLogin : MutableLiveData<Response<GlobalWrapper<Account>>>
-    private lateinit var mutableUserLogout : MutableLiveData<Response<Account>>
+    private lateinit var mutableUserLogout : MutableLiveData<Response<Unit>>
     var token : String? = null
 
     fun login(account: Account): LiveData<Response<GlobalWrapper<Account>>> {
@@ -29,5 +29,14 @@ class LoginViewModel @Inject constructor(
             mutableUserLogin.postValue(response)
         }
         return mutableUserLogin
+    }
+
+    fun logout(): LiveData<Response<Unit>>{
+        mutableUserLogout = MutableLiveData()
+        GlobalScope.launch {
+            val response = repository.logout()
+            mutableUserLogout.postValue(response)
+        }
+        return mutableUserLogout
     }
 }

@@ -347,7 +347,14 @@ class AddSiswaFragment : BaseSkeletonFragment() {
             mtvAddsiswaName.text = "Profile Siswa"
             mbAddsiswaLogout.show()
             mbAddsiswaLogout.setOnClickListener {
-                session.logout()
+                loginViewModel.logout().observe(viewLifecycleOwner){
+                    if (it.isSuccessful){
+                        session.logout()
+                        mainNavController.navigate(R.id.action_addSiswaFragment_to_loginFragment)
+                    } else {
+                        requireContext().showToast(it.message())
+                    }
+                }
             }
 
             mbAddsiswaSimpan.hide()

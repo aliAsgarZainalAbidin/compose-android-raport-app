@@ -318,4 +318,7 @@ interface ApiInterface {
         @Header("Authorization") token: String,
         @Body noteAdd: NoteAdd
     ) : Response<GlobalWrapper<Pesan>>
+
+    @POST("account/logout")
+    suspend fun logout() : Response<Unit>
 }

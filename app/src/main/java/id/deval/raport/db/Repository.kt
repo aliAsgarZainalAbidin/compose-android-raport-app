@@ -20,6 +20,9 @@ class Repository @Inject constructor(
     suspend fun login(account: Account): Response<GlobalWrapper<Account>> {
         return apiInterface.login(account)
     }
+    suspend fun logout(): Response<Unit> {
+        return apiInterface.logout()
+    }
 
     suspend fun getAllTeacher(token: String): Response<GlobalWrapper<ArrayList<Account>>> {
         return apiInterface.getAccount("Bearer $token", "Guru")

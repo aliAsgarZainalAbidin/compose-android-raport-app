@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import dagger.hilt.android.AndroidEntryPoint
+import id.deval.raport.R
 import id.deval.raport.db.Session
 import id.deval.raport.db.event.CommonParams
 import id.deval.raport.viewModels.*

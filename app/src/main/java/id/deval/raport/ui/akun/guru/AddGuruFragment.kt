@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import id.deval.raport.R
 import id.deval.raport.databinding.FragmentAddGuruBinding
 import id.deval.raport.db.models.Account
 import id.deval.raport.db.models.request.AccountUpdate
@@ -60,7 +61,14 @@ class AddGuruFragment : BaseSkeletonFragment() {
                 mbAddguruSimpan.hide()
                 mbAddguruLogout.show()
                 mbAddguruLogout.setOnClickListener {
-                    session.logout()
+                    loginViewModel.logout().observe(viewLifecycleOwner){
+                        if (it.isSuccessful){
+                            session.logout()
+                            mainNavController.navigate(R.id.action_addGuruFragment_to_loginFragment)
+                        } else {
+                            requireContext().showToast(it.message())
+                        }
+                    }
                 }
             }
             ivAddguruBack.setOnClickListener {
