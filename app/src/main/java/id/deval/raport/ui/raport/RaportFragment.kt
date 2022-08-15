@@ -40,7 +40,7 @@ class RaportFragment : BaseSkeletonFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         dataMapel = arrayListOf()
-        dataSiswa = DummyData().setDummyDataSiswa()
+        dataSiswa = arrayListOf()
         role = arguments?.getString(Constanta.ROLE).toString()
 
         with(binding){

@@ -59,9 +59,6 @@ class LoginFragment : BaseSkeletonFragment() {
                 }
 
                 if (isValid) {
-//                    val bundle = bundleOf()
-//                    bundle.putString(Constanta.USERNAME, username)
-//                    mainNavController.navigate(R.id.action_loginFragment_to_baseFragment, bundle)
                     val account = Account(username = username, password = password)
                     loginViewModel.login(account).observe(viewLifecycleOwner){
                         if (it.isSuccessful){
