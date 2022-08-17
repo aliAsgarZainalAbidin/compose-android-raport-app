@@ -54,7 +54,7 @@ class AkunFragment : BaseSkeletonFragment() {
                         }
 
                         mtvAkunGuru.text = it.body()?.result.toString()
-                        if (it.body()?.data!!.size <= 0){
+                        if (it.body()?.data!!.size <= 2){
                             includeRvGuru.mtvRvlayoutViewmore.invisible()
                             includeRvGuru.mtvRvlayoutAdd.show()
                             includeRvGuru.mtvRvlayoutAdd.text = "Tambah Guru"

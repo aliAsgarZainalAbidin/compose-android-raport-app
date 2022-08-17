@@ -78,10 +78,11 @@ class AddKelasFragment : BaseSkeletonFragment() {
                 kelasViewModel.getClassById(session.token.toString(), id)
                     .observe(viewLifecycleOwner) {
                         if (it.isSuccessful) {
-                            tietAddkelasNama.setText(it.body()?.data!![0].name)
-                            tietAddkelasSemester.setText(it.body()?.data!![0].semester.toString())
-                            tietAddkelasTahunajaran.setText(it.body()?.data!![0].tahunAjaran)
-                            val guru = it.body()?.data!![0].detailGuru?.get(0)
+                            val dataGuru = it.body()?.data?.getOrNull(0)
+                            tietAddkelasNama.setText(dataGuru?.name)
+                            tietAddkelasSemester.setText(dataGuru?.semester.toString())
+                            tietAddkelasTahunajaran.setText(dataGuru?.tahunAjaran)
+                            val guru = dataGuru?.detailGuru?.getOrNull(0)
                             if (guru != null) {
                                 val macGuru = "${guru.name}/${guru.username}"
                                 tietAddkelasGuru.setText(macGuru, false)
