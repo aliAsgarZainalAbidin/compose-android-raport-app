@@ -13,6 +13,7 @@ import id.deval.raport.db.models.Growth
 import id.deval.raport.db.models.request.GrowthAdd
 import id.deval.raport.utils.BaseSkeletonFragment
 import id.deval.raport.utils.Constanta
+import id.deval.raport.utils.hideError
 import id.deval.raport.utils.showToast
 import java.text.SimpleDateFormat
 import java.util.*
@@ -41,6 +42,10 @@ class AddGrowthFragment : BaseSkeletonFragment() {
             }
 
             Log.d(TAG, "onViewCreated: PESAN ID $pesanId")
+            tietAddgrowthTinggi.hideError()
+            tietAddgrowthBerat.hideError()
+            tietAddgrowthBmi.hideError()
+            tietAddgrowthKet.hideError()
 
             mbAddgrowthSimpan.setOnClickListener {
                 val tinggi = tietAddgrowthTinggi.text.toString()

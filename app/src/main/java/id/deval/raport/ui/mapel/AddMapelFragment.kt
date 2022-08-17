@@ -13,6 +13,7 @@ import id.deval.raport.db.models.Mapel
 import id.deval.raport.db.models.request.MapelAdd
 import id.deval.raport.utils.BaseSkeletonFragment
 import id.deval.raport.utils.Constanta
+import id.deval.raport.utils.hideError
 import id.deval.raport.utils.showToast
 
 class AddMapelFragment : BaseSkeletonFragment() {
@@ -56,6 +57,9 @@ class AddMapelFragment : BaseSkeletonFragment() {
                 resources.getStringArray(R.array.kategori)
             )
             tietAddmapelGuru.setAdapter(adapterKategori)
+            tietAddmapelNama.hideError()
+            tietAddmapelGuru.hideError()
+
             mbAddmapelSimpan.setOnClickListener {
                 val nama = tietAddmapelNama.text.toString()
                 val kategori = tietAddmapelGuru.text.toString()

@@ -16,6 +16,7 @@ import id.deval.raport.db.models.Siswa
 import id.deval.raport.db.models.request.AccountUpdate
 import id.deval.raport.utils.BaseSkeletonFragment
 import id.deval.raport.utils.Constanta
+import id.deval.raport.utils.hideError
 import id.deval.raport.utils.showToast
 import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -96,6 +97,12 @@ class AddOrangTuaFragment : BaseSkeletonFragment() {
             ivAddorangtuaBack.setOnClickListener {
                 mainNavController.popBackStack()
             }
+            tietAddorangtuaNamalengkap.hideError()
+            tietAddorangtuaPassword.hideError()
+            tietAddorangtuaHp.hideError()
+            tietAddorangtuaEmail.hideError()
+            tietAddorangtuaNisn.hideError()
+            tietAddorangtuaTanggalLahir.hideError()
 
 
             mbAddorangtuaSimpan.setOnClickListener {

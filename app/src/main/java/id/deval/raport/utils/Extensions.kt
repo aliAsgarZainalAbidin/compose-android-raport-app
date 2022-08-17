@@ -3,12 +3,15 @@ package id.deval.raport.utils
 import android.app.Activity
 import android.content.Context
 import android.view.View
+import android.widget.AutoCompleteTextView
 import android.widget.Toast
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.textfield.TextInputEditText
 import id.deval.raport.R
 
 fun View.show() {
@@ -21,6 +24,18 @@ fun View.hide() {
 
 fun View.invisible() {
     visibility = View.INVISIBLE
+}
+
+fun TextInputEditText.hideError(){
+    doAfterTextChanged {
+        error = null
+    }
+}
+
+fun AutoCompleteTextView.hideError(){
+    doAfterTextChanged {
+        error = null
+    }
 }
 
 fun Int.showToast(errorCode:Int){

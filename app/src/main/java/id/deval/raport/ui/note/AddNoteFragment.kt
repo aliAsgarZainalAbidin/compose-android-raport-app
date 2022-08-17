@@ -12,6 +12,7 @@ import id.deval.raport.databinding.FragmentAddNoteBinding
 import id.deval.raport.db.models.request.NoteAdd
 import id.deval.raport.utils.BaseSkeletonFragment
 import id.deval.raport.utils.Constanta
+import id.deval.raport.utils.hideError
 import id.deval.raport.utils.showToast
 import java.util.*
 
@@ -53,6 +54,9 @@ class AddNoteFragment : BaseSkeletonFragment() {
                     }, year, month, day)
                 datePickerDialog.show()
             }
+
+            tietAddnoteTanggal.hideError()
+            tietAddnoteKet.hideError()
 
             mbAddnoteSimpan.setOnClickListener {
                 val date = tietAddnoteTanggal.text.toString()

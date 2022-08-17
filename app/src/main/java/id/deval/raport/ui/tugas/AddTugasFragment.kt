@@ -13,6 +13,7 @@ import id.deval.raport.db.models.Tugas
 import id.deval.raport.db.models.request.TugasAdd
 import id.deval.raport.utils.BaseSkeletonFragment
 import id.deval.raport.utils.Constanta
+import id.deval.raport.utils.hideError
 import id.deval.raport.utils.showToast
 
 class AddTugasFragment : BaseSkeletonFragment() {
@@ -50,6 +51,8 @@ class AddTugasFragment : BaseSkeletonFragment() {
                         }
                     }
             }
+            tietAddtugasNama.hideError()
+            tietAddtugasNilaitugas.hideError()
 
             mbAddtugasSimpan.setOnClickListener {
                 val nama = tietAddtugasNama.text.toString()

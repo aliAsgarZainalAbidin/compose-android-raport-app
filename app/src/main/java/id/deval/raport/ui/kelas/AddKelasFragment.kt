@@ -74,6 +74,7 @@ class AddKelasFragment : BaseSkeletonFragment() {
 
         with(binding) {
             Log.d("TAG", "onViewCreated: $id")
+            tietAddkelasGuru.hideError()
             if (id.isNotEmpty()) {
                 kelasViewModel.getClassById(session.token.toString(), id)
                     .observe(viewLifecycleOwner) {
@@ -141,8 +142,10 @@ class AddKelasFragment : BaseSkeletonFragment() {
                 val nameKelas = tietAddkelasNama.text.toString()
                 val semester = tietAddkelasSemester.text.toString()
                 val tahunAjaran = tietAddkelasTahunajaran.text.toString()
-                var guru = tietAddkelasGuru.text.toString().split("/")[1]
-                guru = listAccountGuru.find { it.username == guru }!!.id.toString()
+                var guru = tietAddkelasGuru.text.toString().split("/").getOrNull(1)
+                guru = listAccountGuru.find { it.username == guru }?.id
+
+                Log.d(TAG, "onViewCreated: WFWFWF $guru")
 
                 if (nameKelas.isEmpty()) {
                     tietAddkelasNama.error = resources.getString(R.string.tiet_empty)
@@ -156,12 +159,12 @@ class AddKelasFragment : BaseSkeletonFragment() {
                     tietAddkelasTahunajaran.error = resources.getString(R.string.tiet_empty)
                     isValid = false
                 }
-                if (guru.isEmpty()) {
+                if (guru.isNullOrEmpty()) {
                     tietAddkelasGuru.error = resources.getString(R.string.tiet_empty)
                     isValid = false
                 }
 
-                if (nameKelas.isNotEmpty() && semester.isNotEmpty() && tahunAjaran.isNotEmpty() && guru.isNotEmpty()) {
+                if (nameKelas.isNotEmpty() && semester.isNotEmpty() && tahunAjaran.isNotEmpty() && !guru.isNullOrEmpty()) {
                     isValid = true
                 }
 

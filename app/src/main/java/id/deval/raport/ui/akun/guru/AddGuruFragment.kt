@@ -50,7 +50,6 @@ class AddGuruFragment : BaseSkeletonFragment() {
                     }
             }
 
-            Log.d(TAG, "onViewCreated: $role")
             if (!role.isNullOrEmpty()){
                 tietAddguruNamalengkap.isEnabled = false
                 tietAddguruHp.isEnabled = false
@@ -76,6 +75,13 @@ class AddGuruFragment : BaseSkeletonFragment() {
             ivAddguruBack.setOnClickListener {
                 mainNavController.popBackStack()
             }
+            tietAddguruNamalengkap.hideError()
+            tietAddguruNik.hideError()
+            tietAddguruPassword.hideError()
+            tietAddguruAlamat.hideError()
+            tietAddguruEmail.hideError()
+            tietAddguruHp.hideError()
+
             mbAddguruSimpan.setOnClickListener {
                 val namaLengkap = tietAddguruNamalengkap.text.toString()
                 val nik = tietAddguruNik.text.toString()

@@ -180,6 +180,23 @@ class AddSiswaFragment : BaseSkeletonFragment() {
                 startPickImageLauncher.launch(intent)
             }
 
+            tietAddsiswaNamalengkap.hideError()
+            tietAddsiswaNisn.hideError()
+            tietAddsiswaTempatlahir.hideError()
+            tietAddsiswaTanggalLahir.hideError()
+            tietAddsiswaGender.hideError()
+            tietAddsiswaReligion.hideError()
+            tietAddsiswaEducation.hideError()
+            tietAddsiswaAddress.hideError()
+            tietAddsiswaNamaAyah.hideError()
+            tietAddsiswaNamaIbu.hideError()
+            tietAddsiswaPekerjaanAyah.hideError()
+            tietAddsiswaPekerjaanIbu.hideError()
+            tietAddsiswaNamaWali.hideError()
+            tietAddsiswaPekerjaanWali.hideError()
+            tietAddsiswaAlamatWali.hideError()
+            tietAddsiswaHp.hideError()
+
             mbAddsiswaSimpan.setOnClickListener {
                 val namaLengkap = tietAddsiswaNamalengkap.text.toString()
                 val nisn = tietAddsiswaNisn.text.toString()
