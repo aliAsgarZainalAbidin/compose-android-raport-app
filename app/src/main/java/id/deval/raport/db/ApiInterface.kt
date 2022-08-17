@@ -265,7 +265,7 @@ interface ApiInterface {
     suspend fun updateAttendanceById(
         @Header("Authorization") token: String,
         @Path("id") id:String,
-        @Body attendance: AttendanceAdd
+        @Body attendance: AttendanceUpdate
     ): Response<GlobalWrapper<ResponseAttendance>>
 
     @GET("raport/detail")

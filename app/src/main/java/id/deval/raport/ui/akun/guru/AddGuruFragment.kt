@@ -51,6 +51,7 @@ class AddGuruFragment : BaseSkeletonFragment() {
             }
 
             if (!role.isNullOrEmpty()){
+                mtvAddguruName.text = "Profile"
                 tietAddguruNamalengkap.isEnabled = false
                 tietAddguruHp.isEnabled = false
                 tietAddguruEmail.isEnabled = false

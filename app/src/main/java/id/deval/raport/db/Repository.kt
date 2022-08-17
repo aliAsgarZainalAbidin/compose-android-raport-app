@@ -223,7 +223,7 @@ class Repository @Inject constructor(
         return apiInterface.getAttendanceById("Bearer $token", id)
     }
 
-    suspend fun updateAttendanceById(token:String, id:String, attendance: AttendanceAdd): Response<GlobalWrapper<ResponseAttendance>>{
+    suspend fun updateAttendanceById(token:String, id:String, attendance: AttendanceUpdate): Response<GlobalWrapper<ResponseAttendance>>{
         return apiInterface.updateAttendanceById("Bearer $token", id, attendance)
     }
 

@@ -14,6 +14,7 @@ import id.deval.raport.db.models.Absen
 import id.deval.raport.db.models.Attendance
 import id.deval.raport.db.models.Siswa
 import id.deval.raport.db.models.request.AttendanceAdd
+import id.deval.raport.db.models.request.AttendanceUpdate
 import id.deval.raport.db.response.ResponseAttendance
 import id.deval.raport.utils.wrappers.GlobalWrapper
 import kotlinx.coroutines.GlobalScope
@@ -60,7 +61,7 @@ class AbsenViewModel @Inject constructor(
     fun updateAttendanceById(
         token: String,
         id: String,
-        attendance: AttendanceAdd
+        attendance: AttendanceUpdate
     ): LiveData<Response<GlobalWrapper<ResponseAttendance>>> {
         mutableUpdateAttendanceById = MutableLiveData()
         GlobalScope.launch {
