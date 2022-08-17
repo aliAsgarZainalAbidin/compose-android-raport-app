@@ -62,46 +62,48 @@ class ChooseSiswaFragment : BaseSkeletonFragment() {
                 mainNavController.popBackStack()
             }
 
-            if (idClass != null) {
-                siswaViewModel.getAllLocalSiswa()
-                    .observe(viewLifecycleOwner) {
+            siswaViewModel.getAllLocalSiswa()
+                .observe(viewLifecycleOwner) {
 //                        dataSiswa.clear()
-                        it.forEach {
-                            dataSiswa.add(it)
-                        }
-                        siswaViewModel.getAllSiswa(session.token.toString())
-                            .observe(viewLifecycleOwner) {
-                                if (it.isSuccessful) {
-                                    refreshRecyclerViewSiswa(it.body()?.data!!, dataSiswa)
-                                } else {
-                                    requireContext().showToast(it.message())
-                                }
-                            }
+                    it.forEach {
+                        dataSiswa.add(it)
                     }
-            }
-
-            mbChoosesiswaSimpan.setOnClickListener {
-                val listSiswa = arrayListOf<String>()
-                siswaViewModel.getAllLocalSiswa()
-                    .observe(viewLifecycleOwner) {
-                        listSiswa.clear()
-                        it.forEach {
-                            listSiswa.add(it.id)
-                        }
-                        val updateSiswa = UpdateSiswa(listSiswa)
-                        kelasViewModel.updateSiswaInClassById(
-                            session.token.toString(),
-                            idClass.toString(),
-                            updateSiswa
-                        ).observe(viewLifecycleOwner) {
+                    siswaViewModel.getAllSiswa(session.token.toString())
+                        .observe(viewLifecycleOwner) {
                             if (it.isSuccessful) {
-                                Log.d(TAG, "onViewCreated: CHOOSE SISWA ${it?.body()?.data?.siswaId}")
-                                mainNavController.popBackStack()
+                                refreshRecyclerViewSiswa(it.body()?.data!!, dataSiswa)
                             } else {
                                 requireContext().showToast(it.message())
                             }
                         }
-                    }
+                }
+
+            mbChoosesiswaSimpan.setOnClickListener {
+                val listSiswa = arrayListOf<String>()
+                if (!idClass.isNullOrEmpty()){
+                    siswaViewModel.getAllLocalSiswa()
+                        .observe(viewLifecycleOwner) {
+                            listSiswa.clear()
+                            it.forEach {
+                                listSiswa.add(it.id)
+                            }
+                            val updateSiswa = UpdateSiswa(listSiswa)
+                            kelasViewModel.updateSiswaInClassById(
+                                session.token.toString(),
+                                idClass.toString(),
+                                updateSiswa
+                            ).observe(viewLifecycleOwner) {
+                                if (it.isSuccessful) {
+                                    Log.d(TAG, "onViewCreated: CHOOSE SISWA ${it?.body()?.data?.siswaId}")
+                                    mainNavController.popBackStack()
+                                } else {
+                                    requireContext().showToast(it.message())
+                                }
+                            }
+                        }
+                } else {
+                    mainNavController.popBackStack()
+                }
             }
         }
     }

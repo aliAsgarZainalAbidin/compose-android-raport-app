@@ -64,14 +64,14 @@ class KelasViewModel @Inject constructor(
         GlobalScope.launch {
             val response = repository.getClassById(token, id)
             val dataSiswa = arrayListOf<Siswa>()
-            response.body()?.data!![0].siswaDetail?.forEach {
+            response.body()?.data?.getOrNull(0)?.siswaDetail?.forEach {
                 if (it != null) {
                     dataSiswa.add(it)
                 }
             }
 
             val dataMapel = arrayListOf<Mapel>()
-            response.body()?.data!![0].mapelDetail?.forEach {
+            response.body()?.data?.getOrNull(0)?.mapelDetail?.forEach {
                 if (it != null) {
                     dataMapel.add(it)
                 }

@@ -34,7 +34,7 @@ class AddKelasFragment : BaseSkeletonFragment() {
     private lateinit var dataSiswa: ArrayList<Siswa>
     private var isValid = false
     private val binding get() = _binding
-    var id = ""
+    var id :String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -70,13 +70,13 @@ class AddKelasFragment : BaseSkeletonFragment() {
         dataSiswa = arrayListOf()
         val listGuru = mutableListOf<String>()
         val listAccountGuru = mutableListOf<Account>()
-        id = arguments?.getString(Constanta.ID, "").toString()
+        id = arguments?.getString(Constanta.ID, "")
 
         with(binding) {
             Log.d("TAG", "onViewCreated: $id")
             tietAddkelasGuru.hideError()
-            if (id.isNotEmpty()) {
-                kelasViewModel.getClassById(session.token.toString(), id)
+            if (!id.isNullOrEmpty()) {
+                kelasViewModel.getClassById(session.token.toString(), id!!)
                     .observe(viewLifecycleOwner) {
                         if (it.isSuccessful) {
                             val dataGuru = it.body()?.data?.getOrNull(0)
@@ -94,6 +94,9 @@ class AddKelasFragment : BaseSkeletonFragment() {
                             requireContext().showToast(it.message())
                         }
                     }
+            } else {
+                refreshRvSiswa()
+                refreshRvMapel()
             }
 
             accountViewModel.getAllTeacher(session.token.toString()).observe(viewLifecycleOwner) {
@@ -179,7 +182,7 @@ class AddKelasFragment : BaseSkeletonFragment() {
                 }
 
                 if (isValid) {
-                    if (id.isEmpty()) {
+                    if (id.isNullOrEmpty()) {
                         val kelas = Kelas(
                             null,
                             siswaId,
@@ -205,7 +208,7 @@ class AddKelasFragment : BaseSkeletonFragment() {
                             nameKelas, mapelId, semester.toInt(), tahunAjaran, guru
                         )
 
-                        kelasViewModel.updateClassById(session.token.toString(), id, kelas)
+                        kelasViewModel.updateClassById(session.token.toString(), id!!, kelas)
                             .observe(viewLifecycleOwner) {
                                 if (it.isSuccessful) {
                                     mapelViewModel.clearTableMapel()

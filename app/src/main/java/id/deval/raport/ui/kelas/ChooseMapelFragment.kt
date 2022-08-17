@@ -74,23 +74,27 @@ class ChooseMapelFragment : BaseSkeletonFragment() {
 
             mbChoosemapelSimpan.setOnClickListener {
                 val listMapel = arrayListOf<String>()
-                mapelViewModel.getAllLocalMapel().observe(viewLifecycleOwner) {
-                    listMapel.clear()
-                    it.forEach {
-                        listMapel.add(it.id)
-                    }
-                    val updateMapel = UpdateMapel(listMapel)
-                    kelasViewModel.updateMapelInClassById(
-                        session.token.toString(),
-                        idClass.toString(),
-                        updateMapel
-                    ).observe(viewLifecycleOwner) {
-                        if (it.isSuccessful) {
-                            mainNavController.popBackStack()
-                        } else {
-                            requireContext().showToast(it.message())
+                if (!idClass.isNullOrEmpty()){
+                    mapelViewModel.getAllLocalMapel().observe(viewLifecycleOwner) {
+                        listMapel.clear()
+                        it.forEach {
+                            listMapel.add(it.id)
+                        }
+                        val updateMapel = UpdateMapel(listMapel)
+                        kelasViewModel.updateMapelInClassById(
+                            session.token.toString(),
+                            idClass.toString(),
+                            updateMapel
+                        ).observe(viewLifecycleOwner) {
+                            if (it.isSuccessful) {
+                                mainNavController.popBackStack()
+                            } else {
+                                requireContext().showToast(it.message())
+                            }
                         }
                     }
+                } else {
+                    mainNavController.popBackStack()
                 }
             }
         }
