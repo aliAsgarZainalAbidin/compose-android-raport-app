@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.addCallback
 import androidx.core.os.bundleOf
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import id.deval.raport.R
 import id.deval.raport.databinding.FragmentAddKelasBinding
@@ -18,6 +19,12 @@ import id.deval.raport.db.models.*
 import id.deval.raport.db.models.request.KelasUpdate
 import id.deval.raport.ui.adapter.RvAdapter
 import id.deval.raport.utils.*
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
+import okhttp3.internal.lockAndWaitNanos
+import okhttp3.internal.notify
+import okhttp3.internal.wait
 import org.greenrobot.eventbus.Subscribe
 
 class AddKelasFragment : BaseSkeletonFragment() {
@@ -79,25 +86,6 @@ class AddKelasFragment : BaseSkeletonFragment() {
                                 val macGuru = "${guru.name}/${guru.username}"
                                 tietAddkelasGuru.setText(macGuru, false)
                             }
-
-                            val dataSiswa = arrayListOf<Siswa>()
-                            it.body()?.data!![0].siswaDetail?.forEach {
-                                if (it != null) {
-                                    dataSiswa.add(it)
-                                }
-                            }
-
-                            val dataMapel = arrayListOf<Mapel>()
-                            it.body()?.data!![0].mapelDetail?.forEach {
-                                if (it != null) {
-                                    dataMapel.add(it)
-                                }
-                            }
-                            siswaViewModel.insertAllLocalSiswa(dataSiswa)
-                            mapelViewModel.insertAllLocalMapel(dataMapel)
-
-                            Log.d("TAG", "onViewCreated: $dataSiswa")
-                            Log.d("TAG", "onViewCreated: $dataMapel")
                             refreshRvSiswa()
                             refreshRvMapel()
                         } else {
@@ -187,7 +175,7 @@ class AddKelasFragment : BaseSkeletonFragment() {
                 }
 
                 if (isValid) {
-                    if (id.isNullOrEmpty()) {
+                    if (id.isEmpty()) {
                         val kelas = Kelas(
                             null,
                             siswaId,
@@ -245,6 +233,8 @@ class AddKelasFragment : BaseSkeletonFragment() {
                     layoutManager =
                         LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
                 }
+
+                Log.d("TAG", "onViewCreated: SISWA ${dataSiswa.size}")
             }
         }
     }
@@ -262,6 +252,8 @@ class AddKelasFragment : BaseSkeletonFragment() {
                     layoutManager =
                         LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
                 }
+                Log.d("TAG", "onViewCreated: MAPEL $dataMapel")
+
             }
         }
     }

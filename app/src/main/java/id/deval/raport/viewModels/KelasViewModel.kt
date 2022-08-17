@@ -63,23 +63,21 @@ class KelasViewModel @Inject constructor(
         mutableClassById = MutableLiveData()
         GlobalScope.launch {
             val response = repository.getClassById(token, id)
-//            if (response.isSuccessful){
-////                val dataSiswa = arrayListOf<Siswa>()
-//                response.body()?.data!![0].siswaDetail?.forEach {
-//                    if (it != null) {
-//                        dataSiswa.add(it)
-//                    }
-//                }
-//
-//                val dataMapel = arrayListOf<Mapel>()
-//                response.body()?.data!![0].mapelDetail?.forEach {
-//                    if (it != null) {
-//                        dataMapel.add(it)
-//                    }
-//                }
-//                repository.insertAllSiswa(dataSiswa)
-//                repository.insertAllLocalMapel(dataMapel)
-//            }
+            val dataSiswa = arrayListOf<Siswa>()
+            response.body()?.data!![0].siswaDetail?.forEach {
+                if (it != null) {
+                    dataSiswa.add(it)
+                }
+            }
+
+            val dataMapel = arrayListOf<Mapel>()
+            response.body()?.data!![0].mapelDetail?.forEach {
+                if (it != null) {
+                    dataMapel.add(it)
+                }
+            }
+            repository.insertAllSiswa(dataSiswa)
+            repository.insertAllLocalMapel(dataMapel)
             mutableClassById.postValue(response)
         }
         return mutableClassById

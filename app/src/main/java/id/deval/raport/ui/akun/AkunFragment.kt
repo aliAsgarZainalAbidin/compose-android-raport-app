@@ -54,9 +54,10 @@ class AkunFragment : BaseSkeletonFragment() {
                         }
 
                         mtvAkunGuru.text = it.body()?.result.toString()
-                        if (it.body()?.data!!.size == 0){
+                        if (it.body()?.data!!.size <= 0){
                             includeRvGuru.mtvRvlayoutViewmore.invisible()
                             includeRvGuru.mtvRvlayoutAdd.show()
+                            includeRvGuru.mtvRvlayoutAdd.text = "Tambah Guru"
                             includeRvGuru.mtvRvlayoutAdd.setOnClickListener {
                                 mainNavController.navigate(R.id.action_baseFragment_to_registrasiGuruFragment)
                             }
@@ -86,9 +87,10 @@ class AkunFragment : BaseSkeletonFragment() {
             siswaViewModel.getAllSiswa(session.token.toString()).observe(viewLifecycleOwner){
                 if (it.isSuccessful){
                     mtvAkunSiswa.text = it.body()?.data!!.size.toString()
-                    if (it.body()?.data!!.size == 0){
+                    if (it.body()?.data!!.size <= 2){
                         includeRvSiswa.mtvRvlayoutViewmore.invisible()
                         includeRvSiswa.mtvRvlayoutAdd.show()
+                        includeRvSiswa.mtvRvlayoutAdd.text = "Tambah Siswa"
                         includeRvSiswa.mtvRvlayoutAdd.setOnClickListener {
                             mainNavController.navigate(R.id.action_baseFragment_to_registrasiSiswaFragment)
                         }

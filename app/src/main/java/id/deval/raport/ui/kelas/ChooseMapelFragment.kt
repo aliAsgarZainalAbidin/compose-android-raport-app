@@ -79,17 +79,17 @@ class ChooseMapelFragment : BaseSkeletonFragment() {
                     it.forEach {
                         listMapel.add(it.id)
                     }
-                }
-                val updateMapel = UpdateMapel(listMapel)
-                kelasViewModel.updateMapelInClassById(
-                    session.token.toString(),
-                    idClass.toString(),
-                    updateMapel
-                ).observe(viewLifecycleOwner) {
-                    if (it.isSuccessful) {
-                        mainNavController.popBackStack()
-                    } else {
-                        requireContext().showToast(it.message())
+                    val updateMapel = UpdateMapel(listMapel)
+                    kelasViewModel.updateMapelInClassById(
+                        session.token.toString(),
+                        idClass.toString(),
+                        updateMapel
+                    ).observe(viewLifecycleOwner) {
+                        if (it.isSuccessful) {
+                            mainNavController.popBackStack()
+                        } else {
+                            requireContext().showToast(it.message())
+                        }
                     }
                 }
             }

@@ -57,6 +57,8 @@ class AddGuruFragment : BaseSkeletonFragment() {
                 tietAddguruEmail.isEnabled = false
                 tietAddguruAlamat.isEnabled = false
                 tietAddguruPassword.isEnabled = false
+                mtvAddguruPassword.hide()
+                tilAddguruPassword.hide()
                 tietAddguruNik.isEnabled = false
                 mbAddguruSimpan.hide()
                 mbAddguruLogout.show()

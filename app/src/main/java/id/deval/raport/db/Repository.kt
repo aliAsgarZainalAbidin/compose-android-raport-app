@@ -266,7 +266,7 @@ class Repository @Inject constructor(
     }
 
     suspend fun insertAllSiswa(siswa: List<Siswa>) {
-        withContext(Dispatchers.IO) {
+        withContext(Dispatchers.IO){
             database.siswaDao().insertAllSiswa(siswa)
         }
     }

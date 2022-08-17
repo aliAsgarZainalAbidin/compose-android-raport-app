@@ -65,7 +65,7 @@ class ChooseSiswaFragment : BaseSkeletonFragment() {
             if (idClass != null) {
                 siswaViewModel.getAllLocalSiswa()
                     .observe(viewLifecycleOwner) {
-                        dataSiswa.clear()
+//                        dataSiswa.clear()
                         it.forEach {
                             dataSiswa.add(it)
                         }
@@ -88,27 +88,26 @@ class ChooseSiswaFragment : BaseSkeletonFragment() {
                         it.forEach {
                             listSiswa.add(it.id)
                         }
+                        val updateSiswa = UpdateSiswa(listSiswa)
+                        kelasViewModel.updateSiswaInClassById(
+                            session.token.toString(),
+                            idClass.toString(),
+                            updateSiswa
+                        ).observe(viewLifecycleOwner) {
+                            if (it.isSuccessful) {
+                                Log.d(TAG, "onViewCreated: CHOOSE SISWA ${it?.body()?.data?.siswaId}")
+                                mainNavController.popBackStack()
+                            } else {
+                                requireContext().showToast(it.message())
+                            }
+                        }
                     }
-                val updateSiswa = UpdateSiswa(listSiswa)
-                kelasViewModel.updateSiswaInClassById(
-                    session.token.toString(),
-                    idClass.toString(),
-                    updateSiswa
-                ).observe(viewLifecycleOwner) {
-                    if (it.isSuccessful) {
-                        Log.d(TAG, "onViewCreated: CHOOSE SISWA ${it?.body()?.data?.siswaId}")
-                        mainNavController.popBackStack()
-                    } else {
-                        requireContext().showToast(it.message())
-                    }
-                }
             }
         }
     }
 
     @Subscribe
     fun addOrDeleteLocalSiswa(localDatabaseEvent: LocalDatabaseEvent<Siswa>) {
-        Log.d(TAG, "addOrDeleteLocalSiswa: ${dataSiswa.size}")
 
         when (localDatabaseEvent.type) {
             "add" -> {
@@ -120,6 +119,7 @@ class ChooseSiswaFragment : BaseSkeletonFragment() {
                 dataSiswa.remove(localDatabaseEvent.data)
             }
         }
+        Log.d(TAG, "addOrDeleteLocalSiswa: ${dataSiswa.size}")
     }
 
     fun refreshRecyclerViewSiswa(data: ArrayList<Siswa>, localData: ArrayList<Siswa>) {
