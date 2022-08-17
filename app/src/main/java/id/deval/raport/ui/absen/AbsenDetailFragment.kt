@@ -50,6 +50,9 @@ class AbsenDetailFragment : BaseSkeletonFragment() {
         updateAttendance = AttendanceAdd()
         with(binding) {
             mtvDetailabsenDate.text = date
+            ivDetailabsenBack.setOnClickListener {
+                mainNavController.popBackStack()
+            }
 
             Log.d("TAG", "onViewCreated: $date $id")
 
@@ -89,25 +92,26 @@ class AbsenDetailFragment : BaseSkeletonFragment() {
             absenViewModel.getAttendanceById(session.token.toString(), id)
                 .observe(viewLifecycleOwner) {
                     if (it.isSuccessful){
-                        updateAttendance.classId = it.body()!!.data[0].classId
-                        updateAttendance.mapelId = it.body()!!.data[0].mapelId
-                        updateAttendance.tanggalAbsen = it.body()!!.data[0].tanggalAbsen
+                        val data = it.body()?.data?.getOrNull(0)
+                        updateAttendance.classId = data?.classId
+                        updateAttendance.mapelId = data?.mapelId
+                        updateAttendance.tanggalAbsen = data?.tanggalAbsen
 
-                        it.body()!!.data[0].detailSiswa?.forEachIndexed { i, siswa ->
+                        data?.detailSiswa?.forEachIndexed { i, siswa ->
                             val detailSiswaItem = DetailSiswaItem(
                                 siswa?.name,
                                 siswa?.nis,
-                                it.body()!!.data[0].attendance?.get(i)?.kehadiran,
+                                data.attendance?.getOrNull(i)?.kehadiran,
                                 siswa?.id
                             )
                             Log.d(TAG, "refreshRecyclerViewAbsen: DETAIL ${detailSiswaItem.id} ${detailSiswaItem.kehadiran}")
                             arrayListDetailSiswaItem.add(detailSiswaItem)
                         }
-                        it.body()!!.data[0].attendance?.forEachIndexed { index, attendance ->
+                        data?.attendance?.forEachIndexed { index, attendance ->
                             val absen = Absen(
                                 attendance?.kehadiran,
                                 attendance?.siswaId ?: "",
-                                it.body()!!.data[0].detailSiswa?.get(index)?.nis
+                                data?.detailSiswa?.getOrNull(index)?.nis
                             )
                             Log.d(TAG, "refreshRecyclerViewAbsen: ATTENDANCE ${absen.siswaId} ${absen.kehadiran}")
                             absenViewModel.insertLocalAbsen(absen)

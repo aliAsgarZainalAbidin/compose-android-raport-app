@@ -53,6 +53,10 @@ class AddPesanFragment : BaseSkeletonFragment() {
                 mainNavController.popBackStack()
             }
 
+            ivAddpesanBack.setOnClickListener {
+                mainNavController.popBackStack()
+            }
+
             if (siswaId!=null){
                 siswaViewModel.getSiswaById(session.token.toString(), siswaId).observe(viewLifecycleOwner){
                     with(includeAddpesanContainer){

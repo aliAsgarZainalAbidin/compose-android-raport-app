@@ -10,10 +10,7 @@ import android.widget.DatePicker
 import id.deval.raport.R
 import id.deval.raport.databinding.FragmentAddNoteBinding
 import id.deval.raport.db.models.request.NoteAdd
-import id.deval.raport.utils.BaseSkeletonFragment
-import id.deval.raport.utils.Constanta
-import id.deval.raport.utils.hideError
-import id.deval.raport.utils.showToast
+import id.deval.raport.utils.*
 import java.util.*
 
 class AddNoteFragment : BaseSkeletonFragment() {
@@ -43,12 +40,13 @@ class AddNoteFragment : BaseSkeletonFragment() {
                 val calendar = Calendar.getInstance()
                 val year = calendar.get(Calendar.YEAR)
                 val month = calendar.get(Calendar.MONTH)
-                val day = calendar.get(Calendar.DAY_OF_WEEK)
+                val day = calendar.get(Calendar.DATE)
 
                 val datePickerDialog =
                     DatePickerDialog(requireContext(), object : DatePickerDialog.OnDateSetListener {
                         override fun onDateSet(p0: DatePicker?, p1: Int, p2: Int, p3: Int) {
-                            tietAddnoteTanggal.setText("$p3-$p2-$p1")
+                            val bulan = p2.plus(1).parseIntToMonth()
+                            tietAddnoteTanggal.setText("$p3 $bulan $p1")
                         }
 
                     }, year, month, day)

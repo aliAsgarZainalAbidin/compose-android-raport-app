@@ -48,6 +48,9 @@ class ListRaportFragment : BaseSkeletonFragment() {
             includeListraportContainer.mtvRvlayoutTitle.setTextColor(resources.getColor(R.color.white))
             includeListraportContainer.mtvRvlayoutAdd.invisible()
             includeListraportContainer.mtvRvlayoutViewmore.invisible()
+            ivListraportBack.setOnClickListener {
+                mainNavController.popBackStack()
+            }
 
             kelasViewModel.getClassById(session.token.toString(), classId)
                 .observe(viewLifecycleOwner) {

@@ -18,10 +18,7 @@ import id.deval.raport.databinding.FragmentListAbsenBinding
 import id.deval.raport.db.models.Attendance
 import id.deval.raport.db.models.request.AttendanceAdd
 import id.deval.raport.ui.adapter.RvAbsensiAdapter
-import id.deval.raport.utils.BaseSkeletonFragment
-import id.deval.raport.utils.Constanta
-import id.deval.raport.utils.DummyData
-import id.deval.raport.utils.showToast
+import id.deval.raport.utils.*
 import id.deval.raport.utils.wrappers.GlobalWrapper
 import okhttp3.Response
 import okhttp3.ResponseBody
@@ -51,6 +48,10 @@ class ListAbsenFragment : BaseSkeletonFragment() {
         mapelId = arguments?.getString(Constanta.MAPEL_ID) ?: ""
         val mapelName = arguments?.getString(Constanta.MAPEL_NAME)
         with(binding) {
+            ivListabsenBack.setOnClickListener {
+                mainNavController.popBackStack()
+            }
+
             mtvListabsenName.text = mapelName
             absenViewModel.getAttendance(session.token.toString(), classId, mapelId)
                 .observe(viewLifecycleOwner) {
@@ -77,33 +78,32 @@ class ListAbsenFragment : BaseSkeletonFragment() {
                 val calendar = Calendar.getInstance()
                 val year = calendar.get(Calendar.YEAR)
                 val month = calendar.get(Calendar.MONTH)
-                val day = calendar.get(Calendar.DAY_OF_MONTH)
+                val day = calendar.get(Calendar.DATE)
                 var date: String
 
                 val datePickerDialog = DatePickerDialog(
                     requireContext(),
-                    object : DatePickerDialog.OnDateSetListener {
-                        override fun onDateSet(p0: DatePicker?, p1: Int, p2: Int, p3: Int) {
-                            date = "$p3-$p2-$p1"
-                            val attendance = AttendanceAdd(
-                                classId, mapelId, date, null
-                            )
-                            absenViewModel.addAttendance(session.token.toString(), attendance)
-                                .observe(viewLifecycleOwner) {
-                                    if (it.isSuccessful) {
-                                        Log.d("TAG", "onViewCreated: ${it.body()?.data}")
-                                        val bundle = bundleOf()
-                                        bundle.putString(Constanta.DATE, date)
-                                        bundle.putString(Constanta.ID, it.body()?.data!!.id)
-                                        mainNavController.navigate(
-                                            R.id.action_listAbsenFragment_to_absenDetailFragment,
-                                            bundle
-                                        )
-                                    } else {
-                                        requireContext().showToast(it.message())
-                                    }
+                    { p0, p1, p2, p3 ->
+                        val month = p2.plus(1).parseIntToMonth()
+                        date = "$p3 $month $p1"
+                        val attendance = AttendanceAdd(
+                            classId, mapelId, date, null
+                        )
+                        absenViewModel.addAttendance(session.token.toString(), attendance)
+                            .observe(viewLifecycleOwner) {
+                                if (it.isSuccessful) {
+                                    Log.d("TAG", "onViewCreated: ${it.body()?.data}")
+                                    val bundle = bundleOf()
+                                    bundle.putString(Constanta.DATE, date)
+                                    bundle.putString(Constanta.ID, it.body()?.data!!.id)
+                                    mainNavController.navigate(
+                                        R.id.action_listAbsenFragment_to_absenDetailFragment,
+                                        bundle
+                                    )
+                                } else {
+                                    requireContext().showToast(it.message())
                                 }
-                        }
+                            }
                     },
                     year,
                     month,

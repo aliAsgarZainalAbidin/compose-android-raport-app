@@ -108,12 +108,13 @@ class AddSiswaFragment : BaseSkeletonFragment() {
                 val calendar = Calendar.getInstance()
                 val year = calendar.get(Calendar.YEAR)
                 val month = calendar.get(Calendar.MONTH)
-                val day = calendar.get(Calendar.DAY_OF_WEEK)
+                val day = calendar.get(Calendar.DATE)
 
                 val datePickerDialog =
                     DatePickerDialog(requireContext(), object : DatePickerDialog.OnDateSetListener {
                         override fun onDateSet(p0: DatePicker?, p1: Int, p2: Int, p3: Int) {
-                            tietAddsiswaTanggalLahir.setText("$p3-$p2-$p1")
+                            val bulan = p2.plus(1).parseIntToMonth()
+                            tietAddsiswaTanggalLahir.setText("$p3 $bulan $p1")
                         }
 
                     }, year, month, day)

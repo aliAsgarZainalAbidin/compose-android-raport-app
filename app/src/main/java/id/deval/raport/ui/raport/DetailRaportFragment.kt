@@ -41,6 +41,9 @@ class DetailRaportFragment : BaseSkeletonFragment() {
         val siswaId = arguments?.getString(Constanta.SISWA_ID)
         listTugasId = arrayListOf()
         with(binding) {
+            ivDetailraportBack.setOnClickListener {
+                mainNavController.popBackStack()
+            }
             includeRvSiswa.mtvRvlayoutTitle.text = "Tugas"
             includeRvSiswa.mtvRvlayoutTitle.setTextColor(resources.getColor(R.color.white))
 

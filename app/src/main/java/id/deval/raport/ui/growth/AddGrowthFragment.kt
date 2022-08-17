@@ -3,13 +3,11 @@ package id.deval.raport.ui.growth
 import android.content.ContentValues.TAG
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import id.deval.raport.R
 import id.deval.raport.databinding.FragmentAddGrowthBinding
-import id.deval.raport.db.models.Growth
 import id.deval.raport.db.models.request.GrowthAdd
 import id.deval.raport.utils.BaseSkeletonFragment
 import id.deval.raport.utils.Constanta
@@ -73,7 +71,8 @@ class AddGrowthFragment : BaseSkeletonFragment() {
                 }
 
                 if (isValid){
-                    val formater = SimpleDateFormat("dd/M/yyyy")
+                    val locale = Locale("id", "ID")
+                    val formater = SimpleDateFormat("dd MMMM yyyy", locale)
                     val date = formater.format(Date())
 
                     val growth = GrowthAdd(
