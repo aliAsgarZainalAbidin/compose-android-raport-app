@@ -41,10 +41,12 @@ class DetailRaportFragment : BaseSkeletonFragment() {
         val siswaId = arguments?.getString(Constanta.SISWA_ID)
         listTugasId = arrayListOf()
         with(binding) {
+            mtvDetailraportName.text = "Raport"
             ivDetailraportBack.setOnClickListener {
                 mainNavController.popBackStack()
             }
             includeRvSiswa.mtvRvlayoutTitle.text = "Tugas"
+            includeRvSiswa.mtvRvlayoutAdd.text = "Tambah Tugas"
             includeRvSiswa.mtvRvlayoutTitle.setTextColor(resources.getColor(R.color.white))
 
             siswaViewModel.getSiswaById(session.token.toString(), siswaId.toString())

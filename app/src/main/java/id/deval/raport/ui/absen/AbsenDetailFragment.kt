@@ -43,7 +43,6 @@ class AbsenDetailFragment : BaseSkeletonFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val dataKehadiran = DummyData().setDummyDataAbsenSiswa()
         arrayListDetailSiswaItem = arrayListOf()
         val date = arguments?.getString(Constanta.DATE)
         val id = arguments?.getString(Constanta.ID)
