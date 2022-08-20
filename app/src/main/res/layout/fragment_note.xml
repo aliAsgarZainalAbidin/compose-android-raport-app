@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.pesan.NoteFragment">
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/mtv_addpesan_addnote"
+        android:layout_width="77dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="@dimen/padding_layout"
+        android:backgroundTint="@color/yellow"
+        android:fontFamily="@font/roboto"
+        android:gravity="center"
+        android:padding="0dp"
+        android:text="Tambah Data"
+        android:textAllCaps="false"
+        android:textColor="@color/black1"
+        android:textSize="8dp"
+        app:cornerRadius="2dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_addpesan_note"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        app:layout_constraintTop_toBottomOf="@id/mtv_addpesan_addnote"
+        tools:itemCount="2"
+        tools:listitem="@layout/rv_note" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -32,5 +32,8 @@ data class Raport(
 	val nilaiUAS: Int? = null,
 
 	@field:SerializedName("tugasDetail")
-	val tugasDetail: List<Tugas?>? = null
+	val tugasDetail: List<Tugas?>? = null,
+
+	@field:SerializedName("mapelDetail")
+	val mapleDetail: List<Mapel?>? = null
 )

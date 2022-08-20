@@ -231,6 +231,10 @@ class Repository @Inject constructor(
         return apiInterface.getSpesifikRaport("Bearer $token", classId, mapelId, siswaId)
     }
 
+    suspend fun getListRaportSiswa(token:String, classId:String, siswaId:String) : Response<GlobalWrapper<ArrayList<Raport>>>{
+        return apiInterface.getListRaportSiswa("Bearer $token", classId, siswaId)
+    }
+
     suspend fun addTugas(token:String, tugas: TugasAdd) : Response<GlobalWrapper<Raport>>{
         return apiInterface.addTugas("Bearer $token", tugas)
     }

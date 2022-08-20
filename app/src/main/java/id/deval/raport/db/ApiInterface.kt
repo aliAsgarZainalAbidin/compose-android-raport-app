@@ -276,6 +276,14 @@ interface ApiInterface {
         @Query("siswaId") siswaId:String,
     ): Response<GlobalWrapper<Raport>>
 
+
+    @GET("raport/download-pdf")
+    suspend fun getListRaportSiswa(
+        @Header("Authorization") token:String,
+        @Query("classId") classId:String,
+        @Query("siswaId") siswaId:String,
+    ): Response<GlobalWrapper<ArrayList<Raport>>>
+
     @POST("tugas/")
     suspend fun addTugas(
         @Header("Authorization") token:String,

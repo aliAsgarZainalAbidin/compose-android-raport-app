@@ -13,4 +13,8 @@ object Constanta {
     val DATE = "DATE"
     val MAPEL_NAME = "MAPEL_NAME"
     val BACKPRESSED = "BACKPRESSED"
+
+    val headerTable = arrayListOf(
+        "Mata Pelajaran","Nilai", "Rerata", "Deskripsi",
+    )
 }

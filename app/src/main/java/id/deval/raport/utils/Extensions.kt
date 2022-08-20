@@ -57,6 +57,23 @@ fun Int.parseIntToMonth(): String{
    return month
 }
 
+fun Float.parseIntToChar(): String{
+    val char = when(this){
+        in 86f..100f -> "A"
+        in 81f..85f -> "A-"
+        in 76f..80f -> "B+"
+        in 71f..75f -> "B"
+        in 66f..70f -> "B-"
+        in 61f..65f -> "C+"
+        in 56f..60f -> "C"
+        in 51f..55f -> "C-"
+        in 46f..50f -> "D+"
+        in 0f..45f -> "D"
+        else -> "E"
+    }
+    return char
+}
+
 fun Int.showToast(errorCode:Int){
     val message = when(errorCode){
         401-> "Tidak memiliki izin"

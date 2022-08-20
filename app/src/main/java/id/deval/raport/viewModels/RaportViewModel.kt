@@ -20,6 +20,7 @@ class RaportViewModel @Inject constructor(
     private val repository: Repository
 ) : ViewModel() {
     private lateinit var mutableRaport : MutableLiveData<Response<GlobalWrapper<Raport>>>
+    private lateinit var mutableListRaport : MutableLiveData<Response<GlobalWrapper<ArrayList<Raport>>>>
     private lateinit var mutableUpdateRaport : MutableLiveData<Response<GlobalWrapper<Raport>>>
     private lateinit var mutableAddTugas : MutableLiveData<Response<GlobalWrapper<Raport>>>
     private lateinit var mutableUpdateTugas : MutableLiveData<Response<GlobalWrapper<Tugas>>>
@@ -33,6 +34,14 @@ class RaportViewModel @Inject constructor(
             mutableRaport.postValue(response)
         }
         return mutableRaport
+    }
+    fun getListRaportSiswa(token:String, classId:String, siswaId:String) : LiveData<Response<GlobalWrapper<ArrayList<Raport>>>>{
+        mutableListRaport = MutableLiveData()
+        GlobalScope.launch {
+            val response = repository.getListRaportSiswa(token, classId, siswaId)
+            mutableListRaport.postValue(response)
+        }
+        return mutableListRaport
     }
 
     fun addTugas(token:String, tugas: TugasAdd) : LiveData<Response<GlobalWrapper<Raport>>>{
