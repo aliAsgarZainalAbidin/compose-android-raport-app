@@ -9,12 +9,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.tabs.TabLayoutMediator
 import id.deval.raport.R
 import id.deval.raport.databinding.FragmentAddPesanBinding
 import id.deval.raport.db.models.Growth
 import id.deval.raport.db.models.Note
 import id.deval.raport.ui.adapter.RvGrowthAdapter
 import id.deval.raport.ui.adapter.RvNoteAdapter
+import id.deval.raport.ui.adapter.ViewPagerAdapter
 import id.deval.raport.utils.BaseSkeletonFragment
 import id.deval.raport.utils.Constanta
 import id.deval.raport.utils.DummyData
@@ -43,11 +45,11 @@ class AddPesanFragment : BaseSkeletonFragment() {
         listNote = arrayListOf()
         var pesanId = ""
         with(binding) {
-            mtvAddpesanAddgrowth.setOnClickListener {
-                val bundle = bundleOf()
-                bundle.putString(Constanta.ID, pesanId)
-                mainNavController.navigate(R.id.action_addPesanFragment_to_addGrowthFragment, bundle)
-            }
+//            mtvAddpesanAddgrowth.setOnClickListener {
+//                val bundle = bundleOf()
+//                bundle.putString(Constanta.ID, pesanId)
+//                mainNavController.navigate(R.id.action_addPesanFragment_to_addGrowthFragment, bundle)
+//            }
 
             mbAddpesanSimpan.setOnClickListener {
                 mainNavController.popBackStack()
@@ -86,8 +88,8 @@ class AddPesanFragment : BaseSkeletonFragment() {
                             }
                         }
 
-                        refreshRVGrowth()
-                        refreshRVNote()
+//                        refreshRVGrowth()
+//                        refreshRVNote()
                         pesanId = it.body()?.data!!.id.toString()
                     } else {
                         requireContext().showToast(it.message())
@@ -95,37 +97,45 @@ class AddPesanFragment : BaseSkeletonFragment() {
                 }
             }
 
-            mtvAddpesanAddnote.setOnClickListener {
-                val bundle = bundleOf()
-                bundle.putString(Constanta.ID, pesanId)
-                mainNavController.navigate(R.id.action_addPesanFragment_to_addNoteFragment, bundle)
+//            mtvAddpesanAddnote.setOnClickListener {
+//                val bundle = bundleOf()
+//                bundle.putString(Constanta.ID, pesanId)
+//                mainNavController.navigate(R.id.action_addPesanFragment_to_addNoteFragment, bundle)
+//            }
+            val adapter = ViewPagerAdapter(childFragmentManager, lifecycle)
+            if (siswaId != null) {
+                adapter.setArgument(siswaId)
             }
-
+            vp2.adapter = adapter
+            val listTab = arrayListOf("Perkembangan", "Catatan")
+            TabLayoutMediator(tbAddpesanLayout,vp2){ tab, position ->
+                tab.text = listTab[position]
+            }.attach()
         }
     }
 
-    fun refreshRVGrowth(){
-        with(binding){
-            rvAddpesanGrowth.apply {
-                val adapter = RvGrowthAdapter(listGrowth)
-                adapter.notifyDataSetChanged()
-                this.adapter = adapter
-                layoutManager =
-                    LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, true)
-            }
-        }
-    }
-
-    fun refreshRVNote(){
-        with(binding){
-            rvAddpesanNote.apply {
-                val adapter = RvNoteAdapter(listNote)
-                adapter.notifyDataSetChanged()
-                this.adapter = adapter
-                layoutManager =
-                    LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, true)
-            }
-        }
-    }
+//    fun refreshRVGrowth(){
+//        with(binding){
+//            rvAddpesanGrowth.apply {
+//                val adapter = RvGrowthAdapter(listGrowth)
+//                adapter.notifyDataSetChanged()
+//                this.adapter = adapter
+//                layoutManager =
+//                    LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, true)
+//            }
+//        }
+//    }
+//
+//    fun refreshRVNote(){
+//        with(binding){
+//            rvAddpesanNote.apply {
+//                val adapter = RvNoteAdapter(listNote)
+//                adapter.notifyDataSetChanged()
+//                this.adapter = adapter
+//                layoutManager =
+//                    LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, true)
+//            }
+//        }
+//    }
 
 }

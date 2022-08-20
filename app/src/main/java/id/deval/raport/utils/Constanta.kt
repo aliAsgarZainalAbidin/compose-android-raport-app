@@ -7,6 +7,7 @@ object Constanta {
     val PATH_IMAGE = "PATH_IMAGE"
     val PARCELABLE_ITEM = "PARCELABLE_ITEM"
     val CLASS_ID = "CLASS_ID"
+    val PESAN_ID = "PESAN_ID"
     val MAPEL_ID = "MAPEL_ID"
     val SISWA_ID = "SISWA_ID"
     val TUGAS_ID = "TUGAS_ID"

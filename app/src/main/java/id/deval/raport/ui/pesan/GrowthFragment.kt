@@ -22,7 +22,6 @@ class GrowthFragment : BaseSkeletonFragment() {
     private lateinit var _binding : FragmentGrowthBinding
     private val binding get() = _binding
     private lateinit var listGrowth : ArrayList<Growth>
-    private var pesanId = ""
 
 
     override fun onCreateView(
@@ -36,6 +35,8 @@ class GrowthFragment : BaseSkeletonFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        var pesanId = arguments?.getString(Constanta.PESAN_ID)
+        val siswaId = arguments?.getString(Constanta.ID) ?: ""
         with(binding){
             listGrowth = arrayListOf()
             mtvAddpesanAddgrowth.setOnClickListener {
@@ -44,29 +45,20 @@ class GrowthFragment : BaseSkeletonFragment() {
                 mainNavController.navigate(R.id.action_addPesanFragment_to_addGrowthFragment, bundle)
             }
 
-//            pesanViewModel.getPesanById(session.token.toString(), siswaId).observe(viewLifecycleOwner){
-//                if (it.isSuccessful){
-//                    it.body()?.data!!.growthDetail?.forEach { growth->
-//                        if (growth != null){
-//                            listGrowth.add(growth)
-//                        }
-//                    }
-//
-//                    Log.d(ContentValues.TAG, "onViewCreated: LIST GROWTH ${it.body()?.data!!.growthId}")
-//                    Log.d(ContentValues.TAG, "onViewCreated: LIST NOTE ${it.body()?.data!!.noteId}")
-//
-//                    it.body()?.data!!.noteDetail?.forEach { note ->
-//                        if (note!=null){
-//                            listNote.add(note)
-//                        }
-//                    }
-//
-//                    refreshRVGrowth()
-//                    pesanId = it.body()?.data!!.id.toString()
-//                } else {
-//                    requireContext().showToast(it.message())
-//                }
-//            }
+            pesanViewModel.getPesanById(session.token.toString(), siswaId).observe(viewLifecycleOwner){
+                if (it.isSuccessful){
+                    it.body()?.data!!.growthDetail?.forEach { growth->
+                        if (growth != null){
+                            listGrowth.add(growth)
+                        }
+                    }
+
+                    refreshRVGrowth()
+                    pesanId = it.body()?.data!!.id.toString()
+                } else {
+                    requireContext().showToast(it.message())
+                }
+            }
 
             refreshRVGrowth()
         }
