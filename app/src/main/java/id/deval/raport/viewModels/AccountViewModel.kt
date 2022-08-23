@@ -22,6 +22,7 @@ class AccountViewModel @Inject constructor(
 
     private lateinit var mutableAccount: MutableLiveData<Response<GlobalWrapper<ArrayList<Account>>>>
     private lateinit var mutableAddTeacherResponse: MutableLiveData<Response<GlobalWrapper<Account>>>
+    private lateinit var mutableSignup: MutableLiveData<Response<GlobalWrapper<Account>>>
     private lateinit var mutableUpdateTeacherResponse: MutableLiveData<Response<GlobalWrapper<Account>>>
     private lateinit var mutableGetTeacherIdResponse: MutableLiveData<Response<GlobalWrapper<Account>>>
     private lateinit var mutableDeleteTeacher: MutableLiveData<Response<Unit>>
@@ -47,8 +48,21 @@ class AccountViewModel @Inject constructor(
                 Log.d(TAG, "addTeacher: $e")
             }
         }
-
         return mutableAddTeacherResponse
+    }
+
+
+    fun signup(account: Account): LiveData<Response<GlobalWrapper<Account>>> {
+        mutableSignup = MutableLiveData()
+        GlobalScope.launch {
+            try {
+                val response = repository.signup(account)
+                mutableSignup.postValue(response)
+            } catch (e: Exception) {
+                Log.d(TAG, "addTeacher: $e")
+            }
+        }
+        return mutableSignup
     }
 
     fun updateTeacher(

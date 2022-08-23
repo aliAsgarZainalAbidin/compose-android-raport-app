@@ -16,6 +16,9 @@
             app:launchSingleTop="true"
             app:popUpTo="@id/loginFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_loginFragment_to_signup"
+            app:destination="@id/signup" />
     </fragment>
     <fragment
         android:id="@+id/baseFragment"
@@ -212,4 +215,9 @@
         android:name="id.deval.raport.ui.absen.AbsenOrangtuaFragment"
         android:label="fragment_absen_orangtua"
         tools:layout="@layout/fragment_absen_orangtua" />
+    <fragment
+        android:id="@+id/signup"
+        android:name="id.deval.raport.ui.signup.SignupFragment"
+        android:label="fragment_signup"
+        tools:layout="@layout/fragment_signup" />
 </navigation>

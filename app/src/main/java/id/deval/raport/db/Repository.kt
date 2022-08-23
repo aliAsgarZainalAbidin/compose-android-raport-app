@@ -106,6 +106,10 @@ class Repository @Inject constructor(
         return apiInterface.addAccountTeacher("Bearer $token", account)
     }
 
+    suspend fun signup( account: Account): Response<GlobalWrapper<Account>> {
+        return apiInterface.signup(account)
+    }
+
     suspend fun updateTeacher(
         token: String,
         id: String,

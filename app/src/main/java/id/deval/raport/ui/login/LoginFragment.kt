@@ -46,6 +46,10 @@ class LoginFragment : BaseSkeletonFragment() {
             tietLoginUsername.hideError()
             tietLoginPassword.hideError()
 
+            mbLoginSignup.setOnClickListener {
+                mainNavController.navigate(R.id.action_loginFragment_to_signup)
+            }
+
             mbLoginLogin.setOnClickListener {
                 val username = tietLoginUsername.text.toString().trim()
                 val password = tietLoginPassword.text.toString().trim()

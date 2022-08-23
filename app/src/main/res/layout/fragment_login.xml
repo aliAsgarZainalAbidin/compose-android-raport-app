@@ -12,7 +12,6 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/padding_layout">
 
-
         <ImageView
             android:id="@+id/iv_login_logo"
             android:layout_width="128dp"
@@ -70,6 +69,24 @@
             android:layout_marginTop="48dp"
             android:text="Login"
             app:layout_constraintTop_toBottomOf="@id/til_login_password" />
+
+        <View
+            android:id="@+id/separator"
+            android:background="@color/gray2"
+            app:layout_constraintTop_toBottomOf="@id/mb_login_login"
+            android:layout_width="match_parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="4dp"
+            android:layout_height="2dp"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/mb_login_signup"
+            style="@style/MaterialButton.Custom"
+            android:layout_width="match_parent"
+            android:layout_marginTop="4dp"
+            android:text="Signup"
+            app:layout_constraintTop_toBottomOf="@id/separator" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

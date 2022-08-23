@@ -118,6 +118,11 @@ interface ApiInterface {
         @Body account: Account
     ): Response<GlobalWrapper<Account>>
 
+    @POST("account/signup")
+    suspend fun signup(
+        @Body account: Account
+    ): Response<GlobalWrapper<Account>>
+
     @PUT("account/{id}")
     suspend fun updateAccountTeacher(
         @Header("Authorization") token: String,
