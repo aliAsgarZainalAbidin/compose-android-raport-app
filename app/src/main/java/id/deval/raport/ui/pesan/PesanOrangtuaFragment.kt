@@ -41,9 +41,13 @@ class PesanOrangtuaFragment : BaseSkeletonFragment() {
         var siswaId = ""
         with(binding){
             ivPesanorangtuaPerson.setOnClickListener {
-                val bundle = bundleOf()
-                bundle.putString(Constanta.ROLE, "orangtua")
-                mainNavController.navigate(R.id.action_baseFragment_to_addSiswaFragment, bundle)
+                try {
+                    val bundle = bundleOf()
+                    bundle.putString(Constanta.ROLE, "orangtua")
+                    mainNavController.navigate(R.id.action_baseFragment_to_addSiswaFragment, bundle)
+                }catch (e: Exception){
+                    Log.d(ContentValues.TAG, "onViewCreated: $e")
+                }
             }
 
             mtvPesanorangtuaName.text = session.name

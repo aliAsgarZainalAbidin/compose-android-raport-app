@@ -36,7 +36,11 @@ class AddGrowthFragment : BaseSkeletonFragment() {
         val pesanId = arguments?.getString(Constanta.ID)
         with(binding){
             ivAddgrowthBack.setOnClickListener {
-                mainNavController.popBackStack()
+                try {
+                    mainNavController.popBackStack()
+                }catch (e: Exception){
+                    Log.d(TAG, "onViewCreated: $e")
+                }
             }
 
             Log.d(TAG, "onViewCreated: PESAN ID $pesanId")
@@ -80,8 +84,12 @@ class AddGrowthFragment : BaseSkeletonFragment() {
                     )
                     pesanViewModel.addGrowth(session.token.toString(), growth).observe(viewLifecycleOwner){
                         if (it.isSuccessful){
-                            requireContext().showToast("${it.body()?.status} menambahkan data")
-                            mainNavController.popBackStack()
+                            try {
+                                requireContext().showToast("${it.body()?.status} menambahkan data")
+                                mainNavController.popBackStack()
+                            }catch (e: Exception){
+                                Log.d(TAG, "onViewCreated: $e")
+                            }
                         } else {
                             requireContext().showToast(it.message())
                         }

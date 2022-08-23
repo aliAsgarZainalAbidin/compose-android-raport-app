@@ -1,5 +1,6 @@
 package id.deval.raport.ui.akun.siswa
 
+import android.content.ContentValues
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -38,16 +39,24 @@ class RegistrasiSiswaFragment : BaseSkeletonFragment() {
             refreshRecyclerViewSiswa()
 
             mbRegistrasisiswaAdd.setOnClickListener {
-                val bundle = bundleOf()
-                bundle.putString(Constanta.ROLE, "admin")
-                mainNavController.navigate(
-                    R.id.action_registrasiSiswaFragment_to_addSiswaFragment,
-                    bundle
-                )
+                try {
+                    val bundle = bundleOf()
+                    bundle.putString(Constanta.ROLE, "admin")
+                    mainNavController.navigate(
+                        R.id.action_registrasiSiswaFragment_to_addSiswaFragment,
+                        bundle
+                    )
+                }catch (e: Exception){
+                    Log.d(ContentValues.TAG, "onViewCreated: $e")
+                }
             }
 
             ivRegistrasisiswaBack.setOnClickListener {
-                mainNavController.popBackStack()
+                try {
+                    mainNavController.popBackStack()
+                }catch (e: Exception){
+                    Log.d(ContentValues.TAG, "onViewCreated: $e")
+                }
             }
         }
     }

@@ -36,7 +36,11 @@ class LoginFragment : BaseSkeletonFragment() {
         with(binding) {
 
             if(!session.token.isNullOrEmpty()){
-                mainNavController.navigate(R.id.action_loginFragment_to_baseFragment)
+                try {
+                    mainNavController.navigate(R.id.action_loginFragment_to_baseFragment)
+                }catch (e: Exception){
+                    Log.d(TAG, "onViewCreated: $e")
+                }
             }
 
             tietLoginUsername.hideError()
@@ -65,8 +69,12 @@ class LoginFragment : BaseSkeletonFragment() {
                     val account = Account(username = username, password = password)
                     loginViewModel.login(account).observe(viewLifecycleOwner){
                         if (it.isSuccessful){
-                            session.login(it.body()?.data!!, loginViewModel.token)
-                            mainNavController.navigate(R.id.action_loginFragment_to_baseFragment)
+                            try {
+                                session.login(it.body()?.data!!, loginViewModel.token)
+                                mainNavController.navigate(R.id.action_loginFragment_to_baseFragment)
+                            }catch (e: Exception){
+                                Log.d(TAG, "onViewCreated: $e")
+                            }
                         } else {
                             requireContext().showToast(it.message())
                         }

@@ -49,7 +49,11 @@ class AbsenDetailFragment : BaseSkeletonFragment() {
         with(binding) {
             mtvDetailabsenDate.text = date
             ivDetailabsenBack.setOnClickListener {
-                mainNavController.popBackStack()
+                try {
+                    mainNavController.popBackStack()
+                } catch (e: Exception){
+                    Log.d(TAG, "onViewCreated: $e")
+                }
             }
 
             Log.d("TAG", "onViewCreated: $date $id")
@@ -73,8 +77,12 @@ class AbsenDetailFragment : BaseSkeletonFragment() {
                         )
                             .observe(viewLifecycleOwner) {
                                 if (it.isSuccessful) {
-                                    requireContext().showToast("${it.body()?.status} men-update data")
-                                    mainNavController.popBackStack()
+                                    try {
+                                        requireContext().showToast("${it.body()?.status} men-update data")
+                                        mainNavController.popBackStack()
+                                    } catch (e : Exception){
+                                        Log.d(TAG, "onViewCreated: $e")
+                                    }
                                 } else {
                                     requireActivity().showToast(it.message())
                                 }

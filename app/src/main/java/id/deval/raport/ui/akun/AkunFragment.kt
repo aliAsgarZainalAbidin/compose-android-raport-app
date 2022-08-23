@@ -1,5 +1,6 @@
 package id.deval.raport.ui.akun
 
+import android.content.ContentValues
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -47,10 +48,14 @@ class AkunFragment : BaseSkeletonFragment() {
                 with(binding){
                     if (it.isSuccessful){
                         ivAkunPerson.setOnClickListener {
-                            val bundle = bundleOf()
-                            bundle.putString(Constanta.ID, session.id)
-                            bundle.putString(Constanta.ROLE, "admin")
-                            mainNavController.navigate(R.id.action_baseFragment_to_addGuruFragment,bundle)
+                            try {
+                                val bundle = bundleOf()
+                                bundle.putString(Constanta.ID, session.id)
+                                bundle.putString(Constanta.ROLE, "admin")
+                                mainNavController.navigate(R.id.action_baseFragment_to_addGuruFragment,bundle)
+                            }catch (e: Exception){
+                                Log.d(ContentValues.TAG, "onViewCreated: $e")
+                            }
                         }
 
                         mtvAkunGuru.text = it.body()?.result.toString()
@@ -59,13 +64,21 @@ class AkunFragment : BaseSkeletonFragment() {
                             includeRvGuru.mtvRvlayoutAdd.show()
                             includeRvGuru.mtvRvlayoutAdd.text = "Tambah Guru"
                             includeRvGuru.mtvRvlayoutAdd.setOnClickListener {
-                                mainNavController.navigate(R.id.action_baseFragment_to_registrasiGuruFragment)
+                                try {
+                                    mainNavController.navigate(R.id.action_baseFragment_to_registrasiGuruFragment)
+                                }catch (e: Exception){
+                                    Log.d(ContentValues.TAG, "onViewCreated: $e")
+                                }
                             }
                         } else {
                             includeRvGuru.mtvRvlayoutViewmore.show()
                             includeRvGuru.mtvRvlayoutAdd.invisible()
                             includeRvGuru.mtvRvlayoutViewmore.setOnClickListener {
-                                mainNavController.navigate(R.id.action_baseFragment_to_registrasiGuruFragment)
+                                try {
+                                    mainNavController.navigate(R.id.action_baseFragment_to_registrasiGuruFragment)
+                                }catch (e: Exception){
+                                    Log.d(ContentValues.TAG, "onViewCreated: $e")
+                                }
                             }
                         }
 
@@ -92,13 +105,21 @@ class AkunFragment : BaseSkeletonFragment() {
                         includeRvSiswa.mtvRvlayoutAdd.show()
                         includeRvSiswa.mtvRvlayoutAdd.text = "Tambah Siswa"
                         includeRvSiswa.mtvRvlayoutAdd.setOnClickListener {
-                            mainNavController.navigate(R.id.action_baseFragment_to_registrasiSiswaFragment)
+                            try {
+                                mainNavController.navigate(R.id.action_baseFragment_to_registrasiSiswaFragment)
+                            }catch (e: Exception){
+                                Log.d(ContentValues.TAG, "onViewCreated: $e")
+                            }
                         }
                     } else {
                         includeRvSiswa.mtvRvlayoutViewmore.show()
                         includeRvSiswa.mtvRvlayoutAdd.invisible()
                         includeRvSiswa.mtvRvlayoutViewmore.setOnClickListener {
-                            mainNavController.navigate(R.id.action_baseFragment_to_registrasiSiswaFragment)
+                            try {
+                                mainNavController.navigate(R.id.action_baseFragment_to_registrasiSiswaFragment)
+                            }catch (e: Exception){
+                                Log.d(ContentValues.TAG, "onViewCreated: $e")
+                            }
                         }
                     }
                     includeRvSiswa.mtvRvlayoutTitle.text = "Siswa"

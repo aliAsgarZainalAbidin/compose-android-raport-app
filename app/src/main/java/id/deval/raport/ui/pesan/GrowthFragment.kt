@@ -40,9 +40,13 @@ class GrowthFragment : BaseSkeletonFragment() {
         with(binding){
             listGrowth = arrayListOf()
             mtvAddpesanAddgrowth.setOnClickListener {
-                val bundle = bundleOf()
-                bundle.putString(Constanta.ID, pesanId)
-                mainNavController.navigate(R.id.action_addPesanFragment_to_addGrowthFragment, bundle)
+                try {
+                    val bundle = bundleOf()
+                    bundle.putString(Constanta.ID, pesanId)
+                    mainNavController.navigate(R.id.action_addPesanFragment_to_addGrowthFragment, bundle)
+                }catch (e: Exception){
+                    Log.d(ContentValues.TAG, "onViewCreated: $e")
+                }
             }
 
             pesanViewModel.getPesanById(session.token.toString(), siswaId).observe(viewLifecycleOwner){

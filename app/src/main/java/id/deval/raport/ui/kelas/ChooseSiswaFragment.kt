@@ -44,7 +44,11 @@ class ChooseSiswaFragment : BaseSkeletonFragment() {
                 override fun handleOnBackPressed() {
                     if (isEnabled) {
                         // Handle back press
-                        mainNavController.popBackStack()
+                        try {
+                            mainNavController.popBackStack()
+                        }catch (e: Exception){
+                            Log.d(TAG, "onViewCreated: $e")
+                        }
                     } else {
                         // If you want to get default implementation of onBackPressed, use this
                         this.remove();
@@ -59,7 +63,11 @@ class ChooseSiswaFragment : BaseSkeletonFragment() {
         dataSiswa = arrayListOf()
         with(binding) {
             ivChoosesiswaBack.setOnClickListener {
-                mainNavController.popBackStack()
+                try {
+                    mainNavController.popBackStack()
+                }catch (e: Exception){
+                    Log.d(TAG, "onViewCreated: $e")
+                }
             }
 
             siswaViewModel.getAllLocalSiswa()
@@ -95,14 +103,22 @@ class ChooseSiswaFragment : BaseSkeletonFragment() {
                             ).observe(viewLifecycleOwner) {
                                 if (it.isSuccessful) {
                                     Log.d(TAG, "onViewCreated: CHOOSE SISWA ${it?.body()?.data?.siswaId}")
-                                    mainNavController.popBackStack()
+                                    try {
+                                        mainNavController.popBackStack()
+                                    }catch (e: Exception){
+                                        Log.d(TAG, "onViewCreated: $e")
+                                    }
                                 } else {
                                     requireContext().showToast(it.message())
                                 }
                             }
                         }
                 } else {
-                    mainNavController.popBackStack()
+                    try {
+                        mainNavController.popBackStack()
+                    }catch (e: Exception){
+                        Log.d(TAG, "onViewCreated: $e")
+                    }
                 }
             }
         }

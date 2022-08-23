@@ -1,5 +1,6 @@
 package id.deval.raport.ui.kelas
 
+import android.content.ContentValues
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -37,16 +38,24 @@ class KelasFragment : BaseSkeletonFragment() {
 
         with(binding) {
             ivKelasPerson.setOnClickListener {
-                val bundle = bundleOf()
-                bundle.putString(Constanta.ID, session.id)
-                bundle.putString(Constanta.ROLE, "admin")
-                mainNavController.navigate(R.id.action_baseFragment_to_addGuruFragment,bundle)
+                try {
+                    val bundle = bundleOf()
+                    bundle.putString(Constanta.ID, session.id)
+                    bundle.putString(Constanta.ROLE, "admin")
+                    mainNavController.navigate(R.id.action_baseFragment_to_addGuruFragment,bundle)
+                }catch (e: Exception){
+                    Log.d(ContentValues.TAG, "onViewCreated: $e")
+                }
             }
             mtvKelasName.text = session.name
             includeRvGuru.mtvRvlayoutTitle.text = "Kelas"
             includeRvGuru.mtvRvlayoutAdd.show()
             includeRvGuru.mtvRvlayoutAdd.setOnClickListener {
-                mainNavController.navigate(R.id.action_baseFragment_to_addKelasFragment)
+                try {
+                    mainNavController.navigate(R.id.action_baseFragment_to_addKelasFragment)
+                }catch (e: Exception){
+                    Log.d(ContentValues.TAG, "onViewCreated: $e")
+                }
             }
             includeRvGuru.mtvRvlayoutAdd.text = "Tambah Kelas"
             includeRvGuru.mtvRvlayoutViewmore.hide()

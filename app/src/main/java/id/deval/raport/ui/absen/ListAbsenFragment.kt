@@ -49,7 +49,11 @@ class ListAbsenFragment : BaseSkeletonFragment() {
         val mapelName = arguments?.getString(Constanta.MAPEL_NAME)
         with(binding) {
             ivListabsenBack.setOnClickListener {
-                mainNavController.popBackStack()
+                try {
+                    mainNavController.popBackStack()
+                }catch (e: Exception){
+                    Log.d(TAG, "onViewCreated: $e")
+                }
             }
 
             mtvListabsenName.text = mapelName
@@ -92,14 +96,17 @@ class ListAbsenFragment : BaseSkeletonFragment() {
                         absenViewModel.addAttendance(session.token.toString(), attendance)
                             .observe(viewLifecycleOwner) {
                                 if (it.isSuccessful) {
-                                    Log.d("TAG", "onViewCreated: ${it.body()?.data}")
-                                    val bundle = bundleOf()
-                                    bundle.putString(Constanta.DATE, date)
-                                    bundle.putString(Constanta.ID, it.body()?.data!!.id)
-                                    mainNavController.navigate(
-                                        R.id.action_listAbsenFragment_to_absenDetailFragment,
-                                        bundle
-                                    )
+                                    try {
+                                        val bundle = bundleOf()
+                                        bundle.putString(Constanta.DATE, date)
+                                        bundle.putString(Constanta.ID, it.body()?.data!!.id)
+                                        mainNavController.navigate(
+                                            R.id.action_listAbsenFragment_to_absenDetailFragment,
+                                            bundle
+                                        )
+                                    }catch (e: Exception){
+                                        Log.d(TAG, "onViewCreated: $e")
+                                    }
                                 } else {
                                     requireContext().showToast(it.message())
                                 }

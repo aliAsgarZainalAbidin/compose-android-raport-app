@@ -52,11 +52,19 @@ class AddPesanFragment : BaseSkeletonFragment() {
 //            }
 
             mbAddpesanSimpan.setOnClickListener {
-                mainNavController.popBackStack()
+                try {
+                    mainNavController.popBackStack()
+                }catch (e: Exception){
+                    Log.d(TAG, "onViewCreated: $e")
+                }
             }
 
             ivAddpesanBack.setOnClickListener {
-                mainNavController.popBackStack()
+                try {
+                    mainNavController.popBackStack()
+                }catch (e: Exception){
+                    Log.d(TAG, "onViewCreated: $e")
+                }
             }
 
             if (siswaId!=null){
@@ -107,6 +115,7 @@ class AddPesanFragment : BaseSkeletonFragment() {
                 adapter.setArgument(siswaId)
             }
             vp2.adapter = adapter
+
             val listTab = arrayListOf("Perkembangan", "Catatan")
             TabLayoutMediator(tbAddpesanLayout,vp2){ tab, position ->
                 tab.text = listTab[position]

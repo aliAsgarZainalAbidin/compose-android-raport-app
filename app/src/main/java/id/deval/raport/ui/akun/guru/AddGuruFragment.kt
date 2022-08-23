@@ -65,8 +65,12 @@ class AddGuruFragment : BaseSkeletonFragment() {
                 mbAddguruLogout.setOnClickListener {
                     loginViewModel.logout().observe(viewLifecycleOwner){
                         if (it.isSuccessful){
-                            session.logout()
-                            mainNavController.navigate(R.id.action_addGuruFragment_to_loginFragment)
+                            try {
+                                session.logout()
+                                mainNavController.navigate(R.id.action_addGuruFragment_to_loginFragment)
+                            }catch (e: Exception){
+                                Log.d(TAG, "onViewCreated: $e")
+                            }
                         } else {
                             requireContext().showToast(it.message())
                         }
@@ -74,7 +78,11 @@ class AddGuruFragment : BaseSkeletonFragment() {
                 }
             }
             ivAddguruBack.setOnClickListener {
-                mainNavController.popBackStack()
+                try {
+                    mainNavController.popBackStack()
+                }catch (e: Exception){
+                    Log.d(TAG, "onViewCreated: $e")
+                }
             }
             tietAddguruNamalengkap.hideError()
             tietAddguruNik.hideError()
@@ -144,8 +152,12 @@ class AddGuruFragment : BaseSkeletonFragment() {
                         accountViewModel.addTeacher(session.token.toString(), account)
                             .observe(viewLifecycleOwner) {
                                 if (it.isSuccessful){
-                                    requireContext().showToast("${it.body()?.status}, Berhasil menambahkan data Guru")
-                                    mainNavController.popBackStack()
+                                    try {
+                                        requireContext().showToast("${it.body()?.status}, Berhasil menambahkan data Guru")
+                                        mainNavController.popBackStack()
+                                    }catch (e: Exception){
+                                        Log.d(TAG, "onViewCreated: $e")
+                                    }
                                 } else {
                                     requireContext().showToast(it.message())
                                 }
@@ -155,8 +167,12 @@ class AddGuruFragment : BaseSkeletonFragment() {
                         accountViewModel.updateTeacher(session.token.toString(), id, accountUpdate)
                             .observe(viewLifecycleOwner) {
                                 if (it.isSuccessful){
-                                    requireContext().showToast("${it.body()?.status}, Berhasil memperbaharui data Guru")
-                                    mainNavController.popBackStack()
+                                    try {
+                                        requireContext().showToast("${it.body()?.status}, Berhasil memperbaharui data Guru")
+                                        mainNavController.popBackStack()
+                                    }catch (e: Exception){
+                                        Log.d(TAG, "onViewCreated: $e")
+                                    }
                                 } else {
                                     requireContext().showToast(it.message())
                                 }

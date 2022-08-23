@@ -1,5 +1,7 @@
 package id.deval.raport.ui.adapter
 
+import android.content.ContentValues
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
@@ -23,9 +25,13 @@ class RvTugasAdapter(
 
                 if (navController != null){
                     clRvtugasContainer.setOnClickListener {
-                        val bundle = bundleOf()
-                        bundle.putString(Constanta.TUGAS_ID, data.id)
-                        navController.navigate(R.id.action_detailRaportFragment_to_addTugasFragment, bundle)
+                        try {
+                            val bundle = bundleOf()
+                            bundle.putString(Constanta.TUGAS_ID, data.id)
+                            navController.navigate(R.id.action_detailRaportFragment_to_addTugasFragment, bundle)
+                        }catch (e: Exception){
+                            Log.d(ContentValues.TAG, "onViewCreated: $e")
+                        }
                     }
                 }
             }

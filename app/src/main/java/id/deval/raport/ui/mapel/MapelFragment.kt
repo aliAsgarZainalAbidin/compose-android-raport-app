@@ -1,6 +1,8 @@
 package id.deval.raport.ui.mapel
 
+import android.content.ContentValues
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -34,16 +36,24 @@ class MapelFragment : BaseSkeletonFragment() {
         dataMapel = arrayListOf()
         with(binding) {
             ivMapelPerson.setOnClickListener {
-                val bundle = bundleOf()
-                bundle.putString(Constanta.ID, session.id)
-                bundle.putString(Constanta.ROLE, "admin")
-                mainNavController.navigate(R.id.action_baseFragment_to_addGuruFragment,bundle)
+                try {
+                    val bundle = bundleOf()
+                    bundle.putString(Constanta.ID, session.id)
+                    bundle.putString(Constanta.ROLE, "admin")
+                    mainNavController.navigate(R.id.action_baseFragment_to_addGuruFragment,bundle)
+                }catch (e: Exception){
+                    Log.d(ContentValues.TAG, "onViewCreated: $e")
+                }
             }
             mtvMapelName.text = session.name
             includeRvMapel.mtvRvlayoutAdd.show()
             includeRvMapel.mtvRvlayoutAdd.text = "Tambah Mapel"
             includeRvMapel.mtvRvlayoutAdd.setOnClickListener {
-                mainNavController.navigate(R.id.action_baseFragment_to_addMapelFragment)
+                try {
+                    mainNavController.navigate(R.id.action_baseFragment_to_addMapelFragment)
+                }catch (e: Exception){
+                    Log.d(ContentValues.TAG, "onViewCreated: $e")
+                }
             }
             includeRvMapel.mtvRvlayoutTitle.text = "Mata Pelajaran"
             includeRvMapel.mtvRvlayoutViewmore.hide()

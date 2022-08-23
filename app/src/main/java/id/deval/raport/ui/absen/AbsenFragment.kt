@@ -1,6 +1,8 @@
 package id.deval.raport.ui.absen
 
+import android.content.ContentValues.TAG
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -48,10 +50,14 @@ class AbsenFragment : BaseSkeletonFragment() {
             when (role) {
                 "guru" -> {
                     ivAbsenPerson.setOnClickListener {
-                        val bundle = bundleOf()
-                        bundle.putString(Constanta.ID, session.id)
-                        bundle.putString(Constanta.ROLE, "admin")
-                        mainNavController.navigate(R.id.action_baseFragment_to_addGuruFragment,bundle)
+                        try {
+                            val bundle = bundleOf()
+                            bundle.putString(Constanta.ID, session.id)
+                            bundle.putString(Constanta.ROLE, "admin")
+                            mainNavController.navigate(R.id.action_baseFragment_to_addGuruFragment,bundle)
+                        } catch (e: Exception){
+                            Log.d(TAG, "onViewCreated: $e")
+                        }
                     }
                     kelasViewModel.getClassByIdGuru(session.token.toString(), session.id.toString())
                         .observe(viewLifecycleOwner) {
@@ -83,12 +89,16 @@ class AbsenFragment : BaseSkeletonFragment() {
                 }
                 "orangtua" -> {
                     ivAbsenPerson.setOnClickListener {
-                        val bundle = bundleOf()
-                        bundle.putString(Constanta.ROLE, role)
-                        mainNavController.navigate(
-                            R.id.action_baseFragment_to_addSiswaFragment,
-                            bundle
-                        )
+                        try {
+                            val bundle = bundleOf()
+                            bundle.putString(Constanta.ROLE, role)
+                            mainNavController.navigate(
+                                R.id.action_baseFragment_to_addSiswaFragment,
+                                bundle
+                            )
+                        }catch (e: Exception){
+                            Log.d(TAG, "onViewCreated: $e")
+                        }
                     }
 
                     kelasViewModel.getClassByNis(
@@ -133,10 +143,14 @@ class AbsenFragment : BaseSkeletonFragment() {
 
     @Subscribe
     fun navigateToListAbsenFragment(commonParams: CommonParams) {
-        val bundle = bundleOf()
-        bundle.putString(Constanta.CLASS_ID, classId)
-        bundle.putString(Constanta.MAPEL_ID, commonParams.id)
-        bundle.putString(Constanta.MAPEL_NAME, commonParams.username)
-        mainNavController.navigate(R.id.action_baseFragment_to_listAbsenFragment, bundle)
+        try {
+            val bundle = bundleOf()
+            bundle.putString(Constanta.CLASS_ID, classId)
+            bundle.putString(Constanta.MAPEL_ID, commonParams.id)
+            bundle.putString(Constanta.MAPEL_NAME, commonParams.username)
+            mainNavController.navigate(R.id.action_baseFragment_to_listAbsenFragment, bundle)
+        }catch (e: Exception){
+            Log.d(TAG, "onViewCreated: $e")
+        }
     }
 }

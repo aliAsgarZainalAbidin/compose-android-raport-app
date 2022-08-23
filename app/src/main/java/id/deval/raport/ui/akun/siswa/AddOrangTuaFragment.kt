@@ -1,6 +1,7 @@
 package id.deval.raport.ui.akun.siswa
 
 import android.app.DatePickerDialog
+import android.content.ContentValues
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -93,7 +94,11 @@ class AddOrangTuaFragment : BaseSkeletonFragment() {
             }
 
             ivAddorangtuaBack.setOnClickListener {
-                mainNavController.popBackStack()
+                try {
+                    mainNavController.popBackStack()
+                }catch (e: Exception){
+                    Log.d(ContentValues.TAG, "onViewCreated: $e")
+                }
             }
             tietAddorangtuaNamalengkap.hideError()
             tietAddorangtuaPassword.hideError()
@@ -238,11 +243,15 @@ class AddOrangTuaFragment : BaseSkeletonFragment() {
                                     )
                                         .observe(viewLifecycleOwner) {
                                             if (it.isSuccessful) {
-                                                requireContext().showToast("Berhasil registrasi Siswa & Orang Tua")
-                                                mainNavController.popBackStack(
-                                                    R.id.addSiswaFragment,
-                                                    true
-                                                )
+                                                try {
+                                                    requireContext().showToast("Berhasil registrasi Siswa & Orang Tua")
+                                                    mainNavController.popBackStack(
+                                                        R.id.addSiswaFragment,
+                                                        true
+                                                    )
+                                                }catch (e: Exception){
+                                                    Log.d(ContentValues.TAG, "onViewCreated: $e")
+                                                }
                                             } else {
                                                 requireContext().showToast(it.message())
                                             }
@@ -264,8 +273,12 @@ class AddOrangTuaFragment : BaseSkeletonFragment() {
                         accountViewModel.updateTeacher(session.token.toString(), id, accountUpdate)
                             .observe(viewLifecycleOwner) {
                                 if (it.isSuccessful) {
-                                    requireContext().showToast("${it.body()?.status}, Berhasil memperbaharui data OrangTua")
-                                    mainNavController.popBackStack(R.id.addSiswaFragment, true)
+                                    try {
+                                        requireContext().showToast("${it.body()?.status}, Berhasil memperbaharui data OrangTua")
+                                        mainNavController.popBackStack(R.id.addSiswaFragment, true)
+                                    }catch (e: Exception){
+                                        Log.d(ContentValues.TAG, "onViewCreated: $e")
+                                    }
                                 } else {
                                     requireContext().showToast(it.message())
                                 }

@@ -1,7 +1,9 @@
 package id.deval.raport.ui.note
 
 import android.app.DatePickerDialog
+import android.content.ContentValues
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -33,7 +35,11 @@ class AddNoteFragment : BaseSkeletonFragment() {
         val pesanId = arguments?.getString(Constanta.ID)
         with(binding) {
             ivAddnoteBack.setOnClickListener {
-                mainNavController.popBackStack()
+                try {
+                    mainNavController.popBackStack()
+                }catch (e: Exception){
+                    Log.d(ContentValues.TAG, "onViewCreated: $e")
+                }
             }
 
             tietAddnoteTanggal.setOnClickListener {
@@ -79,8 +85,12 @@ class AddNoteFragment : BaseSkeletonFragment() {
                     )
                     pesanViewModel.addNote(session.token.toString(),note).observe(viewLifecycleOwner){
                         if (it.isSuccessful){
-                            requireContext().showToast("${it.body()?.status} menambahkan data")
-                            mainNavController.popBackStack()
+                            try {
+                                requireContext().showToast("${it.body()?.status} menambahkan data")
+                                mainNavController.popBackStack()
+                            }catch (e: Exception){
+                                Log.d(ContentValues.TAG, "onViewCreated: $e")
+                            }
                         } else {
                             requireContext().showToast(it.message())
                         }

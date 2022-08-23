@@ -1,8 +1,10 @@
 package id.deval.raport.ui
 
+import android.content.ContentValues
 import android.content.Intent
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -94,28 +96,32 @@ class BaseFragment : BaseSkeletonFragment() {
             val navOptions = NavOptions.Builder()
                 .setPopUpTo(R.id.akunFragment, true)
                 .build()
-            secNavController.navigate(R.id.akunFragment, bundleOf(), navOptions)
-
-            botnavBaseContainer.setOnItemSelectedListener {
-                secNavController.popBackStack(
-                    secNavController.currentDestination?.id ?: R.id.akunFragment, true
-                )
-                when (it.itemId) {
-                    R.id.akun -> {
-                        secNavController.navigate(R.id.akunFragment)
-                        true
+            try {
+                secNavController.navigate(R.id.akunFragment, bundleOf(), navOptions)
+                botnavBaseContainer.setOnItemSelectedListener {
+                    secNavController.popBackStack(
+                        secNavController.currentDestination?.id ?: R.id.akunFragment, true
+                    )
+                    when (it.itemId) {
+                        R.id.akun -> {
+                            secNavController.navigate(R.id.akunFragment)
+                            true
+                        }
+                        R.id.kelas -> {
+                            secNavController.navigate(R.id.kelasFragment)
+                            true
+                        }
+                        R.id.mapel -> {
+                            secNavController.navigate(R.id.mapelFragment)
+                            true
+                        }
+                        else -> false
                     }
-                    R.id.kelas -> {
-                        secNavController.navigate(R.id.kelasFragment)
-                        true
-                    }
-                    R.id.mapel -> {
-                        secNavController.navigate(R.id.mapelFragment)
-                        true
-                    }
-                    else -> false
                 }
+            }catch (e: Exception){
+                Log.d(ContentValues.TAG, "onViewCreated: $e")
             }
+
         }
     }
 
@@ -130,33 +136,38 @@ class BaseFragment : BaseSkeletonFragment() {
             val navOptions = NavOptions.Builder()
                 .setPopUpTo(R.id.absenFragment, true)
                 .build()
-            secNavController.navigate(R.id.absenFragment, bundleOf(), navOptions)
 
-            botnavBaseContainer.menu.clear()
-            botnavBaseContainer.inflateMenu(R.menu.menu_botnav_teacher)
-            botnavBaseContainer.setOnItemSelectedListener {
+            try {
+                secNavController.navigate(R.id.absenFragment, bundleOf(), navOptions)
 
-                secNavController.popBackStack(
-                    secNavController.currentDestination?.id ?: R.id.absenFragment, true
-                )
-                when (it.itemId) {
-                    R.id.absen -> {
-                        secNavController.navigate(R.id.absenFragment, bundle)
-                        true
-                    }
-                    R.id.raport -> {
-                        secNavController.navigate(R.id.raportFragment, bundle)
-                        true
-                    }
-                    R.id.pesan -> {
-                        when(role){
-                            "guru" -> secNavController.navigate(R.id.pesanFragment)
-                            "orangtua" -> secNavController.navigate(R.id.pesanOrangtuaFragment)
+                botnavBaseContainer.menu.clear()
+                botnavBaseContainer.inflateMenu(R.menu.menu_botnav_teacher)
+                botnavBaseContainer.setOnItemSelectedListener {
+
+                    secNavController.popBackStack(
+                        secNavController.currentDestination?.id ?: R.id.absenFragment, true
+                    )
+                    when (it.itemId) {
+                        R.id.absen -> {
+                            secNavController.navigate(R.id.absenFragment, bundle)
+                            true
                         }
-                        true
+                        R.id.raport -> {
+                            secNavController.navigate(R.id.raportFragment, bundle)
+                            true
+                        }
+                        R.id.pesan -> {
+                            when(role){
+                                "guru" -> secNavController.navigate(R.id.pesanFragment)
+                                "orangtua" -> secNavController.navigate(R.id.pesanOrangtuaFragment)
+                            }
+                            true
+                        }
+                        else -> false
                     }
-                    else -> false
                 }
+            }catch (e: Exception){
+                Log.d(ContentValues.TAG, "onViewCreated: $e")
             }
         }
     }

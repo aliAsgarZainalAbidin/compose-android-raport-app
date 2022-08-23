@@ -2,7 +2,6 @@ package id.deval.raport.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
 import id.deval.raport.databinding.RvAbsenSiswaBinding
 import id.deval.raport.db.event.CommonParams

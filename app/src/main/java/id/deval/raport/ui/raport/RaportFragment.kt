@@ -254,10 +254,14 @@ class RaportFragment : BaseSkeletonFragment() {
     fun viewAsGuru() {
         with(binding) {
             ivRaportPerson.setOnClickListener {
-                val bundle = bundleOf()
-                bundle.putString(Constanta.ID, session.id)
-                bundle.putString(Constanta.ROLE, "admin")
-                mainNavController.navigate(R.id.action_baseFragment_to_addGuruFragment, bundle)
+                try {
+                    val bundle = bundleOf()
+                    bundle.putString(Constanta.ID, session.id)
+                    bundle.putString(Constanta.ROLE, "admin")
+                    mainNavController.navigate(R.id.action_baseFragment_to_addGuruFragment, bundle)
+                }catch (e: Exception){
+                    Log.d(TAG, "onViewCreated: $e")
+                }
             }
 
             kelasViewModel.getClassByIdGuru(session.token.toString(), session.id.toString())
@@ -298,22 +302,30 @@ class RaportFragment : BaseSkeletonFragment() {
 
     @Subscribe
     fun navigateToListRaportFragment(commonParams: CommonParams) {
-        val bundle = bundleOf()
-        bundle.putString(Constanta.CLASS_ID, classId)
-        bundle.putString(Constanta.MAPEL_ID, commonParams.id)
-        bundle.putString(Constanta.MAPEL_NAME, commonParams.username)
-        mainNavController.navigate(R.id.action_baseFragment_to_listRaportFragment, bundle)
+        try {
+            val bundle = bundleOf()
+            bundle.putString(Constanta.CLASS_ID, classId)
+            bundle.putString(Constanta.MAPEL_ID, commonParams.id)
+            bundle.putString(Constanta.MAPEL_NAME, commonParams.username)
+            mainNavController.navigate(R.id.action_baseFragment_to_listRaportFragment, bundle)
+        }catch (e: Exception){
+            Log.d(TAG, "onViewCreated: $e")
+        }
     }
 
     @Subscribe
     fun navigateToDetailRaportFragment(eventToDetailRaport: EventToDetailRaport) {
-        val bundle = bundleOf()
-        bundle.putString(Constanta.SISWA_ID, siswaId)
-        bundle.putString(Constanta.CLASS_ID, classId)
-        bundle.putString(Constanta.MAPEL_ID, eventToDetailRaport.id)
-        bundle.putString(Constanta.MAPEL_NAME, eventToDetailRaport.username)
-        bundle.putString(Constanta.ROLE, role)
-        mainNavController.navigate(R.id.action_baseFragment_to_detailRaportFragment, bundle)
+        try {
+            val bundle = bundleOf()
+            bundle.putString(Constanta.SISWA_ID, siswaId)
+            bundle.putString(Constanta.CLASS_ID, classId)
+            bundle.putString(Constanta.MAPEL_ID, eventToDetailRaport.id)
+            bundle.putString(Constanta.MAPEL_NAME, eventToDetailRaport.username)
+            bundle.putString(Constanta.ROLE, role)
+            mainNavController.navigate(R.id.action_baseFragment_to_detailRaportFragment, bundle)
+        }catch (e: Exception){
+            Log.d(TAG, "onViewCreated: $e")
+        }
     }
 
 }

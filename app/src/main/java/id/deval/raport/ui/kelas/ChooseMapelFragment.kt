@@ -45,7 +45,11 @@ class ChooseMapelFragment : BaseSkeletonFragment() {
                 override fun handleOnBackPressed() {
                     if (isEnabled) {
                         // Handle back press
-                        mainNavController.popBackStack()
+                        try {
+                            mainNavController.popBackStack()
+                        }catch (e: Exception){
+                            Log.d(ContentValues.TAG, "onViewCreated: $e")
+                        }
                     } else {
                         // If you want to get default implementation of onBackPressed, use this
                         this.remove();
@@ -58,7 +62,11 @@ class ChooseMapelFragment : BaseSkeletonFragment() {
         dataMapel = arrayListOf()
         with(binding) {
             ivChoosemapelBack.setOnClickListener {
-                mainNavController.popBackStack()
+                try {
+                    mainNavController.popBackStack()
+                }catch (e: Exception){
+                    Log.d(ContentValues.TAG, "onViewCreated: $e")
+                }
             }
 
             mapelViewModel.getAllLocalMapel().observe(viewLifecycleOwner) {
@@ -87,14 +95,22 @@ class ChooseMapelFragment : BaseSkeletonFragment() {
                             updateMapel
                         ).observe(viewLifecycleOwner) {
                             if (it.isSuccessful) {
-                                mainNavController.popBackStack()
+                                try {
+                                    mainNavController.popBackStack()
+                                }catch (e: Exception){
+                                    Log.d(ContentValues.TAG, "onViewCreated: $e")
+                                }
                             } else {
                                 requireContext().showToast(it.message())
                             }
                         }
                     }
                 } else {
-                    mainNavController.popBackStack()
+                    try {
+                        mainNavController.popBackStack()
+                    }catch (e: Exception){
+                        Log.d(ContentValues.TAG, "onViewCreated: $e")
+                    }
                 }
             }
         }

@@ -1,6 +1,8 @@
 package id.deval.raport.ui.akun.guru
 
+import android.content.ContentValues
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -32,11 +34,19 @@ class RegistrasiGuruFragment : BaseSkeletonFragment() {
             refreshRecyclerViewTeacher()
 
             mbRegistrasiguruAdd.setOnClickListener {
-                mainNavController.navigate(R.id.action_registrasiGuruFragment_to_addGuruFragment)
+                try {
+                    mainNavController.navigate(R.id.action_registrasiGuruFragment_to_addGuruFragment)
+                }catch (e: Exception){
+                    Log.d(ContentValues.TAG, "onViewCreated: $e")
+                }
             }
 
             ivRegistrasiguruBack.setOnClickListener {
-                mainNavController.popBackStack()
+                try {
+                    mainNavController.popBackStack()
+                }catch (e: Exception){
+                    Log.d(ContentValues.TAG, "onViewCreated: $e")
+                }
             }
         }
     }

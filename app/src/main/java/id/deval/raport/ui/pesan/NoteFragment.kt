@@ -61,9 +61,13 @@ class NoteFragment : BaseSkeletonFragment() {
             }
 
             mtvAddpesanAddnote.setOnClickListener {
-                val bundle = bundleOf()
-                bundle.putString(Constanta.ID, pesanId)
-                mainNavController.navigate(R.id.action_addPesanFragment_to_addNoteFragment, bundle)
+                try {
+                    val bundle = bundleOf()
+                    bundle.putString(Constanta.ID, pesanId)
+                    mainNavController.navigate(R.id.action_addPesanFragment_to_addNoteFragment, bundle)
+                }catch (e: Exception){
+                    Log.d(ContentValues.TAG, "onViewCreated: $e")
+                }
             }
         }
 

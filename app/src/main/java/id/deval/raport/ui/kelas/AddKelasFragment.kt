@@ -51,12 +51,16 @@ class AddKelasFragment : BaseSkeletonFragment() {
             .addCallback(object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
                     if (isEnabled) {
-                        // Handle back press
-                        mapelViewModel.clearTableMapel()
-                        siswaViewModel.clearTableSiswa()
-                        dataMapel.clear()
-                        dataSiswa.clear()
-                        mainNavController.popBackStack()
+                        try {
+                            // Handle back press
+                            mapelViewModel.clearTableMapel()
+                            siswaViewModel.clearTableSiswa()
+                            dataMapel.clear()
+                            dataSiswa.clear()
+                            mainNavController.popBackStack()
+                        }catch (e: Exception){
+                            Log.d(TAG, "onViewCreated: $e")
+                        }
                     } else {
                         // If you want to get default implementation of onBackPressed, use this
                         this.remove();
@@ -113,19 +117,27 @@ class AddKelasFragment : BaseSkeletonFragment() {
             }
 
             ivAddkelasBack.setOnClickListener {
-                mapelViewModel.clearTableMapel()
-                siswaViewModel.clearTableSiswa()
-                dataMapel.clear()
-                dataSiswa.clear()
-                mainNavController.popBackStack()
+                try {
+                    mapelViewModel.clearTableMapel()
+                    siswaViewModel.clearTableSiswa()
+                    dataMapel.clear()
+                    dataSiswa.clear()
+                    mainNavController.popBackStack()
+                }catch (e: Exception){
+                    Log.d(TAG, "onViewCreated: $e")
+                }
             }
             includeRvSiswa.mtvRvlayoutTitle.setTextColor(resources.getColor(R.color.white))
             includeRvSiswa.mtvRvlayoutTitle.text = "Siswa"
             includeRvSiswa.mtvRvlayoutAdd.show()
             includeRvSiswa.mtvRvlayoutAdd.setOnClickListener {
-                val bundle = bundleOf()
-                bundle.putString(Constanta.CLASS_ID,id)
-                mainNavController.navigate(R.id.action_addKelasFragment_to_chooseSiswaFragment, bundle)
+                try {
+                    val bundle = bundleOf()
+                    bundle.putString(Constanta.CLASS_ID,id)
+                    mainNavController.navigate(R.id.action_addKelasFragment_to_chooseSiswaFragment, bundle)
+                }catch (e: Exception){
+                    Log.d(TAG, "onViewCreated: $e")
+                }
             }
             includeRvSiswa.mtvRvlayoutAdd.text = "Tambah Siswa"
             includeRvSiswa.mtvRvlayoutViewmore.hide()
@@ -134,9 +146,13 @@ class AddKelasFragment : BaseSkeletonFragment() {
             includeRvMapel.mtvRvlayoutTitle.text = "Mapel"
             includeRvMapel.mtvRvlayoutAdd.show()
             includeRvMapel.mtvRvlayoutAdd.setOnClickListener {
-                val bundle = bundleOf()
-                bundle.putString(Constanta.CLASS_ID,id)
-                mainNavController.navigate(R.id.action_addKelasFragment_to_chooseMapelFragment, bundle)
+                try {
+                    val bundle = bundleOf()
+                    bundle.putString(Constanta.CLASS_ID,id)
+                    mainNavController.navigate(R.id.action_addKelasFragment_to_chooseMapelFragment, bundle)
+                }catch (e: Exception){
+                    Log.d(TAG, "onViewCreated: $e")
+                }
             }
             includeRvMapel.mtvRvlayoutAdd.text = "Tambah Mapel"
             includeRvMapel.mtvRvlayoutViewmore.hide()
@@ -192,12 +208,16 @@ class AddKelasFragment : BaseSkeletonFragment() {
                         kelasViewModel.addClass(session.token.toString(), kelas)
                             .observe(viewLifecycleOwner) {
                                 if (it.isSuccessful) {
-                                    mapelViewModel.clearTableMapel()
-                                    siswaViewModel.clearTableSiswa()
-                                    dataMapel.clear()
-                                    dataSiswa.clear()
-                                    mainNavController.popBackStack()
-                                    requireContext().showToast("${it.body()?.status} menambahkan data kelas")
+                                    try {
+                                        mapelViewModel.clearTableMapel()
+                                        siswaViewModel.clearTableSiswa()
+                                        dataMapel.clear()
+                                        dataSiswa.clear()
+                                        mainNavController.popBackStack()
+                                        requireContext().showToast("${it.body()?.status} menambahkan data kelas")
+                                    }catch (e: Exception){
+                                        Log.d(TAG, "onViewCreated: $e")
+                                    }
                                 } else {
                                     requireContext().showToast(it.message())
                                 }

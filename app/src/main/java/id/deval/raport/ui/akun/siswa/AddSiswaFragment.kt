@@ -101,7 +101,11 @@ class AddSiswaFragment : BaseSkeletonFragment() {
         id = arguments?.getString(Constanta.ID) ?: ""
         with(binding) {
             ivAddsiswaBack.setOnClickListener {
-                mainNavController.popBackStack()
+                try {
+                    mainNavController.popBackStack()
+                }catch (e: Exception){
+                    Log.d(TAG, "onViewCreated: $e")
+                }
             }
 
             tietAddsiswaTanggalLahir.setOnClickListener {
@@ -325,13 +329,17 @@ class AddSiswaFragment : BaseSkeletonFragment() {
                     )
 
                     if (id.isEmpty()) {
-                        val bundle = bundleOf()
-                        bundle.putParcelable(Constanta.PARCELABLE_ITEM, siswa)
-                        bundle.putString(Constanta.PATH_IMAGE, pathImage)
-                        mainNavController.navigate(
-                            R.id.action_addSiswaFragment_to_addOrangTuaFragment,
-                            bundle
-                        )
+                        try {
+                            val bundle = bundleOf()
+                            bundle.putParcelable(Constanta.PARCELABLE_ITEM, siswa)
+                            bundle.putString(Constanta.PATH_IMAGE, pathImage)
+                            mainNavController.navigate(
+                                R.id.action_addSiswaFragment_to_addOrangTuaFragment,
+                                bundle
+                            )
+                        }catch (e: Exception){
+                            Log.d(TAG, "onViewCreated: $e")
+                        }
                     } else {
                         siswaViewModel.updateSiswa(session.token.toString(), id, siswa).observe(viewLifecycleOwner){
                             if (!pathImage!!.startsWith("siswa")) {
@@ -348,10 +356,14 @@ class AddSiswaFragment : BaseSkeletonFragment() {
                             }
                             Log.d(TAG, "viewAsAdmin: UPDATE SISWA")
 
-                            val bundle = bundleOf()
-                            bundle.putParcelable(Constanta.PARCELABLE_ITEM, siswa)
-                            bundle.putString(Constanta.USERNAME, nisn)
-                            mainNavController.navigate(R.id.action_addSiswaFragment_to_addOrangTuaFragment, bundle)
+                            try {
+                                val bundle = bundleOf()
+                                bundle.putParcelable(Constanta.PARCELABLE_ITEM, siswa)
+                                bundle.putString(Constanta.USERNAME, nisn)
+                                mainNavController.navigate(R.id.action_addSiswaFragment_to_addOrangTuaFragment, bundle)
+                            }catch (e: Exception){
+                                Log.d(TAG, "onViewCreated: $e")
+                            }
                         }
                     }
                 }
@@ -367,8 +379,12 @@ class AddSiswaFragment : BaseSkeletonFragment() {
             mbAddsiswaLogout.setOnClickListener {
                 loginViewModel.logout().observe(viewLifecycleOwner){
                     if (it.isSuccessful){
-                        session.logout()
-                        mainNavController.navigate(R.id.action_addSiswaFragment_to_loginFragment)
+                        try {
+                            session.logout()
+                            mainNavController.navigate(R.id.action_addSiswaFragment_to_loginFragment)
+                        }catch (e: Exception){
+                            Log.d(TAG, "onViewCreated: $e")
+                        }
                     } else {
                         requireContext().showToast(it.message())
                     }

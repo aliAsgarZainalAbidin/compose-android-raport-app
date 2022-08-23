@@ -37,7 +37,11 @@ class AddTugasFragment : BaseSkeletonFragment() {
         val tugasId = arguments?.getString(Constanta.TUGAS_ID)
         with(binding) {
             ivAddtugasBack.setOnClickListener {
-                mainNavController.popBackStack()
+                try {
+                    mainNavController.popBackStack()
+                }catch (e: Exception){
+                    Log.d(TAG, "onViewCreated: $e")
+                }
             }
 
             if (!tugasId.isNullOrEmpty()) {
@@ -86,8 +90,12 @@ class AddTugasFragment : BaseSkeletonFragment() {
                         raportViewModel.addTugas(session.token.toString(), tugas)
                             .observe(viewLifecycleOwner) {
                                 if (it.isSuccessful){
-                                    requireContext().showToast("${it.body()?.status} menambahkan tugas")
-                                    mainNavController.popBackStack()
+                                    try {
+                                        requireContext().showToast("${it.body()?.status} menambahkan tugas")
+                                        mainNavController.popBackStack()
+                                    }catch (e: Exception){
+                                        Log.d(TAG, "onViewCreated: $e")
+                                    }
                                 } else {
                                     requireContext().showToast(it.message())
                                 }

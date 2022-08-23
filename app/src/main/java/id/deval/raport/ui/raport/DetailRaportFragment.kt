@@ -43,7 +43,11 @@ class DetailRaportFragment : BaseSkeletonFragment() {
         with(binding) {
             mtvDetailraportName.text = "Raport"
             ivDetailraportBack.setOnClickListener {
-                mainNavController.popBackStack()
+                try {
+                    mainNavController.popBackStack()
+                }catch (e: Exception){
+                    Log.d(TAG, "onViewCreated: $e")
+                }
             }
             includeRvSiswa.mtvRvlayoutTitle.text = "Tugas"
             includeRvSiswa.mtvRvlayoutAdd.text = "Tambah Tugas"
@@ -133,9 +137,13 @@ class DetailRaportFragment : BaseSkeletonFragment() {
             includeRvSiswa.mtvRvlayoutViewmore.invisible()
             includeRvSiswa.mtvRvlayoutAdd.show()
             includeRvSiswa.mtvRvlayoutAdd.setOnClickListener {
-                val bundle = bundleOf()
-                bundle.putString(Constanta.ID,raportId)
-                mainNavController.navigate(R.id.action_detailRaportFragment_to_addTugasFragment, bundle)
+                try {
+                    val bundle = bundleOf()
+                    bundle.putString(Constanta.ID,raportId)
+                    mainNavController.navigate(R.id.action_detailRaportFragment_to_addTugasFragment, bundle)
+                }catch (e: Exception){
+                    Log.d(TAG, "onViewCreated: $e")
+                }
             }
 
             includeRvSiswa.rvRvlayoutContainer.apply {

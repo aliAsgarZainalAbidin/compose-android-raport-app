@@ -1,5 +1,6 @@
 package id.deval.raport.ui.adapter
 
+import android.content.ContentValues
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -50,9 +51,13 @@ class RvAdapter<T>(
                         mtvRvitemName.text = data.name
                         mtvRvitemNis.text = data.username
                         ivRvitemEdit.setOnClickListener {
-                            val bundle = bundleOf()
-                            bundle.putString(Constanta.ID, data.id)
-                            navController.navigate(R.id.action_registrasiGuruFragment_to_addGuruFragment,bundle)
+                            try {
+                                val bundle = bundleOf()
+                                bundle.putString(Constanta.ID, data.id)
+                                navController.navigate(R.id.action_registrasiGuruFragment_to_addGuruFragment,bundle)
+                            }catch (e: Exception){
+                                Log.d(ContentValues.TAG, "onViewCreated: $e")
+                            }
                         }
 
                         ivRvitemDelete.setOnClickListener {
@@ -64,10 +69,14 @@ class RvAdapter<T>(
                     "siswa" -> {
                         bindingSiswaRv(data as Siswa)
                         ivRvitemEdit.setOnClickListener {
-                            val bundle = bundleOf()
-                            bundle.putString(Constanta.ID, data.id)
-                            bundle.putString(Constanta.ROLE, "admin")
-                            navController.navigate(R.id.action_registrasiSiswaFragment_to_addSiswaFragment, bundle)
+                            try {
+                                val bundle = bundleOf()
+                                bundle.putString(Constanta.ID, data.id)
+                                bundle.putString(Constanta.ROLE, "admin")
+                                navController.navigate(R.id.action_registrasiSiswaFragment_to_addSiswaFragment, bundle)
+                            }catch (e: Exception){
+                                Log.d(ContentValues.TAG, "onViewCreated: $e")
+                            }
                         }
 
                         ivRvitemDelete.setOnClickListener {
@@ -86,9 +95,13 @@ class RvAdapter<T>(
                     "siswa-pesan" -> {
                         bindingSiswaRv(data as Siswa)
                         clIvitemContainer.setOnClickListener {
-                            val bundle = bundleOf()
-                            bundle.putString(Constanta.ID, data.id)
-                            navController.navigate(R.id.action_baseFragment_to_addPesanFragment, bundle)
+                            try {
+                                val bundle = bundleOf()
+                                bundle.putString(Constanta.ID, data.id)
+                                navController.navigate(R.id.action_baseFragment_to_addPesanFragment, bundle)
+                            }catch (e: Exception){
+                                Log.d(ContentValues.TAG, "onViewCreated: $e")
+                            }
                         }
                         true
                     }
@@ -100,9 +113,13 @@ class RvAdapter<T>(
                         mtvRvitemNis.text = data.siswaId?.size.toString()
 
                         ivRvitemEdit.setOnClickListener {
-                            val bundle = bundleOf()
-                            bundle.putString(Constanta.ID, data.id)
-                            navController.navigate(R.id.action_baseFragment_to_addKelasFragment, bundle)
+                            try {
+                                val bundle = bundleOf()
+                                bundle.putString(Constanta.ID, data.id)
+                                navController.navigate(R.id.action_baseFragment_to_addKelasFragment, bundle)
+                            }catch (e: Exception){
+                                Log.d(ContentValues.TAG, "onViewCreated: $e")
+                            }
                         }
 
                         ivRvitemDelete.setOnClickListener {
@@ -121,19 +138,27 @@ class RvAdapter<T>(
                     "mapel-absen-orangtua" -> {
                         bindingMapelRv(data as Mapel)
                         clIvitemContainer.setOnClickListener {
-                            val bundle = bundleOf()
-                            bundle.putString(Constanta.MAPEL_ID, data.id)
-                            bundle.putString(Constanta.MAPEL_NAME, data.name)
-                            navController.navigate(R.id.action_baseFragment_to_absenOrangtuaFragment, bundle)
+                            try {
+                                val bundle = bundleOf()
+                                bundle.putString(Constanta.MAPEL_ID, data.id)
+                                bundle.putString(Constanta.MAPEL_NAME, data.name)
+                                navController.navigate(R.id.action_baseFragment_to_absenOrangtuaFragment, bundle)
+                            }catch (e: Exception){
+                                Log.d(ContentValues.TAG, "onViewCreated: $e")
+                            }
                         }
                         true
                     }
                     "mapel" -> {
                         bindingMapelRv(data as Mapel)
                         ivRvitemEdit.setOnClickListener {
-                            val bundle = bundleOf()
-                            bundle.putString(Constanta.ID, data.id)
-                            navController.navigate(R.id.action_baseFragment_to_addMapelFragment, bundle)
+                            try {
+                                val bundle = bundleOf()
+                                bundle.putString(Constanta.ID, data.id)
+                                navController.navigate(R.id.action_baseFragment_to_addMapelFragment, bundle)
+                            }catch (e: Exception){
+                                Log.d(ContentValues.TAG, "onViewCreated: $e")
+                            }
                         }
 
                         ivRvitemDelete.setOnClickListener {
