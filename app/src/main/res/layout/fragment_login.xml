@@ -37,7 +37,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="number"
-                android:text="39" />
+                tools:text="39" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -58,7 +58,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
-                android:text="ArogaN61" />
+                tools:text="ArogaN61" />
 
         </com.google.android.material.textfield.TextInputLayout>
 

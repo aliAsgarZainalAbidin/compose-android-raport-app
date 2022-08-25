@@ -31,7 +31,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         debug {
-            buildConfigField "String", "BASE_URL", '"http://192.168.31.241:3000/api/v1/"'
+            buildConfigField "String", "BASE_URL", '"http://10.153.36.218:3000/api/v1/"'
 //            buildConfigField "String", "BASE_URL", '"http://192.168.88.116:3000/api/v1/"'
             buildConfigField "String", "TAG", '"RAPORT-APP"'
         }
@@ -71,7 +71,7 @@ dependencies {
     api deps.androidx.rv_selection
     kapt deps.third.glide_compiler
 
-    kapt "com.google.dagger:hilt-android-compiler:2.28-alpha"
+    kapt "com.google.dagger:hilt-android-compiler:2.42"
     // Dagger Core
     api "com.google.dagger:dagger:2.42"
     kapt "com.google.dagger:dagger-compiler:2.42"
