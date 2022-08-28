@@ -3,10 +3,14 @@ package id.deval.raport.ui.akun.siswa
 import android.Manifest
 import android.app.Activity
 import android.app.DatePickerDialog
+import android.content.ContentUris
 import android.content.ContentValues.TAG
 import android.content.Intent
 import android.graphics.Bitmap
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
 import android.view.LayoutInflater
@@ -36,8 +40,8 @@ class AddSiswaFragment : BaseSkeletonFragment() {
     private lateinit var id: String
     private var isValid = false
     private var pathImage: String? = null
-    private lateinit var selectedImage : Bitmap
-    private var localImage : String? =null
+    private lateinit var selectedImage: Bitmap
+    private var localImage: String? = null
     private val requestPermission =
         registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) {
             Log.d(
@@ -55,23 +59,67 @@ class AddSiswaFragment : BaseSkeletonFragment() {
                         requireActivity().contentResolver,
                         selectedImageUri
                     )
-                    selectedImageUri.let {
+
+                    val collection = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                        MediaStore.Images.Media.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY)
+                    } else MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+
+                    val selection =
+                        MediaStore.Images.ImageColumns.RELATIVE_PATH + " like '%" + "DCIM" + "%'"
+                    val projection = arrayOf(
+                        MediaStore.Images.Media._ID,
+                        MediaStore.Images.Media.DISPLAY_NAME,
+                        MediaStore.Images.Media.RELATIVE_PATH
+                    )
+
+                    selectedImageUri.let { uri ->
                         val cursor = requireActivity().contentResolver.query(
-//                            MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                            it,
-                            arrayOf(MediaStore.Images.Media.DATA), null, null, null
-                        )
-                        if (cursor == null) {
-                            pathImage = selectedImageUri.path.toString()
-                            localImage = selectedImageUri.path
-                        } else {
-                            cursor.moveToFirst()
-                            val idx = cursor.getColumnIndex(MediaStore.Images.Media.DATA)
-                            pathImage = cursor.getString(idx)
-                            cursor.close()
+//                            MediaStore.Images.Media.EXTERNAL_CONTENT_URI, //pick random image
+                            collection,
+                            projection,
+                            selection,
+                            null,
+                            null
+                        ).use {
+                            var id = 0L
+                            var displayName = ""
+                            var relativePath = ""
+                            if (it == null) {
+                                pathImage = selectedImageUri.path.toString()
+                                localImage = selectedImageUri.path
+                            } else {
+                                it.moveToFirst()
+                                val idColumn = it.getColumnIndexOrThrow(MediaStore.Images.Media._ID)
+                                val displayNameColumn =
+                                    it.getColumnIndexOrThrow(MediaStore.Images.Media.DISPLAY_NAME)
+                                val relativePathColumn =
+                                    it.getColumnIndexOrThrow(MediaStore.Images.Media.RELATIVE_PATH)
+                                while (it.moveToNext()) {
+                                    id = it.getLong(idColumn)
+                                    displayName = it.getString(displayNameColumn)
+                                    relativePath = it.getString(relativePathColumn)
+                                    Log.d(TAG, "RelativePATH : $relativePath")
+                                    Log.d(TAG, "DisplayName : $displayName")
+                                    Log.d(TAG, "ID: $id")
+
+                                    if (uri.lastPathSegment?.replace("image:", "", true)
+                                            .equals(id.toString())
+                                    ) {
+                                        Log.d(TAG, "PATH ?: /storage/emulated/0/$relativePath$displayName")
+                                        localImage = "/storage/emulated/0/$relativePath$displayName"
+                                        pathImage = localImage
+                                    }
+                                }
+                                it.close()
+                            }
+                            Log.d(TAG, "PATH Sementara: $pathImage")
+                            Log.d(
+                                "TAG",
+                                "startPickImageLauncher: /storage/emulated/0/$relativePath$displayName"
+                            )
                         }
+                        Log.d(TAG, "PATH selectedImageUri: ${uri.lastPathSegment}")
                     }
-                    Log.d("TAG", "startPickImageLauncher: $pathImage")
                     binding.ivAddsiswaPhoto.setImageBitmap(selectedImage)
                 }
             }
@@ -153,7 +201,7 @@ class AddSiswaFragment : BaseSkeletonFragment() {
                         val urlPhoto = "${BASE_URL}siswa/file/${siswa.photo}"
                         pathImage = siswa.photo
                         Log.d(TAG, "onViewCreated: $localImage")
-                        if (!localImage.isNullOrEmpty()){
+                        if (!localImage.isNullOrEmpty()) {
                             Log.d(TAG, "onViewCreated: NON GLIDE")
                             pathImage = localImage
                             ivAddsiswaPhoto.setImageBitmap(selectedImage)
@@ -194,9 +242,15 @@ class AddSiswaFragment : BaseSkeletonFragment() {
             )
 
             ivAddsiswaPhoto.setOnClickListener {
+                val uriString =
+                    Environment.getExternalStorageDirectory().path + File.separator + "DCIM" + File.separator
                 val intent = Intent()
                 intent.type = "image/jpeg"
                 intent.action = Intent.ACTION_GET_CONTENT
+                intent.setDataAndType(
+                    Uri.parse(uriString), "image/jpeg"
+                );
+                Log.d(TAG, "viewAsAdmin: $uriString")
                 startPickImageLauncher.launch(intent)
             }
 
@@ -358,6 +412,7 @@ class AddSiswaFragment : BaseSkeletonFragment() {
                     } else {
                         siswaViewModel.updateSiswa(session.token.toString(), id, siswa)
                             .observe(viewLifecycleOwner) {
+                                Log.d(TAG, "viewAsAdmin: $pathImage")
                                 if (!pathImage?.startsWith("siswa")!!) {
                                     val imageBitmap = File(pathImage)
                                     val requestImageBody =
