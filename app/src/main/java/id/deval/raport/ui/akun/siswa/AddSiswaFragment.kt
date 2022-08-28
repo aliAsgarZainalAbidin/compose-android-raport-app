@@ -5,6 +5,7 @@ import android.app.Activity
 import android.app.DatePickerDialog
 import android.content.ContentValues.TAG
 import android.content.Intent
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
@@ -35,6 +36,8 @@ class AddSiswaFragment : BaseSkeletonFragment() {
     private lateinit var id: String
     private var isValid = false
     private var pathImage: String? = null
+    private lateinit var selectedImage : Bitmap
+    private var localImage : String? =null
     private val requestPermission =
         registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) {
             Log.d(
@@ -48,20 +51,19 @@ class AddSiswaFragment : BaseSkeletonFragment() {
             if (it.resultCode == Activity.RESULT_OK) {
                 if (it.data != null && it.data!!.data != null) {
                     val selectedImageUri = it.data!!.data!!
-                    val selectedImage = MediaStore.Images.Media.getBitmap(
+                    selectedImage = MediaStore.Images.Media.getBitmap(
                         requireActivity().contentResolver,
                         selectedImageUri
                     )
                     selectedImageUri.let {
                         val cursor = requireActivity().contentResolver.query(
+//                            MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
                             it,
-                            arrayOf(MediaStore.Images.Media.DATA),
-                            null,
-                            null,
-                            null
+                            arrayOf(MediaStore.Images.Media.DATA), null, null, null
                         )
                         if (cursor == null) {
                             pathImage = selectedImageUri.path.toString()
+                            localImage = selectedImageUri.path
                         } else {
                             cursor.moveToFirst()
                             val idx = cursor.getColumnIndex(MediaStore.Images.Media.DATA)
@@ -103,7 +105,7 @@ class AddSiswaFragment : BaseSkeletonFragment() {
             ivAddsiswaBack.setOnClickListener {
                 try {
                     mainNavController.popBackStack()
-                }catch (e: Exception){
+                } catch (e: Exception) {
                     Log.d(TAG, "onViewCreated: $e")
                 }
             }
@@ -127,9 +129,10 @@ class AddSiswaFragment : BaseSkeletonFragment() {
 
             Log.d(TAG, "onViewCreated: $id")
             if (id.isNotEmpty()) {
+                Log.d(TAG, "onViewCreated: LOAD IMAGE")
                 tietAddsiswaNisn.isEnabled = false
                 siswaViewModel.getSiswa(session.token.toString(), id).observe(viewLifecycleOwner) {
-                    if (it.isSuccessful){
+                    if (it.isSuccessful) {
                         val siswa = it.body()?.data!!
                         tietAddsiswaNamalengkap.setText(siswa.name)
                         tietAddsiswaNisn.setText(siswa.nis)
@@ -149,9 +152,21 @@ class AddSiswaFragment : BaseSkeletonFragment() {
                         tietAddsiswaHp.setText(siswa.phone)
                         val urlPhoto = "${BASE_URL}siswa/file/${siswa.photo}"
                         pathImage = siswa.photo
-                        Glide.with(requireContext())
-                            .load(urlPhoto)
-                            .into(ivAddsiswaPhoto)
+                        Log.d(TAG, "onViewCreated: $localImage")
+                        if (!localImage.isNullOrEmpty()){
+                            Log.d(TAG, "onViewCreated: NON GLIDE")
+                            pathImage = localImage
+                            ivAddsiswaPhoto.setImageBitmap(selectedImage)
+                        } else {
+                            Log.d(TAG, "onViewCreated: GLIDE")
+                            Glide.with(requireContext())
+                                .load(urlPhoto)
+                                .into(ivAddsiswaPhoto)
+                        }
+
+//                        Glide.with(requireContext())
+//                            .load(urlPhoto)
+//                            .into(ivAddsiswaPhoto)
                     } else {
                         requireContext().showToast(it.message())
                     }
@@ -337,34 +352,42 @@ class AddSiswaFragment : BaseSkeletonFragment() {
                                 R.id.action_addSiswaFragment_to_addOrangTuaFragment,
                                 bundle
                             )
-                        }catch (e: Exception){
+                        } catch (e: Exception) {
                             Log.d(TAG, "onViewCreated: $e")
                         }
                     } else {
-                        siswaViewModel.updateSiswa(session.token.toString(), id, siswa).observe(viewLifecycleOwner){
-                            if (!pathImage!!.startsWith("siswa")) {
-                                val imageBitmap = File(pathImage)
-                                val requestImageBody =
-                                    imageBitmap.asRequestBody("image/jpeg".toMediaTypeOrNull())
-                                val photo = MultipartBody.Part.createFormData(
-                                    "photo",
-                                    imageBitmap.name,
-                                    requestImageBody
-                                )
-                                siswaViewModel.uploadPhotoSiswa(session.token.toString(),id, photo)
-                                Log.d(TAG, "viewAsAdmin: UPDATE PHOTO")
-                            }
-                            Log.d(TAG, "viewAsAdmin: UPDATE SISWA")
+                        siswaViewModel.updateSiswa(session.token.toString(), id, siswa)
+                            .observe(viewLifecycleOwner) {
+                                if (!pathImage?.startsWith("siswa")!!) {
+                                    val imageBitmap = File(pathImage)
+                                    val requestImageBody =
+                                        imageBitmap.asRequestBody("image/jpeg".toMediaTypeOrNull())
+                                    val photo = MultipartBody.Part.createFormData(
+                                        "photo",
+                                        imageBitmap.name,
+                                        requestImageBody
+                                    )
+                                    siswaViewModel.uploadPhotoSiswa(
+                                        session.token.toString(),
+                                        id,
+                                        photo
+                                    )
+                                    Log.d(TAG, "viewAsAdmin: UPDATE PHOTO")
+                                }
+                                Log.d(TAG, "viewAsAdmin: UPDATE SISWA")
 
-                            try {
-                                val bundle = bundleOf()
-                                bundle.putParcelable(Constanta.PARCELABLE_ITEM, siswa)
-                                bundle.putString(Constanta.USERNAME, nisn)
-                                mainNavController.navigate(R.id.action_addSiswaFragment_to_addOrangTuaFragment, bundle)
-                            }catch (e: Exception){
-                                Log.d(TAG, "onViewCreated: $e")
+                                try {
+                                    val bundle = bundleOf()
+                                    bundle.putParcelable(Constanta.PARCELABLE_ITEM, siswa)
+                                    bundle.putString(Constanta.USERNAME, nisn)
+                                    mainNavController.navigate(
+                                        R.id.action_addSiswaFragment_to_addOrangTuaFragment,
+                                        bundle
+                                    )
+                                } catch (e: Exception) {
+                                    Log.d(TAG, "onViewCreated: $e")
+                                }
                             }
-                        }
                     }
                 }
             }
@@ -377,12 +400,12 @@ class AddSiswaFragment : BaseSkeletonFragment() {
             mtvAddsiswaName.text = "Profile Siswa"
             mbAddsiswaLogout.show()
             mbAddsiswaLogout.setOnClickListener {
-                loginViewModel.logout().observe(viewLifecycleOwner){
-                    if (it.isSuccessful){
+                loginViewModel.logout().observe(viewLifecycleOwner) {
+                    if (it.isSuccessful) {
                         try {
                             session.logout()
                             mainNavController.navigate(R.id.action_addSiswaFragment_to_loginFragment)
-                        }catch (e: Exception){
+                        } catch (e: Exception) {
                             Log.d(TAG, "onViewCreated: $e")
                         }
                     } else {
@@ -412,8 +435,8 @@ class AddSiswaFragment : BaseSkeletonFragment() {
             ivAddsiswaPhoto.isEnabled = false
 
             siswaViewModel.getSiswaByNIS(session.token.toString(), session.username.toString())
-                .observe(viewLifecycleOwner){
-                    if (it.isSuccessful){
+                .observe(viewLifecycleOwner) {
+                    if (it.isSuccessful) {
                         val siswa = it.body()?.data!!
                         tietAddsiswaNamalengkap.setText(siswa.name)
                         tietAddsiswaNisn.setText(siswa.nis)

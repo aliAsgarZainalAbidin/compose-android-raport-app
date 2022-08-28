@@ -31,7 +31,8 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         debug {
-            buildConfigField "String", "BASE_URL", '"http://10.153.36.218:3000/api/v1/"'
+//            buildConfigField "String", "BASE_URL", '"http://192.168.31.241:3000/api/v1/"'
+            buildConfigField "String", "BASE_URL", '"https://secure-plains-38108.herokuapp.com/api/v1/"'
 //            buildConfigField "String", "BASE_URL", '"http://192.168.88.116:3000/api/v1/"'
             buildConfigField "String", "TAG", '"RAPORT-APP"'
         }
