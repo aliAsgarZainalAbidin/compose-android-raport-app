@@ -22,7 +22,7 @@ data class ResponseDetailKelas(
 	val siswaId: ArrayList<String?>? = null,
 
 	@field:SerializedName("semester")
-	val semester: Int? = null,
+	val semester: String? = null,
 
 	@field:SerializedName("_id")
 	val id: String? = null,

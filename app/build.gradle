@@ -2,10 +2,12 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-parcelize'
+    id 'com.google.gms.google-services'
 }
 apply plugin: 'kotlin-kapt'
 apply plugin: 'com.android.application'
 apply plugin: 'dagger.hilt.android.plugin'
+apply plugin: 'com.google.firebase.crashlytics'
 
 
 android {
@@ -197,6 +199,7 @@ dependencies {
 //    compileOnly 'org.apache.poi:poi-ooxml:3.17'
     implementation platform('com.google.firebase:firebase-bom:30.0.1')
     implementation 'com.google.firebase:firebase-analytics-ktx'
+    implementation 'com.google.firebase:firebase-crashlytics-ktx'
 
     implementation "androidx.work:work-runtime-ktx:2.7.1"
     implementation "io.coil-kt:coil:1.3.2"

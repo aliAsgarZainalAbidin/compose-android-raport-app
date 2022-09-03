@@ -14,7 +14,7 @@ data class KelasUpdate(
 	val mapelId: List<String?>? = null,
 
 	@field:SerializedName("semester")
-	val semester: Int? = null,
+	val semester: String? = null,
 
 	@field:SerializedName("tahunAjaran")
 	val tahunAjaran: String? = null,

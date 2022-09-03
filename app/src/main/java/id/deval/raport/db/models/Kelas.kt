@@ -17,7 +17,7 @@ data class Kelas(
 	val mapelId: List<String?>? = null,
 
 	@field:SerializedName("semester")
-	val semester: Int? = null,
+	val semester: String? = null,
 
 	@field:SerializedName("tahunAjaran")
 	val tahunAjaran: String? = null,

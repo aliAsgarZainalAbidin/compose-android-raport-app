@@ -73,6 +73,9 @@ class AddKelasFragment : BaseSkeletonFragment() {
         dataMapel = arrayListOf()
         dataSiswa = arrayListOf()
         val listGuru = mutableListOf<String>()
+        val listSemester = mutableListOf<String>()
+        listSemester.add("Ganjil")
+        listSemester.add("Genap")
         val listAccountGuru = mutableListOf<Account>()
         id = arguments?.getString(Constanta.ID, "")
 
@@ -111,6 +114,9 @@ class AddKelasFragment : BaseSkeletonFragment() {
                     listAccountGuru.addAll(it.body()?.data!!)
                     val guruAdapter = ArrayAdapter(requireActivity(), R.layout.list_item, listGuru)
                     tietAddkelasGuru.setAdapter(guruAdapter)
+
+                    val semesterAdapter = ArrayAdapter(requireActivity(), R.layout.list_item, listSemester)
+                    tietAddkelasSemester.setAdapter(semesterAdapter)
                 } else {
                     requireContext().showToast(it.message())
                 }
@@ -202,7 +208,7 @@ class AddKelasFragment : BaseSkeletonFragment() {
                         val kelas = Kelas(
                             null,
                             siswaId,
-                            nameKelas, mapelId, semester.toInt(), tahunAjaran, guru
+                            nameKelas, mapelId, semester, tahunAjaran, guru
                         )
 
                         kelasViewModel.addClass(session.token.toString(), kelas)
@@ -225,7 +231,7 @@ class AddKelasFragment : BaseSkeletonFragment() {
                     } else {
                         val kelas = KelasUpdate(
                             siswaId,
-                            nameKelas, mapelId, semester.toInt(), tahunAjaran, guru
+                            nameKelas, mapelId, semester, tahunAjaran, guru
                         )
 
                         kelasViewModel.updateClassById(session.token.toString(), id!!, kelas)

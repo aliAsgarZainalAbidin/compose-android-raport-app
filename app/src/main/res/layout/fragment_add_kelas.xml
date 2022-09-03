@@ -82,19 +82,19 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_addkelas_semester"
-            style="@style/TextField.Outlined.White.Custom"
+            style="@style/AutoCompleteTextView.Custom"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/padding_layout"
             android:layout_marginTop="0dp"
             app:layout_constraintTop_toBottomOf="@+id/mtv_addkelas_semester">
 
-            <com.google.android.material.textfield.TextInputEditText
+            <AutoCompleteTextView
                 android:id="@+id/tiet_addkelas_semester"
+                style="@style/AutoCompleteTextView.Custom"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/bg_til_android_blue"
-                android:inputType="number"
                 tools:text="2221231" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -126,7 +126,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/bg_til_android_blue"
-                android:inputType="number"
+                android:inputType="text"
                 tools:text="2221231" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -193,9 +193,9 @@
             android:layout_width="match_parent"
             android:layout_marginHorizontal="@dimen/padding_layout"
             android:layout_marginTop="48dp"
+            android:layout_marginBottom="24dp"
             android:text="Simpan"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginBottom="24dp"
             app:layout_constraintTop_toBottomOf="@id/cl_addKelas_containerMapel" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

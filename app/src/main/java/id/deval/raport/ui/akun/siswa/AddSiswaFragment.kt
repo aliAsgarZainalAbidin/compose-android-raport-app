@@ -64,6 +64,7 @@ class AddSiswaFragment : BaseSkeletonFragment() {
                         MediaStore.Images.Media.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY)
                     } else MediaStore.Images.Media.EXTERNAL_CONTENT_URI
 
+                    //selection and projection in emulator not supported
                     val selection =
                         MediaStore.Images.ImageColumns.RELATIVE_PATH + " like '%" + "DCIM" + "%'"
                     val projection = arrayOf(
@@ -77,7 +78,7 @@ class AddSiswaFragment : BaseSkeletonFragment() {
 //                            MediaStore.Images.Media.EXTERNAL_CONTENT_URI, //pick random image
                             collection,
                             projection,
-                            selection,
+                            null,
                             null,
                             null
                         ).use {
@@ -402,12 +403,14 @@ class AddSiswaFragment : BaseSkeletonFragment() {
                             val bundle = bundleOf()
                             bundle.putParcelable(Constanta.PARCELABLE_ITEM, siswa)
                             bundle.putString(Constanta.PATH_IMAGE, pathImage)
+                            val checkImage = File(pathImage)
                             mainNavController.navigate(
                                 R.id.action_addSiswaFragment_to_addOrangTuaFragment,
                                 bundle
                             )
                         } catch (e: Exception) {
                             Log.d(TAG, "onViewCreated: $e")
+                            requireContext().showToast("Foto yang anda upload tidak valid, Silahkan coba foto yang lain.")
                         }
                     } else {
                         siswaViewModel.updateSiswa(session.token.toString(), id, siswa)

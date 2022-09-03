@@ -59,7 +59,7 @@ class DummyData {
                 arrayListOf(),
                 "Kelas IV A",
                 arrayListOf(),
-                1,
+                "1",
                 "2021/2022",
                 "912039812m3",
                 )
