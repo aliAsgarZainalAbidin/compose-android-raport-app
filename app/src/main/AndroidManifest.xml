@@ -14,12 +14,12 @@
         android:label="@string/app_name"
         android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
+        android:usesCleartextTraffic="true"
         android:supportsRtl="true"
         android:theme="@style/Theme.Raport"
         tools:targetApi="n">
         <activity
             android:name=".ui.MainActivity"
-            android:theme="@style/Theme.Raport"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
