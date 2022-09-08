@@ -3,9 +3,10 @@ package id.deval.raport.ui.akun.siswa
 import android.Manifest
 import android.app.Activity
 import android.app.DatePickerDialog
-import android.content.ContentUris
 import android.content.ContentValues.TAG
+import android.content.Context
 import android.content.Intent
+import android.database.Cursor
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
@@ -19,6 +20,7 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.DatePicker
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.core.os.bundleOf
 import com.bumptech.glide.Glide
 import id.deval.raport.BuildConfig.BASE_URL
@@ -64,67 +66,106 @@ class AddSiswaFragment : BaseSkeletonFragment() {
                         MediaStore.Images.Media.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY)
                     } else MediaStore.Images.Media.EXTERNAL_CONTENT_URI
 
-                    //selection and projection in emulator not supported
-                    val selection =
-                        MediaStore.Images.ImageColumns.RELATIVE_PATH + " like '%" + "DCIM" + "%'"
-                    val projection = arrayOf(
-                        MediaStore.Images.Media._ID,
-                        MediaStore.Images.Media.DISPLAY_NAME,
-                        MediaStore.Images.Media.RELATIVE_PATH
-                    )
+                    //selection and projection in emulator not support
+                    var projection: Array<String>? = null
+                    var selection: String? = null
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                        projection = arrayOf(
+                            MediaStore.Images.Media._ID,
+                            MediaStore.Images.Media.DISPLAY_NAME,
+                            MediaStore.Images.Media.RELATIVE_PATH
+                        )
+                        selection =
+                            MediaStore.Images.ImageColumns.RELATIVE_PATH + " like '%" + "DCIM" + "%'"
 
-                    selectedImageUri.let { uri ->
-                        val cursor = requireActivity().contentResolver.query(
-//                            MediaStore.Images.Media.EXTERNAL_CONTENT_URI, //pick random image
-                            collection,
-                            projection,
-                            null,
-                            null,
-                            null
-                        ).use {
-                            var id = 0L
-                            var displayName = ""
-                            var relativePath = ""
-                            if (it == null) {
-                                pathImage = selectedImageUri.path.toString()
-                                localImage = selectedImageUri.path
-                            } else {
-                                it.moveToFirst()
-                                val idColumn = it.getColumnIndexOrThrow(MediaStore.Images.Media._ID)
-                                val displayNameColumn =
-                                    it.getColumnIndexOrThrow(MediaStore.Images.Media.DISPLAY_NAME)
-                                val relativePathColumn =
-                                    it.getColumnIndexOrThrow(MediaStore.Images.Media.RELATIVE_PATH)
-                                while (it.moveToNext()) {
-                                    id = it.getLong(idColumn)
-                                    displayName = it.getString(displayNameColumn)
-                                    relativePath = it.getString(relativePathColumn)
-                                    Log.d(TAG, "RelativePATH : $relativePath")
-                                    Log.d(TAG, "DisplayName : $displayName")
-                                    Log.d(TAG, "ID: $id")
+                        selectedImageUri.let { uri ->
+                            requireActivity().contentResolver.query(
+                                collection,
+                                projection,
+                                null,
+                                null,
+                                null
+                            ).use {
+                                var id = 0L
+                                var displayName = ""
+                                var relativePath = ""
+                                if (it == null) {
+                                    pathImage = selectedImageUri.path.toString()
+                                    localImage = selectedImageUri.path
+                                } else {
+                                    it.moveToFirst()
+                                    val idColumn =
+                                        it.getColumnIndexOrThrow(MediaStore.Images.Media._ID)
+                                    val displayNameColumn =
+                                        it.getColumnIndexOrThrow(MediaStore.Images.Media.DISPLAY_NAME)
+                                    val relativePathColumn =
+                                        it.getColumnIndexOrThrow(MediaStore.Images.Media.RELATIVE_PATH)
+                                    while (it.moveToNext()) {
+                                        id = it.getLong(idColumn)
+                                        displayName = it.getString(displayNameColumn)
+                                        relativePath = it.getString(relativePathColumn)
+                                        Log.d(TAG, "RelativePATH : $relativePath")
+                                        Log.d(TAG, "DisplayName : $displayName")
+                                        Log.d(TAG, "ID: $id")
 
-                                    if (uri.lastPathSegment?.replace("image:", "", true)
-                                            .equals(id.toString())
-                                    ) {
-                                        Log.d(TAG, "PATH ?: /storage/emulated/0/$relativePath$displayName")
-                                        localImage = "/storage/emulated/0/$relativePath$displayName"
-                                        pathImage = localImage
+                                        if (uri.lastPathSegment?.replace("image:", "", true)
+                                                .equals(id.toString())
+                                        ) {
+                                            Log.d(
+                                                TAG,
+                                                "PATH ?: /storage/emulated/0/$relativePath$displayName"
+                                            )
+                                            localImage =
+                                                "/storage/emulated/0/$relativePath$displayName"
+                                            pathImage = localImage
+                                        }
                                     }
+                                    it.close()
                                 }
-                                it.close()
+                                Log.d(TAG, "PATH Sementara: $pathImage")
                             }
-                            Log.d(TAG, "PATH Sementara: $pathImage")
-                            Log.d(
-                                "TAG",
-                                "startPickImageLauncher: /storage/emulated/0/$relativePath$displayName"
-                            )
+                            Log.d(TAG, "PATH selectedImageUri: ${uri.lastPathSegment}")
                         }
-                        Log.d(TAG, "PATH selectedImageUri: ${uri.lastPathSegment}")
+                    } else {
+                        projection = arrayOf(
+                            MediaStore.Images.Media.DATA
+                        )
+                        selection = null
+                        pathImage = getDataColumn(
+                            requireContext(),
+                            selectedImageUri,
+                            projection,
+                            selection,
+                            null
+                        )
+                        Log.d(TAG, "TEST PATH ? : ${pathImage}")
                     }
                     binding.ivAddsiswaPhoto.setImageBitmap(selectedImage)
                 }
             }
         }
+
+    fun getDataColumn(
+        context: Context,
+        uri: Uri?,
+        projection: Array<String>?,
+        selection: String?,
+        selectionArgs: Array<String>?
+    ): String? {
+        var cursor: Cursor? = null
+        try {
+            cursor = uri?.let {
+                context.getContentResolver().query(it, projection, selection, selectionArgs, null)
+            }
+            if (cursor != null && cursor.moveToFirst()) {
+                val column_index: Int = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
+                return cursor.getString(column_index)
+            }
+        } finally {
+            if (cursor != null) cursor.close()
+        }
+        return null
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -291,7 +332,7 @@ class AddSiswaFragment : BaseSkeletonFragment() {
                 val hp = tietAddsiswaHp.text.toString()
 
                 if (namaLengkap.isEmpty()) {
-                    tilAddsiswaNamalengkap.error = resources.getString(R.string.tiet_empty)
+                    tietAddsiswaNamalengkap.error = resources.getString(R.string.tiet_empty)
                     isValid = false
                 }
 
@@ -409,8 +450,8 @@ class AddSiswaFragment : BaseSkeletonFragment() {
                                 bundle
                             )
                         } catch (e: Exception) {
-                            Log.d(TAG, "onViewCreated: $e")
-                            requireContext().showToast("Foto yang anda upload tidak valid, Silahkan coba foto yang lain.")
+                            Log.d(TAG, "onViewCreated: PATH FOTO TIDAK VALID $pathImage")
+                            requireContext().showToast("Foto tidak Valid. Silahkan pilih foto yang lain atau pastikan pilih foto dari galeri")
                         }
                     } else {
                         siswaViewModel.updateSiswa(session.token.toString(), id, siswa)

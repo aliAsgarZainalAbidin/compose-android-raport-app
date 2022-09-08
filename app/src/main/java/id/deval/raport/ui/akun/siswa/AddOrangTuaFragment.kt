@@ -139,8 +139,12 @@ class AddOrangTuaFragment : BaseSkeletonFragment() {
                     isValid = false
                     tietAddorangtuaTanggalLahir.error = resources.getString(R.string.tiet_empty)
                 }
+                if (password.length<6){
+                    isValid = false
+                    tietAddorangtuaPassword.error = "Password minimal 6 karakter"
+                }
 
-                if (namaLengkap.isNotEmpty() && password.isNotEmpty() && nomorHp.isNotEmpty() && email.isNotEmpty() && nik.isNotEmpty() && tanggalLahir.isNotEmpty()) {
+                if (namaLengkap.isNotEmpty() && password.isNotEmpty() && password.length>= 6 && nomorHp.isNotEmpty() && email.isNotEmpty() && nik.isNotEmpty() && tanggalLahir.isNotEmpty()) {
                     isValid = true
                 }
 

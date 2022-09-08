@@ -14,6 +14,7 @@ import id.deval.raport.db.models.Account
 import id.deval.raport.db.models.Siswa
 import id.deval.raport.ui.adapter.RvAdapter
 import id.deval.raport.utils.*
+import java.lang.NullPointerException
 
 class AkunFragment : BaseSkeletonFragment() {
 

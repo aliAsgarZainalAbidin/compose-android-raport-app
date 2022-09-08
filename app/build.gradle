@@ -34,7 +34,9 @@ android {
         }
         debug {
 //            buildConfigField "String", "BASE_URL", '"http://192.162.2.114:3000/api/v1/"'
-            buildConfigField "String", "BASE_URL", '"https://calm-temple-18212.herokuapp.com/api/v1/"'
+//            buildConfigField "String", "BASE_URL", '"https://calm-temple-18212.herokuapp.com/api/v1/"'  //RAHMA
+//            buildConfigField "String", "BASE_URL", '"https://secure-plains-38108.herokuapp.com/api/v1/"'  //ALI
+            buildConfigField "String", "BASE_URL", '"https://dry-bastion-43929.herokuapp.com/api/v1/"' //PUBLIC
 //            buildConfigField "String", "BASE_URL", '"http://192.168.88.116:3000/api/v1/"'
             buildConfigField "String", "TAG", '"RAPORT-APP"'
         }

@@ -38,7 +38,7 @@ class AddGuruFragment : BaseSkeletonFragment() {
                 Log.d("TAG", "onViewCreated: $id")
                 accountViewModel.getTeacherById(session.token.toString(), id)
                     .observe(viewLifecycleOwner) {
-                        if (it.isSuccessful){
+                        if (it.isSuccessful) {
                             val data = it.body()?.data!!
                             tietAddguruNamalengkap.setText(data.name)
                             tietAddguruHp.setText(data.phone)
@@ -50,7 +50,7 @@ class AddGuruFragment : BaseSkeletonFragment() {
                     }
             }
 
-            if (!role.isNullOrEmpty()){
+            if (!role.isNullOrEmpty()) {
                 mtvAddguruName.text = "Profile"
                 tietAddguruNamalengkap.isEnabled = false
                 tietAddguruHp.isEnabled = false
@@ -63,12 +63,12 @@ class AddGuruFragment : BaseSkeletonFragment() {
                 mbAddguruSimpan.hide()
                 mbAddguruLogout.show()
                 mbAddguruLogout.setOnClickListener {
-                    loginViewModel.logout().observe(viewLifecycleOwner){
-                        if (it.isSuccessful){
+                    loginViewModel.logout().observe(viewLifecycleOwner) {
+                        if (it.isSuccessful) {
                             try {
                                 session.logout()
                                 mainNavController.navigate(R.id.action_addGuruFragment_to_loginFragment)
-                            }catch (e: Exception){
+                            } catch (e: Exception) {
                                 Log.d(TAG, "onViewCreated: $e")
                             }
                         } else {
@@ -80,7 +80,7 @@ class AddGuruFragment : BaseSkeletonFragment() {
             ivAddguruBack.setOnClickListener {
                 try {
                     mainNavController.popBackStack()
-                }catch (e: Exception){
+                } catch (e: Exception) {
                     Log.d(TAG, "onViewCreated: $e")
                 }
             }
@@ -129,7 +129,12 @@ class AddGuruFragment : BaseSkeletonFragment() {
                     isValid = false
                 }
 
-                if (namaLengkap.isNotEmpty() || nik.isNotEmpty() || password.isNotEmpty() || alamat.isNotEmpty() || email.isNotEmpty() || nomorHp.isNotEmpty()) {
+                if (password.length < 6) {
+                    isValid = false
+                    tietAddguruPassword.error = "Password minimal 6 karakter"
+                }
+
+                if (namaLengkap.isNotEmpty() && nik.isNotEmpty() && password.isNotEmpty() && password.length >= 6 && alamat.isNotEmpty() && email.isNotEmpty() && nomorHp.isNotEmpty()) {
                     isValid = true
                 }
 
@@ -151,11 +156,11 @@ class AddGuruFragment : BaseSkeletonFragment() {
                     if (id.isEmpty()) {
                         accountViewModel.addTeacher(session.token.toString(), account)
                             .observe(viewLifecycleOwner) {
-                                if (it.isSuccessful){
+                                if (it.isSuccessful) {
                                     try {
                                         requireContext().showToast("${it.body()?.status}, Berhasil menambahkan data Guru")
                                         mainNavController.popBackStack()
-                                    }catch (e: Exception){
+                                    } catch (e: Exception) {
                                         Log.d(TAG, "onViewCreated: $e")
                                     }
                                 } else {
@@ -163,14 +168,15 @@ class AddGuruFragment : BaseSkeletonFragment() {
                                 }
                             }
                     } else {
-                        val accountUpdate = AccountUpdate(password, alamat, nomorHp, namaLengkap, email)
+                        val accountUpdate =
+                            AccountUpdate(password, alamat, nomorHp, namaLengkap, email)
                         accountViewModel.updateTeacher(session.token.toString(), id, accountUpdate)
                             .observe(viewLifecycleOwner) {
-                                if (it.isSuccessful){
+                                if (it.isSuccessful) {
                                     try {
                                         requireContext().showToast("${it.body()?.status}, Berhasil memperbaharui data Guru")
                                         mainNavController.popBackStack()
-                                    }catch (e: Exception){
+                                    } catch (e: Exception) {
                                         Log.d(TAG, "onViewCreated: $e")
                                     }
                                 } else {
